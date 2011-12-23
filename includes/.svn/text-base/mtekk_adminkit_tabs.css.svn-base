@@ -1,0 +1,13 @@
+/**
+ * Tabbed Admin Page (CSS)
+ *
+ * @author Tom Klingenberg 
+ * @colordef #dfdfdf light-grey (tabs border color)
+ * @colordef #f9f9f9 very-light-grey (admin standard background color)
+ */
+#hasadmintabs ul.ui-tabs-nav {border-bottom:1px solid #dfdfdf; font-size:12px; height:29px; list-style-image:none; list-style-position:outside; list-style-type:none; margin:13px 0 0; overflow:visible; padding:0 0 0 8px;}
+#hasadmintabs ul.ui-tabs-nav li {display:block; float:left; line-height:200%; list-style-image:none; list-style-position:outside; list-style-type:none; margin:0; padding:0; position:relative; text-align:center; white-space:nowrap; width:auto;}
+#hasadmintabs ul.ui-tabs-nav li a {background:transparent none no-repeat scroll 0 50%; border-bottom:1px solid #dfdfdf; display:block; float:left; line-height:28px; padding:1px 13px 0; position:relative; text-decoration:none;}
+#hasadmintabs ul.ui-tabs-nav li.ui-tabs-selected a{border-top-left-radius:4px; border-top-right-radius:4px;border:1px solid #dfdfdf; border-bottom-color:#f9f9f9; color:#333333; font-weight:normal; padding:0 12px;}
+#hasadmintabs ul.ui-tabs-nav a:focus, a:active {outline-color:-moz-use-text-color; outline-style:none; outline-width:medium;}
+#screen-options-wrap p.submit {margin:0; padding:0;}

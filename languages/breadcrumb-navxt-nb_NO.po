@@ -1,0 +1,709 @@
+# Translation of Breadcrumb NavXT in Norwegian (Bokmål)
+# This file is distributed under the same license as the Breadcrumb NavXT package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2012-01-04 03:02:27+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: Breadcrumb NavXT\n"
+
+#: breadcrumb_navxt_widget.php:32
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "Legger til breadcrumbs-sti i din sidebar"
+
+#: breadcrumb_navxt_widget.php:93
+msgid "Title:"
+msgstr "Tittel:"
+
+#: breadcrumb_navxt_widget.php:97
+msgid "Output trail as:"
+msgstr "Skriv stiens utdata som:"
+
+#: breadcrumb_navxt_widget.php:99
+msgid "List"
+msgstr "Liste"
+
+#: breadcrumb_navxt_widget.php:100
+msgid "RDFa"
+msgstr "RDFa"
+
+#: breadcrumb_navxt_widget.php:101
+msgid "Microformat"
+msgstr "Mikroformat"
+
+#: breadcrumb_navxt_widget.php:102
+msgid "Plain"
+msgstr "Ordinær"
+
+#: breadcrumb_navxt_widget.php:107
+msgid "Link the breadcrumbs"
+msgstr "Lenke breadcrumbs"
+
+#: breadcrumb_navxt_widget.php:109
+msgid "Reverse the order of the trail"
+msgstr "Reverser rekkefølgen på stien"
+
+#: breadcrumb_navxt_widget.php:111
+msgid "Hide the trail on the front page"
+msgstr "Skjul stien på hovedsiden"
+
+#: breadcrumb_navxt_admin.php:36
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %s, Breadcrumb NavXT requires %s"
+msgstr "Din PHP-versjon er for gammel. Vennligst oppgrader til en nyere versjon. Din versjon er %s, Breadcrumb NavXT krever %s"
+
+#: breadcrumb_navxt_admin.php:113
+msgid "Insufficient privileges to proceed."
+msgstr "Utilstrekkelige rettigheter for å fortsette."
+
+#: breadcrumb_navxt_admin.php:204
+msgid "Tips for the settings are located below select options."
+msgstr "Tips for innstillinger finnes under \"Velg alternativer\"."
+
+#: breadcrumb_navxt_admin.php:205
+msgid "Resources"
+msgstr "Resurser"
+
+#: breadcrumb_navxt_admin.php:206
+msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
+msgstr "%sTutorials and How Tos%s: Det er flere guider, \"tutorials\" og \"how tos\" tilgjengelig på forfatterens hjemmeside."
+
+#: breadcrumb_navxt_admin.php:206
+msgid "Go to the Breadcrumb NavXT tag archive."
+msgstr "Gå til Breadcrumb NavXT stikkordsarkiv."
+
+#: breadcrumb_navxt_admin.php:207
+msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
+msgstr "%sOnline Dokumentasjon%s: Dokumentasjon for mer avansert teknisk informasjon."
+
+#: breadcrumb_navxt_admin.php:207
+msgid "Go to the Breadcrumb NavXT online documentation"
+msgstr "Gå til Breadcrumb NavXT online dokumentasjon"
+
+#: breadcrumb_navxt_admin.php:208
+msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
+msgstr "%sRaporter en Bug%s: Hvis du tror du har funnet en bug, vennligst inkluder din WordPress-versjon og detaljer om hvordan reprodusere buggen."
+
+#: breadcrumb_navxt_admin.php:208 breadcrumb_navxt_admin.php:211
+msgid "Go to the Breadcrumb NavXT support post for your version."
+msgstr "Gå til Breadcrumb NavXT support for din versjon."
+
+#: breadcrumb_navxt_admin.php:209
+msgid "Giving Back"
+msgstr "Gi Tilbake"
+
+#: breadcrumb_navxt_admin.php:210
+msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
+msgstr "%sDonate%s: Liker Breadcrumb NavXT og ønsker å bidra til utviklingen? Vurder å spandere en øl på forfatteren."
+
+#: breadcrumb_navxt_admin.php:210
+msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
+msgstr "Gå til PayPal for å gi en donasjon til Breadcrumb NavXT."
+
+#: breadcrumb_navxt_admin.php:211
+msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
+msgstr "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
+
+#: breadcrumb_navxt_admin.php:216 breadcrumb_navxt_admin.php:307
+msgid "General"
+msgstr "Generelt"
+
+#: breadcrumb_navxt_admin.php:219
+msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
+msgstr "For at innstillingene på denne siden skal gjelde må du enten bruke den medfølgende Breadcrumb NavXT widget, eller bruke en av kodeseksjonene nedenfor i temaet ditt."
+
+#: breadcrumb_navxt_admin.php:220
+msgid "Breadcrumb trail with separators"
+msgstr "Breadcrumb-sti med skilletegn"
+
+#: breadcrumb_navxt_admin.php:226
+msgid "Breadcrumb trail in list form"
+msgstr "Breadcrumb-sti i listeform"
+
+#: breadcrumb_navxt_admin.php:235
+msgid "Quick Start"
+msgstr "Hurtig-Start"
+
+#: breadcrumb_navxt_admin.php:238
+msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
+msgstr "Bruker du koden fra Hurtig-Start seksjonen ovenfor, kan følgende CSS brukes som utgangspunkt for å style breadcrumb-stien."
+
+#: breadcrumb_navxt_admin.php:250
+msgid "Styling"
+msgstr "Styling"
+
+#: breadcrumb_navxt_admin.php:256
+msgid "Import/Export/Reset"
+msgstr "Import/Eksport/Tilbakestille Innstillinger"
+
+#: breadcrumb_navxt_admin.php:280 includes/mtekk_adminkit.php:765
+msgid "Import"
+msgstr "Import"
+
+#: breadcrumb_navxt_admin.php:281 includes/mtekk_adminkit.php:766
+msgid "Export"
+msgstr "Eksport"
+
+#: breadcrumb_navxt_admin.php:282 includes/mtekk_adminkit.php:767
+msgid "Reset"
+msgstr "Tilbakestille"
+
+#: breadcrumb_navxt_admin.php:295
+msgid "Breadcrumb NavXT Settings"
+msgstr "Breadcrumb NavXT Innstillinger"
+
+#: breadcrumb_navxt_admin.php:310
+msgid "Breadcrumb Separator"
+msgstr "Breadcrumb Skilletegn"
+
+#: breadcrumb_navxt_admin.php:310
+msgid "Placed in between each breadcrumb."
+msgstr "Settes inn mellom hver breadcrumb."
+
+#: breadcrumb_navxt_admin.php:311
+msgid "Breadcrumb Max Title Length"
+msgstr "Breadcrumb Max Tittellengde"
+
+#: breadcrumb_navxt_admin.php:315
+msgid "Home Breadcrumb"
+msgstr "Hjem Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:320
+msgid "Place the home breadcrumb in the trail."
+msgstr "Sett inn hjem-breadcrumb i stien."
+
+#: breadcrumb_navxt_admin.php:325
+msgid "Home Title: "
+msgstr "Hjem-Tittel:"
+
+#: breadcrumb_navxt_admin.php:333
+msgid "Home Template"
+msgstr "Hjem-Mal"
+
+#: breadcrumb_navxt_admin.php:333
+msgid "The template for the home breadcrumb."
+msgstr "Mal for hjem-breadcrumb."
+
+#: breadcrumb_navxt_admin.php:334
+msgid "Home Template (Unlinked)"
+msgstr "Hjem-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:334
+msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
+msgstr "Mal for hjem-breadcrumb, brukes når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:335
+msgid "Blog Breadcrumb"
+msgstr "Blogg Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:335
+msgid "Place the blog breadcrumb in the trail."
+msgstr "Sett inn blogg-breadcrumb i stien."
+
+#: breadcrumb_navxt_admin.php:336
+msgid "Blog Template"
+msgstr "Blogg-Mal"
+
+#: breadcrumb_navxt_admin.php:336
+msgid "The template for the blog breadcrumb, used only in static front page environments."
+msgstr "Mal for blogg-breadcrumb, brukes bare på en statisk framside."
+
+#: breadcrumb_navxt_admin.php:337
+msgid "Blog Template (Unlinked)"
+msgstr "Blogg-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:337
+msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
+msgstr "Mal for blogg-breadcrumb, brukes bare på en statisk framside og når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:341
+msgid "Main Site Breadcrumb"
+msgstr "Hovedsidens Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:346
+msgid "Place the main site home breadcrumb in the trail in an multisite setup."
+msgstr "Sett inn hovedsidens hjem-breadcrumb i stien i et multisite-oppsett."
+
+#: breadcrumb_navxt_admin.php:351
+msgid "Main Site Home Title: "
+msgstr "Hovedsidens Hjem-Tittel:"
+
+#: breadcrumb_navxt_admin.php:360
+msgid "Main Site Home Template"
+msgstr "Hovedsidens Hjem-Mal"
+
+#: breadcrumb_navxt_admin.php:360
+msgid "The template for the main site home breadcrumb, used only in multisite environments."
+msgstr "Mal for hovedsidens hjem-breadcrumb, brukes bare i multisite-oppsett."
+
+#: breadcrumb_navxt_admin.php:361
+msgid "Main Site Home Template (Unlinked)"
+msgstr "Hovedsidens Hjem-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:361
+msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
+msgstr "Mal for hovedsidens hjem-breadcrumb, brukes bare i multisite-oppsett og når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:366
+msgid "Current Item"
+msgstr "Aktuelle Element"
+
+#: breadcrumb_navxt_admin.php:369
+msgid "Link Current Item"
+msgstr "Lenke Aktuelle Element"
+
+#: breadcrumb_navxt_admin.php:369
+msgid "Yes"
+msgstr "Ja"
+
+#: breadcrumb_navxt_admin.php:370
+msgid "Current Item Template"
+msgstr "Aktuelle Element Mal"
+
+#: breadcrumb_navxt_admin.php:370
+msgid "The template for current item breadcrumbs."
+msgstr "Mal for aktuelle element breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:371
+msgid "Current Item Template (Unlinked)"
+msgstr "Aktuelle Element Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:371
+msgid "The template for current item breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for aktuelle element breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:372
+msgid "Paged Breadcrumb"
+msgstr "Sidebestemt Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:372
+msgid "Include the paged breadcrumb in the breadcrumb trail."
+msgstr "Inkluder sidebestemt breadcrumb i stien."
+
+#: breadcrumb_navxt_admin.php:372
+msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
+msgstr "Indikerer at brukeren er på en annen side enn den første i paginerte innlegg eller sider."
+
+#: breadcrumb_navxt_admin.php:373
+msgid "Paged Template"
+msgstr "Sidebestemt-Mal"
+
+#: breadcrumb_navxt_admin.php:373
+msgid "The template for paged breadcrumbs."
+msgstr "Mal for sidebestemt breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:378
+msgid "Posts &amp; Pages"
+msgstr "Innlegg &amp; Sider"
+
+#: breadcrumb_navxt_admin.php:381
+msgid "Post Template"
+msgstr "Innlegg-Mal"
+
+#: breadcrumb_navxt_admin.php:381
+msgid "The template for post breadcrumbs."
+msgstr "Mal for innlegg-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:382
+msgid "Post Template (Unlinked)"
+msgstr "Innlegg-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:382
+msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for innlegg-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:383
+msgid "Post Taxonomy Display"
+msgstr "Innleggsgruppe Visning"
+
+#: breadcrumb_navxt_admin.php:383
+msgid "Show the taxonomy leading to a post in the breadcrumb trail."
+msgstr "Vis gruppenavnet som peker til et innlegg i stien."
+
+#: breadcrumb_navxt_admin.php:387
+msgid "Post Taxonomy"
+msgstr "Innleggsgruppe"
+
+#: breadcrumb_navxt_admin.php:391
+msgid "Categories"
+msgstr "Kategorier"
+
+#: breadcrumb_navxt_admin.php:392 breadcrumb_navxt_admin.php:490
+msgid "Dates"
+msgstr "Datoer"
+
+#: breadcrumb_navxt_admin.php:393
+msgid "Tags"
+msgstr "Stikkord"
+
+#: breadcrumb_navxt_admin.php:394 breadcrumb_navxt_admin.php:491
+msgid "Pages"
+msgstr "Sider"
+
+#: breadcrumb_navxt_admin.php:405 breadcrumb_navxt_admin.php:502
+msgid "The taxonomy which the breadcrumb trail will show."
+msgstr "Gruppenavnet som breadcrumb-stien vil vise."
+
+#: breadcrumb_navxt_admin.php:409
+msgid "Page Template"
+msgstr "Side-Mal"
+
+#: breadcrumb_navxt_admin.php:409
+msgid "The template for page breadcrumbs."
+msgstr "Mal for side-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:410
+msgid "Page Template (Unlinked)"
+msgstr "Side-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:410
+msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for side-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:411
+msgid "Attachment Template"
+msgstr "Vedlegg-Mal"
+
+#: breadcrumb_navxt_admin.php:411
+msgid "The template for attachment breadcrumbs."
+msgstr "Mal for vedlegg-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:412
+msgid "Attachment Template (Unlinked)"
+msgstr "Vedlegg-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:412
+msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for vedlegg-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:427 breadcrumb_navxt_admin.php:600
+#: breadcrumb_navxt_class.php:56 breadcrumb_navxt_class.php:205
+#: breadcrumb_navxt_class.php:213 breadcrumb_navxt_class.php:219
+#: breadcrumb_navxt_class.php:235 breadcrumb_navxt_class.php:247
+#: breadcrumb_navxt_class.php:259
+msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Gå til %title%.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_admin.php:428 breadcrumb_navxt_admin.php:601
+msgid "%htitle%"
+msgstr "%htitle%"
+
+#: breadcrumb_navxt_admin.php:465 breadcrumb_navxt_admin.php:541
+msgid "%s Template"
+msgstr "%s Mal"
+
+#: breadcrumb_navxt_admin.php:465 breadcrumb_navxt_admin.php:541
+msgid "The template for %s breadcrumbs."
+msgstr "Mal for %s-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:466 breadcrumb_navxt_admin.php:542
+msgid "%s Template (Unlinked)"
+msgstr "%s Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:466 breadcrumb_navxt_admin.php:542
+msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for %s-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:471
+msgid "%s Root Page"
+msgstr "%s Rot-siden"
+
+#: breadcrumb_navxt_admin.php:474
+msgid "&mdash; Select &mdash;"
+msgstr "&mdash; Velg &mdash;"
+
+#: breadcrumb_navxt_admin.php:478
+msgid "%s Archive Display"
+msgstr "%s Arkiv Visning"
+
+#: breadcrumb_navxt_admin.php:478
+msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
+msgstr "Vis breadcrumb for %s type innleggsarkiv i breadcrumb-stien."
+
+#: breadcrumb_navxt_admin.php:482
+msgid "%s Taxonomy Display"
+msgstr "%s Gruppenavn Visning"
+
+#: breadcrumb_navxt_admin.php:482
+msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
+msgstr "Vis gruppenavnet som peker til en %s i breadcrumb-stien."
+
+#: breadcrumb_navxt_admin.php:486
+msgid "%s Taxonomy"
+msgstr "%s Gruppenavn"
+
+#: breadcrumb_navxt_admin.php:512
+msgid "Categories &amp; Tags"
+msgstr "Kategorier &amp; Stikkord"
+
+#: breadcrumb_navxt_admin.php:515
+msgid "Category Template"
+msgstr "Kategori-Mal"
+
+#: breadcrumb_navxt_admin.php:515
+msgid "The template for category breadcrumbs."
+msgstr "Mal for kategori-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:516
+msgid "Category Template (Unlinked)"
+msgstr "Kategori-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:516
+msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for kategori-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:517
+msgid "Tag Template"
+msgstr "Stikkord-Mal"
+
+#: breadcrumb_navxt_admin.php:517
+msgid "The template for tag breadcrumbs."
+msgstr "Mal for stikkord-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:518
+msgid "Tag Template (Unlinked)"
+msgstr "Stikkord-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:518
+msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for stikkord-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:551
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: breadcrumb_navxt_admin.php:554
+msgid "Author Template"
+msgstr "Forfatter-Mal"
+
+#: breadcrumb_navxt_admin.php:554
+msgid "The template for author breadcrumbs."
+msgstr "Mal for forfatter-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:555
+msgid "Author Template (Unlinked)"
+msgstr "Forfatter-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:555
+msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for forfatter-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:556
+msgid "Author Display Format"
+msgstr "Forfatter Visningsformat"
+
+#: breadcrumb_navxt_admin.php:556
+msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
+msgstr "display_name bruker navnet som er valgt under \"Vis navn offentlig som\" i brukerprofilen."
+
+#: breadcrumb_navxt_admin.php:557
+msgid "Date Template"
+msgstr "Dato-Mal"
+
+#: breadcrumb_navxt_admin.php:557
+msgid "The template for date breadcrumbs."
+msgstr "Mal for dato-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:558
+msgid "Date Template (Unlinked)"
+msgstr "Dato-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:558
+msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Mal for dato-breadcrumbs, brukes bare når breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:559
+msgid "Search Template"
+msgstr "Søk-Mal"
+
+#: breadcrumb_navxt_admin.php:559
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
+msgstr "Lenkemal for søk-breadcrumbs, brukes bare når søkeresultatet omfatter flere sider."
+
+#: breadcrumb_navxt_admin.php:560
+msgid "Search Template (Unlinked)"
+msgstr "Søk-Mal (ulenket)"
+
+#: breadcrumb_navxt_admin.php:560
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
+msgstr "Lenkemal for søk-breadcrumbs, brukes bare når søkeresultatet omfatter flere sider og breadcrumb ikke er lenket."
+
+#: breadcrumb_navxt_admin.php:561
+msgid "404 Title"
+msgstr "404 Tittel"
+
+#: breadcrumb_navxt_admin.php:562
+msgid "404 Template"
+msgstr "404 Mal"
+
+#: breadcrumb_navxt_admin.php:562
+msgid "The template for 404 breadcrumbs."
+msgstr "Mal for 404-breadcrumbs."
+
+#: breadcrumb_navxt_admin.php:567
+msgid "Save Changes"
+msgstr "Lagre endringer"
+
+#: includes/mtekk_adminkit.php:201
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: includes/mtekk_adminkit.php:271
+msgid "Your settings are out of date."
+msgstr "Dine innstillinger er utdaterte."
+
+#: includes/mtekk_adminkit.php:271
+msgid "Migrate the settings now."
+msgstr "Utfør innstillingene nå."
+
+#: includes/mtekk_adminkit.php:271
+msgid "Migrate now."
+msgstr "Utfør nå."
+
+#: includes/mtekk_adminkit.php:279
+msgid "Your plugin install is incomplete."
+msgstr "Installasjonen av plugin er ufullstendig."
+
+#: includes/mtekk_adminkit.php:279
+msgid "Load default settings now."
+msgstr "Last inn standard innstillinger nå."
+
+#: includes/mtekk_adminkit.php:279
+msgid "Complete now."
+msgstr "Fullfør nå."
+
+#: includes/mtekk_adminkit.php:287
+msgid "Your plugin settings are invalid."
+msgstr "Dine plugin-innstillinger er ugyldige."
+
+#: includes/mtekk_adminkit.php:287
+msgid "Attempt to fix settings now."
+msgstr "Forsøk å ordne innstillinger nå."
+
+#: includes/mtekk_adminkit.php:287
+msgid "Fix now."
+msgstr "Ordne nå."
+
+#: includes/mtekk_adminkit.php:463
+msgid "Settings successfully saved."
+msgstr "Innstillinger ble lagret."
+
+#: includes/mtekk_adminkit.php:463 includes/mtekk_adminkit.php:468
+msgid "Undo the options save."
+msgstr "Angre lagring av alternativer."
+
+#: includes/mtekk_adminkit.php:463 includes/mtekk_adminkit.php:468
+#: includes/mtekk_adminkit.php:573 includes/mtekk_adminkit.php:597
+#: includes/mtekk_adminkit.php:614
+msgid "Undo"
+msgstr "Angre"
+
+#: includes/mtekk_adminkit.php:468
+msgid "Some settings were not saved."
+msgstr "Noen innstillinger ble ikke lagret."
+
+#: includes/mtekk_adminkit.php:469
+msgid "The following settings were not saved:"
+msgstr "Følgende innstillinger ble ikke lagret:"
+
+#: includes/mtekk_adminkit.php:474
+msgid "Please include this message in your %sbug report%s."
+msgstr "Vær vennlig å inkludere denne meldingen i din %sbug-rapport%s."
+
+#: includes/mtekk_adminkit.php:474
+msgid "Go to the %s support post for your version."
+msgstr "Gå til %s support for din versjon."
+
+#: includes/mtekk_adminkit.php:573
+msgid "Settings successfully imported from the uploaded file."
+msgstr "Import av innstillinger fra fil var vellykket."
+
+#: includes/mtekk_adminkit.php:573
+msgid "Undo the options import."
+msgstr "Angre import av alternativer."
+
+#: includes/mtekk_adminkit.php:578
+msgid "Importing settings from file failed."
+msgstr "Importering av innstillinger fra fil mislyktes."
+
+#: includes/mtekk_adminkit.php:597
+msgid "Settings successfully reset to the default values."
+msgstr "Innstillinger ble tilbakestilt til standardverdiene."
+
+#: includes/mtekk_adminkit.php:597
+msgid "Undo the options reset."
+msgstr "Angre tilbakestilling av alternativer."
+
+#: includes/mtekk_adminkit.php:614
+msgid "Settings successfully undid the last operation."
+msgstr "Innstillinger gjorde om siste handling."
+
+#: includes/mtekk_adminkit.php:614
+msgid "Undo the last undo operation."
+msgstr "Angre siste angre-handling."
+
+#: includes/mtekk_adminkit.php:649
+msgid "Settings successfully migrated."
+msgstr "Innstillingene ble utført."
+
+#: includes/mtekk_adminkit.php:656
+msgid "Default settings successfully installed."
+msgstr "Standard innstillinger ble installert."
+
+#: includes/mtekk_adminkit.php:757
+msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
+msgstr "Importere innstillinger fra en XML-fil, eksportere nåværende innstillinger til en XML-fil, eller tilbakestille til standard innstillinger."
+
+#: includes/mtekk_adminkit.php:760
+msgid "Settings File"
+msgstr "Innstillinger Fil"
+
+#: includes/mtekk_adminkit.php:763
+msgid "Select a XML settings file to upload and import settings from."
+msgstr "Velg en XML-fil å laste opp og importere innstillinger fra."
+
+#: breadcrumb_navxt_class.php:203 breadcrumb_navxt_class.php:211
+msgid "Home"
+msgstr "Hjem"
+
+#: breadcrumb_navxt_class.php:230
+msgid "<a title=\"Reload the current page.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Last inn nåværende side på nytt.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:242
+msgid "Page %htitle%"
+msgstr "Side %htitle%"
+
+#: breadcrumb_navxt_class.php:266
+msgid "404"
+msgstr "404"
+
+#: breadcrumb_navxt_class.php:269
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\">%htitle%</a>&#39;"
+msgstr "Søkeresultat for &#39;<a title=\"Gå til første side i søkeresultatet for %title%.\" href=\"%link%\">%htitle%</a>&#39;"
+
+#: breadcrumb_navxt_class.php:271
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "Søkeresultat for &#39;%htitle%&#39;"
+
+#: breadcrumb_navxt_class.php:274
+msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Gå til %title% stikkordsarkiv.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:279
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\">%htitle%</a>"
+msgstr "Artikler av: <a title=\"Gå til første side med innlegg av %title%.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:281
+msgid "Articles by: %htitle%"
+msgstr "Artikler av: %htitle%"
+
+#: breadcrumb_navxt_class.php:286
+msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Gå til %title% kategoriarkiv.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:290
+msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Gå til %title% arkiv.\" href=\"%link%\">%htitle%</a>"

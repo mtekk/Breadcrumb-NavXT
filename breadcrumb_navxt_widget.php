@@ -73,6 +73,7 @@ class bcn_widget extends WP_Widget
 	{
 		//Filter out anything that could be invalid
 		$old_instance['title'] = strip_tags($new_instance['title']);
+		$old_instance['pretext'] = strip_tags($new_instance['pretext']);
 		$old_instance['type'] = strip_tags($new_instance['type']);
 		$old_instance['linked'] = isset($new_instance['linked']);
 		$old_instance['reverse'] = isset($new_instance['reverse']);
@@ -81,10 +82,14 @@ class bcn_widget extends WP_Widget
 	}
 	function form($instance)
 	{
-		$instance = wp_parse_args((array) $instance, array('title' => '', 'type' => 'plain', 'linked' => true, 'reverse' => false, 'front' => false));?>
+		$instance = wp_parse_args((array) $instance, array('title' => '', 'pretext' => '', 'type' => 'plain', 'linked' => true, 'reverse' => false, 'front' => false));?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"> <?php _e('Title:', 'breadcrumb-navxt'); ?></label>
 			<input class="widefat" type="text" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo esc_attr($instance['title']);?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('pretext'); ?>"> <?php _e('Title:', 'breadcrumb-navxt'); ?></label>
+			<input class="widefat" type="text" name="<?php echo $this->get_field_name('pretext'); ?>" id="<?php echo $this->get_field_id('pretext'); ?>" value="<?php echo esc_attr($instance['pretext']);?>" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id('type'); ?>"> <?php _e('Output trail as:', 'breadcrumb-navxt'); ?></label>

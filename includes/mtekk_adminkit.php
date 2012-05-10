@@ -18,7 +18,7 @@
 */
 abstract class mtekk_adminKit
 {
-	private $__version = '1.0';
+	private $__version = '1.1';
 	protected $version;
 	protected $full_name;
 	protected $short_name;

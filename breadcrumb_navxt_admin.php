@@ -455,10 +455,7 @@ class bcn_admin extends mtekk_adminKit
 					</tr>
 					<?php
 						$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), strtolower(__($post_type->labels->singular_name))), !$post_type->has_archive);
-//						//If it is flat, we need a taxonomy selection
-//						if(!$post_type->hierarchical)
-//						{
-							$this->input_check(sprintf(__('%s Taxonomy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the taxonomy leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), strtolower(__($post_type->labels->singular_name))));
+						$this->input_check(sprintf(__('%s Taxonomy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the taxonomy leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), strtolower(__($post_type->labels->singular_name))));
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -481,7 +478,6 @@ class bcn_admin extends mtekk_adminKit
 							<span class="setting-description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></span>
 						</td>
 					</tr>
-					<?php //} ?>
 				</table>
 			</fieldset>
 					<?php

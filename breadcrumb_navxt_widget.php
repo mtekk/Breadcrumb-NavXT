@@ -50,13 +50,13 @@ class bcn_widget extends WP_Widget
 		if($instance['type'] == 'list')
 		{
 			//Display the list output breadcrumb
-			echo $instance['pretext'] . ' <ol class="breadcrumb_trail breadcrumbs">';
+			echo $instance['pretext'] . '<ol class="breadcrumb_trail breadcrumbs">';
 			bcn_display_list(false, $instance['linked'], $instance['reverse']);
 			echo '</ol>';
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" itemprop="breadcrumbs">' . $instance['pretext'] . ' ';
+			echo '<div class="breadcrumbs" itemprop="breadcrumbs">' . $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';
@@ -64,7 +64,7 @@ class bcn_widget extends WP_Widget
 		else
 		{
 			//Display the pretext
-			echo $instance['pretext'] . ' ';
+			echo $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 		}

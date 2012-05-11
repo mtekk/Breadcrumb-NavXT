@@ -27,7 +27,7 @@ class bcn_widget extends WP_Widget
 		// @see https://core.trac.wordpress.org/ticket/10527		
 		if(!isset($l10n['breadcrumb-navxt']))
 		{
-			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb_navxt/languages');
+			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}
 		$ops = array('classname' => 'widget_breadcrumb_navxt', 'description' => __('Adds a breadcrumb trail to your sidebar', 'breadcrumb-navxt'));
 		parent::__construct('bcn_widget', 'Breadcrumb NavXT', $ops);

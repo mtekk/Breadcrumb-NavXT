@@ -796,7 +796,11 @@ class bcn_breadcrumb_trail
 	 *
 	 * Handles only the root page stuff for post types, including the "page for posts"
 	 * 
-	 * TODO: this still needs to be redone, just trying to get it working ATM
+	 * It works in a three part process
+	 * The first part sets the type and posts_id internal variables
+	 * The second part 
+	 * 
+	 * TODO: this still needs to be cleaned up
 	 */
 	function do_root()
 	{
@@ -862,7 +866,6 @@ class bcn_breadcrumb_trail
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
 		}
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
-		//if(isset($posts_id) || $this->opt['blog_display'] && get_option('show_on_front') == 'page' && (is_home() || (is_single() && !is_page()) || (is_archive() && !is_author())))
 		if(isset($posts_id) || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag()))
 		{
 			//If we entered here with a posts page, we need to set the id
@@ -874,23 +877,27 @@ class bcn_breadcrumb_trail
 			//We'll have to check if this ID is valid, e.g. user has specified a posts page
 			if($posts_id && $posts_id != $frontpage_id)
 			{
-				//Get the blog page
-				$bcn_post = get_post($posts_id);
-				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($posts_id), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array($type_str . '-root', 'post-' . $post->post_type)));
-				//If we are at home, then we need to add the current item type
-				if(is_home())
+				//We need to ensure post is an object and we can read the post type
+				if(is_object($post) && isset($post->post_type))
 				{
-					$breadcrumb->add_type('current-item');
-				}
-				//If we're not on the current item we need to setup the anchor
-				if(!is_home() || (is_paged() && $this->opt['bpaged_display']) || (is_home() && $this->opt['bcurrent_item_linked']))
-				{
-					$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
-					//Figure out the anchor for home page
-					$breadcrumb->set_url(get_permalink($posts_id));
+					//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
+					$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($posts_id), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array($type_str . '-root', 'post-' . $post->post_type)));
+					//If we are at home, then we need to add the current item type
+					if(is_home())
+					{
+						$breadcrumb->add_type('current-item');
+					}
+					//If we're not on the current item we need to setup the anchor
+					if(!is_home() || (is_paged() && $this->opt['bpaged_display']) || (is_home() && $this->opt['bcurrent_item_linked']))
+					{
+						$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
+						//Figure out the anchor for home page
+						$breadcrumb->set_url(get_permalink($posts_id));
+					}
 				}
 				//Done with the "root", now on to the parents
+				//Get the blog page
+				$bcn_post = get_post($posts_id);
 				//If there is a parent post let's find it
 				if($bcn_post->post_parent && $bcn_post->ID != $bcn_post->post_parent && $frontpage_id != $bcn_post->post_parent)
 				{

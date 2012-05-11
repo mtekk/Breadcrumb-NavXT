@@ -50,19 +50,21 @@ class bcn_widget extends WP_Widget
 		if($instance['type'] == 'list')
 		{
 			//Display the list output breadcrumb
-			echo '<ol class="breadcrumb_trail breadcrumbs">';
+			echo $instance['pretext'] . ' <ol class="breadcrumb_trail breadcrumbs">';
 			bcn_display_list(false, $instance['linked'], $instance['reverse']);
 			echo '</ol>';
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" itemprop="breadcrumbs">';
+			echo '<div class="breadcrumbs" itemprop="breadcrumbs">' . $instance['pretext'] . ' ';
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';
 		}
 		else
 		{
+			//Display the pretext
+			echo $instance['pretext'] . ' ';
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 		}
@@ -88,7 +90,7 @@ class bcn_widget extends WP_Widget
 			<input class="widefat" type="text" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo esc_attr($instance['title']);?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('pretext'); ?>"> <?php _e('Title:', 'breadcrumb-navxt'); ?></label>
+			<label for="<?php echo $this->get_field_id('pretext'); ?>"> <?php _e('Text to show before the trail:', 'breadcrumb-navxt'); ?></label>
 			<input class="widefat" type="text" name="<?php echo $this->get_field_name('pretext'); ?>" id="<?php echo $this->get_field_id('pretext'); ?>" value="<?php echo esc_attr($instance['pretext']);?>" />
 		</p>
 		<p>

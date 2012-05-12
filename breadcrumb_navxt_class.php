@@ -813,7 +813,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//For CPT archives
-		else if(is_post_type_archive())
+		else if(is_post_type_archive() && !isset($type->taxonomy))
 		{
 			//We need the type for later, so save it
 			$type_str = $type->name;
@@ -860,6 +860,7 @@ class bcn_breadcrumb_trail
 			$type = $wp_query->get_queried_object();
 		}
 		$root_id = -1;
+		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
 		//These two are for taxonomy archives and for a single custom post type
 		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
@@ -886,7 +887,6 @@ class bcn_breadcrumb_trail
 			//We'll have to check if this ID is valid, e.g. user has specified a posts page
 			if($root_id && $root_id != $frontpage_id)
 			{
-				//var_dump($type_str);
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post-' . $type_str)));
 				//If we are at home, then we need to add the current item type

@@ -1000,12 +1000,13 @@ class bcn_breadcrumb_trail
 		//For archives
 		else if(is_archive())
 		{
+			$type = $wp_query->get_queried_object();
 			//For date based archives
 			if(is_date())
 			{
 				$this->do_archive_by_date();
 			}
-			else if(is_post_type_archive())
+			else if(is_post_type_archive() && !isset($type->taxonomy))
 			{
 				$this->do_archive_by_post_type();
 			}

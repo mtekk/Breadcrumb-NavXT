@@ -440,15 +440,15 @@ class bcn_breadcrumb_trail
 	 */
 	function post_terms($id, $taxonomy)
 	{
-		//Add new breadcrumb to the trail
-		$this->trail[] = new bcn_breadcrumb();
-		//Figure out where we placed the crumb, make a nice pointer to it
-		$bcn_breadcrumb = &$this->trail[count($this->trail) - 1];
 		//Fills a temporary object with the terms for the post
 		$bcn_object = get_the_terms($id, $taxonomy);
-		//Only process if we have tags
+		//Only process if we have terms
 		if(is_array($bcn_object))
 		{
+			//Add new breadcrumb to the trail
+			$this->trail[] = new bcn_breadcrumb();
+			//Figure out where we placed the crumb, make a nice pointer to it
+			$bcn_breadcrumb = &$this->trail[count($this->trail) - 1];
 			$is_first = true;
 			//Loop through all of the term results
 			foreach($bcn_object as $term)
@@ -467,12 +467,6 @@ class bcn_breadcrumb_trail
 					$this->opt['H' . $term->taxonomy . '_template']));
 				$is_first = false;
 			}
-		}
-		else
-		{
-			//TODO: I think this one needed to be changed
-			//If there are no tags, then we set the title to "Untagged"
-			$bcn_breadcrumb->set_title(__('Un' . $taxonomy, 'breadcrumb-navxt'));
 		}
 	}
 	/**

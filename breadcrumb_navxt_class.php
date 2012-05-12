@@ -435,8 +435,8 @@ class bcn_breadcrumb_trail
 	 * @param int $id The id of the post to find the terms for.
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
-	 * @TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
-	 * TODO: This still needs to be updated to the new method
+	 * TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
+	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
 	 */
 	function post_terms($id, $taxonomy)
 	{

@@ -185,7 +185,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.0.50';
+	private $version = '4.0.90';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -353,7 +353,7 @@ class bcn_breadcrumb_trail
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $curauth->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item')));
 			//If we're paged, or allowing the current item to be linked, let's link to the first page
-			if($this->opt['bcurrent_item_linked'] || is_paged() && $this->opt['paged_display'])
+			if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 			{
 				//Set the template to our one containing an anchor
 				$breadcrumb->set_template($this->opt['Hauthor_template']);

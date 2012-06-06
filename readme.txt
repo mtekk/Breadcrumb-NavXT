@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.2
-Tested up to: 3.3.1
-Stable tag: 4.0.2
+Tested up to: 3.4
+Stable tag: 4.1.0
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -16,18 +16,24 @@ Breadcrumb NavXT, the successor to the popular WordPress plugin Breadcrumb Navig
 Breadcrumb NavXT distributes with translations for the following languages:
 
 * English - default -
-* Spanish by Karin Sequen
-* Swedish by Patrik Spathon
+* Russian by Alexander Samsonov
+* German by Daniel Lang
+* French (France) by Emmanuel Beziat
+* Norwegian (Bokmål) by Jan Rosvoldsve
+* Spanish (Spain) by Karin Sequen
+* Portuguese (Portugal) by Luís Rodrigues
 * Estonian by Martin Orn
+* Latvian by Martins Dzerve
+* Swedish by Patrik Spathon
 * Azerbaijani by Zaur Bayramov
 
-The following translations are in need of a maintainer:
+The following were not included, but are in the process of being updated:
+* Italian by Tamara Balestri
+* Malay by Ben Di
+* Hindi by Love Chandel
 
-* German originally maintained by Tom Klingenberg
-* French originally maintained by Laurent Grabielle
+The following translations are in need of a maintainer:
 * Dutch originally maintained by Stan Lenssen
-* Russian originally maintained by Yuri Gribov
-* Italian originally maintained by Luca Camellini
 * Japanese originally maintained by Kazuhiro Terada
 
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
@@ -37,6 +43,15 @@ Don't see your language on the list? Stop by [Breadcrumb NavXT's translation pro
 Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
 
 == Changelog ==
+= 4.1.0 =
+* Behavior change: Made the behavior of posts using flat taxonomies match the behavior of using a hierarchical taxonomy when the post is not assigned a taxonomy term.
+* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don’t have a parent.
+* New feature: Pretext option for the included Widget, allows 'You are here:' type messages in the widget.
+* Bug fix: Textdomain was changed to the correct one in the widget.
+* Bug fix: Textdomain was changed from 'breadcrumb_navxt' to 'breadcrumb-navxt' for improved compatibility with the new GlotPress translation flow.
+* Bug fix: Fixed cause of PHP warnings on empty term archive pages.
+* Bug fix: Fixed cause of PHP warnings on term archives restricted to a specified post type.
+* Bug fix: Fixed cause of PHP warnings and improper behavior on author archives if showing the page number in the breadcrumb trail.
 = 4.0.2 =
 * New feature: Estonian translation added props to Martin Orn.
 * New feature: Azerbaijani translation added props to Zaur Bayramov.

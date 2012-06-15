@@ -461,7 +461,7 @@ class bcn_admin extends mtekk_adminKit
 						</th>
 						<td>
 							<?php
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates'));
+								//$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates'));
 								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Pages'));
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)

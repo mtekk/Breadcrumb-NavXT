@@ -324,8 +324,27 @@ class bcn_admin extends mtekk_adminKit
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', '32', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
-						$this->input_text(__('Breadcrumb Max Title Length', 'breadcrumb-navxt'), 'amax_title_length', '10');
+						//$this->input_number(__('Breadcrumb Max Title Length', 'breadcrumb-navxt'), 'amax_title_length', '10', '0', '', '1');
 					?>
+					<tr valign="top">
+						<th scope="row">
+							<?php _e('Title Length', 'breadcrumb-navxt'); ?>						
+						</th>
+						<td>
+							<label>
+								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
+								<?php _e('Limit the length of the breadcrumb title.', 'breadcrumb-navxt'); ?>				
+							</label><br />
+							<ul>
+								<li>
+									<label for="amax_title_length">
+										<?php _e('Max Title Length: ','breadcrumb-navxt');?>
+										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="5" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" size="20" />
+									</label>
+								</li>
+							</ul>							
+						</td>
+					</tr>
 					<tr valign="top">
 						<th scope="row">
 							<?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?>						

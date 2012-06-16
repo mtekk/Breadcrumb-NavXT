@@ -225,6 +225,8 @@ class bcn_breadcrumb_trail
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
 			//the first and not after the last breadcrumb
 			'hseparator' => ' &gt; ',
+			//Whether or not we should trim the breadcrumb titles
+			'blimit_title' => false,
 			//The maximum title lenght
 			'amax_title_length' => 0,
 			//Current item options, really only applies to static pages and posts unless other current items are linked
@@ -1082,7 +1084,7 @@ class bcn_breadcrumb_trail
 				}
 			}
 			//Trim titles, if needed
-			if($this->opt['amax_title_length'] > 0)
+			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
 				//Trim the breadcrumb's title
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
@@ -1140,7 +1142,7 @@ class bcn_breadcrumb_trail
 				$trail_str .= ' class="current_item"';
 			}
 			//Trim titles, if needed
-			if($this->opt['amax_title_length'] > 0)
+			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
 				//Trim the breadcrumb's title
 				$breadcrumb->title_trim($this->opt['amax_title_length']);

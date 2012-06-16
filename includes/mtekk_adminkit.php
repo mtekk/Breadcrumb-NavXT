@@ -809,6 +809,50 @@ abstract class mtekk_adminKit
 	<?php
 	}
 	/**
+	 * This will output a well formed table row for a HTML5 number input
+	 * 
+	 * @param string $label
+	 * @param string $option
+	 * @param string $width [optional]
+	 * @param bool $disable [optional]
+	 * @param string $description [optional]
+	 * @param int|string $min [optional] 
+	 * @param int|string $max [optional]
+	 * @param int|string $step [optional]
+	 * @return 
+	 */
+	function input_number($label, $option, $width = '32', $disable = false, $description = '', $min = '', $max = '', $step = '')
+	{
+		$optid = $this->get_valid_id($option);
+		$extras = '';
+		if($min !== '')
+		{
+			$extras .= 'min="' . $min . '" ';
+		}
+		if($max !== '')
+		{
+			$extras .= 'max="' . $max . '" ';
+		}
+		if($step !== '')
+		{
+			$extras .= 'step="' . $step . '" ';
+		}
+		if($disable)
+		{?>
+			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
+		<?php } ?>
+		<tr valign="top">
+			<th scope="row">
+				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
+			</th>
+			<td>
+				<input type="number" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php echo $extras;?><?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" size="<?php echo $width;?>" /><br />
+					<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+			</td>
+		</tr>
+	<?php
+	}
+	/**
 	 * This will output a well formed textbox
 	 * 
 	 * @param string $label

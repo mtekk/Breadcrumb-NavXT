@@ -128,12 +128,14 @@ class bcn_breadcrumb
 	 */
 	public function title_trim($max_length)
 	{
+		//To preserve HTML entities, must decode before splitting
+		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
 		//Make sure that we are not making it longer with that ellipse
 		if((mb_strlen($this->title) + 3) > $max_length)
 		{
 			//Trim the title
 			$this->title = mb_substr($this->title, 0, $max_length - 1);
-			//Make sure we can split a, four keywords are available %link%, %title%, %htitle%, and %type%pace, but we want to limmit to cutting at max an additional 25%
+			//Make sure we can split a, but we want to limmit to cutting at max an additional 25%
 			if(mb_strpos($this->title, ' ', .75 * $max_length) > 0)
 			{
 				//Don't split mid word
@@ -143,8 +145,10 @@ class bcn_breadcrumb
 				}
 			}
 			//Remove the whitespace at the end and add the hellip
-			$this->title = rtrim($this->title) . '&hellip;';
+			$this->title = rtrim($this->title) . html_entity_decode('&hellip;', ENT_COMPAT, 'UTF-8');
 		}
+		//Return to the encoded version of all HTML entities (keep standards complance)
+		$this->title = htmlentities($this->title, ENT_COMPAT, 'UTF-8');
 	}
 	/**
 	 * Assembles the parts of the breadcrumb into a html string
@@ -154,7 +158,6 @@ class bcn_breadcrumb
 	 */
 	public function assemble($linked = true)
 	{
-		//var_dump($this);
 		//Build our replacements array
 		$replacements = array(
 							esc_attr(strip_tags($this->title)),

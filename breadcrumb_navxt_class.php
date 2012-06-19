@@ -130,8 +130,9 @@ class bcn_breadcrumb
 	{
 		//To preserve HTML entities, must decode before splitting
 		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
+		$title_length = mb_strlen($this->title);
 		//Make sure that we are not making it longer with that ellipse
-		if((mb_strlen($this->title) + 3) > $max_length)
+		if($title_length > $max_length && ($title_length + 2) > $max_length)
 		{
 			//Trim the title
 			$this->title = mb_substr($this->title, 0, $max_length - 1);

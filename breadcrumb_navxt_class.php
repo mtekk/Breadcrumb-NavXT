@@ -752,7 +752,7 @@ class bcn_breadcrumb_trail
 			if($this->opt['bmainsite_display'] && !is_main_site())
 			{
 				//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Smainsite_title'], $this->opt['Hmainsite_template_no_anchor'], array('mainsite-home'), get_home_url($current_site->blog_id)));
+				$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Smainsite_title'], $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
 			}
 		}
 	}

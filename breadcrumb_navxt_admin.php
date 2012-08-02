@@ -15,29 +15,6 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-//Do a PHP version check, require 5.2 or newer
-if(version_compare(phpversion(), '5.2.0', '<'))
-{
-	//Only purpose of this function is to echo out the PHP version error
-	function bcn_phpold()
-	{
-		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.2.0');
-	}
-	//If we are in the admin, let's print a warning then return
-	if(is_admin())
-	{
-		add_action('admin_notices', 'bcn_phpold');
-	}
-	return;
-}
-if(!function_exists('mb_strlen'))
-{
-	require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
-}
-//Include the breadcrumb class
-require_once(dirname(__FILE__) . '/breadcrumb_navxt_class.php');
-//Include the WP 2.8+ widget class
-require_once(dirname(__FILE__) . '/breadcrumb_navxt_widget.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {
@@ -57,7 +34,7 @@ class bcn_admin extends mtekk_adminKit
 	protected $unique_prefix = 'bcn';
 	protected $plugin_basename = 'breadcrumb-navxt/breadcrumb_navxt_admin.php';
 	protected $support_url = 'http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-';
-	public $breadcrumb_trail;
+	protected $breadcrumb_trail = null;
 	/**
 	 * Administrative interface class default constructor
 	 * @param bcn_breadcrumb_trail	$breadcrumb_trail a breadcrumb trail object
@@ -88,12 +65,6 @@ class bcn_admin extends mtekk_adminKit
 	{
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
-	}
-	function wp_loaded()
-	{
-		//First make sure our defaults are safe
-		$this->find_posttypes($this->opt);
-		$this->find_taxonomies($this->opt);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
@@ -180,6 +151,7 @@ class bcn_admin extends mtekk_adminKit
 					unset($opts['Hcurrent_item_template']);
 				}
 			}
+			//TODO: Need to resolve the find_* functions they don't live in this class anymore
 			//Add custom post types
 			$this->find_posttypes($opts);
 			//Add custom taxonomy types
@@ -187,6 +159,14 @@ class bcn_admin extends mtekk_adminKit
 			//Save the passed in opts to the object's option array
 			$this->opt = $opts;
 		}
+	}
+	function opts_update_prebk(&$opts)
+	{
+		//TODO: Need to resolve the find_* functions they don't live in this class anymore
+		//Add custom post types
+		$this->find_posttypes($this->opt);
+		//Add custom taxonomy types
+		$this->find_taxonomies($this->opt);
 	}
 	/**
 	 * help action hook function
@@ -546,156 +526,5 @@ class bcn_admin extends mtekk_adminKit
 		$this->import_form(); ?>
 		</div>
 		<?php
-	}
-	function opts_update_prebk(&$opts)
-	{
-		//Add custom post types
-		$this->find_posttypes($this->opt);
-		//Add custom taxonomy types
-		$this->find_taxonomies($this->opt);
-	}
-	/**
-	 * Places settings into $opts array, if missing, for the registered post types
-	 * 
-	 * @param array $opts
-	 */
-	function find_posttypes(&$opts)
-	{
-		global $wp_post_types, $wp_taxonomies;
-		//Loop through all of the post types in the array
-		foreach($wp_post_types as $post_type)
-		{
-			//We only want custom post types
-			if(!$post_type->_builtin)
-			{
-				//If the post type does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('Hpost_' . $post_type->name . '_template', $opts) || !$post_type->hierarchical && !array_key_exists('Spost_' . $post_type->name . '_taxonomy_type', $opts))
-				{
-					//Add the necessary option array members
-					$opts['Hpost_' . $post_type->name . '_template'] = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
-					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('%htitle%', 'breadcrumb-navxt');
-					$opts['bpost_' . $post_type->name . '_archive_display'] = $post_type->has_archive;
-					//Do type dependent tasks
-					if($post_type->hierarchical)
-					{
-						//Set post_root for hierarchical types
-						$opts['apost_' . $post_type->name . '_root'] = get_option('page_on_front');
-					}
-					//If it is flat, we need a taxonomy selection
-					else
-					{
-						//Set post_root for flat types
-						$opts['apost_' . $post_type->name . '_root'] = get_option('page_for_posts');
-					}
-					//Default to not displaying a taxonomy
-					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
-					//Loop through all of the possible taxonomies
-					foreach($wp_taxonomies as $taxonomy)
-					{
-						//Activate the first taxonomy valid for this post type and exit the loop
-						if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
-						{
-							$opts['bpost_' . $post_type->name . '_taxonomy_display'] = true;
-							$opts['Spost_' . $post_type->name . '_taxonomy_type'] = $taxonomy->name;
-							break;
-						}
-					}
-					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
-					if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
-					{
-						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'date';
-					}
-				}
-			}
-		}
-	}
-	/**
-	 * Places settings into $opts array, if missing, for the registered taxonomies
-	 * 
-	 * @param $opts
-	 */
-	function find_taxonomies(&$opts)
-	{
-		global $wp_taxonomies;
-		//We'll add our custom taxonomy stuff at this time
-		foreach($wp_taxonomies as $taxonomy)
-		{
-			//We only want custom taxonomies
-			if(!$taxonomy->_builtin)
-			{
-				//If the taxonomy does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('H' . $taxonomy->name . '_template', $opts))
-				{
-					//Add the necessary option array members
-					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<a title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
-					$opts['H' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('%%htitle%%', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
-				}
-			}
-		}
-	}
-	/**
-	 * Outputs the breadcrumb trail
-	 * 
-	 * @param  (bool)   $return Whether to return or echo the trail.
-	 * @param  (bool)   $linked Whether to allow hyperlinks in the trail or not.
-	 * @param  (bool)	$reverse Whether to reverse the output or not.
-	 */
-	function display($return = false, $linked = true, $reverse = false)
-	{
-		//Grab the current settings from the db
-		$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display($return, $linked, $reverse);
-	}
-	/**
-	 * Outputs the breadcrumb trail
-	 * 
-	 * @since  3.2.0
-	 * @param  (bool)   $return Whether to return or echo the trail.
-	 * @param  (bool)   $linked Whether to allow hyperlinks in the trail or not.
-	 * @param  (bool)	$reverse Whether to reverse the output or not.
-	 */
-	function display_list($return = false, $linked = true, $reverse = false)
-	{
-		//Grab the current settings from the db
-		$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);
-	}
-}
-//In the future there will be a hook for this so derivatives of bcn_breadcrumb_trail can use the admin
-$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-//Let's make an instance of our object takes care of everything
-$bcn_admin = new bcn_admin($bcn_breadcrumb_trail);
-/**
- * A wrapper for the internal function in the class
- * 
- * @param bool $return Whether to return or echo the trail. (optional)
- * @param bool $linked Whether to allow hyperlinks in the trail or not. (optional)
- * @param bool $reverse Whether to reverse the output or not. (optional)
- */
-function bcn_display($return = false, $linked = true, $reverse = false)
-{
-	global $bcn_admin;
-	if($bcn_admin !== null)
-	{
-		return $bcn_admin->display($return, $linked, $reverse);
-	}
-}
-/**
- * A wrapper for the internal function in the class
- * 
- * @param  bool $return  Whether to return or echo the trail. (optional)
- * @param  bool $linked  Whether to allow hyperlinks in the trail or not. (optional)
- * @param  bool $reverse Whether to reverse the output or not. (optional)
- */
-function bcn_display_list($return = false, $linked = true, $reverse = false)
-{
-	global $bcn_admin;
-	if($bcn_admin !== null)
-	{
-		return $bcn_admin->display_list($return, $linked, $reverse);
 	}
 }

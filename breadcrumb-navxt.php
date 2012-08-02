@@ -9,7 +9,6 @@ Author URI: http://mtekk.us/
 License: GPL2
 TextDomain: breadcrumb-navxt
 DomainPath: /languages/
-
 */
 /*  Copyright 2007-2012  John Havlik  (email : mtekkmonkey@gmail.com)
 
@@ -100,9 +99,9 @@ class breadcrumb_navxt
 	/**
 	 * Places settings into $opts array, if missing, for the registered post types
 	 * 
-	 * @param array $opts The options array to process
+	 * @param array $opts
 	 */
-	protected function find_posttypes(&$opts)
+	function find_posttypes(&$opts)
 	{
 		global $wp_post_types, $wp_taxonomies;
 		//Loop through all of the post types in the array
@@ -155,9 +154,9 @@ class breadcrumb_navxt
 	/**
 	 * Places settings into $opts array, if missing, for the registered taxonomies
 	 * 
-	 * @param array $opts The options array to process
+	 * @param $opts
 	 */
-	protected function find_taxonomies(&$opts)
+	function find_taxonomies(&$opts)
 	{
 		global $wp_taxonomies;
 		//We'll add our custom taxonomy stuff at this time

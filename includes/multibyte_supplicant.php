@@ -69,6 +69,20 @@ if(!function_exists('mb_substr'))
 		}
 	}
 }
+if(!function_exists('mb_strtolower'))
+{
+	/**
+	 * Fallback for mb_strtolower for users without multibyte support
+	 * 
+	 * @param string $str the string to change to lowercase
+	 * @param string $encoding the encoding of the string
+	 * @return string the lowercase string
+	 */
+	function mb_strtolower($str, $encoding = 'UTF-8')
+	{
+		return strtolower($str);
+	}
+}
 //We need this constant to be defined, otherwise things will break
 if(!defined('MB_CASE_TITLE'))
 {

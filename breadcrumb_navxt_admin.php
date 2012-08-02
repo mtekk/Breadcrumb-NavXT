@@ -9,7 +9,6 @@ Author URI: http://mtekk.us/
 License: GPL2
 TextDomain: breadcrumb-navxt
 DomainPath: /languages/
-
 */
 /*  Copyright 2007-2012  John Havlik  (email : mtekkmonkey@gmail.com)
 
@@ -27,6 +26,7 @@ DomainPath: /languages/
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 //Do a PHP version check, require 5.2 or newer
 if(version_compare(phpversion(), '5.2.0', '<'))
 {

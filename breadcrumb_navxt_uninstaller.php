@@ -9,7 +9,7 @@
  * @author Tom Klingenberg
  */
 
-
+require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 /**
  * Breadcrumb NavXT abstract plugin uninstaller class
  * 

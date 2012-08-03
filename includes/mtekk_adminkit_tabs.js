@@ -12,7 +12,7 @@ function mtekk_admin_tabulator_init(){
 	jQuery('#hasadmintabs > fieldset').each(function(i){
 		id = jQuery(this).attr('id');
 		cssc = jQuery(this).attr('class');
-		title = jQuery(this).attr('title');
+		title = jQuery(this).find('h3.tab-title').attr('title');
 		caption = jQuery(this).find('h3.tab-title').text();
 		jQuery('#hasadmintabs > ul').append('<li><a href="#'+id+'" class="'+cssc+'" title="'+title+'"><span>'+caption+"<\/span><\/a><\/li>");
 		jQuery(this).find('h3.tab-title').hide();

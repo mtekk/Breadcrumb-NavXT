@@ -320,11 +320,10 @@ class bcn_admin extends mtekk_adminKit
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">
-				<h3><?php _e('General', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title"><?php _e('General', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', '32', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
-						//$this->input_number(__('Breadcrumb Max Title Length', 'breadcrumb-navxt'), 'amax_title_length', '10', '0', '', '1');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -398,7 +397,7 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 			</fieldset>
 			<fieldset id="current" class="bcn_options">
-				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title"><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes'));
@@ -408,7 +407,8 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 			</fieldset>
 			<fieldset id="single" class="bcn_options">
-				<h3><?php _e('Posts &amp; Pages', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title"><?php _e('Posts &amp; Pages', 'breadcrumb-navxt'); ?></h3>
+				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', '64', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
@@ -438,6 +438,9 @@ class bcn_admin extends mtekk_adminKit
 							<span class="setting-description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></span>
 						</td>
 					</tr>
+				</table>
+				<h3><?php _e('Pages', 'breadcrumb-navxt'); ?></h3>
+				<table class="form-table">
 					<?php
 						$this->input_text(__('Page Template', 'breadcrumb-navxt'), 'Hpost_page_template', '64', false, __('The template for page breadcrumbs.', 'breadcrumb-navxt'));
 						$this->input_text(__('Page Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_page_template_no_anchor', '64', false, __('The template for page breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
@@ -446,6 +449,8 @@ class bcn_admin extends mtekk_adminKit
 					?>
 				</table>
 			</fieldset>
+			<fieldset id="custom-post-type" class="bcn_options">
+				<h3 class="tab-title" title="<?php _e('The settings for your Custom Post Types are located under this tab.', 'breadcrumb-navxt')?>"><?php _e('Custom Post Types', 'breadcrumb-navxt'); ?></h3>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
@@ -455,7 +460,6 @@ class bcn_admin extends mtekk_adminKit
 				{
 					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
-			<fieldset id="post_<?php echo $post_type->name ?>" class="bcn_options">
 				<h3><?php echo $post_type->labels->singular_name; ?></h3>
 				<table class="form-table">
 					<?php
@@ -497,12 +501,13 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 				</table>
-			</fieldset>
+			
 					<?php
 				}
 			}?>
+			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
-				<h3><?php _e('Categories &amp; Tags', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title"><?php _e('Categories &amp; Tags', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Category Template', 'breadcrumb-navxt'), 'Hcategory_template', '64', false, __('The template for category breadcrumbs.', 'breadcrumb-navxt'));
@@ -512,6 +517,8 @@ class bcn_admin extends mtekk_adminKit
 					?>
 				</table>
 			</fieldset>
+			<fieldset id="custom-taxonomy" class="bcn_options alttab">
+				<h3 class="tab-title"><?php _e('Custom Taxonomies', 'breadcrumb-navxt'); ?></h3>
 			<?php
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)
@@ -521,7 +528,6 @@ class bcn_admin extends mtekk_adminKit
 				{
 					$label_lc = mb_strtolower($taxonomy->label, 'UTF-8');
 				?>
-			<fieldset id="<?php echo $taxonomy->name; ?>" class="bcn_options alttab">
 				<h3><?php echo mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'); ?></h3>
 				<table class="form-table">
 					<?php
@@ -529,13 +535,13 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name), 'H' . $taxonomy->name . '_template_no_anchor', '64', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $label_lc));
 					?>
 				</table>
-			</fieldset>
 				<?php
 				}
 			}
 			?>
+			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
-				<h3><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Author Template', 'breadcrumb-navxt'), 'Hauthor_template', '64', false, __('The template for author breadcrumbs.', 'breadcrumb-navxt'));

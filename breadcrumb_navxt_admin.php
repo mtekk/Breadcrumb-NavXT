@@ -308,7 +308,7 @@ class bcn_admin extends mtekk_adminKit
 		//Let's call the parent version of the page, will handle our setting stuff
 		parent::admin_page();
 		?>
-		<div class="wrap"><h2><?php _e('Breadcrumb NavXT Settings', 'breadcrumb-navxt'); ?></h2>
+		<div class="wrap"><div id="icon-options-general" class="icon32"></div><h2><?php _e('Breadcrumb NavXT Settings', 'breadcrumb-navxt'); ?></h2>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
 		if(!$this->version_check(get_option($this->unique_prefix . '_version')))

@@ -344,6 +344,17 @@ class bcn_admin extends mtekk_adminKit
 							</ul>							
 						</td>
 					</tr>
+				</table>
+				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
+				<table class="form-table">
+					<?php
+						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes'));
+						$this->input_check(__('Paged Breadcrumb', 'breadcrumb-navxt'), 'bpaged_display', __('Include the paged breadcrumb in the breadcrumb trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first on paginated posts/pages.', 'breadcrumb-navxt'));
+						$this->input_text(__('Paged Template', 'breadcrumb-navxt'), 'Hpaged_template', '64', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
+					?>
+				</table>
+				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
+				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">
 							<?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?>						
@@ -396,16 +407,6 @@ class bcn_admin extends mtekk_adminKit
 					?>
 				</table>
 			</fieldset>
-			<fieldset id="current" class="bcn_options">
-				<h3 class="tab-title"><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
-					<?php
-						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes'));
-						$this->input_check(__('Paged Breadcrumb', 'breadcrumb-navxt'), 'bpaged_display', __('Include the paged breadcrumb in the breadcrumb trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first on paginated posts/pages.', 'breadcrumb-navxt'));
-						$this->input_text(__('Paged Template', 'breadcrumb-navxt'), 'Hpaged_template', '64', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
-					?>
-				</table>
-			</fieldset>
 			<fieldset id="single" class="bcn_options">
 				<h3 class="tab-title"><?php _e('Posts &amp; Pages', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
@@ -450,7 +451,7 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 			</fieldset>
 			<fieldset id="custom-post-type" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('The settings for your Custom Post Types are located under this tab.', 'breadcrumb-navxt')?>"><?php _e('Custom Post Types', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title" title="<?php _e('The settings for your Custom Post Types are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Custom Post Types', 'breadcrumb-navxt'); ?></h3>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)

@@ -446,7 +446,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<span class="setting-description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></span>
+							<p class="description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -508,7 +508,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<span class="setting-description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></span>
+							<p class="description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>

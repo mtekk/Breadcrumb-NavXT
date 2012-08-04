@@ -423,11 +423,11 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->input_text(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', '64', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
 						$this->input_text(__('Post Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_post_template_no_anchor', '64', false, __('The template for post breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->input_check(__('Post Taxonomy Display', 'breadcrumb-navxt'), 'bpost_post_taxonomy_display', __('Show the taxonomy leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'));
+						$this->input_check(__('Post Hierarchy Display', 'breadcrumb-navxt'), 'bpost_post_taxonomy_display', __('Show the taxonomy leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'));
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<?php _e('Post Taxonomy', 'breadcrumb-navxt'); ?>
+							<?php _e('Post Hierarchy', 'breadcrumb-navxt'); ?>
 						</th>
 						<td>
 							<?php
@@ -435,7 +435,7 @@ class bcn_admin extends mtekk_adminKit
 								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates'));
 								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'));
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Hierarchy'));
+								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent'));
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -446,7 +446,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -488,16 +488,16 @@ class bcn_admin extends mtekk_adminKit
 					</tr>
 					<?php
 						$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
-						$this->input_check(sprintf(__('%s Taxonomy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the taxonomy leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc));
+						$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the taxonomy leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc));
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<?php printf(__('%s Taxonomy', 'breadcrumb-navxt'), $post_type->labels->singular_name); ?>
+							<?php printf(__('%s Hierarchy', 'breadcrumb-navxt'), $post_type->labels->singular_name); ?>
 						</th>
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Hierarchy'));
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent'));
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -508,7 +508,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The taxonomy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -618,30 +618,34 @@ class bcn_admin extends mtekk_adminKit
 					{
 						//Set post_root for hierarchical types
 						$opts['apost_' . $post_type->name . '_root'] = get_option('page_on_front');
+						//Default to displaying a 'taxonomy'
+						$opts['bpost_' . $post_type->name . '_taxonomy_display'] = true;
+						//The 'taxonomy' is the page/post hierarchy for hierarchical post types
+						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'page';
 					}
 					//If it is flat, we need a taxonomy selection
 					else
 					{
 						//Set post_root for flat types
 						$opts['apost_' . $post_type->name . '_root'] = get_option('page_for_posts');
-					}
-					//Default to not displaying a taxonomy
-					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
-					//Loop through all of the possible taxonomies
-					foreach($wp_taxonomies as $taxonomy)
-					{
-						//Activate the first taxonomy valid for this post type and exit the loop
-						if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
+						//Default to not displaying a taxonomy
+						$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
+						//Loop through all of the possible taxonomies
+						foreach($wp_taxonomies as $taxonomy)
 						{
-							$opts['bpost_' . $post_type->name . '_taxonomy_display'] = true;
-							$opts['Spost_' . $post_type->name . '_taxonomy_type'] = $taxonomy->name;
-							break;
+							//Activate the first taxonomy valid for this post type and exit the loop
+							if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
+							{
+								$opts['bpost_' . $post_type->name . '_taxonomy_display'] = true;
+								$opts['Spost_' . $post_type->name . '_taxonomy_type'] = $taxonomy->name;
+								break;
+							}
 						}
 					}
 					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
 					if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 					{
-						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'date';
+						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'page';
 					}
 				}
 			}

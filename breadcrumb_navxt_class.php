@@ -536,8 +536,8 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink());
 		}
-		//If we have a hiearchical post, go through the parent tree
-		if(is_post_type_hierarchical($post->post_type))
+		//If we have page, force it to go through the parent tree
+		if($post->post_type === 'page')
 		{
 			//Done with the current item, now on to the parents
 			$frontpage = get_option('page_on_front');
@@ -545,11 +545,6 @@ class bcn_breadcrumb_trail
 			if($post->post_parent && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 			{
 				$this->post_parents($post->post_parent, $frontpage);
-			}
-			else if(!$this->is_builtin($post->post_type))
-			{
-				//Handle the post's hiearchy
-				$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);	
 			}
 		}
 		//Otherwise we need the follow the hiearchy tree

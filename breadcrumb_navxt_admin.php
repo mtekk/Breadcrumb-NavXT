@@ -15,6 +15,24 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
+//Do a PHP version check, require 5.2 or newer
+if(version_compare(phpversion(), '5.2.0', '<'))
+{
+	//Only purpose of this function is to echo out the PHP version error
+	function bcn_phpold()
+	{
+		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.2.0');
+	}
+	//If we are in the admin, let's print a warning then return
+	if(is_admin())
+	{
+		add_action('admin_notices', 'bcn_phpold');
+	}
+	return;
+}
+//Include the WP 2.8+ widget class
+require_once(dirname(__FILE__) . '/breadcrumb_navxt_widget.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {

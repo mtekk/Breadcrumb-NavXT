@@ -16,7 +16,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
+require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 //The breadcrumb class
 class bcn_breadcrumb
 {
@@ -377,7 +377,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO: Add logic for contextual taxonomy selection
 	 */
-	function post_taxonomy($id, $type, $parent = null)
+	function post_hierarchy($id, $type, $parent = null)
 	{
 		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
 		if($this->opt['bpost_' . $type . '_taxonomy_display'])
@@ -549,14 +549,14 @@ class bcn_breadcrumb_trail
 			else if(!$this->is_builtin($post->post_type))
 			{
 				//Handle the post's taxonomy
-				$this->post_taxonomy($post->ID, $post->post_type, $post->post_parent);	
+				$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);	
 			}
 		}
 		//Otherwise we need the follow the taxonomy tree
 		else
 		{
 			//Handle the post's taxonomy
-			$this->post_taxonomy($post->ID, $post->post_type, $post->post_parent);
+			$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);
 		}
 	}
 	/**
@@ -595,13 +595,13 @@ class bcn_breadcrumb_trail
 			else if(!$this->is_builtin($parent->post_type))
 			{
 				//Handle the post's taxonomy
-				$this->post_taxonomy($post->post_parent, $parent->post_type);	
+				$this->post_hierarchy($post->post_parent, $parent->post_type);	
 			}
 		}
 		else
 		{
 			//Handle the post's taxonomy
-			$this->post_taxonomy($post->post_parent, $parent->post_type);
+			$this->post_hierarchy($post->post_parent, $parent->post_type);
 		}
 	}
 	/**

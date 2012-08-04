@@ -548,14 +548,14 @@ class bcn_breadcrumb_trail
 			}
 			else if(!$this->is_builtin($post->post_type))
 			{
-				//Handle the post's taxonomy
+				//Handle the post's hiearchy
 				$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);	
 			}
 		}
-		//Otherwise we need the follow the taxonomy tree
+		//Otherwise we need the follow the hiearchy tree
 		else
 		{
-			//Handle the post's taxonomy
+			//Handle the post's hiearchy
 			$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);
 		}
 	}

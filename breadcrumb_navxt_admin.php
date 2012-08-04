@@ -320,7 +320,7 @@ class bcn_admin extends mtekk_adminKit
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">
-				<h3 class="tab-title"><?php _e('General', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title" title="<?php _e('A collection of settings most likely to be modified are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('General', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('General', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
@@ -558,7 +558,7 @@ class bcn_admin extends mtekk_adminKit
 			?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
-				<h3 class="tab-title"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title" title="<?php _e('The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Author Archives', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php

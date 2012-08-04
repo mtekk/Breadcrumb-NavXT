@@ -518,7 +518,7 @@ class bcn_admin extends mtekk_adminKit
 			}?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
-				<h3 class="tab-title" title="<?php _e('The settings for the built in taxonomies (Categories and Tags) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Categories &amp; Tags', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title" title="<?php _e('The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Taxonomies', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Categories', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
@@ -533,9 +533,6 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('Tag Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_tag_template_no_anchor', '64', false, __('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
-			</fieldset>
-			<fieldset id="custom-taxonomy" class="bcn_options alttab">
-				<h3 class="tab-title" title="<?php _e('The settings for the Custom Taxonomies avaliable to this site are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Custom Taxonomies', 'breadcrumb-navxt'); ?></h3>
 			<?php
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)

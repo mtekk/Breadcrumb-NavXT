@@ -760,9 +760,9 @@ abstract class mtekk_adminKit
 		$form .= sprintf('<label for="%s_admin_import_file">', $this->unique_prefix);
 		$form .= __('Settings File', $this->identifier);
 		$form .= '</label></th><td>';
-		$form .= sprintf('<input type="file" name="%s_admin_import_file" id="%s_admin_import_file" size="32" /><br /><span class="setting-description">', $this->unique_prefix, $this->unique_prefix);
+		$form .= sprintf('<input type="file" name="%s_admin_import_file" id="%s_admin_import_file" size="32" /><p class="description">', $this->unique_prefix, $this->unique_prefix);
 		$form .= __('Select a XML settings file to upload and import settings from.', 'breadcrumb_navxt');
-		$form .= '</span></td></tr></table><p class="submit">';
+		$form .= '</p></td></tr></table><p class="submit">';
 		$form .= sprintf('<input type="submit" class="button" name="%s_admin_import" value="' . __('Import', $this->identifier) . '"/>', $this->unique_prefix, $this->unique_prefix);
 		$form .= sprintf('<input type="submit" class="button" name="%s_admin_export" value="' . __('Export', $this->identifier) . '"/>', $this->unique_prefix);
 		$form .= sprintf('<input type="submit" class="button" name="%s_admin_reset" value="' . __('Reset', $this->identifier) . '"/>', $this->unique_prefix, $this->unique_prefix);
@@ -804,7 +804,7 @@ abstract class mtekk_adminKit
 			</th>
 			<td>
 				<input type="text" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" size="<?php echo $width;?>" /><br />
-					<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -848,7 +848,7 @@ abstract class mtekk_adminKit
 			</th>
 			<td>
 				<input type="number" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php echo $extras;?><?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" size="<?php echo $width;?>" /><br />
-					<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -869,7 +869,7 @@ abstract class mtekk_adminKit
 			<label for="<?php echo $optid;?>"><?php echo $label;?></label>
 		</p>
 		<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="large-text code disabled"';}else{echo 'class="large-text code"';}?> id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
-		<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }
+		<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }
 	}
 	/**
 	 * This will output a well formed tiny mce ready textbox
@@ -893,7 +893,7 @@ abstract class mtekk_adminKit
 			</th>
 			<td>
 				<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="mtekk_mce disabled"';}else{echo 'class="mtekk_mce"';}?> id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
-				<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -920,7 +920,7 @@ abstract class mtekk_adminKit
 					<input type="checkbox" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="true" <?php checked(true, $this->opt[$option]);?> />
 						<?php echo $instruction; ?>				
 				</label><br />
-				<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -968,7 +968,7 @@ abstract class mtekk_adminKit
 				<select name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php if($disable){echo 'disabled="disabled" class="disabled"';}?>>
 					<?php $this->select_options($option, $titles, $values); ?>
 				</select><br />
-				<?php if($description !== ''){?><span class="setting-description"><?php echo $description;?></span><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
 	<?php

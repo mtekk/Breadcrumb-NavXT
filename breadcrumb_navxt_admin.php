@@ -106,6 +106,8 @@ class bcn_admin extends mtekk_adminKit
 		//First make sure our defaults are safe
 		$this->find_posttypes($this->opt);
 		$this->find_taxonomies($this->opt);
+		//Let others hook into our settings
+		$this->opt = apply_filters($unique_prefix . '_settings_init', $this->opt);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
@@ -345,6 +347,9 @@ class bcn_admin extends mtekk_adminKit
 							</ul>							
 						</td>
 					</tr>
+					<?php
+						do_action($this->unique_prefix . '_settings_general');
+					?>
 				</table>
 				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
@@ -352,6 +357,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes'));
 						$this->input_check(__('Paged Breadcrumb', 'breadcrumb-navxt'), 'bpaged_display', __('Include the paged breadcrumb in the breadcrumb trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first on paginated posts/pages.', 'breadcrumb-navxt'));
 						$this->input_text(__('Paged Template', 'breadcrumb-navxt'), 'Hpaged_template', '64', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
+						do_action($this->unique_prefix . '_settings_current_item');
 					?>
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -378,6 +384,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->input_text(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', '64', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', '64', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						do_action($this->unique_prefix . '_settings_home');
 					?>
 				</table>
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -386,6 +393,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), (get_option('show_on_front') !== "page"));
 						$this->input_text(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '64', (get_option('show_on_front') !== "page"), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '64', (get_option('show_on_front') !== "page"), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						do_action($this->unique_prefix . '_settings_blog');
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -413,10 +421,12 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', '64', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', '64', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						do_action($this->unique_prefix . '_settings_mainsite');
 					?>
 				</table>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_general'); ?>
 			</fieldset>
-			<fieldset id="single" class="bcn_options">
+			<fieldset id="post" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for the built in post types (Posts and Pages) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Posts &amp; Pages', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
@@ -459,6 +469,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('Attachment Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_attachment_template_no_anchor', '64', false, __('The template for attachment breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_post'); ?>
 			</fieldset>
 			<fieldset id="custom-post-type" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for the Custom Post Types avaliable to this site are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Custom Post Types', 'breadcrumb-navxt'); ?></h3>
@@ -512,10 +523,11 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 				</table>
-			
 					<?php
 				}
-			}?>
+			}
+			do_action($this->unique_prefix . '_after_settings_tab_custom_post_type');
+			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
 				<h3 class="tab-title" title="<?php _e('The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Taxonomies', 'breadcrumb-navxt'); ?></h3>
@@ -552,7 +564,7 @@ class bcn_admin extends mtekk_adminKit
 				<?php
 				}
 			}
-			?>
+			do_action($this->unique_prefix . '_after_settings_tab_taxonomy'); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
@@ -575,6 +587,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('404 Template', 'breadcrumb-navxt'), 'H404_template', '64', false, __('The template for 404 breadcrumbs.', 'breadcrumb-navxt'));
 					?>
 				</table>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous'); ?>
 			</fieldset>
 			</div>
 			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>

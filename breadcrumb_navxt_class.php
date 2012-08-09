@@ -450,7 +450,6 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
 	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
-	 * FIXME We have an issue here, see #21
 	 */
 	function post_terms($id, $taxonomy)
 	{

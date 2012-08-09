@@ -55,15 +55,22 @@ class bcn_breadcrumb
 		//Assign the breadcrumb template
 		if($template == NULL)
 		{
-			$template = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
+			if($url == NULL)
+			{
+				$template = $this->template = __('%htitle%', 'breadcrumb-navxt');
+			}
+			else
+			{
+				$template = __('<a title="Go to %title%." href="%link%" class="%type%" >%htitle%</a>', 'breadcrumb-navxt');
+			}
 		}
 		if($url == NULL)
 		{
-			$this->template_no_anchor = $template;
+				$this->template_no_anchor = $template;
 		}
 		else
 		{
-			$this->template = $template;
+				$this->template = $template;
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);

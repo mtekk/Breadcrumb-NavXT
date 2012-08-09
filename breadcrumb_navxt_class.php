@@ -55,15 +55,22 @@ class bcn_breadcrumb
 		//Assign the breadcrumb template
 		if($template == NULL)
 		{
-			$template = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
+			if($url == NULL)
+			{
+				$template = $this->template = __('%htitle%', 'breadcrumb-navxt');
+			}
+			else
+			{
+				$template = __('<a title="Go to %title%." href="%link%" class="%type%" >%htitle%</a>', 'breadcrumb-navxt');
+			}
 		}
 		if($url == NULL)
 		{
-			$this->template_no_anchor = $template;
+				$this->template_no_anchor = $template;
 		}
 		else
 		{
-			$this->template = $template;
+				$this->template = $template;
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
@@ -443,6 +450,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
 	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
+	 * FIXME We have an issue here, see #21
 	 */
 	function post_terms($id, $taxonomy)
 	{

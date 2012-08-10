@@ -107,7 +107,7 @@ class bcn_admin extends mtekk_adminKit
 		$this->find_posttypes($this->opt);
 		$this->find_taxonomies($this->opt);
 		//Let others hook into our settings
-		$this->opt = apply_filters($unique_prefix . '_settings_init', $this->opt);
+		$this->opt = apply_filters($this->unique_prefix . '_settings_init', $this->opt);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
@@ -449,6 +449,11 @@ class bcn_admin extends mtekk_adminKit
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
+									//Check for non-public taxonomies
+									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+									{
+										continue;
+									}
 									//We only want custom taxonomies
 									if(($taxonomy->object_type == 'post' || is_array($taxonomy->object_type) && in_array('post', $taxonomy->object_type)) && !$taxonomy->_builtin)
 									{
@@ -477,6 +482,11 @@ class bcn_admin extends mtekk_adminKit
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
 			{
+				//Check for non-public CPTs
+				if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name))
+				{
+					continue;
+				}
 				//We only want custom post types
 				if(!$post_type->_builtin)
 				{
@@ -512,6 +522,11 @@ class bcn_admin extends mtekk_adminKit
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
+									//Check for non-public taxonomies
+									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+									{
+										continue;
+									}
 									//We only want custom taxonomies
 									if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 									{
@@ -549,6 +564,11 @@ class bcn_admin extends mtekk_adminKit
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)
 			{
+				//Check for non-public taxonomies
+				if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+				{
+					continue;
+				}
 				//We only want custom taxonomies
 				if(!$taxonomy->_builtin)
 				{
@@ -616,6 +636,11 @@ class bcn_admin extends mtekk_adminKit
 		//Loop through all of the post types in the array
 		foreach($wp_post_types as $post_type)
 		{
+			//Check for non-public CPTs
+			if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name))
+			{
+				continue;
+			}
 			//We only want custom post types
 			if(!$post_type->_builtin)
 			{
@@ -646,6 +671,11 @@ class bcn_admin extends mtekk_adminKit
 						//Loop through all of the possible taxonomies
 						foreach($wp_taxonomies as $taxonomy)
 						{
+							//Check for non-public taxonomies
+							if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+							{
+								continue;
+							}
 							//Activate the first taxonomy valid for this post type and exit the loop
 							if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 							{
@@ -675,6 +705,11 @@ class bcn_admin extends mtekk_adminKit
 		//We'll add our custom taxonomy stuff at this time
 		foreach($wp_taxonomies as $taxonomy)
 		{
+			//Check for non-public taxonomies
+			if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+			{
+				continue;
+			}
 			//We only want custom taxonomies
 			if(!$taxonomy->_builtin)
 			{

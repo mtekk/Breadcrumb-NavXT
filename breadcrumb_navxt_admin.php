@@ -427,7 +427,7 @@ class bcn_admin extends mtekk_adminKit
 				<?php do_action($this->unique_prefix . '_after_settings_tab_general'); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('The settings for the built in post types (Posts and Pages) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Posts &amp; Pages', 'breadcrumb-navxt'); ?></h3>
+				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
@@ -474,10 +474,6 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('Attachment Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_attachment_template_no_anchor', '64', false, __('The template for attachment breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_settings_tab_post'); ?>
-			</fieldset>
-			<fieldset id="custom-post-type" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('The settings for the Custom Post Types avaliable to this site are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Custom Post Types', 'breadcrumb-navxt'); ?></h3>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
@@ -541,7 +537,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_settings_tab_custom_post_type');
+			do_action($this->unique_prefix . '_after_settings_tab_post');
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">

@@ -786,12 +786,12 @@ abstract class mtekk_adminKit
 	 * 
 	 * @param string $label
 	 * @param string $option
-	 * @param string $width [optional]
+	 * @param string $class [optional]
 	 * @param bool $disable [optional]
 	 * @param string $description [optional]
 	 * @return 
 	 */
-	function input_text($label, $option, $width = '32', $disable = false, $description = '')
+	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
 		$optid = $this->get_valid_id($option);
 		if($disable)
@@ -803,7 +803,7 @@ abstract class mtekk_adminKit
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
 			</th>
 			<td>
-				<input type="text" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" size="<?php echo $width;?>" /><br />
+				<input type="text" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php if($disable){echo 'disabled="disabled"'; $class .= ' disabled';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" class="<?php echo $class;?>" /><br />
 					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -814,7 +814,7 @@ abstract class mtekk_adminKit
 	 * 
 	 * @param string $label
 	 * @param string $option
-	 * @param string $width [optional]
+	 * @param string $class [optional]
 	 * @param bool $disable [optional]
 	 * @param string $description [optional]
 	 * @param int|string $min [optional] 
@@ -822,7 +822,7 @@ abstract class mtekk_adminKit
 	 * @param int|string $step [optional]
 	 * @return 
 	 */
-	function input_number($label, $option, $width = '32', $disable = false, $description = '', $min = '', $max = '', $step = '')
+	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
 		$optid = $this->get_valid_id($option);
 		$extras = '';
@@ -847,7 +847,7 @@ abstract class mtekk_adminKit
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
 			</th>
 			<td>
-				<input type="number" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php echo $extras;?><?php if($disable){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" size="<?php echo $width;?>" /><br />
+				<input type="number" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" <?php echo $extras;?><?php if($disable){echo 'disabled="disabled"'; $class .= ' disabled';}?> value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" class="<?php echo $class;?>" /><br />
 					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>

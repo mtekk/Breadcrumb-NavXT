@@ -236,13 +236,9 @@ class bcn_breadcrumb_trail
 			//Whether or not we should trim the breadcrumb titles
 			'blimit_title' => false,
 			//The maximum title lenght
-			'amax_title_length' => 0,
+			'amax_title_length' => 20,
 			//Current item options, really only applies to static pages and posts unless other current items are linked
 			'bcurrent_item_linked' => false,
-			//The breadcrumb template for current items, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			//'Hcurrent_item_template' => __('<a title="Reload the current page." href="%link%">%htitle%</a>', 'breadcrumb-navxt'),
-			//The breadcrumb template for current items, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			//'Hcurrent_item_template_no_anchor' => '%htitle%',
 			//Static page options
 			//The anchor template for page breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_page_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),

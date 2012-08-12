@@ -145,6 +145,8 @@ abstract class mtekk_adminKit
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
 		$this->opt = $this->parse_args(get_option($this->unique_prefix . '_options'), $this->opt);
+		//Run the opts fix filter
+		$this->opts_fix($this->opt);
 	}
 	/**
 	 * Adds the adminpage the menue and the nice little settings link
@@ -301,8 +303,10 @@ abstract class mtekk_adminKit
 	}
 	/**
 	 * A prototype function. End user should override if they need this feature.
+	 * 
+	 * @param array $opts
 	 */
-	function opts_fix()
+	function opts_fix(&$opts)
 	{
 	}
 	/**

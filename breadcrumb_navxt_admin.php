@@ -341,7 +341,7 @@ class bcn_admin extends mtekk_adminKit
 								<li>
 									<label for="amax_title_length">
 										<?php _e('Max Title Length: ','breadcrumb-navxt');?>
-										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="5" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
+										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
 									</label>
 								</li>
 							</ul>							
@@ -614,12 +614,19 @@ class bcn_admin extends mtekk_adminKit
 		</div>
 		<?php
 	}
+	function opts_fix(&$opts)
+	{
+		if($opts['amax_title_length'] < 1)
+		{
+			$opts['amax_title_length'] = 1;
+		}
+	}
 	function opts_update_prebk(&$opts)
 	{
 		//Add custom post types
-		$this->find_posttypes($this->opt);
+		$this->find_posttypes($opts);
 		//Add custom taxonomy types
-		$this->find_taxonomies($this->opt);
+		$this->find_taxonomies($opts);
 	}
 	/**
 	 * Places settings into $opts array, if missing, for the registered post types

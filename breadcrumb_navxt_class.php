@@ -196,7 +196,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.1.50';
+	private $version = '4.1.68';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -283,6 +283,11 @@ class bcn_breadcrumb_trail
 			'Hpost_tag_template' => __('<a title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for tag breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_tag_template_no_anchor' => '%htitle%',
+			//Post format related stuff
+			//The breadcrumb template for post format breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
+			'Hpost_format_template' => __('<a title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			//The breadcrumb template for post format breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
+			'Hpost_format_template_no_anchor' => '%htitle%',
 			//Author page stuff
 			//The anchor template for author breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),

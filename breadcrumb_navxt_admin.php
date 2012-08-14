@@ -556,6 +556,13 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('Tag Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_tag_template_no_anchor', 'large-text', false, __('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
+				<h3><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h3>
+				<table class="form-table">
+					<?php
+						$this->input_text(__('Post Format Template', 'breadcrumb-navxt'), 'Hpost_format_template', 'large-text', false, __('The template for post format breadcrumbs.', 'breadcrumb-navxt'));
+						$this->input_text(__('Post Format Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_format_template_no_anchor', 'large-text', false, __('The template for post_format breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+					?>
+				</table>
 			<?php
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)

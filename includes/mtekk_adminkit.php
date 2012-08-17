@@ -276,6 +276,15 @@ abstract class mtekk_adminKit
 			$this->message();
 			return false;
 		}
+		//Do a quick version check
+		else if(version_compare($version, $this->version, '>') && is_array($this->opt))
+		{
+			//Throw an error since the DB version is out of date
+			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			//Output any messages that there may be
+			$this->message();
+			return true;
+		}
 		else if(!is_array($this->opt))
 		{
 			//Throw an error since it appears the options were never registered
@@ -613,7 +622,7 @@ abstract class mtekk_adminKit
 		$opt = get_option($this->unique_prefix . '_options');
 		//Set the options in the DB to the backup options
 		update_option($this->unique_prefix . '_options', get_option($this->unique_prefix . '_options_bk'));
-		//Set the backup options to the undid options
+		//Set the backup options to the undone options
 		update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
 		$this->message['updated fade'][] = __('Settings successfully undid the last operation.', $this->identifier) . $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier));

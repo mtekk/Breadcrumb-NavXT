@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 4.1.50
+Version: 4.1.90
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '4.1.50';
+	protected $version = '4.1.90';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -130,7 +130,7 @@ class bcn_admin extends mtekk_adminKit
 	{
 		global $wp_post_types;
 		//If our version is not the same as in the db, time to update
-		if($version !== $this->version)
+		if(version_compare($version, $this->version, '<'))
 		{
 			//Upgrading to 3.8.1
 			if(version_compare($version, '3.8.1', '<'))
@@ -150,7 +150,7 @@ class bcn_admin extends mtekk_adminKit
 						//Handle all of our boolean options first, they're real easy, just add a 'b'
 						if(strpos($option, 'display') > 0 || $option == 'current_item_linked')
 						{
-							$this->breadcrumb_trail->opt['b'.$option] = $value;
+							$this->breadcrumb_trail->opt['b' . $option] = $value;
 						}
 						//Handle migration of anchor templates to the templates
 						else if(strpos($option, 'anchor') > 0)

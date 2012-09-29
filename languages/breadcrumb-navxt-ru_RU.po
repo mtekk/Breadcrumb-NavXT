@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-06-06 01:27:59+0000\n"
+"PO-Revision-Date: 2012-09-28 21:54:53+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,513 +10,748 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: breadcrumb_navxt_widget.php:93
+#: breadcrumb_navxt_class.php:64 breadcrumb_navxt_class.php:216
+#: breadcrumb_navxt_class.php:224 breadcrumb_navxt_class.php:230
+#: breadcrumb_navxt_class.php:244 breadcrumb_navxt_class.php:256
+#: breadcrumb_navxt_class.php:268
+msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\"Перейти к %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:278
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr "Результаты поиска для запроса: &#39;<a title=\"Перейти на первую страницу с результатами поиска %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+
+#: breadcrumb_navxt_admin.php:325
+msgid "A collection of settings most likely to be modified are located under this tab."
+msgstr "Основные настройки."
+
+#: breadcrumb_navxt_admin.php:333
+msgid "Title Length"
+msgstr "Длина заголовка"
+
+#: breadcrumb_navxt_admin.php:338
+msgid "Limit the length of the breadcrumb title."
+msgstr "Ограничить длину заголовка"
+
+#: breadcrumb_navxt_admin.php:399
+msgid "Mainsite Breadcrumb"
+msgstr "Ссылка на главный сайт"
+
+#: breadcrumb_navxt_admin.php:430
+msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
+msgstr "Настройки для всех типов записей (записи, страницы, записи произвольного типа)."
+
+#: breadcrumb_navxt_admin.php:430
+msgid "Post Types"
+msgstr "Записи и страницы"
+
+#: breadcrumb_navxt_admin.php:436
+msgid "Post Hierarchy Display"
+msgstr "Вывод иерархии"
+
+#: breadcrumb_navxt_admin.php:440
+msgid "Post Hierarchy"
+msgstr "Иерархия записи"
+
+#: breadcrumb_navxt_admin.php:508
+msgid "%s Hierarchy Display"
+msgstr "%s вывод иерархии"
+
+#: breadcrumb_navxt_admin.php:559
+msgid "Post Formats"
+msgstr "Форматы записей"
+
+#: breadcrumb_navxt_admin.php:343
+msgid "Max Title Length: "
+msgstr "Максимальная длина:"
+
+#: breadcrumb_navxt_admin.php:431
+msgid "Posts"
+msgstr "Записи"
+
+#: breadcrumb_navxt_admin.php:448 breadcrumb_navxt_admin.php:517
+msgid "Post Parent"
+msgstr "Под-страницы"
+
+#: breadcrumb_navxt_admin.php:464 breadcrumb_navxt_admin.php:533
+msgid "The hierarchy which the breadcrumb trail will show."
+msgstr "Путь будет строиться по выбранной иерархии."
+
+#: breadcrumb_navxt_admin.php:512
+msgid "%s Hierarchy"
+msgstr "%s иерархия"
+
+#: breadcrumb_navxt_admin.php:544
+msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
+msgstr "Настройки таксономий (рубрики, метки и произвольные таксономии)."
+
+#: breadcrumb_navxt_admin.php:544
+msgid "Taxonomies"
+msgstr "Таксономии"
+
+#: breadcrumb_navxt_admin.php:562
+msgid "Post Format Template"
+msgstr "Форматы записей"
+
+#: breadcrumb_navxt_admin.php:562
+msgid "The template for post format breadcrumbs."
+msgstr "Шаблон ссылки на свой формат записей"
+
+#: breadcrumb_navxt_admin.php:563
+msgid "Post Format Template (Unlinked)"
+msgstr "Шаблон ссылки на свой формат записей (некликабельная)"
+
+#: breadcrumb_navxt_admin.php:563
+msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Шаблон ссылки на свой формат записей (когда ссылка на свой формат записей некликабельна)."
+
+#: breadcrumb_navxt_admin.php:593
+msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
+msgstr "Настройки архивов по автору, дате, поиску и 404 ошибки."
+
+#: breadcrumb_navxt_admin.php:594
+msgid "Author Archives"
+msgstr "Архивы по автору"
+
+#: breadcrumb_navxt_class.php:283 breadcrumb_navxt_class.php:288
+msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\"Перейти к архиву по метке %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:293
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "Статьи от: <a title=\"Перейти на первую страницу с записями %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:300
+msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\"Перейти к архиву рубрики %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:304
+msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\"Перейти к архиву %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: includes/mtekk_adminkit.php:283
+msgid "Your settings are for a newer version."
+msgstr "Ваши настройки для новой версии."
+
+#: breadcrumb_navxt_widget.php:96
 msgid "Text to show before the trail:"
 msgstr "Текст, выводимый перед путем:"
 
-#: breadcrumb_navxt_widget.php:100
+#: breadcrumb_navxt_widget.php:103
 msgid "Schema.org"
 msgstr "Schema.org"
 
-#: breadcrumb_navxt_admin.php:227
+#: breadcrumb_navxt_admin.php:229
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Перейти на сайт перевода Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:36
-msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
-msgstr "Ваша версия PHP устарела, пожалуйста обновите ее. У вас версия %1$s, Breadcrumb NavXT требует %2$s"
+#: breadcrumb_navxt_widget.php:33
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "\"Хлебные крошки\" в вашем сайдбаре."
 
-#: breadcrumb_navxt_widget.php:89
+#: breadcrumb_navxt_widget.php:92
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: breadcrumb_navxt_widget.php:101
+#: breadcrumb_navxt_widget.php:100
+msgid "Output trail as:"
+msgstr "Выводить путь как:"
+
+#: breadcrumb_navxt_widget.php:102
+msgid "List"
+msgstr "Список"
+
+#: breadcrumb_navxt_widget.php:104
 msgid "Plain"
 msgstr "Текст"
 
-#: breadcrumb_navxt_widget.php:106
+#: breadcrumb_navxt_widget.php:109
 msgid "Link the breadcrumbs"
 msgstr "Путь в виде ссылок"
 
-#: breadcrumb_navxt_widget.php:108
+#: breadcrumb_navxt_widget.php:111
 msgid "Reverse the order of the trail"
 msgstr "Обратная сортировка пути"
 
-#: breadcrumb_navxt_widget.php:110
+#: breadcrumb_navxt_widget.php:113
 msgid "Hide the trail on the front page"
 msgstr "Не показывать виджет на главной"
 
-#: breadcrumb_navxt_admin.php:118
+#: breadcrumb_navxt_admin.php:120
 msgid "Insufficient privileges to proceed."
 msgstr "Недостаточно прав для продолжения."
 
-#: breadcrumb_navxt_admin.php:220
+#: breadcrumb_navxt_admin.php:222
 msgid "Tips for the settings are located below select options."
 msgstr "Различные подсказки по работе с плагином."
 
-#: breadcrumb_navxt_admin.php:221
+#: breadcrumb_navxt_admin.php:223
 msgid "Resources"
 msgstr "Ресурсы"
 
-#: breadcrumb_navxt_admin.php:222
+#: breadcrumb_navxt_admin.php:224
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sРуководства и FAQ'и%s: Тут вы найдете несколько руководств, туториалов и FAQ'ов по использованию плагина."
 
-#: breadcrumb_navxt_admin.php:222
+#: breadcrumb_navxt_admin.php:224
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Все записи с тегом  'Breadcrumb NavXT'."
 
-#: breadcrumb_navxt_admin.php:223
+#: breadcrumb_navxt_admin.php:225
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sДокументация онлайн%s: Здесь вы найдете документацию с более подробной технической информацией."
 
-#: breadcrumb_navxt_admin.php:223
+#: breadcrumb_navxt_admin.php:225
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Перейти на сайт с онлайн документацией по плагину Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:224
+#: breadcrumb_navxt_admin.php:226
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%sСообщить об ошибке%s: Если вы нашли ошибку в работе плагина, то сообщите о ней автору. Не забудьте указать версию WordPress и ситуацию, при которой можно воспроизвести ошибку."
 
-#: breadcrumb_navxt_admin.php:224
+#: breadcrumb_navxt_admin.php:226
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Сообщить об ошибке плагина Breadcrumb NavXT вашей версии."
 
-#: breadcrumb_navxt_admin.php:225
+#: breadcrumb_navxt_admin.php:227
 msgid "Giving Back"
 msgstr "Внести свой вклад"
 
-#: breadcrumb_navxt_admin.php:226
+#: breadcrumb_navxt_admin.php:228
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%sПожертвования%s: Любите плагин Breadcrumb NavXT и хотите помочь его разработке? Купите автору пиво :)"
 
-#: breadcrumb_navxt_admin.php:226
+#: breadcrumb_navxt_admin.php:228
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Перейти к сайту PayPal, чтобы сделать пожертвование автору плагина Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:227
+#: breadcrumb_navxt_admin.php:229
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sПеревод%s: Ваш язык недоступен? Свяжитесь с John Havlik, если хотите перевести плагин на свой язык."
 
-#: breadcrumb_navxt_admin.php:232 breadcrumb_navxt_admin.php:323
+#: breadcrumb_navxt_admin.php:234 breadcrumb_navxt_admin.php:325
+#: breadcrumb_navxt_admin.php:326
 msgid "General"
 msgstr "Основные"
 
-#: breadcrumb_navxt_admin.php:235
+#: breadcrumb_navxt_admin.php:237
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "Для использования плагина вы должны или использовать соответствующий виджет или поместить указанные примеры кода в нужный файл вашего шаблона."
 
-#: breadcrumb_navxt_admin.php:236
+#: breadcrumb_navxt_admin.php:238
 msgid "Breadcrumb trail with separators"
 msgstr "Путь с разделителями"
 
-#: breadcrumb_navxt_admin.php:242
+#: breadcrumb_navxt_admin.php:244
 msgid "Breadcrumb trail in list form"
 msgstr "Путь в формате list"
 
-#: breadcrumb_navxt_admin.php:251
+#: breadcrumb_navxt_admin.php:253
 msgid "Quick Start"
 msgstr "Быстрый старт"
 
-#: breadcrumb_navxt_admin.php:254
+#: breadcrumb_navxt_admin.php:256
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Следующий CSS-код может быть использован для оформления стиля пути."
 
-#: breadcrumb_navxt_admin.php:266
+#: breadcrumb_navxt_admin.php:268
 msgid "Styling"
 msgstr "Стиль"
 
-#: breadcrumb_navxt_admin.php:272
+#: breadcrumb_navxt_admin.php:274
 msgid "Import/Export/Reset"
 msgstr "Импорт/Экспорт/Сброс"
 
-#: breadcrumb_navxt_admin.php:296 includes/mtekk_adminkit.php:765
+#: breadcrumb_navxt_admin.php:298 includes/mtekk_adminkit.php:779
 msgid "Import"
 msgstr "Импорт"
 
-#: breadcrumb_navxt_admin.php:297 includes/mtekk_adminkit.php:766
+#: breadcrumb_navxt_admin.php:299 includes/mtekk_adminkit.php:780
 msgid "Export"
 msgstr "Экспорт"
 
-#: breadcrumb_navxt_admin.php:298 includes/mtekk_adminkit.php:767
+#: breadcrumb_navxt_admin.php:300 includes/mtekk_adminkit.php:781
 msgid "Reset"
 msgstr "Сброс"
 
-#: breadcrumb_navxt_admin.php:311
+#: breadcrumb_navxt_admin.php:313
 msgid "Breadcrumb NavXT Settings"
 msgstr "Настройки Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:326
+#: breadcrumb_navxt_admin.php:329
 msgid "Breadcrumb Separator"
 msgstr "Разделитель"
 
-#: breadcrumb_navxt_admin.php:326
+#: breadcrumb_navxt_admin.php:329
 msgid "Placed in between each breadcrumb."
 msgstr "Устанавливается между ссылками."
 
-#: breadcrumb_navxt_admin.php:327
-msgid "Breadcrumb Max Title Length"
-msgstr "Максимальная длина заголовка ссылки"
-
-#: breadcrumb_navxt_admin.php:331
+#: breadcrumb_navxt_admin.php:363 breadcrumb_navxt_admin.php:367
 msgid "Home Breadcrumb"
 msgstr "Ссылка на главную"
 
-#: breadcrumb_navxt_admin.php:336
+#: breadcrumb_navxt_admin.php:372
 msgid "Place the home breadcrumb in the trail."
 msgstr "Поместить ссылку на главную страницу блога в путь."
 
-#: breadcrumb_navxt_admin.php:341
+#: breadcrumb_navxt_admin.php:377
 msgid "Home Title: "
 msgstr "Заголовок ссылки на главную"
 
-#: breadcrumb_navxt_admin.php:349
+#: breadcrumb_navxt_admin.php:385
 msgid "Home Template"
 msgstr "Шаблон ссылки на главную"
 
-#: breadcrumb_navxt_admin.php:349
+#: breadcrumb_navxt_admin.php:385
 msgid "The template for the home breadcrumb."
 msgstr "Шаблон ссылки для главной страницы блога."
 
-#: breadcrumb_navxt_admin.php:350
+#: breadcrumb_navxt_admin.php:386
 msgid "Home Template (Unlinked)"
 msgstr "Шаблон ссылки на главную (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:350
+#: breadcrumb_navxt_admin.php:386
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Шаблон ссылки для главной страницы блога (когда ссылка на главную некликабельна)."
 
-#: breadcrumb_navxt_admin.php:351
+#: breadcrumb_navxt_admin.php:390 breadcrumb_navxt_admin.php:393
 msgid "Blog Breadcrumb"
 msgstr "Ссылка на блог"
 
-#: breadcrumb_navxt_admin.php:351
+#: breadcrumb_navxt_admin.php:393
 msgid "Place the blog breadcrumb in the trail."
 msgstr "Поместить ссылку на блог в путь."
 
-#: breadcrumb_navxt_admin.php:352
+#: breadcrumb_navxt_admin.php:394
 msgid "Blog Template"
 msgstr "Шаблон ссылки на блог"
 
-#: breadcrumb_navxt_admin.php:352
+#: breadcrumb_navxt_admin.php:394
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "Шаблон ссылки на блог (используется только при статической главной странице)."
 
-#: breadcrumb_navxt_admin.php:353
+#: breadcrumb_navxt_admin.php:395
 msgid "Blog Template (Unlinked)"
 msgstr "Шаблон ссылки на блог (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:353
+#: breadcrumb_navxt_admin.php:395
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на блог (используется только при статической главной странице и только, когда ссылка на блог некликабельна)."
 
-#: breadcrumb_navxt_admin.php:357
+#: breadcrumb_navxt_admin.php:403
 msgid "Main Site Breadcrumb"
 msgstr "Ссылка на главный сайт"
 
-#: breadcrumb_navxt_admin.php:362
+#: breadcrumb_navxt_admin.php:408
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Поместить ссылку на главный сайт в путь (при включенном режиме мультисайта)."
 
-#: breadcrumb_navxt_admin.php:367
+#: breadcrumb_navxt_admin.php:413
 msgid "Main Site Home Title: "
 msgstr "Заголовок ссылки на главный сайт:"
 
-#: breadcrumb_navxt_admin.php:376
+#: breadcrumb_navxt_admin.php:422
 msgid "Main Site Home Template"
 msgstr "Шаблон ссылки на главный сайт"
 
-#: breadcrumb_navxt_admin.php:376
+#: breadcrumb_navxt_admin.php:422
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Шаблон ссылки на главный сайт (используется только при включенном режиме мультисайта)."
 
-#: breadcrumb_navxt_admin.php:377
+#: breadcrumb_navxt_admin.php:423
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Шаблон ссылки на главный сайт (некликабельная)."
 
-#: breadcrumb_navxt_admin.php:377
+#: breadcrumb_navxt_admin.php:423
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на главный сайт (используется только при включенном режиме мультисайта  и только, когда ссылка на главный сайт некликабельна)."
 
-#: breadcrumb_navxt_admin.php:382
+#: breadcrumb_navxt_admin.php:354
 msgid "Current Item"
 msgstr "Текущая позиция"
 
-#: breadcrumb_navxt_admin.php:385
+#: breadcrumb_navxt_admin.php:357
 msgid "Link Current Item"
 msgstr "Показывать текущую позицию в виде ссылки"
 
-#: breadcrumb_navxt_admin.php:385
+#: breadcrumb_navxt_admin.php:357
 msgid "Yes"
 msgstr "Да"
 
-#: breadcrumb_navxt_admin.php:386
+#: breadcrumb_navxt_admin.php:358
 msgid "Paged Breadcrumb"
 msgstr "Постраничная навигация"
 
-#: breadcrumb_navxt_admin.php:386
+#: breadcrumb_navxt_admin.php:358
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Включить поддержку постраничной навигации."
 
-#: breadcrumb_navxt_admin.php:386
+#: breadcrumb_navxt_admin.php:358
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "В текущей позиции будет указан номер страницы, если посетитель находится на странице, образованной постраничной навигацией."
 
-#: breadcrumb_navxt_admin.php:387
+#: breadcrumb_navxt_admin.php:359
 msgid "Paged Template"
 msgstr "Шаблон"
 
-#: breadcrumb_navxt_admin.php:387
+#: breadcrumb_navxt_admin.php:359
 msgid "The template for paged breadcrumbs."
 msgstr "Шаблон для страниц с постраничной навигацией."
 
-#: breadcrumb_navxt_admin.php:392
-msgid "Posts &amp; Pages"
-msgstr "Записи &amp; Страницы"
-
-#: breadcrumb_navxt_admin.php:395
+#: breadcrumb_navxt_admin.php:434
 msgid "Post Template"
 msgstr "Шаблон ссылки на запись"
 
-#: breadcrumb_navxt_admin.php:395
+#: breadcrumb_navxt_admin.php:434
 msgid "The template for post breadcrumbs."
 msgstr "Шаблон ссылки на запись."
 
-#: breadcrumb_navxt_admin.php:396
+#: breadcrumb_navxt_admin.php:435
 msgid "Post Template (Unlinked)"
 msgstr "Шаблон ссылки на запись (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:396
+#: breadcrumb_navxt_admin.php:435
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на запись (когда ссылка на запись некликабельна)."
 
-#: breadcrumb_navxt_admin.php:397
-msgid "Post Taxonomy Display"
-msgstr "Пути"
-
-#: breadcrumb_navxt_admin.php:397
+#: breadcrumb_navxt_admin.php:436
 msgid "Show the taxonomy leading to a post in the breadcrumb trail."
 msgstr "Показывать в пути все возможные варианты доступа к текущей позиции."
 
-#: breadcrumb_navxt_admin.php:401
-msgid "Post Taxonomy"
-msgstr "Вариант пути"
-
-#: breadcrumb_navxt_admin.php:405
+#: breadcrumb_navxt_admin.php:444 breadcrumb_navxt_admin.php:545
 msgid "Categories"
 msgstr "Рубрики"
 
-#: breadcrumb_navxt_admin.php:406 breadcrumb_navxt_admin.php:464
+#: breadcrumb_navxt_admin.php:445
 msgid "Dates"
 msgstr "Даты"
 
-#: breadcrumb_navxt_admin.php:407
+#: breadcrumb_navxt_admin.php:446 breadcrumb_navxt_admin.php:552
 msgid "Tags"
 msgstr "Метки"
 
-#: breadcrumb_navxt_admin.php:408 breadcrumb_navxt_admin.php:465
+#: breadcrumb_navxt_admin.php:468
 msgid "Pages"
 msgstr "Страницы"
 
-#: breadcrumb_navxt_admin.php:419 breadcrumb_navxt_admin.php:476
-msgid "The taxonomy which the breadcrumb trail will show."
-msgstr "Будет использован в пути указанный вариант пути к текущей записи."
-
-#: breadcrumb_navxt_admin.php:423
+#: breadcrumb_navxt_admin.php:471
 msgid "Page Template"
 msgstr "Шаблон ссылки на страницу"
 
-#: breadcrumb_navxt_admin.php:423
+#: breadcrumb_navxt_admin.php:471
 msgid "The template for page breadcrumbs."
 msgstr "Шаблон ссылки на страницу."
 
-#: breadcrumb_navxt_admin.php:424
+#: breadcrumb_navxt_admin.php:472
 msgid "Page Template (Unlinked)"
 msgstr "Шаблон ссылки на страницу (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:424
+#: breadcrumb_navxt_admin.php:472
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на страницу (когда ссылка на страницу некликабельна)."
 
-#: breadcrumb_navxt_admin.php:425
+#: breadcrumb_navxt_admin.php:473
 msgid "Attachment Template"
 msgstr "Шаблон ссылки на вложение"
 
-#: breadcrumb_navxt_admin.php:425
+#: breadcrumb_navxt_admin.php:473
 msgid "The template for attachment breadcrumbs."
 msgstr "Шаблон ссылки на вложение."
 
-#: breadcrumb_navxt_admin.php:426
+#: breadcrumb_navxt_admin.php:474
 msgid "Attachment Template (Unlinked)"
 msgstr "Шаблон ссылки на вложение (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:426
+#: breadcrumb_navxt_admin.php:474
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на вложение (когда ссылка на вложение некликабельна)."
 
-#: breadcrumb_navxt_admin.php:566 breadcrumb_navxt_class.php:56
-#: breadcrumb_navxt_class.php:205 breadcrumb_navxt_class.php:213
-#: breadcrumb_navxt_class.php:219 breadcrumb_navxt_class.php:235
-#: breadcrumb_navxt_class.php:247 breadcrumb_navxt_class.php:259
+#: breadcrumb_navxt_admin.php:661
 msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
 msgstr "<a title=\"Перейти к %title%.\" href=\"%link%\">%htitle%</a>"
 
-#: breadcrumb_navxt_admin.php:567
+#: breadcrumb_navxt_admin.php:662 breadcrumb_navxt_class.php:60
 msgid "%htitle%"
 msgstr "%htitle%"
 
-#: breadcrumb_navxt_admin.php:442 breadcrumb_navxt_admin.php:507
+#: breadcrumb_navxt_admin.php:494 breadcrumb_navxt_admin.php:583
 msgid "%s Template"
 msgstr "%s Шаблон"
 
-#: breadcrumb_navxt_admin.php:442 breadcrumb_navxt_admin.php:507
+#: breadcrumb_navxt_admin.php:494 breadcrumb_navxt_admin.php:583
 msgid "The template for %s breadcrumbs."
 msgstr "Шаблон для %s пути."
 
-#: breadcrumb_navxt_admin.php:443 breadcrumb_navxt_admin.php:508
+#: breadcrumb_navxt_admin.php:495 breadcrumb_navxt_admin.php:584
 msgid "%s Template (Unlinked)"
 msgstr "%s Шаблон  (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:443 breadcrumb_navxt_admin.php:508
+#: breadcrumb_navxt_admin.php:495 breadcrumb_navxt_admin.php:584
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон для %s пути (когда %s путь некликабелен)."
 
-#: breadcrumb_navxt_admin.php:448
+#: breadcrumb_navxt_admin.php:500
 msgid "%s Root Page"
 msgstr "%s Главная страница"
 
-#: breadcrumb_navxt_admin.php:451
+#: breadcrumb_navxt_admin.php:503
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Выбор &mdash;"
 
-#: breadcrumb_navxt_admin.php:455
+#: breadcrumb_navxt_admin.php:507
 msgid "%s Archive Display"
 msgstr "%s Архив"
 
-#: breadcrumb_navxt_admin.php:455
+#: breadcrumb_navxt_admin.php:507
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Показывать путь для %s архивов типов записей."
 
-#: breadcrumb_navxt_admin.php:456
-msgid "%s Taxonomy Display"
-msgstr "%s Таксономия"
-
-#: breadcrumb_navxt_admin.php:456
+#: breadcrumb_navxt_admin.php:508
 msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
 msgstr "Показывать путь для %s таксономий."
 
-#: breadcrumb_navxt_admin.php:460
-msgid "%s Taxonomy"
-msgstr "%s Таксономия"
-
-#: breadcrumb_navxt_admin.php:485
-msgid "Categories &amp; Tags"
-msgstr "Рубрики &amp; Метки"
-
-#: breadcrumb_navxt_admin.php:488
+#: breadcrumb_navxt_admin.php:548
 msgid "Category Template"
 msgstr "Шаблон ссылки на рубрику"
 
-#: breadcrumb_navxt_admin.php:488
+#: breadcrumb_navxt_admin.php:548
 msgid "The template for category breadcrumbs."
 msgstr "Шаблон ссылки на рубрику."
 
-#: breadcrumb_navxt_admin.php:489
+#: breadcrumb_navxt_admin.php:549
 msgid "Category Template (Unlinked)"
 msgstr "Шаблон ссылки на рубрику (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:489
+#: breadcrumb_navxt_admin.php:549
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на рубрику (когда ссылка на рубрику некликабельна)."
 
-#: breadcrumb_navxt_admin.php:490
+#: breadcrumb_navxt_admin.php:555
 msgid "Tag Template"
 msgstr "Шаблон ссылки на метку"
 
-#: breadcrumb_navxt_admin.php:490
+#: breadcrumb_navxt_admin.php:555
 msgid "The template for tag breadcrumbs."
 msgstr "Шаблон ссылки на метку."
 
-#: breadcrumb_navxt_admin.php:491
+#: breadcrumb_navxt_admin.php:556
 msgid "Tag Template (Unlinked)"
 msgstr "Шаблон ссылки на метку (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:491
+#: breadcrumb_navxt_admin.php:556
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на метку (когда ссылка на метку некликабельна)."
 
-#: breadcrumb_navxt_admin.php:517
+#: breadcrumb_navxt_admin.php:593 breadcrumb_navxt_admin.php:602
 msgid "Miscellaneous"
 msgstr "Другое"
 
-#: breadcrumb_navxt_admin.php:520
+#: breadcrumb_navxt_admin.php:597
 msgid "Author Template"
 msgstr "Шаблон ссылки на автора"
 
-#: breadcrumb_navxt_admin.php:520
+#: breadcrumb_navxt_admin.php:597
 msgid "The template for author breadcrumbs."
 msgstr "Шаблон ссылки на автора."
 
-#: breadcrumb_navxt_admin.php:521
+#: breadcrumb_navxt_admin.php:598
 msgid "Author Template (Unlinked)"
 msgstr "Шаблон ссылки на автора (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:521
+#: breadcrumb_navxt_admin.php:598
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на автора (когда ссылка на автора некликабельна)."
 
-#: breadcrumb_navxt_admin.php:522
+#: breadcrumb_navxt_admin.php:599
 msgid "Author Display Format"
 msgstr "Формат имени автора"
 
-#: breadcrumb_navxt_admin.php:522
+#: breadcrumb_navxt_admin.php:599
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name отображает имя автора так, как указано у него в профиле в опции  \"Отображать как\"."
 
-#: breadcrumb_navxt_admin.php:523
+#: breadcrumb_navxt_admin.php:605
 msgid "Date Template"
 msgstr "Шаблон ссылки на архив по дате"
 
-#: breadcrumb_navxt_admin.php:523
+#: breadcrumb_navxt_admin.php:605
 msgid "The template for date breadcrumbs."
 msgstr "Шаблон ссылки на архив по дате."
 
-#: breadcrumb_navxt_admin.php:524
+#: breadcrumb_navxt_admin.php:606
 msgid "Date Template (Unlinked)"
 msgstr "Шаблон ссылки на архив по дате (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:524
+#: breadcrumb_navxt_admin.php:606
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Шаблон ссылки на архив по дате (когда ссылка на архив по дате некликабельна)."
 
-#: breadcrumb_navxt_admin.php:525
+#: breadcrumb_navxt_admin.php:607
 msgid "Search Template"
 msgstr "Шаблон ссылки на страницу с результатами поиска"
 
-#: breadcrumb_navxt_admin.php:525
+#: breadcrumb_navxt_admin.php:607
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Шаблон ссылки на страницу с результатами поиска (используется только, когда страница с результатами поиска разделена постраничной навигацией)."
 
-#: breadcrumb_navxt_admin.php:526
+#: breadcrumb_navxt_admin.php:608
 msgid "Search Template (Unlinked)"
 msgstr "Шаблон ссылки на страницу с результатами поиска (некликабельная)"
 
-#: breadcrumb_navxt_admin.php:526
+#: breadcrumb_navxt_admin.php:608
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Шаблон ссылки на страницу с результатами поиска (когда страница с результатами поиска разделена постраничной навигацией и когда ссылка на страницу с результатами поиска некликабельна)."
 
-#: breadcrumb_navxt_admin.php:527
+#: breadcrumb_navxt_admin.php:609
 msgid "404 Title"
 msgstr "Страница 404 (не найдено)"
 
-#: breadcrumb_navxt_admin.php:528
+#: breadcrumb_navxt_admin.php:610
 msgid "404 Template"
 msgstr "Шаблон текста для 404 страницы"
 
-#: breadcrumb_navxt_admin.php:528
+#: breadcrumb_navxt_admin.php:610
 msgid "The template for 404 breadcrumbs."
 msgstr "Шаблон текста в пути для 404 страницы."
 
-#: breadcrumb_navxt_admin.php:533
+#: breadcrumb_navxt_admin.php:616
 msgid "Save Changes"
 msgstr "Сохранить изменения"
+
+#: includes/mtekk_adminkit.php:204
+msgid "Settings"
+msgstr "Настройки"
+
+#: includes/mtekk_adminkit.php:274
+msgid "Your settings are out of date."
+msgstr "Ваши настройки устарели."
+
+#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+msgid "Migrate the settings now."
+msgstr "Обновить настройки сейчас."
+
+#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+msgid "Migrate now."
+msgstr "Обновить сейчас."
+
+#: includes/mtekk_adminkit.php:291
+msgid "Your plugin install is incomplete."
+msgstr "Установка плагина некорректна."
+
+#: includes/mtekk_adminkit.php:291
+msgid "Load default settings now."
+msgstr "Загрузить дефолтные настройки."
+
+#: includes/mtekk_adminkit.php:291
+msgid "Complete now."
+msgstr "Сделать сейчас."
+
+#: includes/mtekk_adminkit.php:299
+msgid "Your plugin settings are invalid."
+msgstr "Настройки плагина испорчены."
+
+#: includes/mtekk_adminkit.php:299
+msgid "Attempt to fix settings now."
+msgstr "Попытаться исправить настройки сейчас."
+
+#: includes/mtekk_adminkit.php:299
+msgid "Fix now."
+msgstr "Исправить сейчас."
+
+#: includes/mtekk_adminkit.php:477
+msgid "Settings successfully saved."
+msgstr "Настройки удачно сохранены."
+
+#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
+msgid "Undo the options save."
+msgstr "Отменить сохранение настроек."
+
+#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
+#: includes/mtekk_adminkit.php:587 includes/mtekk_adminkit.php:611
+#: includes/mtekk_adminkit.php:628
+msgid "Undo"
+msgstr "Отменить"
+
+#: includes/mtekk_adminkit.php:482
+msgid "Some settings were not saved."
+msgstr "Некоторые настройки не были сохранены."
+
+#: includes/mtekk_adminkit.php:483
+msgid "The following settings were not saved:"
+msgstr "Следующие настройки не были сохранены:"
+
+#: includes/mtekk_adminkit.php:488
+msgid "Please include this message in your %sbug report%s."
+msgstr "Пожалуйста, добавьте текст в ваше %sсообщение об ошибке%s."
+
+#: includes/mtekk_adminkit.php:488
+msgid "Go to the %s support post for your version."
+msgstr "Перейти на %s страницу поддержки для вашей версии плагина."
+
+#: includes/mtekk_adminkit.php:587
+msgid "Settings successfully imported from the uploaded file."
+msgstr "Настройки удачно импортированы из загруженного файла."
+
+#: includes/mtekk_adminkit.php:587
+msgid "Undo the options import."
+msgstr "Отменить импорт настроек."
+
+#: includes/mtekk_adminkit.php:592
+msgid "Importing settings from file failed."
+msgstr "Импортируемые настройки испорчены."
+
+#: includes/mtekk_adminkit.php:611
+msgid "Settings successfully reset to the default values."
+msgstr "Настройки удачно сброшены на дефолтные значения."
+
+#: includes/mtekk_adminkit.php:611
+msgid "Undo the options reset."
+msgstr "Отменить сброс настроек."
+
+#: includes/mtekk_adminkit.php:628
+msgid "Settings successfully undid the last operation."
+msgstr "Последняя операция была удачно отменена."
+
+#: includes/mtekk_adminkit.php:628
+msgid "Undo the last undo operation."
+msgstr "Отменить отмену последней операции."
+
+#: includes/mtekk_adminkit.php:663
+msgid "Settings successfully migrated."
+msgstr "Настройки удачно обновлены."
+
+#: includes/mtekk_adminkit.php:670
+msgid "Default settings successfully installed."
+msgstr "Дефолтные настройки были удачно установлены."
+
+#: includes/mtekk_adminkit.php:771
+msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
+msgstr "Импорт настроек из XML-файла, экспорт настроек в XML-файл, или сброс настроек на дефолтные значения."
+
+#: includes/mtekk_adminkit.php:774
+msgid "Settings File"
+msgstr "Файл настроек"
+
+#: includes/mtekk_adminkit.php:777
+msgid "Select a XML settings file to upload and import settings from."
+msgstr "Выберите XML-файл настроек для загрузки и импорта."
+
+#: breadcrumb_navxt_class.php:214 breadcrumb_navxt_class.php:222
+msgid "Home"
+msgstr "Главная"
+
+#: breadcrumb_navxt_class.php:251
+msgid "Page %htitle%"
+msgstr "Страница %htitle%"
+
+#: breadcrumb_navxt_class.php:275
+msgid "404"
+msgstr "404. Страница не найдена"
+
+#: breadcrumb_navxt_class.php:280
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "Результаты поиска для запроса: &#39;%htitle%&#39;"
+
+#: breadcrumb_navxt_class.php:295
+msgid "Articles by: %htitle%"
+msgstr "Записи от: '%htitle%'"

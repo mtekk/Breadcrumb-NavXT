@@ -149,7 +149,7 @@ abstract class mtekk_adminKit
 		$this->opts_fix($this->opt);
 	}
 	/**
-	 * Adds the adminpage the menue and the nice little settings link
+	 * Adds the adminpage the menu and the nice little settings link
 	 * TODO: make this more generic for easier extension
 	 */
 	function add_page()

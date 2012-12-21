@@ -205,7 +205,7 @@ class bcn_breadcrumb_trail
 	function bcn_breadcrumb_trail()
 	{
 		//Load the translation domain as the next part needs it		
-		load_plugin_textdomain($domain = 'breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
+		load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		//Initilize with default option values
 		$this->opt = array(
 			//Should the mainsite be shown
@@ -467,8 +467,6 @@ class bcn_breadcrumb_trail
 			//Loop through all of the term results
 			foreach($bcn_object as $term)
 			{
-				//Run through a filter for good measure
-				$term->name = apply_filters("get_$taxonomy", $term->name);
 				//Everything but the first term needs a comma separator
 				if($is_first == false)
 				{

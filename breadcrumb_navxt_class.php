@@ -204,8 +204,16 @@ class bcn_breadcrumb_trail
 	//Default constructor
 	function bcn_breadcrumb_trail()
 	{
+		global $l10n;
+		// the global and the check might become obsolete in
+		// further wordpress versions
+		// @see https://core.trac.wordpress.org/ticket/10527		
+		if(!isset($l10n['breadcrumb-navxt']))
+		{
+			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
+		}
 		//Load the translation domain as the next part needs it		
-		load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
+		//load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		//Initilize with default option values
 		$this->opt = array(
 			//Should the mainsite be shown

@@ -167,15 +167,8 @@ class bcn_breadcrumb
 	 */
 	public function assemble($linked = true)
 	{
-		global $current_site;
-		if(function_exists('get_current_site_name'))
-		{
-			$site_name = get_current_site_name($current_site);
-		}
-		else
-		{
-			$site_name = get_option('blogname');
-		}
+		//Get the site name
+		$site_name = get_option('blogname');
 		//Build our replacements array
 		$replacements = array(
 							esc_attr(strip_tags($this->title)),

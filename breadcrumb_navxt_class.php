@@ -35,7 +35,8 @@ class bcn_breadcrumb
 					'%title%',
 					'%link%',
 					'%htitle%',
-					'%type%');
+					'%type%',
+					'%site_name%');
 	//The type of this breadcrumb
 	public $type;
 	/**
@@ -166,12 +167,22 @@ class bcn_breadcrumb
 	 */
 	public function assemble($linked = true)
 	{
+		global $current_site;
+		if(function_exists('get_current_site_name'))
+		{
+			$site_name = get_current_site_name($current_site);
+		}
+		else
+		{
+			$site_name = get_option('blogname');
+		}
 		//Build our replacements array
 		$replacements = array(
 							esc_attr(strip_tags($this->title)),
 							$this->url,
 							$this->title,
-							$this->type);
+							$this->type,
+							$site_name);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements[3]))
 		{

@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 4.2.0
+Version: 4.2.50
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '4.2.0';
+	protected $version = '4.2.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -194,6 +194,15 @@ class bcn_admin extends mtekk_adminKit
 				if(isset($opts['Hcurrent_item_template']))
 				{
 					unset($opts['Hcurrent_item_template']);
+				}
+			}
+			//Upgrading to 4.3.0
+			if(version_compare($version, '4.3.0', '<'))
+			{
+				//Removed home_title
+				if(isset($opts['Shome_title']))
+				{
+					unset($opts['Shome_title']);
 				}
 			}
 			//Add custom post types
@@ -364,26 +373,8 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
-					<tr valign="top">
-						<th scope="row">
-							<?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?>						
-						</th>
-						<td>
-							<label>
-								<input name="bcn_options[bhome_display]" type="checkbox" id="bhome_display" value="true" <?php checked(true, $this->opt['bhome_display']); ?> />
-								<?php _e('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'); ?>				
-							</label><br />
-							<ul>
-								<li>
-									<label for="Shome_title">
-										<?php _e('Home Title: ','breadcrumb-navxt');?>
-										<input type="text" name="bcn_options[Shome_title]" id="Shome_title" value="<?php echo esc_html($this->opt['Shome_title'], ENT_COMPAT, 'UTF-8'); ?>" size="20" />
-									</label>
-								</li>
-							</ul>							
-						</td>
-					</tr>
-					<?php
+					<?php 
+						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', 'large-text', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', 'large-text', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_home');

@@ -35,8 +35,7 @@ class bcn_breadcrumb
 					'%title%',
 					'%link%',
 					'%htitle%',
-					'%type%',
-					'%site_name%');
+					'%type%');
 	//The type of this breadcrumb
 	public $type;
 	/**
@@ -167,15 +166,12 @@ class bcn_breadcrumb
 	 */
 	public function assemble($linked = true)
 	{
-		//Get the site name
-		$site_name = get_option('blogname');
 		//Build our replacements array
 		$replacements = array(
 							esc_attr(strip_tags($this->title)),
 							$this->url,
 							$this->title,
-							$this->type,
-							$site_name);
+							$this->type);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements[3]))
 		{
@@ -200,7 +196,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.2.0';
+	private $version = '4.2.50';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -230,8 +226,6 @@ class bcn_breadcrumb_trail
 			'Hmainsite_template_no_anchor' => '%htitle%',
 			//Should the home page be shown
 			'bhome_display' => true,
-			//Title displayed when is_home() returns true
-			'Shome_title' => __('Home', 'breadcrumb-navxt'),
 			//The breadcrumb template for the home page, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hhome_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for the home page, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
@@ -731,8 +725,10 @@ class bcn_breadcrumb_trail
 	function do_front_page()
 	{
 		global $post, $current_site;
+		//Get the site name
+		$site_name = get_option('blogname');
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Shome_title'], $this->opt['Hhome_template_no_anchor'], array('site-home', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template_no_anchor'], array('site-home', 'current-item')));
 		//If we're paged, let's link to the first page
 		if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 		{
@@ -758,8 +754,10 @@ class bcn_breadcrumb_trail
 		//On everything else we need to link, but no current item (pre/suf)fixes
 		if($this->opt['bhome_display'])
 		{
+			//Get the site name
+			$site_name = get_option('blogname');
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Shome_title'], $this->opt['Hhome_template'], array('site-home'), get_home_url()));
+			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template'], array('site-home'), get_home_url()));
 			//If we have a multi site and are not on the main site we need to add a breadcrumb for the main site
 			if($this->opt['bmainsite_display'] && !is_main_site())
 			{
@@ -778,6 +776,8 @@ class bcn_breadcrumb_trail
 	{
 		if(isset($object->labels->name))
 		{
+			//Core filter use here is ok for time being
+			//TODO: Recheck validitiy prior to each release
 			return apply_filters('post_type_archive_title', $object->labels->name);
 		}
 	}

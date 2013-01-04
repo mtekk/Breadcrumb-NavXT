@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.2
-Tested up to: 3.4
-Stable tag: 4.1.0
+Tested up to: 3.4.2
+Stable tag: 4.2.0
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -18,6 +18,7 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * English - default -
 * Russian by Alexander Samsonov
 * German by Daniel Lang
+* Dutch by Joachim Jensen
 * French (France) by Emmanuel Beziat
 * Norwegian (Bokmål) by Jan Rosvoldsve
 * Spanish (Spain) by Karin Sequen
@@ -28,12 +29,13 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * Azerbaijani by Zaur Bayramov
 
 The following were not included, but are in the process of being updated:
+
 * Italian by Tamara Balestri
 * Malay by Ben Di
 * Hindi by Love Chandel
 
 The following translations are in need of a maintainer:
-* Dutch originally maintained by Stan Lenssen
+
 * Japanese originally maintained by Kazuhiro Terada
 
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
@@ -43,6 +45,16 @@ Don't see your language on the list? Stop by [Breadcrumb NavXT's translation pro
 Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
 
 == Changelog ==
+= 4.2.0 =
+* Behaviour change: Date archives are only available for the 'post' post type.
+* New feature: All Custom Post Types can now either use a post parent, or taxonomy based hierarchy.
+* New feature: Post Format archives are now supported.
+* New feature: Reorganized settings page with more responsive elements.
+* Bug fix: Widget will now display properly when told to include the paged breadcrumb on the main posts archive.
+* Bug fix: Using flat taxonomies as the post hierarchy no longer causes extraneous breadcrumb templates to be applied.
+* Bug fix: Mainsite link now works on posts and pages in multisite environments.
+* Bug fix: `bcn_breadcrumb::title_trim()` no longer cuts HTML encoded characters.
+* Bug fix: `bcn_breadcrumb::title_trim()` no longer trims the title when the title length is equal to the max length.
 = 4.1.0 =
 * Behavior change: Made the behavior of posts using flat taxonomies match the behavior of using a hierarchical taxonomy when the post is not assigned a taxonomy term.
 * New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don’t have a parent.

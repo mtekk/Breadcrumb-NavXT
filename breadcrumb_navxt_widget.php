@@ -36,8 +36,10 @@ class bcn_widget extends WP_Widget
 	function widget($args, $instance)
 	{
 		extract($args);
+		//A bit of a hack but we need the DB settings to know if we should exit early
+		$opt = get_option('bcn_options');
 		//If we are on the front page and don't display on the front, return early
-		if($instance['front'] && is_front_page())
+		if($instance['front'] && is_front_page() && !(is_paged() && $opt['bpaged_display']))
 		{
 			return;
 		}

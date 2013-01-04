@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 4.2.50
+Version: 4.2.51
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '4.2.50';
+	protected $version = '4.2.51';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -203,6 +203,11 @@ class bcn_admin extends mtekk_adminKit
 				if(isset($opts['Shome_title']))
 				{
 					unset($opts['Shome_title']);
+				}
+				//Removed mainsite_title
+				if(isset($opts['Smainsite_title']))
+				{
+					unset($opts['Smainsite_title']);
 				}
 			}
 			//Add custom post types
@@ -391,27 +396,8 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
-					<tr valign="top">
-						<th scope="row">
-							<?php _e('Main Site Breadcrumb', 'breadcrumb-navxt'); ?>						
-						</th>
-						<td>
-							<label>
-								<input name="bcn_options[bmainsite_display]" type="checkbox" id="bmainsite_display" <?php if(!is_multisite()){echo 'disabled="disabled" class="disabled"';}?> value="true" <?php checked(true, $this->opt['bmainsite_display']); ?> />
-								<?php _e('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'); ?>				
-							</label><br />
-							<ul>
-								<li>
-									<label for="Smainsite_title">
-										<?php _e('Main Site Home Title: ', 'breadcrumb-navxt');?>
-										<input type="text" name="bcn_options[Smainsite_title]" id="Smainsite_title" <?php if(!is_multisite()){echo 'disabled="disabled" class="disabled"';}?> value="<?php echo htmlentities($this->opt['Smainsite_title'], ENT_COMPAT, 'UTF-8'); ?>" size="20" />
-										<?php if(!is_multisite()){?><input type="hidden" name="bcn_options[Smainsite_title]" value="<?php echo htmlentities($this->opt['Smainsite_title'], ENT_COMPAT, 'UTF-8');?>" /><?php } ?>
-									</label>
-								</li>
-							</ul>							
-						</td>
-					</tr>
 					<?php
+						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', 'large-text', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', 'large-text', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_mainsite');

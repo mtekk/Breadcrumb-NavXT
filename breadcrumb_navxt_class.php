@@ -196,7 +196,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.2.50';
+	private $version = '4.2.51';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -218,8 +218,6 @@ class bcn_breadcrumb_trail
 		$this->opt = array(
 			//Should the mainsite be shown
 			'bmainsite_display' => true,
-			//Title displayed when for the main site
-			'Smainsite_title' => __('Home', 'breadcrumb-navxt'),
 			//The breadcrumb template for the main site, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hmainsite_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for the main site, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
@@ -739,8 +737,10 @@ class bcn_breadcrumb_trail
 		//If we have a multi site and are not on the main site we may need to add a breadcrumb for the main site
 		if($this->opt['bmainsite_display'] && !is_main_site())
 		{
+			//Get the site name
+			$site_name = get_site_option('site_name');
 			//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Smainsite_title'], $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
 		}
 	}
 	/**
@@ -761,8 +761,10 @@ class bcn_breadcrumb_trail
 			//If we have a multi site and are not on the main site we need to add a breadcrumb for the main site
 			if($this->opt['bmainsite_display'] && !is_main_site())
 			{
+				//Get the site name
+				$site_name = get_site_option('site_name');
 				//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb($this->opt['Smainsite_title'], $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
+				$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
 			}
 		}
 	}

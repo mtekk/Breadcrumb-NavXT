@@ -46,9 +46,11 @@ if(!function_exists('mb_strlen'))
 	require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
 }
 //Include the breadcrumb class
-require_once(dirname(__FILE__) . '/breadcrumb_navxt_class.php');
+require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');
+//Include the breadcrumb trail class
+require_once(dirname(__FILE__) . '/class.bcn_breadcrumb_trail.php');
 //Include the WP 2.8+ widget class
-require_once(dirname(__FILE__) . '/breadcrumb_navxt_widget.php');
+require_once(dirname(__FILE__) . '/class.bcn_widget.php');
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
@@ -82,8 +84,9 @@ class breadcrumb_navxt
 			//Include adminKit base class
 			if(!class_exists('mtekk_adminKit'))
 			{
-				require_once(dirname(__FILE__) . '/includes/mtekk_adminkit.php');
+				require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
 			}
+			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object
 			$this->admin = new bcn_admin($this->breadcrumb_trail);
 		}
@@ -93,8 +96,9 @@ class breadcrumb_navxt
 			//Include adminKit base class
 			if(!class_exists('mtekk_adminKit'))
 			{
-				require_once(dirname(__FILE__) . '/includes/mtekk_adminkit.php');
+				require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
 			}
+			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
 			//Instantiate our new admin object
 			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail);
 		}

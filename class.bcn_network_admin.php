@@ -134,6 +134,19 @@ class bcn_network_admin extends mtekk_adminKit
 		return update_site_option($option, $newvalue);
 	}
 	/**
+	 * Have to hook into add_option and replace with network wide alternate
+	 * 
+	 * @param string $option The name of the option to update
+	 * @param mixed $value The new value to set the option to
+	 * @param null $deprecated Deprecated parameter
+	 * @param string $autoload Whether or not to autoload the option, it's a string because WP is special
+	 * 
+	 */
+	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
+	{
+		return add_site_option($option, $value);
+	}
+	/**
 	 * Have to hook into delete_option and replace with network wide alternate
 	 * 
 	 * @param string $option The name of the option to delete
@@ -372,7 +385,7 @@ class bcn_network_admin extends mtekk_adminKit
 			return;
 		}
 		?>
-		<form action="options-general.php?page=breadcrumb-navxt" method="post" id="bcn_admin-options">
+		<form action="<?php echo $this->admin_url(); ?>" method="post" id="bcn_admin-options">
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">
@@ -426,7 +439,7 @@ class bcn_network_admin extends mtekk_adminKit
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), (get_option('show_on_front') !== "page"));
+						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', 'large-text', false, __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', 'large-text', false , __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_network_settings_blog');

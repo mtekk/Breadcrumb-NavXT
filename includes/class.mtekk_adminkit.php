@@ -229,10 +229,10 @@ abstract class mtekk_adminKit
 			//Grab defaults from the object
 			$opts = $this->opt;
 			//Add the options
-			add_option($this->unique_prefix . '_options', $opts);
-			add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
+			$this->add_option($this->unique_prefix . '_options', $opts);
+			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
 			//Add the version, no need to autoload the db version
-			add_option($this->unique_prefix . '_version', $this->version, '', 'no');
+			$this->add_option($this->unique_prefix . '_version', $this->version, '', 'no');
 		}
 		else
 		{
@@ -1025,6 +1025,19 @@ abstract class mtekk_adminKit
 	function update_option($option, $newvalue)
 	{
 		return update_option($option, $newvalue);
+	}
+	/**
+	 * A local pass through for add_option so that we can hook in and pick the correct method if needed
+	 * 
+	 * @param string $option The name of the option to update
+	 * @param mixed $value The new value to set the option to
+	 * @param null $deprecated Deprecated parameter
+	 * @param string $autoload Whether or not to autoload the option, it's a string because WP is special
+	 * 
+	 */
+	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
+	{
+		return add_option($option, $value, null, $autoload);
 	}
 	/**
 	 * A local pass through for delete_option so that we can hook in and pick the correct method if needed

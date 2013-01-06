@@ -314,7 +314,7 @@ class bcn_admin extends mtekk_adminKit
 			return;
 		}
 		?>
-		<form action="options-general.php?page=breadcrumb-navxt" method="post" id="bcn_admin-options">
+		<form action="<?php echo $this->admin_url(); ?>" method="post" id="bcn_admin-options">
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">

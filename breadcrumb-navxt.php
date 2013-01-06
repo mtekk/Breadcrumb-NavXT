@@ -58,6 +58,7 @@ class breadcrumb_navxt
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
+	protected $plugin_basename = null;
 	protected $opt = null;
 	protected $breadcrumb_trail = null;
 	protected $admin = null;
@@ -73,6 +74,8 @@ class breadcrumb_navxt
 		$this->breadcrumb_trail = $breadcrumb_trail;
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
+		//We set the plugin basename here
+		$this->plugin_basename = plugin_basename(__FILE__);
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'));
 		add_action('init', array($this, 'init'));
@@ -81,26 +84,16 @@ class breadcrumb_navxt
 		//Load our main admin if in the dashboard
 		if(is_admin())
 		{
-			//Include adminKit base class
-			if(!class_exists('mtekk_adminKit'))
-			{
-				require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
-			}
 			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object
-			$this->admin = new bcn_admin($this->breadcrumb_trail);
+			$this->admin = new bcn_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)
 		if(defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN)
 		{
-			//Include adminKit base class
-			if(!class_exists('mtekk_adminKit'))
-			{
-				require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
-			}
 			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
 			//Instantiate our new admin object
-			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail);
+			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 	}
 	function init()

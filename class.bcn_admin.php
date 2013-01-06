@@ -31,12 +31,10 @@ if(version_compare(phpversion(), '5.2.0', '<'))
 	}
 	return;
 }
-//Include the WP 2.8+ widget class
-require_once(dirname(__FILE__) . '/breadcrumb_navxt_widget.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {
-	require_once(dirname(__FILE__) . '/includes/mtekk_adminkit.php');
+	require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
 }
 /**
  * The administrative interface class 
@@ -50,22 +48,22 @@ class bcn_admin extends mtekk_adminKit
 	protected $access_level = 'manage_options';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
-	protected $plugin_basename = 'breadcrumb-navxt/breadcrumb_navxt_admin.php';
+	protected $plugin_basename = null;
 	protected $support_url = 'http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-';
 	protected $breadcrumb_trail = null;
 	/**
 	 * Administrative interface class default constructor
-	 * @param bcn_breadcrumb_trail	$breadcrumb_trail a breadcrumb trail object
+	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
+	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(bcn_breadcrumb_trail $breadcrumb_trail)
+	function __construct(bcn_breadcrumb_trail $breadcrumb_trail, $basename)
 	{
 		$this->breadcrumb_trail = $breadcrumb_trail;
+		$this->plugin_basename = $basename;
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'));
-		//We set the plugin basename here, could manually set it, but this is for demonstration purposes
-		//$this->plugin_basename = plugin_basename(__FILE__);
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}

@@ -3,14 +3,14 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 4.2.51
+Version: 4.2.70
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
 TextDomain: breadcrumb-navxt
 DomainPath: /languages/
 */
-/*  Copyright 2007-2012  John Havlik  (email : mtekkmonkey@gmail.com)
+/*  Copyright 2007-2013  John Havlik  (email : mtekkmonkey@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '4.2.51';
+	protected $version = '4.2.70';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -440,7 +440,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additonal plugin as this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -509,7 +509,18 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description">
+							<?php
+							if($post_type->hierarchical)
+							{
+								_e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); 
+							}
+							else
+							{
+								_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additonal plugin as this is a non-hierarchical post type.', 'breadcrumb-navxt');
+							}
+							?>
+							</p>
 						</td>
 					</tr>
 				</table>

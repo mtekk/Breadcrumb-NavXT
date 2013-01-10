@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2012  John Havlik  (email : mtekkmonkey@gmail.com)
+	Copyright 2007-2013  John Havlik  (email : mtekkmonkey@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,10 @@ class bcn_breadcrumb
 					'%title%',
 					'%link%',
 					'%htitle%',
-					'%type%');
+					'%type%',
+					'%ftitle%',
+					'%fhtitle%');
+	private $_title = NULL;
 	//The type of this breadcrumb
 	public $type;
 	/**
@@ -84,6 +87,7 @@ class bcn_breadcrumb
 	{
 		//Set the title
 		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type);
+		$this->_title = $this->title;
 	}
 	/**
 	 * Function to get the protected title member
@@ -171,7 +175,9 @@ class bcn_breadcrumb
 							esc_attr(strip_tags($this->title)),
 							$this->url,
 							$this->title,
-							$this->type);
+							$this->type,
+							esc_attr(strip_tags($this->_title)),
+							$this->_title);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements[3]))
 		{
@@ -196,7 +202,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.1.90';
+	private $version = '4.2.70';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options

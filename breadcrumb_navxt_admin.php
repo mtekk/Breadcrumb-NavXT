@@ -440,7 +440,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additonal plugin as this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -517,7 +517,7 @@ class bcn_admin extends mtekk_adminKit
 							}
 							else
 							{
-								_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additonal plugin as this is a non-hierarchical post type.', 'breadcrumb-navxt');
+								_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt');
 							}
 							?>
 							</p>

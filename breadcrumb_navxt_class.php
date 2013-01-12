@@ -41,6 +41,36 @@ class bcn_breadcrumb
 	private $_title = NULL;
 	//The type of this breadcrumb
 	public $type;
+	protected $allowed_html = array(
+					'a' => array(
+						'href' => true,
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'media' => true,
+						'dir' => true,
+						'relList' => true,
+						'rel' => true
+					),
+					'img' => array(
+						'alt' => true,
+						'align' => true,
+						'height' => true,
+						'width' => true,
+						'src' => true,
+						'id' => true,
+						'class' => true
+					),
+					'span' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true
+					)
+				);
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *  
@@ -69,11 +99,11 @@ class bcn_breadcrumb
 		}
 		if($url == NULL)
 		{
-				$this->template_no_anchor = $template;
+				$this->template_no_anchor = wp_kses($template, $this->allowed_html);
 		}
 		else
 		{
-				$this->template = $template;
+				$this->set_template($template);
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
@@ -121,7 +151,7 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = $template;
+		$this->template = wp_kses($template, $this->allowed_html);
 	}
 	/**
 	 * Append a type entry to the type array

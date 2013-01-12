@@ -30,6 +30,36 @@ abstract class mtekk_adminKit
 	protected $opt = array();
 	protected $message;
 	protected $support_url;
+	protected $allowed_html = array(
+					'a' => array(
+						'href' => true,
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'media' => true,
+						'dir' => true,
+						'relList' => true,
+						'rel' => true
+					),
+					'img' => array(
+						'alt' => true,
+						'align' => true,
+						'height' => true,
+						'width' => true,
+						'src' => true,
+						'id' => true,
+						'class' => true
+					),
+					'span' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true
+					)
+				);
 	function __construct()
 	{
 		//Admin Init Hook
@@ -366,13 +396,13 @@ abstract class mtekk_adminKit
 					//Handle the HTML options
 					case 'h':
 						//May be better to use wp_kses here
-						$opts[$option] = stripslashes($input[$option]);
+						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						break;
 					//Handle the HTML options that must not be null
 					case 'H':
 						if(isset($input[$option]))
 						{
-							$opts[$option] = stripslashes($input[$option]);
+							$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						}
 						break;
 					//Handle the text options that must not be null

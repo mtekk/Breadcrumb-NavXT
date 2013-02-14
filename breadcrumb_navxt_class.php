@@ -232,7 +232,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.2.70';
+	private $version = '4.3.0';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options

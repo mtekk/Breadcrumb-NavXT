@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/breadcrumb-navxt\n"
-"POT-Creation-Date: 2013-01-11 03:27:55+00:00\n"
+"POT-Creation-Date: 2013-02-09 03:51:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -122,15 +122,15 @@ msgstr ""
 msgid "Import/Export/Reset"
 msgstr ""
 
-#: breadcrumb_navxt_admin.php:314 includes/mtekk_adminkit.php:779
+#: breadcrumb_navxt_admin.php:314 includes/mtekk_adminkit.php:809
 msgid "Import"
 msgstr ""
 
-#: breadcrumb_navxt_admin.php:315 includes/mtekk_adminkit.php:780
+#: breadcrumb_navxt_admin.php:315 includes/mtekk_adminkit.php:810
 msgid "Export"
 msgstr ""
 
-#: breadcrumb_navxt_admin.php:316 includes/mtekk_adminkit.php:781
+#: breadcrumb_navxt_admin.php:316 includes/mtekk_adminkit.php:811
 msgid "Reset"
 msgstr ""
 
@@ -608,59 +608,59 @@ msgstr ""
 msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
 msgstr ""
 
-#: breadcrumb_navxt_admin.php:652 breadcrumb_navxt_class.php:63
+#: breadcrumb_navxt_admin.php:652 breadcrumb_navxt_class.php:93
 msgid "%htitle%"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:67 breadcrumb_navxt_class.php:228
-#: breadcrumb_navxt_class.php:234 breadcrumb_navxt_class.php:240
-#: breadcrumb_navxt_class.php:254 breadcrumb_navxt_class.php:266
-#: breadcrumb_navxt_class.php:278
+#: breadcrumb_navxt_class.php:97 breadcrumb_navxt_class.php:258
+#: breadcrumb_navxt_class.php:264 breadcrumb_navxt_class.php:270
+#: breadcrumb_navxt_class.php:284 breadcrumb_navxt_class.php:296
+#: breadcrumb_navxt_class.php:308
 msgid ""
 "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:261
+#: breadcrumb_navxt_class.php:291
 msgid "Page %htitle%"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:285
+#: breadcrumb_navxt_class.php:315
 msgid "404"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:288
+#: breadcrumb_navxt_class.php:318
 msgid ""
 "Search results for &#39;<a title=\"Go to the first page of search results "
 "for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:290
+#: breadcrumb_navxt_class.php:320
 msgid "Search results for &#39;%htitle%&#39;"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:293 breadcrumb_navxt_class.php:298
+#: breadcrumb_navxt_class.php:323 breadcrumb_navxt_class.php:328
 msgid ""
 "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%"
 "\">%htitle%</a>"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:303
+#: breadcrumb_navxt_class.php:333
 msgid ""
 "Articles by: <a title=\"Go to the first page of posts by %title%.\" href="
 "\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:305
+#: breadcrumb_navxt_class.php:335
 msgid "Articles by: %htitle%"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:310
+#: breadcrumb_navxt_class.php:340
 msgid ""
 "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class="
 "\"%type%\">%htitle%</a>"
 msgstr ""
 
-#: breadcrumb_navxt_class.php:314
+#: breadcrumb_navxt_class.php:344
 msgid ""
 "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">"
 "%htitle%</a>"
@@ -706,126 +706,126 @@ msgstr ""
 msgid "Hide the trail on the front page"
 msgstr ""
 
-#: includes/mtekk_adminkit.php:204
+#: includes/mtekk_adminkit.php:234
 msgid "Settings"
 msgstr ""
 
-#: includes/mtekk_adminkit.php:274
+#: includes/mtekk_adminkit.php:304
 msgid "Your settings are out of date."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
 msgid "Migrate the settings now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
 msgid "Migrate now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:313
 msgid "Your settings are for a newer version."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Your plugin install is incomplete."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Load default settings now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Complete now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Your plugin settings are invalid."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Attempt to fix settings now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Fix now."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:477
+#: includes/mtekk_adminkit.php:507
 msgid "Settings successfully saved."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
+#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
 msgid "Undo the options save."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
-#: includes/mtekk_adminkit.php:587 includes/mtekk_adminkit.php:611
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
+#: includes/mtekk_adminkit.php:617 includes/mtekk_adminkit.php:641
+#: includes/mtekk_adminkit.php:658
 msgid "Undo"
 msgstr ""
 
-#: includes/mtekk_adminkit.php:482
+#: includes/mtekk_adminkit.php:512
 msgid "Some settings were not saved."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:483
+#: includes/mtekk_adminkit.php:513
 msgid "The following settings were not saved:"
 msgstr ""
 
-#: includes/mtekk_adminkit.php:488
+#: includes/mtekk_adminkit.php:518
 msgid "Please include this message in your %sbug report%s."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:488
+#: includes/mtekk_adminkit.php:518
 msgid "Go to the %s support post for your version."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:587
+#: includes/mtekk_adminkit.php:617
 msgid "Settings successfully imported from the uploaded file."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:587
+#: includes/mtekk_adminkit.php:617
 msgid "Undo the options import."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:592
+#: includes/mtekk_adminkit.php:622
 msgid "Importing settings from file failed."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:611
+#: includes/mtekk_adminkit.php:641
 msgid "Settings successfully reset to the default values."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:611
+#: includes/mtekk_adminkit.php:641
 msgid "Undo the options reset."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:658
 msgid "Settings successfully undid the last operation."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:658
 msgid "Undo the last undo operation."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:663
+#: includes/mtekk_adminkit.php:693
 msgid "Settings successfully migrated."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:670
+#: includes/mtekk_adminkit.php:700
 msgid "Default settings successfully installed."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:771
+#: includes/mtekk_adminkit.php:801
 msgid ""
 "Import settings from a XML file, export the current settings to a XML file, "
 "or reset to the default settings."
 msgstr ""
 
-#: includes/mtekk_adminkit.php:774
+#: includes/mtekk_adminkit.php:804
 msgid "Settings File"
 msgstr ""
 
-#: includes/mtekk_adminkit.php:777
+#: includes/mtekk_adminkit.php:807
 msgid "Select a XML settings file to upload and import settings from."
 msgstr ""

@@ -1145,7 +1145,7 @@ class bcn_breadcrumb_trail
 		}
 		
 		// Correct ampersand for W3C Validation
-		$trail_str = str_replace('&','&amp;',$trail_str);
+		$trail_str = str_replace('&term','&amp;term',$trail_str);
 		
 		//Should we return or echo the assembled trail?
 		if($return)

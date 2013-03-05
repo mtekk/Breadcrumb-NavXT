@@ -81,6 +81,7 @@ class bcn_breadcrumb
 	 */
 	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL)
 	{
+		$this->allowed_html = apply_filters('bcn_breadcrumb_allowed_html', $this->allowed_html);
 		//The breadcrumb type
 		$this->type = $type;
 		//Set the title

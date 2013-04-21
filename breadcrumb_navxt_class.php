@@ -763,7 +763,7 @@ class bcn_breadcrumb_trail
 		//Get the site name
 		$site_name = get_option('blogname');
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template_no_anchor'], array('site-home', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template_no_anchor'], array('home', 'current-item')));
 		//If we're paged, let's link to the first page
 		if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 		{
@@ -777,7 +777,7 @@ class bcn_breadcrumb_trail
 			//Get the site name
 			$site_name = get_site_option('site_name');
 			//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('main-home'), get_home_url($current_site->blog_id)));
 		}
 	}
 	/**
@@ -794,14 +794,14 @@ class bcn_breadcrumb_trail
 			//Get the site name
 			$site_name = get_option('blogname');
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template'], array('site-home'), get_home_url()));
+			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template'], array('home'), get_home_url()));
 			//If we have a multi site and are not on the main site we need to add a breadcrumb for the main site
 			if($this->opt['bmainsite_display'] && !is_main_site())
 			{
 				//Get the site name
 				$site_name = get_site_option('site_name');
 				//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('mainsite-home'), get_home_url($current_site->blog_id)));
+				$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('main-home'), get_home_url($current_site->blog_id)));
 			}
 		}
 	}

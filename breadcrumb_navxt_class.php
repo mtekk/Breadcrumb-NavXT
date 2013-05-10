@@ -32,7 +32,7 @@ class bcn_breadcrumb
 	//The link the breadcrumb leads to, null if $linked == false
 	protected $url;
 	//The corresponding resource ID
-	protected $is;
+	protected $id = NULL;
 	protected $_tags = array(
 					'%title%',
 					'%link%',
@@ -81,11 +81,13 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL)
+	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL, $id = NULL)
 	{
 		$this->allowed_html = apply_filters('bcn_breadcrumb_allowed_html', $this->allowed_html);
 		//The breadcrumb type
 		$this->type = $type;
+		//Set the resource id
+		$this->set_id($id);
 		//Set the title
 		$this->set_title($title);
 		//Assign the breadcrumb template
@@ -110,6 +112,7 @@ class bcn_breadcrumb
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
+		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', $this->allowed_html);
 	}
 	/**
@@ -120,7 +123,7 @@ class bcn_breadcrumb
 	public function set_title($title)
 	{
 		//Set the title
-		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type);
+		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type, $this->id);
 		$this->_title = $this->title;
 	}
 	/**
@@ -158,13 +161,13 @@ class bcn_breadcrumb
 		$this->template = wp_kses($template, $this->allowed_html);
 	}
 	/**
-	 * 
+	 * Sets the internal breadcrumb ID
 	 *
-	 * @param string $template the template to use durring assebly
+	 * @param int $id the id of the resource this breadcrumb represents
 	 */
 	 public function set_id($id)
 	 {
-	 	
+	 	$this->id = $id;
 	 }
 	/**
 	 * Append a type entry to the type array

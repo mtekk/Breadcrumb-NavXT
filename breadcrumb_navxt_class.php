@@ -33,13 +33,6 @@ class bcn_breadcrumb
 	protected $url;
 	//The corresponding resource ID
 	protected $id = NULL;
-	protected $_tags = array(
-					'%title%',
-					'%link%',
-					'%htitle%',
-					'%type%',
-					'%ftitle%',
-					'%fhtitle%');
 	private $_title = NULL;
 	//The type of this breadcrumb
 	public $type;
@@ -218,28 +211,30 @@ class bcn_breadcrumb
 	{
 		//Build our replacements array
 		$replacements = array(
-							esc_attr(strip_tags($this->title)),
-							$this->url,
-							$this->title,
-							$this->type,
-							esc_attr(strip_tags($this->_title)),
-							$this->_title);
+			'%title%' => esc_attr(strip_tags($this->title)),
+			'%link%' => $this->url,
+			'%htitle%' => $this->title,
+			'%type%' => $this->type,
+			'%ftitle%' => esc_attr(strip_tags($this->_title)),
+			'%fhtitle%' => $this->_title
+			);
 		//The type may be an array, implode it if that is the case
-		if(is_array($replacements[3]))
+		if(is_array($replacements['%type%']))
 		{
-			$replacements[3] = implode(' ', $replacements[3]);
+			$replacements['%type%'] = implode(' ', $replacements['%type%']);
 		}
+		$replacements = apply_filters('bcn_template_tags', $replacements);
 		//If we are linked we'll need to use the normal template
 		if($this->linked && $linked)
 		{
 			//Return the assembled breadcrumb string
-			return str_replace($this->_tags, $replacements, $this->template);
+			return str_replace(array_keys($replacements), $replacements, $this->template);
 		}
 		//Otherwise we use the no anchor template
 		else
 		{
 			//Return the assembled breadcrumb string
-			return str_replace($this->_tags, $replacements, $this->template_no_anchor);
+			return str_replace(array_keys($replacements), $replacements, $this->template_no_anchor);
 		}
 	}
 }
@@ -248,7 +243,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.40';
+	private $version = '4.3.45';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options

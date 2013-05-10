@@ -73,6 +73,8 @@ abstract class mtekk_adminKit
 		$this->local();
 		//Register Help Output
 		//add_action('add_screen_help_and_options', array($this, 'help'));
+		//Filter our allowed html tags
+		$this->allowed_html = apply_filters($this->unique_prefix . '_allowed_html', $this->allowed_html);
 	}
 	/**
 	 * Returns the internal mtekk_admin_class version

@@ -31,6 +31,8 @@ class bcn_breadcrumb
 	protected $linked;
 	//The link the breadcrumb leads to, null if $linked == false
 	protected $url;
+	//The corresponding resource ID
+	protected $is;
 	protected $_tags = array(
 					'%title%',
 					'%link%',
@@ -108,6 +110,7 @@ class bcn_breadcrumb
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
+		$this->allowed_html = apply_filters('bcn_allowed_html', $this->allowed_html);
 	}
 	/**
 	 * Function to set the protected title member
@@ -154,6 +157,15 @@ class bcn_breadcrumb
 		//Assign the breadcrumb template
 		$this->template = wp_kses($template, $this->allowed_html);
 	}
+	/**
+	 * 
+	 *
+	 * @param string $template the template to use durring assebly
+	 */
+	 public function set_id($id)
+	 {
+	 	
+	 }
 	/**
 	 * Append a type entry to the type array
 	 * 

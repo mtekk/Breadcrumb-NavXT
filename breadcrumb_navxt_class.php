@@ -223,7 +223,7 @@ class bcn_breadcrumb
 		{
 			$replacements['%type%'] = implode(' ', $replacements['%type%']);
 		}
-		$replacements = apply_filters('bcn_template_tags', $replacements);
+		$replacements = apply_filters('bcn_template_tags', $replacements, $this->id);
 		//If we are linked we'll need to use the normal template
 		if($this->linked && $linked)
 		{

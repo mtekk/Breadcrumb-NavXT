@@ -248,7 +248,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.0';
+	private $version = '4.3.40';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -422,7 +422,7 @@ class bcn_breadcrumb_trail
 		{
 			//TODO Evaluate the need for this filter call
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $curauth->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $curauth->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $curauth->ID));
 			//If we're paged, or allowing the current item to be linked, let's link to the first page
 			if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 			{
@@ -442,7 +442,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO: Add logic for contextual taxonomy selection
 	 */
-	function post_hierarchy($id, $type, $parent = null)
+	function post_hierarchy($id, $type, $parent = NULL)
 	{
 		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
 		if($this->opt['bpost_' . $type . '_taxonomy_display'])
@@ -478,7 +478,7 @@ class bcn_breadcrumb_trail
 			//Handle the use of hierarchical posts as the 'taxonomy'
 			else if(is_post_type_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
 			{
-				if($parent == null)
+				if($parent == NULL)
 				{
 					//We have to grab the post to find its parent, can't use $post for this one
 					$parent = get_post($id);
@@ -552,7 +552,7 @@ class bcn_breadcrumb_trail
 		//Get the current category object, filter applied within this call
 		$term = &get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array($taxonomy), get_term_link($term, $taxonomy)));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array($taxonomy), get_term_link($term, $taxonomy), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($term->parent && $term->parent != $id)
 		{
@@ -572,7 +572,7 @@ class bcn_breadcrumb_trail
 		//Use WordPress API, though a bit heavier than the old method, this will ensure compatibility with other plug-ins
 		$parent = get_post($id);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($id), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($id)));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($id), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($id), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($parent->post_parent >= 0 && $parent->post_parent != false && $id != $parent->post_parent && $frontpage != $parent->post_parent)
 		{
@@ -590,7 +590,7 @@ class bcn_breadcrumb_trail
 	{
 		global $post, $page;
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post-' . $post->post_type, 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links
 		if($this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
 		{
@@ -628,7 +628,7 @@ class bcn_breadcrumb_trail
 	{
 		global $post;
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post-attachment', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post-attachment', 'current-item'), NULL, $post->ID));
 		if($this->opt['bcurrent_item_linked'])
 		{
 			//Change the template over to the normal, linked one
@@ -639,7 +639,7 @@ class bcn_breadcrumb_trail
 		//Get the parent's information
 		$parent = get_post($post->post_parent);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post->post_parent), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($post->post_parent)));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post->post_parent), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($post->post_parent), $post->post_parent));
 		//We need to treat flat and hiearchical post attachment hierachies differently
 		if(is_post_type_hierarchical($parent->post_type))
 		{
@@ -674,7 +674,7 @@ class bcn_breadcrumb_trail
 		//Simmilar to using $post, but for things $post doesn't cover
 		$term = $wp_query->get_queried_object();
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $term->taxonomy . '_template_no_anchor'], array($term->taxonomy, 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $term->taxonomy . '_template_no_anchor'], array($term->taxonomy, 'current-item'), NULL, $term->term_id));
 		//If we're paged, let's link to the first page
 		if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 		{
@@ -1020,7 +1020,7 @@ class bcn_breadcrumb_trail
 		if(count($this->trail) > 0)
 		{
 			//Exit early since we have breadcrumbs in the trail
-			return null;
+			return NULL;
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_before_fill', $this);

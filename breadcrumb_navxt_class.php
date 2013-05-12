@@ -1154,6 +1154,10 @@ class bcn_breadcrumb_trail
 			//Place in the breadcrumb's assembled elements
 			$trail_str .= $breadcrumb->assemble($linked);
 		}
+		
+		// Correct ampersand for W3C Validation
+		$trail_str = str_replace('&term','&amp;term',$trail_str);
+		
 		//Should we return or echo the assembled trail?
 		if($return)
 		{

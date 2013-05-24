@@ -183,7 +183,7 @@ class bcn_breadcrumb
 		$replacements = array(
 			'%title%' => esc_attr(strip_tags($this->title)),
 			'%link%' => $this->url,
-			'%htitle%' => $this->title,
+			'%htitle%' => $this->_title,
 			'%type%' => $this->type,
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
 			'%fhtitle%' => $this->_title
@@ -213,7 +213,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.45';
+	private $version = '4.3.65';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options

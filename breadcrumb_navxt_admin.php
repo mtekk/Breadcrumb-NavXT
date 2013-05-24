@@ -79,14 +79,13 @@ class bcn_admin extends mtekk_adminKit
 		$this->breadcrumb_trail = $breadcrumb_trail;
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
-		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
-		add_action('wp_loaded', array($this, 'wp_loaded'));
 		//We set the plugin basename here, could manually set it, but this is for demonstration purposes
 		//$this->plugin_basename = plugin_basename(__FILE__);
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', create_function('', 'return register_widget("'. $this->unique_prefix . '_widget");'));
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
+		add_action('init', array($this, 'wp_init'));
 	}
 	/**
 	 * admin initialization callback function
@@ -103,6 +102,97 @@ class bcn_admin extends mtekk_adminKit
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
 	}
+	function wp_init()
+	{
+		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
+	}
+	function allowed_html($tags)
+	{
+		$allowed_html = array(
+					'a' => array(
+						'href' => true,
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'media' => true,
+						'dir' => true,
+						'relList' => true,
+						'rel' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'img' => array(
+						'alt' => true,
+						'align' => true,
+						'height' => true,
+						'width' => true,
+						'src' => true,
+						'id' => true,
+						'class' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'span' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h1' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h2' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					)
+				);
+		return $allowed_html; //$this->array_merge_recursive($tags, $allowed_html);
+	}
 	function wp_loaded()
 	{
 		//First make sure our defaults are safe
@@ -110,6 +200,7 @@ class bcn_admin extends mtekk_adminKit
 		$this->find_taxonomies($this->opt);
 		//Let others hook into our settings
 		$this->opt = apply_filters($this->unique_prefix . '_settings_init', $this->opt);
+		parent::wp_loaded();
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed

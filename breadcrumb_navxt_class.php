@@ -183,7 +183,7 @@ class bcn_breadcrumb
 		$replacements = array(
 			'%title%' => esc_attr(strip_tags($this->title)),
 			'%link%' => $this->url,
-			'%htitle%' => $this->_title,
+			'%htitle%' => $this->title,
 			'%type%' => $this->type,
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
 			'%fhtitle%' => $this->_title

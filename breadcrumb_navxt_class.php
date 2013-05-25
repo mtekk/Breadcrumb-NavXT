@@ -36,36 +36,7 @@ class bcn_breadcrumb
 	private $_title = NULL;
 	//The type of this breadcrumb
 	public $type;
-	protected $allowed_html = array(
-					'a' => array(
-						'href' => true,
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'media' => true,
-						'dir' => true,
-						'relList' => true,
-						'rel' => true
-					),
-					'img' => array(
-						'alt' => true,
-						'align' => true,
-						'height' => true,
-						'width' => true,
-						'src' => true,
-						'id' => true,
-						'class' => true
-					),
-					'span' => array(
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'dir' => true,
-						'align' => true,
-						'lang' => true,
-						'xml:lang' => true
-					)
-				);
+	protected $allowed_html = array();
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *  
@@ -76,7 +47,8 @@ class bcn_breadcrumb
 	 */
 	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL, $id = NULL)
 	{
-		$this->allowed_html = apply_filters('bcn_breadcrumb_allowed_html', $this->allowed_html);
+		//Filter allowed_html array to allow others to add acceptable tags
+		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
 		//The breadcrumb type
 		$this->type = $type;
 		//Set the resource id
@@ -105,8 +77,6 @@ class bcn_breadcrumb
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
-		//Filter allowed_html array to allow others to add acceptable tags
-		$this->allowed_html = apply_filters('bcn_allowed_html', $this->allowed_html);
 	}
 	/**
 	 * Function to set the protected title member
@@ -136,7 +106,7 @@ class bcn_breadcrumb
 	 */
 	public function set_url($url)
 	{
-		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url));
+		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id));
 		//Set linked to true if we set a non-null $url
 		if($url)
 		{
@@ -223,7 +193,7 @@ class bcn_breadcrumb
 		{
 			$replacements['%type%'] = implode(' ', $replacements['%type%']);
 		}
-		$replacements = apply_filters('bcn_template_tags', $replacements, $this->id);
+		$replacements = apply_filters('bcn_template_tags', $replacements, $this->type, $this->id);
 		//If we are linked we'll need to use the normal template
 		if($this->linked && $linked)
 		{
@@ -243,7 +213,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.45';
+	private $version = '4.3.65';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options

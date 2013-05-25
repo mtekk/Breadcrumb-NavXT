@@ -106,7 +106,7 @@ class bcn_breadcrumb
 	 */
 	public function set_url($url)
 	{
-		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url));
+		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id));
 		//Set linked to true if we set a non-null $url
 		if($url)
 		{

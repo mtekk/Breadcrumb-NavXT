@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	protected $version = '4.2.60';
+	protected $version = '4.3.90';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';
@@ -67,6 +67,7 @@ class bcn_network_admin extends mtekk_adminKit
 		add_action('wp_loaded', array($this, 'wp_loaded'));
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
+		add_action('init', array($this, 'wp_init'));
 	}
 	/**
 	 * admin initialization callback function
@@ -81,9 +82,101 @@ class bcn_network_admin extends mtekk_adminKit
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
 	}
+	function wp_init()
+	{
+		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
+	}
+	function allowed_html($tags)
+	{
+		$allowed_html = array(
+					'a' => array(
+						'href' => true,
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'media' => true,
+						'dir' => true,
+						'relList' => true,
+						'rel' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'img' => array(
+						'alt' => true,
+						'align' => true,
+						'height' => true,
+						'width' => true,
+						'src' => true,
+						'id' => true,
+						'class' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'span' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h1' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h2' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					)
+				);
+		return $allowed_html; //$this->array_merge_recursive($tags, $allowed_html);
+	}
 	function wp_loaded()
 	{
 		
+		parent::wp_loaded();
 	}
 	/**
 	 * Return the URL of the settings page for the plugin
@@ -448,7 +541,7 @@ class bcn_network_admin extends mtekk_adminKit
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'));
+						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), !is_multisite());
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', 'large-text', false, __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', 'large-text', false, __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_network_settings_mainsite');
@@ -491,7 +584,7 @@ class bcn_network_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -560,7 +653,18 @@ class bcn_network_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); ?></p>
+							<p class="description">
+							<?php
+							if($post_type->hierarchical)
+							{
+								_e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); 
+							}
+							else
+							{
+								_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt');
+							}
+							?>
+							</p>
 						</td>
 					</tr>
 				</table>

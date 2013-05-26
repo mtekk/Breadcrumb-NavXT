@@ -1,26 +1,26 @@
-# Translation of Breadcrumb NavXT in German
+# Translation of Breadcrumb NavXT in Arabic
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-02-09 03:40:28+0000\n"
+"PO-Revision-Date: 2013-02-09 03:41:03+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
 #: breadcrumb_navxt_admin.php:443 breadcrumb_navxt_admin.php:520
 msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
-msgstr "Die Hierarchie, welche der Breadcrumb Trail anzeigen wird. Beachte, dass die \"Post Parent\" Option ein zusätzliches Plugin benötigen kann um wie erwartet zu funktionieren, da dies ein nicht-hierarchischer Post Typ ist."
+msgstr "الهرمية التي ستظهر بها علامات التتبع . لاحظ ان خيار \"الدوينة الاب \" قد يتطلب اضافات اضافية ليعمل كما هو مطلوب حيث ان هذه الاضافة هي عبارة عن نوع تدوينة بدون هرميات ( من مستوى واحد )"
 
 #: includes/mtekk_adminkit.php:283
 msgid "Your settings are for a newer version."
-msgstr "Deine Einstellungen sind für eine aktuellere Version ausgelegt."
+msgstr "الاعدادات المحفوظة خاصة بإصدار أحدث."
 
 #: breadcrumb_navxt_widget.php:96
 msgid "Text to show before the trail:"
-msgstr "Text, der vor dem Trail angezeigt werden soll:"
+msgstr "النص المراد إظهاره قبل علامات التتبع Breadcrumbs ."
 
 #: breadcrumb_navxt_widget.php:103
 msgid "Schema.org"
@@ -28,150 +28,150 @@ msgstr "Schema.org"
 
 #: breadcrumb_navxt_widget.php:33
 msgid "Adds a breadcrumb trail to your sidebar"
-msgstr "Fügt der Sidebar einen Breadcrumb Trail hinzu"
+msgstr "اضف علامات التتبع Breadcrumbs إلى العمود الجانبي في الموقع"
 
 #: breadcrumb_navxt_widget.php:92
 msgid "Title:"
-msgstr "Titel:"
+msgstr "العنوان :"
 
 #: breadcrumb_navxt_widget.php:100
 msgid "Output trail as:"
-msgstr "Trail ausgeben als:"
+msgstr "اظهار علامات التتبع ك : "
 
 #: breadcrumb_navxt_widget.php:102
 msgid "List"
-msgstr "Liste"
+msgstr "قائمة"
 
 #: breadcrumb_navxt_widget.php:104
 msgid "Plain"
-msgstr "Plain"
+msgstr "نص عادي"
 
 #: breadcrumb_navxt_widget.php:109
 msgid "Link the breadcrumbs"
-msgstr "Verlinke die Breadcrumbs"
+msgstr "ضع روابط على علامات التتبع"
 
 #: breadcrumb_navxt_widget.php:111
 msgid "Reverse the order of the trail"
-msgstr "Die Reihenfolge des Trails umkehren"
+msgstr "عكس ترتيب علامات التتبع"
 
 #: breadcrumb_navxt_widget.php:113
 msgid "Hide the trail on the front page"
-msgstr "Verstecke den Trail auf der Startseite"
+msgstr "قم بإخفاء علامات التتبع في الصفحة الرئيسية"
 
 #: includes/mtekk_adminkit.php:204
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr "الاعدادات"
 
 #: includes/mtekk_adminkit.php:274
 msgid "Your settings are out of date."
-msgstr "Deine Einstellungen sind veraltet."
+msgstr "إعداداتك قديمة ."
 
 #: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
 msgid "Migrate the settings now."
-msgstr "Die Einstellungen jetzt migrieren."
+msgstr "ترحيل الإعدادات الآن."
 
 #: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
 msgid "Migrate now."
-msgstr "Jetzt migrieren."
+msgstr "الترحيل الآن."
 
 #: includes/mtekk_adminkit.php:291
 msgid "Your plugin install is incomplete."
-msgstr "Deine Plugin-Installtion ist fertig."
+msgstr "لم تتم عملية تثبيت الاضافة ."
 
 #: includes/mtekk_adminkit.php:291
 msgid "Load default settings now."
-msgstr "Standard-Einstellungen jetzt laden."
+msgstr "حمل الاعدادات الافتراضية الآن."
 
 #: includes/mtekk_adminkit.php:291
 msgid "Complete now."
-msgstr "Fertiggestellt."
+msgstr "تم الانتهاء ."
 
 #: includes/mtekk_adminkit.php:299
 msgid "Your plugin settings are invalid."
-msgstr "Deine Plugin-Einstellungen sind fehlerhaft."
+msgstr "ان اعدادت الاضافة غير صحيحة."
 
 #: includes/mtekk_adminkit.php:299
 msgid "Attempt to fix settings now."
-msgstr "Versuche, die Einstellungen jetzt zu fixen."
+msgstr "حاول اصلاح الاعدادات الآن."
 
 #: includes/mtekk_adminkit.php:299
 msgid "Fix now."
-msgstr "Jetzt fixen."
+msgstr "اصلحها الان"
 
 #: includes/mtekk_adminkit.php:477
 msgid "Settings successfully saved."
-msgstr "Einstellungen erfolgreich gespeichert."
+msgstr "تم حفظ الاعدادات بنجاح"
 
 #: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
 msgid "Undo the options save."
-msgstr "Das Speichern der Optionen rückgängig machen."
+msgstr "تراجع عن حفظ الخيارات"
 
 #: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
 #: includes/mtekk_adminkit.php:587 includes/mtekk_adminkit.php:611
 #: includes/mtekk_adminkit.php:628
 msgid "Undo"
-msgstr "Rückgänig machen"
+msgstr "تراجع"
 
 #: includes/mtekk_adminkit.php:482
 msgid "Some settings were not saved."
-msgstr "Einige Einstellungen wurden nicht gespeichert."
+msgstr "هنالك بعض الاعدادات لم يتم حفظها بعد"
 
 #: includes/mtekk_adminkit.php:483
 msgid "The following settings were not saved:"
-msgstr "Die folgenden Einstellungen wurden nicht gespeichert."
+msgstr "الاعدادات التالية لم يتم حفظها بعد :"
 
 #: includes/mtekk_adminkit.php:488
 msgid "Please include this message in your %sbug report%s."
-msgstr "Bitte füge diese Nachricht Deinem %sbug report%s bei."
+msgstr "الرجاء ادراج الرسالة التالية في \"%sbug report%s\"."
 
 #: includes/mtekk_adminkit.php:488
 msgid "Go to the %s support post for your version."
-msgstr "Gehe zum %s Support Post für Deine Version."
+msgstr "الرجاء التوجه إلى تدوينة الدعم ( %s) لاصدارك "
 
 #: includes/mtekk_adminkit.php:587
 msgid "Settings successfully imported from the uploaded file."
-msgstr "Die Einstellungen wurden erfolgreich von der hochgeladenen Datei importiert."
+msgstr "تم استيراد الاعدادات بنجاح من الملف المرفوع."
 
 #: includes/mtekk_adminkit.php:587
 msgid "Undo the options import."
-msgstr "Den Optionen-Import rückgängig machen."
+msgstr "التراجع عن استيراد الاعدادات."
 
 #: includes/mtekk_adminkit.php:592
 msgid "Importing settings from file failed."
-msgstr "Einstellungen-Import aus Datei fehlgeschlagen."
+msgstr "لم تتم عملية استيراد الاعدادات بنجاح من الملف."
 
 #: includes/mtekk_adminkit.php:611
 msgid "Settings successfully reset to the default values."
-msgstr "Einstellungen erfolgreich auf Standardwerte zurückgesetzt."
+msgstr "تم استعادة الاعدادات الافتراضية بنجاح"
 
 #: includes/mtekk_adminkit.php:611
 msgid "Undo the options reset."
-msgstr "Den Optionen-Reset rückgängig machen."
+msgstr "التراجع عن عملية الضبط الافتراضي للاعدادات."
 
 #: includes/mtekk_adminkit.php:628
 msgid "Settings successfully undid the last operation."
-msgstr "Einstellungen hat die letzte Operation erfolgreich rückgängig gemacht."
+msgstr "تم التراجع عن اخر عملية بنجاح ."
 
 #: includes/mtekk_adminkit.php:628
 msgid "Undo the last undo operation."
-msgstr "Wiederholen."
+msgstr "التراجع عن أخر عملية تراجع ."
 
 #: includes/mtekk_adminkit.php:663
 msgid "Settings successfully migrated."
-msgstr "Einstellungen erfolgreich migriert."
+msgstr "تم ترحيل الاعدادات بنجاح"
 
 #: includes/mtekk_adminkit.php:670
 msgid "Default settings successfully installed."
-msgstr "Standardeinstellungen erfolgreich installiert."
+msgstr "تم تثبيت الاعدادات الافتراضية بنجاح"
 
 #: includes/mtekk_adminkit.php:771
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
-msgstr "Einstellungen aus einer XML Datei importieren, aktuelle Einstellungen in XML Datei exportieren oder Reset auf Standardeinstellungen."
+msgstr "استيراد الاعدادات من ملف XML , تصدير وحفظ الاعدادات في ملف XML ,  اعادة الضبط للاعدادات الافتراضية ."
 
 #: includes/mtekk_adminkit.php:774
 msgid "Settings File"
-msgstr "Einstellungen Datei"
+msgstr "ملف الإعدادات"
 
 #: includes/mtekk_adminkit.php:777
 msgid "Select a XML settings file to upload and import settings from."
-msgstr "Wähle eine XML Datei mit Einstellungen zum Hochladen und Einstellungen-Import."
+msgstr "تحديد ملف الاعدادات بصيغة XML للقيام بعملية رفعه واستيراد الاعدادات منه ."

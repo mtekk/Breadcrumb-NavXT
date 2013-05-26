@@ -31,13 +31,12 @@ class bcn_breadcrumb
 	protected $linked;
 	//The link the breadcrumb leads to, null if $linked == false
 	protected $url;
-	protected $_tags = array(
-					'%title%',
-					'%link%',
-					'%htitle%',
-					'%type%');
+	//The corresponding resource ID
+	protected $id = NULL;
+	private $_title = NULL;
 	//The type of this breadcrumb
 	public $type;
+	protected $allowed_html = array();
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *  
@@ -46,10 +45,14 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL)
+	public function bcn_breadcrumb($title = '', $template = '', $type = '', $url = NULL, $id = NULL)
 	{
+		//Filter allowed_html array to allow others to add acceptable tags
+		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
 		//The breadcrumb type
 		$this->type = $type;
+		//Set the resource id
+		$this->set_id($id);
 		//Set the title
 		$this->set_title($title);
 		//Assign the breadcrumb template
@@ -66,11 +69,11 @@ class bcn_breadcrumb
 		}
 		if($url == NULL)
 		{
-				$this->template_no_anchor = $template;
+				$this->template_no_anchor = wp_kses($template, $this->allowed_html);
 		}
 		else
 		{
-				$this->template = $template;
+				$this->set_template($template);
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
@@ -83,7 +86,8 @@ class bcn_breadcrumb
 	public function set_title($title)
 	{
 		//Set the title
-		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type);
+		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type, $this->id);
+		$this->_title = $this->title;
 	}
 	/**
 	 * Function to get the protected title member
@@ -102,7 +106,7 @@ class bcn_breadcrumb
 	 */
 	public function set_url($url)
 	{
-		$this->url = apply_filters('bcn_breadcrumb_url', $url);
+		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id));
 		//Set linked to true if we set a non-null $url
 		if($url)
 		{
@@ -117,8 +121,17 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = $template;
+		$this->template = wp_kses($template, $this->allowed_html);
 	}
+	/**
+	 * Sets the internal breadcrumb ID
+	 *
+	 * @param int $id the id of the resource this breadcrumb represents
+	 */
+	 public function set_id($id)
+	 {
+	 	$this->id = $id;
+	 }
 	/**
 	 * Append a type entry to the type array
 	 * 
@@ -168,26 +181,30 @@ class bcn_breadcrumb
 	{
 		//Build our replacements array
 		$replacements = array(
-							esc_attr(strip_tags($this->title)),
-							$this->url,
-							$this->title,
-							$this->type);
+			'%title%' => esc_attr(strip_tags($this->title)),
+			'%link%' => $this->url,
+			'%htitle%' => $this->title,
+			'%type%' => $this->type,
+			'%ftitle%' => esc_attr(strip_tags($this->_title)),
+			'%fhtitle%' => $this->_title
+			);
 		//The type may be an array, implode it if that is the case
-		if(is_array($replacements[3]))
+		if(is_array($replacements['%type%']))
 		{
-			$replacements[3] = implode(' ', $replacements[3]);
+			$replacements['%type%'] = implode(' ', $replacements['%type%']);
 		}
+		$replacements = apply_filters('bcn_template_tags', $replacements, $this->type, $this->id);
 		//If we are linked we'll need to use the normal template
 		if($this->linked && $linked)
 		{
 			//Return the assembled breadcrumb string
-			return str_replace($this->_tags, $replacements, $this->template);
+			return str_replace(array_keys($replacements), $replacements, $this->template);
 		}
 		//Otherwise we use the no anchor template
 		else
 		{
 			//Return the assembled breadcrumb string
-			return str_replace($this->_tags, $replacements, $this->template_no_anchor);
+			return str_replace(array_keys($replacements), $replacements, $this->template_no_anchor);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-09-28 21:55:08+0000\n"
+"PO-Revision-Date: 2013-02-14 02:36:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,126 +10,130 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: breadcrumb_navxt_class.php:64 breadcrumb_navxt_class.php:216
-#: breadcrumb_navxt_class.php:224 breadcrumb_navxt_class.php:230
-#: breadcrumb_navxt_class.php:244 breadcrumb_navxt_class.php:256
-#: breadcrumb_navxt_class.php:268
+#: breadcrumb_navxt_admin.php:443 breadcrumb_navxt_admin.php:520
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "Hierarkiet som breadcrumb-stien vil vise. Bemærk at \"Indlægsforælder\"-indstillingen kan kræve et andet plugin for at opføre sig som forventet, da dette er en ikke-hierarkisk indholdstype."
+
+#: breadcrumb_navxt_class.php:97 breadcrumb_navxt_class.php:258
+#: breadcrumb_navxt_class.php:264 breadcrumb_navxt_class.php:270
+#: breadcrumb_navxt_class.php:284 breadcrumb_navxt_class.php:296
+#: breadcrumb_navxt_class.php:308
 msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Gå til %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:278
+#: breadcrumb_navxt_class.php:318
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr "Søgeresultater for &#39;<a title=\"Gå til første side af søgeresultaterne for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
-#: breadcrumb_navxt_admin.php:325
+#: breadcrumb_navxt_admin.php:341
 msgid "A collection of settings most likely to be modified are located under this tab."
 msgstr "En samling af indstillinger, der højst sandsynligt skal ændres, er placeret under denne fane."
 
-#: breadcrumb_navxt_admin.php:333
+#: breadcrumb_navxt_admin.php:349
 msgid "Title Length"
 msgstr "Titellængde"
 
-#: breadcrumb_navxt_admin.php:338
+#: breadcrumb_navxt_admin.php:354
 msgid "Limit the length of the breadcrumb title."
 msgstr "Begræns længden af breadcrumb-titlen."
 
-#: breadcrumb_navxt_admin.php:399
+#: breadcrumb_navxt_admin.php:397
 msgid "Mainsite Breadcrumb"
 msgstr "Hovedside-breadcrumb"
 
-#: breadcrumb_navxt_admin.php:430
+#: breadcrumb_navxt_admin.php:409
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
 msgstr "Indstillingerne for alle indholdstyper (Indlæg, sider og brugeroprettede indholdstyper) er placeret under denne fane."
 
-#: breadcrumb_navxt_admin.php:430
+#: breadcrumb_navxt_admin.php:409
 msgid "Post Types"
 msgstr "Indholdstyper"
 
-#: breadcrumb_navxt_admin.php:436
+#: breadcrumb_navxt_admin.php:415
 msgid "Post Hierarchy Display"
 msgstr "Visning af hierarki for indlæg"
 
-#: breadcrumb_navxt_admin.php:440
+#: breadcrumb_navxt_admin.php:419
 msgid "Post Hierarchy"
 msgstr "Hierarki for indlæg"
 
-#: breadcrumb_navxt_admin.php:508
+#: breadcrumb_navxt_admin.php:487
 msgid "%s Hierarchy Display"
 msgstr "Visning af hierarki for %s"
 
-#: breadcrumb_navxt_admin.php:559
+#: breadcrumb_navxt_admin.php:549
 msgid "Post Formats"
 msgstr "Formater"
 
-#: breadcrumb_navxt_admin.php:343
+#: breadcrumb_navxt_admin.php:359
 msgid "Max Title Length: "
 msgstr "Maks. titellængde"
 
-#: breadcrumb_navxt_admin.php:431
+#: breadcrumb_navxt_admin.php:410
 msgid "Posts"
 msgstr "Indlæg"
 
-#: breadcrumb_navxt_admin.php:448 breadcrumb_navxt_admin.php:517
+#: breadcrumb_navxt_admin.php:427 breadcrumb_navxt_admin.php:496
 msgid "Post Parent"
 msgstr "Indlægsforælder"
 
-#: breadcrumb_navxt_admin.php:464 breadcrumb_navxt_admin.php:533
+#: breadcrumb_navxt_admin.php:516
 msgid "The hierarchy which the breadcrumb trail will show."
 msgstr "Hierarkiet som breadcrumb-stien vil vise."
 
-#: breadcrumb_navxt_admin.php:512
+#: breadcrumb_navxt_admin.php:491
 msgid "%s Hierarchy"
 msgstr "Hierarki for %s"
 
-#: breadcrumb_navxt_admin.php:544
+#: breadcrumb_navxt_admin.php:534
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
 msgstr "Indstillingerne for alle taksonomier (inkl. kategorier, tags og brugeroprettede taksonomier) er placeret under denne fane."
 
-#: breadcrumb_navxt_admin.php:544
+#: breadcrumb_navxt_admin.php:534
 msgid "Taxonomies"
 msgstr "Taksonomier"
 
-#: breadcrumb_navxt_admin.php:562
+#: breadcrumb_navxt_admin.php:552
 msgid "Post Format Template"
 msgstr "Skabelon for format"
 
-#: breadcrumb_navxt_admin.php:562
+#: breadcrumb_navxt_admin.php:552
 msgid "The template for post format breadcrumbs."
 msgstr "Skabelonen for format-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:563
+#: breadcrumb_navxt_admin.php:553
 msgid "Post Format Template (Unlinked)"
 msgstr "Skabelon for format (uden link)"
 
-#: breadcrumb_navxt_admin.php:563
+#: breadcrumb_navxt_admin.php:553
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for post_format breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:593
+#: breadcrumb_navxt_admin.php:583
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
 msgstr "Indstillingerne for forfatter- og datoarkiver, søgninger og 404-sider er placeret under denne fane."
 
-#: breadcrumb_navxt_admin.php:594
+#: breadcrumb_navxt_admin.php:584
 msgid "Author Archives"
 msgstr "Forfatterarkiv"
 
-#: breadcrumb_navxt_class.php:283 breadcrumb_navxt_class.php:288
+#: breadcrumb_navxt_class.php:323 breadcrumb_navxt_class.php:328
 msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Gå til tag-arkiverne for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:293
+#: breadcrumb_navxt_class.php:333
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "Artikler af: <a title=\"Gå til den første side af indlæg af %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:300
+#: breadcrumb_navxt_class.php:340
 msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Gå til kategori-arkiverne for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:304
+#: breadcrumb_navxt_class.php:344
 msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Gå til arkiverne for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:313
 msgid "Your settings are for a newer version."
 msgstr "Dine indstillinger er for en nyere version."
 
@@ -141,9 +145,13 @@ msgstr "Tekst foran stien:"
 msgid "Schema.org"
 msgstr "Schema.org"
 
-#: breadcrumb_navxt_admin.php:229
+#: breadcrumb_navxt_admin.php:245
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Gå til Breadcrumb NavXT oversættelsesprojekt."
+
+#: breadcrumb_navxt_admin.php:36
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
+msgstr "Din version af PHP er for gammel, opgrader venligst til en nyere version. Din version er %1$s, Breadcrumb NavXT kræver %2$s"
 
 #: breadcrumb_navxt_widget.php:33
 msgid "Adds a breadcrumb trail to your sidebar"
@@ -177,581 +185,569 @@ msgstr "Vis sti i omvendt rækkefølge"
 msgid "Hide the trail on the front page"
 msgstr "Skjul stien på forsiden"
 
-#: breadcrumb_navxt_admin.php:120
+#: breadcrumb_navxt_admin.php:122
 msgid "Insufficient privileges to proceed."
 msgstr "Utilstrækkelige privilegier til at fortsætte."
 
-#: breadcrumb_navxt_admin.php:222
+#: breadcrumb_navxt_admin.php:238
 msgid "Tips for the settings are located below select options."
 msgstr "Tips til indstillingerne findes under den enkelte indstilling."
 
-#: breadcrumb_navxt_admin.php:223
+#: breadcrumb_navxt_admin.php:239
 msgid "Resources"
 msgstr "Resurser"
 
-#: breadcrumb_navxt_admin.php:224
+#: breadcrumb_navxt_admin.php:240
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sVejledninger og hjælp%s: Der er flere guides, vejledninger og hjælp på forfatterens hjemmeside."
 
-#: breadcrumb_navxt_admin.php:224
+#: breadcrumb_navxt_admin.php:240
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Gå til tag-arkivet for Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:225
+#: breadcrumb_navxt_admin.php:241
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sOnline dokumentation%s: Se dokumentationen for mere detaljerede tekniske informationer."
 
-#: breadcrumb_navxt_admin.php:225
+#: breadcrumb_navxt_admin.php:241
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Gå til den online dokumentation for Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:226
+#: breadcrumb_navxt_admin.php:242
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%sRapporter en fejl%s: Hvis du tror, du har fundet en fejl, så inkluder venligst din WordPress-version og detajler om, hvordan fejlen kan reproduceres."
 
-#: breadcrumb_navxt_admin.php:226
+#: breadcrumb_navxt_admin.php:242
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Gå til Breadcrumb NavXT supportindlæg for din version."
 
-#: breadcrumb_navxt_admin.php:227
+#: breadcrumb_navxt_admin.php:243
 msgid "Giving Back"
 msgstr "Giv igen"
 
-#: breadcrumb_navxt_admin.php:228
+#: breadcrumb_navxt_admin.php:244
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%sDonate%s: Elsker du Breadcrumb NavXT og ønsker at hjælpe udviklingen? Overvej at købe forfatteren en øl."
 
-#: breadcrumb_navxt_admin.php:228
+#: breadcrumb_navxt_admin.php:244
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Gå til PayPal for at give en donation til Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:229
+#: breadcrumb_navxt_admin.php:245
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sOversæt%s: Er dit sprog ikke tilgængeligt? Kontakt John Havlik for at oversætte."
 
-#: breadcrumb_navxt_admin.php:234 breadcrumb_navxt_admin.php:325
-#: breadcrumb_navxt_admin.php:326
+#: breadcrumb_navxt_admin.php:250 breadcrumb_navxt_admin.php:341
+#: breadcrumb_navxt_admin.php:342
 msgid "General"
 msgstr "Generelt"
 
-#: breadcrumb_navxt_admin.php:237
+#: breadcrumb_navxt_admin.php:253
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "For at indstillingerne på denne side skal tage effekt, skal du enten bruge den inkluderede Breadcrumb NavXT widget, eller placere mindst en af koderne herunder i dit tema."
 
-#: breadcrumb_navxt_admin.php:238
+#: breadcrumb_navxt_admin.php:254
 msgid "Breadcrumb trail with separators"
 msgstr "Breadcrumb-sti med adskillere"
 
-#: breadcrumb_navxt_admin.php:244
+#: breadcrumb_navxt_admin.php:260
 msgid "Breadcrumb trail in list form"
 msgstr "Breadcrumb-sti som liste"
 
-#: breadcrumb_navxt_admin.php:253
+#: breadcrumb_navxt_admin.php:269
 msgid "Quick Start"
 msgstr "Quick Start"
 
-#: breadcrumb_navxt_admin.php:256
+#: breadcrumb_navxt_admin.php:272
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Bruges koden fra Quick Start-sektionen herover, kan følgende CSS bruges som base til at style din breadcrumb-sti."
 
-#: breadcrumb_navxt_admin.php:268
+#: breadcrumb_navxt_admin.php:284
 msgid "Styling"
 msgstr "Styling"
 
-#: breadcrumb_navxt_admin.php:274
+#: breadcrumb_navxt_admin.php:290
 msgid "Import/Export/Reset"
 msgstr "Import/Eksport/Nulstil"
 
-#: breadcrumb_navxt_admin.php:298 includes/mtekk_adminkit.php:779
+#: breadcrumb_navxt_admin.php:314 includes/mtekk_adminkit.php:809
 msgid "Import"
 msgstr "Importer"
 
-#: breadcrumb_navxt_admin.php:299 includes/mtekk_adminkit.php:780
+#: breadcrumb_navxt_admin.php:315 includes/mtekk_adminkit.php:810
 msgid "Export"
 msgstr "Eksporter"
 
-#: breadcrumb_navxt_admin.php:300 includes/mtekk_adminkit.php:781
+#: breadcrumb_navxt_admin.php:316 includes/mtekk_adminkit.php:811
 msgid "Reset"
 msgstr "Nulstil"
 
-#: breadcrumb_navxt_admin.php:313
+#: breadcrumb_navxt_admin.php:329
 msgid "Breadcrumb NavXT Settings"
 msgstr "Breadcrumb NavXT Indstillinger"
 
-#: breadcrumb_navxt_admin.php:329
+#: breadcrumb_navxt_admin.php:345
 msgid "Breadcrumb Separator"
 msgstr "Breadcrumb-adskiller"
 
-#: breadcrumb_navxt_admin.php:329
+#: breadcrumb_navxt_admin.php:345
 msgid "Placed in between each breadcrumb."
 msgstr "Placeret mellem hver breadcrumb."
 
-#: breadcrumb_navxt_admin.php:363 breadcrumb_navxt_admin.php:367
+#: breadcrumb_navxt_admin.php:379 breadcrumb_navxt_admin.php:382
 msgid "Home Breadcrumb"
 msgstr "Forside-breadcrumb"
 
-#: breadcrumb_navxt_admin.php:372
+#: breadcrumb_navxt_admin.php:382
 msgid "Place the home breadcrumb in the trail."
 msgstr "Placer forside-breadcrumben i stien."
 
-#: breadcrumb_navxt_admin.php:377
-msgid "Home Title: "
-msgstr "Forside-titel:"
-
-#: breadcrumb_navxt_admin.php:385
+#: breadcrumb_navxt_admin.php:383
 msgid "Home Template"
 msgstr "Skabelon for forside"
 
-#: breadcrumb_navxt_admin.php:385
+#: breadcrumb_navxt_admin.php:383
 msgid "The template for the home breadcrumb."
 msgstr "Skabelonen for forside-breadcrumben"
 
-#: breadcrumb_navxt_admin.php:386
+#: breadcrumb_navxt_admin.php:384
 msgid "Home Template (Unlinked)"
 msgstr "Skabelon for forside (uden link)"
 
-#: breadcrumb_navxt_admin.php:386
+#: breadcrumb_navxt_admin.php:384
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Skabelonen for forside-breadcrumb, brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:390 breadcrumb_navxt_admin.php:393
+#: breadcrumb_navxt_admin.php:388 breadcrumb_navxt_admin.php:391
 msgid "Blog Breadcrumb"
 msgstr "Blog-breadcrumb"
 
-#: breadcrumb_navxt_admin.php:393
+#: breadcrumb_navxt_admin.php:391
 msgid "Place the blog breadcrumb in the trail."
 msgstr "Placer blog-breadcrumben i stien."
 
-#: breadcrumb_navxt_admin.php:394
+#: breadcrumb_navxt_admin.php:392
 msgid "Blog Template"
 msgstr "Skabelon for blog"
 
-#: breadcrumb_navxt_admin.php:394
+#: breadcrumb_navxt_admin.php:392
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "Skabelonen for blog-breadcrumben, kun brugt når en statisk forside er sat."
 
-#: breadcrumb_navxt_admin.php:395
+#: breadcrumb_navxt_admin.php:393
 msgid "Blog Template (Unlinked)"
 msgstr "Skabelon for blog (uden link)"
 
-#: breadcrumb_navxt_admin.php:395
+#: breadcrumb_navxt_admin.php:393
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Skabelonen for blog-breadcrumben, kun brugt når en statisk forside er sat, og når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:403
+#: breadcrumb_navxt_admin.php:400
 msgid "Main Site Breadcrumb"
 msgstr "Hovedside-breadcrumb"
 
-#: breadcrumb_navxt_admin.php:408
+#: breadcrumb_navxt_admin.php:400
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Placer hovedside-breadcrumben i stien i en multisite-installation."
 
-#: breadcrumb_navxt_admin.php:413
-msgid "Main Site Home Title: "
-msgstr "Hovedside-titel:"
-
-#: breadcrumb_navxt_admin.php:422
+#: breadcrumb_navxt_admin.php:401
 msgid "Main Site Home Template"
 msgstr "Skabelon for hovedside"
 
-#: breadcrumb_navxt_admin.php:422
+#: breadcrumb_navxt_admin.php:401
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Skabelonen for hovedside-breadcrumben, kun brugt i multisite-installationer."
 
-#: breadcrumb_navxt_admin.php:423
+#: breadcrumb_navxt_admin.php:402
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Skabelon for hovedside (uden link)"
 
-#: breadcrumb_navxt_admin.php:423
+#: breadcrumb_navxt_admin.php:402
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Skabelonen for hovedside-breadcrumben, kun brugt i multisite-installationer, og når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:354
+#: breadcrumb_navxt_admin.php:370
 msgid "Current Item"
 msgstr "Nuværende side"
 
-#: breadcrumb_navxt_admin.php:357
+#: breadcrumb_navxt_admin.php:373
 msgid "Link Current Item"
 msgstr "Link nuværende side"
 
-#: breadcrumb_navxt_admin.php:357
+#: breadcrumb_navxt_admin.php:373
 msgid "Yes"
 msgstr "Ja"
 
-#: breadcrumb_navxt_admin.php:358
+#: breadcrumb_navxt_admin.php:374
 msgid "Paged Breadcrumb"
 msgstr "Pagineret breadcrumb"
 
-#: breadcrumb_navxt_admin.php:358
+#: breadcrumb_navxt_admin.php:374
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Inkluder den paginerede breadcrumb i breadcrumb-stien."
 
-#: breadcrumb_navxt_admin.php:358
+#: breadcrumb_navxt_admin.php:374
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Indikerer at brugeren er på en anden side end den første på paginerede indlæg/sider."
 
-#: breadcrumb_navxt_admin.php:359
+#: breadcrumb_navxt_admin.php:375
 msgid "Paged Template"
 msgstr "Pagineret skabelon"
 
-#: breadcrumb_navxt_admin.php:359
+#: breadcrumb_navxt_admin.php:375
 msgid "The template for paged breadcrumbs."
 msgstr "Skabelonen for paginerede breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:434
+#: breadcrumb_navxt_admin.php:413
 msgid "Post Template"
 msgstr "Skabelon for indlæg"
 
-#: breadcrumb_navxt_admin.php:434
+#: breadcrumb_navxt_admin.php:413
 msgid "The template for post breadcrumbs."
 msgstr "Skabelonen for indlægs-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:435
+#: breadcrumb_navxt_admin.php:414
 msgid "Post Template (Unlinked)"
 msgstr "Skabelon for indlæg (uden link)"
 
-#: breadcrumb_navxt_admin.php:435
+#: breadcrumb_navxt_admin.php:414
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for indlægs-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:436
+#: breadcrumb_navxt_admin.php:415
 msgid "Show the taxonomy leading to a post in the breadcrumb trail."
 msgstr "Vis taksonomien, der leder til et indlæg, i breadcrumb-stien."
 
-#: breadcrumb_navxt_admin.php:444 breadcrumb_navxt_admin.php:545
+#: breadcrumb_navxt_admin.php:423 breadcrumb_navxt_admin.php:535
 msgid "Categories"
 msgstr "Kategorier"
 
-#: breadcrumb_navxt_admin.php:445
+#: breadcrumb_navxt_admin.php:424
 msgid "Dates"
 msgstr "Datoer"
 
-#: breadcrumb_navxt_admin.php:446 breadcrumb_navxt_admin.php:552
+#: breadcrumb_navxt_admin.php:425 breadcrumb_navxt_admin.php:542
 msgid "Tags"
 msgstr "Tags"
 
-#: breadcrumb_navxt_admin.php:468
+#: breadcrumb_navxt_admin.php:447
 msgid "Pages"
 msgstr "Sider"
 
-#: breadcrumb_navxt_admin.php:471
+#: breadcrumb_navxt_admin.php:450
 msgid "Page Template"
 msgstr "Skabelon for side"
 
-#: breadcrumb_navxt_admin.php:471
+#: breadcrumb_navxt_admin.php:450
 msgid "The template for page breadcrumbs."
 msgstr "Skabelonen for side-breadcrumbs"
 
-#: breadcrumb_navxt_admin.php:472
+#: breadcrumb_navxt_admin.php:451
 msgid "Page Template (Unlinked)"
 msgstr "Skabelon for side (uden link)"
 
-#: breadcrumb_navxt_admin.php:472
+#: breadcrumb_navxt_admin.php:451
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for side-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:473
+#: breadcrumb_navxt_admin.php:452
 msgid "Attachment Template"
 msgstr "Skabelon for vedhæftning"
 
-#: breadcrumb_navxt_admin.php:473
+#: breadcrumb_navxt_admin.php:452
 msgid "The template for attachment breadcrumbs."
 msgstr "Skabelonen for vedhæftnings-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:474
+#: breadcrumb_navxt_admin.php:453
 msgid "Attachment Template (Unlinked)"
 msgstr "Skabelon for vedhæftning (uden link)"
 
-#: breadcrumb_navxt_admin.php:474
+#: breadcrumb_navxt_admin.php:453
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for vedhæftnings-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:661
+#: breadcrumb_navxt_admin.php:651
 msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
 msgstr "<a title=\"Gå til %title%.\" href=\"%link%\">%htitle%</a>"
 
-#: breadcrumb_navxt_admin.php:662 breadcrumb_navxt_class.php:60
+#: breadcrumb_navxt_admin.php:652 breadcrumb_navxt_class.php:93
 msgid "%htitle%"
 msgstr "%htitle%"
 
-#: breadcrumb_navxt_admin.php:494 breadcrumb_navxt_admin.php:583
+#: breadcrumb_navxt_admin.php:473 breadcrumb_navxt_admin.php:573
 msgid "%s Template"
 msgstr "Skabelon for %s"
 
-#: breadcrumb_navxt_admin.php:494 breadcrumb_navxt_admin.php:583
+#: breadcrumb_navxt_admin.php:473 breadcrumb_navxt_admin.php:573
 msgid "The template for %s breadcrumbs."
 msgstr "Skabelonen for %s-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:495 breadcrumb_navxt_admin.php:584
+#: breadcrumb_navxt_admin.php:474 breadcrumb_navxt_admin.php:574
 msgid "%s Template (Unlinked)"
 msgstr "Skabelon for %s (uden link)"
 
-#: breadcrumb_navxt_admin.php:495 breadcrumb_navxt_admin.php:584
+#: breadcrumb_navxt_admin.php:474 breadcrumb_navxt_admin.php:574
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for %s-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:500
+#: breadcrumb_navxt_admin.php:479
 msgid "%s Root Page"
 msgstr "%s rodside"
 
-#: breadcrumb_navxt_admin.php:503
+#: breadcrumb_navxt_admin.php:482
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Vælg &mdash;"
 
-#: breadcrumb_navxt_admin.php:507
+#: breadcrumb_navxt_admin.php:486
 msgid "%s Archive Display"
 msgstr "Visning af %s-arkiv"
 
-#: breadcrumb_navxt_admin.php:507
+#: breadcrumb_navxt_admin.php:486
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Vis breadcrumben for post type-arkiver til %s i breadcrumb-stien."
 
-#: breadcrumb_navxt_admin.php:508
+#: breadcrumb_navxt_admin.php:487
 msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
 msgstr "Vis taksonomien, der leder til %s, i breadcrumb-stien."
 
-#: breadcrumb_navxt_admin.php:548
+#: breadcrumb_navxt_admin.php:538
 msgid "Category Template"
 msgstr "Skabelon for kategori"
 
-#: breadcrumb_navxt_admin.php:548
+#: breadcrumb_navxt_admin.php:538
 msgid "The template for category breadcrumbs."
 msgstr "Skabelonen for kategori-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:549
+#: breadcrumb_navxt_admin.php:539
 msgid "Category Template (Unlinked)"
 msgstr "Skabelon for kategori (uden link)"
 
-#: breadcrumb_navxt_admin.php:549
+#: breadcrumb_navxt_admin.php:539
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for kategori-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:555
+#: breadcrumb_navxt_admin.php:545
 msgid "Tag Template"
 msgstr "Skabelon for tag"
 
-#: breadcrumb_navxt_admin.php:555
+#: breadcrumb_navxt_admin.php:545
 msgid "The template for tag breadcrumbs."
 msgstr "Skabelonen for tag-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:556
+#: breadcrumb_navxt_admin.php:546
 msgid "Tag Template (Unlinked)"
 msgstr "Skabelon for tag (uden link)"
 
-#: breadcrumb_navxt_admin.php:556
+#: breadcrumb_navxt_admin.php:546
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for tag-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:593 breadcrumb_navxt_admin.php:602
+#: breadcrumb_navxt_admin.php:583 breadcrumb_navxt_admin.php:592
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: breadcrumb_navxt_admin.php:597
+#: breadcrumb_navxt_admin.php:587
 msgid "Author Template"
 msgstr "Skabelon for forfatter"
 
-#: breadcrumb_navxt_admin.php:597
+#: breadcrumb_navxt_admin.php:587
 msgid "The template for author breadcrumbs."
 msgstr "Skabelonen for forfatter-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:598
+#: breadcrumb_navxt_admin.php:588
 msgid "Author Template (Unlinked)"
 msgstr "Skabelon for forfatter (uden link)"
 
-#: breadcrumb_navxt_admin.php:598
+#: breadcrumb_navxt_admin.php:588
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for forfatter-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:599
+#: breadcrumb_navxt_admin.php:589
 msgid "Author Display Format"
 msgstr "Visning af forfatterformat"
 
-#: breadcrumb_navxt_admin.php:599
+#: breadcrumb_navxt_admin.php:589
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name bruger navnet angivet i \"Vis navn offentligt som\" under brugerprofilen; de øvrige svarer til indstillingerne i brugerprofilen."
 
-#: breadcrumb_navxt_admin.php:605
+#: breadcrumb_navxt_admin.php:595
 msgid "Date Template"
 msgstr "Skabelon for dato"
 
-#: breadcrumb_navxt_admin.php:605
+#: breadcrumb_navxt_admin.php:595
 msgid "The template for date breadcrumbs."
 msgstr "Skabelonen for dato-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:606
+#: breadcrumb_navxt_admin.php:596
 msgid "Date Template (Unlinked)"
 msgstr "Skabelon for dato (uden link)"
 
-#: breadcrumb_navxt_admin.php:606
+#: breadcrumb_navxt_admin.php:596
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Skabelonen for dato-breadcrumbs, kun brugt når breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:607
+#: breadcrumb_navxt_admin.php:597
 msgid "Search Template"
 msgstr "Skabelon for søgning"
 
-#: breadcrumb_navxt_admin.php:607
+#: breadcrumb_navxt_admin.php:597
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Skabelonen for søgnings-breadcrumbs, kun brugt når søgeresultaterne spænder over flere sider."
 
-#: breadcrumb_navxt_admin.php:608
+#: breadcrumb_navxt_admin.php:598
 msgid "Search Template (Unlinked)"
 msgstr "Skabelon for søgning (uden link)"
 
-#: breadcrumb_navxt_admin.php:608
+#: breadcrumb_navxt_admin.php:598
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Skabelonen for søgnings-breadcrumbs, kun brugt når søgeresultaterne spænder over flere sider, og breadcrumben ikke er linket."
 
-#: breadcrumb_navxt_admin.php:609
+#: breadcrumb_navxt_admin.php:599
 msgid "404 Title"
 msgstr "404-titel"
 
-#: breadcrumb_navxt_admin.php:610
+#: breadcrumb_navxt_admin.php:600
 msgid "404 Template"
 msgstr "Skabelon for 404"
 
-#: breadcrumb_navxt_admin.php:610
+#: breadcrumb_navxt_admin.php:600
 msgid "The template for 404 breadcrumbs."
 msgstr "Skabelonen for 404-breadcrumbs."
 
-#: breadcrumb_navxt_admin.php:616
+#: breadcrumb_navxt_admin.php:606
 msgid "Save Changes"
 msgstr "Gem ændringer"
 
-#: includes/mtekk_adminkit.php:204
+#: includes/mtekk_adminkit.php:234
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: includes/mtekk_adminkit.php:274
+#: includes/mtekk_adminkit.php:304
 msgid "Your settings are out of date."
 msgstr "Dine indstillinger er forældede."
 
-#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
 msgid "Migrate the settings now."
 msgstr "Migrer indstillingerne nu."
 
-#: includes/mtekk_adminkit.php:274 includes/mtekk_adminkit.php:283
+#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
 msgid "Migrate now."
 msgstr "Migrer nu."
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Your plugin install is incomplete."
 msgstr "Din plugin-installation er ikke færdig."
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Load default settings now."
 msgstr "Indlæs standardindstillinger nu."
 
-#: includes/mtekk_adminkit.php:291
+#: includes/mtekk_adminkit.php:321
 msgid "Complete now."
 msgstr "Færdiggør nu."
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Your plugin settings are invalid."
 msgstr "Dine plugin-indstillinger er ugyldige."
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Attempt to fix settings now."
 msgstr "Forsøg at rette indstillinger nu."
 
-#: includes/mtekk_adminkit.php:299
+#: includes/mtekk_adminkit.php:329
 msgid "Fix now."
 msgstr "Ret nu."
 
-#: includes/mtekk_adminkit.php:477
+#: includes/mtekk_adminkit.php:507
 msgid "Settings successfully saved."
 msgstr "Indstillinger gemt."
 
-#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
+#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
 msgid "Undo the options save."
 msgstr "Fortryd gem af indstillinger."
 
-#: includes/mtekk_adminkit.php:477 includes/mtekk_adminkit.php:482
-#: includes/mtekk_adminkit.php:587 includes/mtekk_adminkit.php:611
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
+#: includes/mtekk_adminkit.php:617 includes/mtekk_adminkit.php:641
+#: includes/mtekk_adminkit.php:658
 msgid "Undo"
 msgstr "Fortryd"
 
-#: includes/mtekk_adminkit.php:482
+#: includes/mtekk_adminkit.php:512
 msgid "Some settings were not saved."
 msgstr "Nogle indstillinger blev ikke gemt."
 
-#: includes/mtekk_adminkit.php:483
+#: includes/mtekk_adminkit.php:513
 msgid "The following settings were not saved:"
 msgstr "Følgende indstillinger blev ikke gemt:"
 
-#: includes/mtekk_adminkit.php:488
+#: includes/mtekk_adminkit.php:518
 msgid "Please include this message in your %sbug report%s."
 msgstr "Venligst inkluder denne besked i din %sfejlrapport%s."
 
-#: includes/mtekk_adminkit.php:488
+#: includes/mtekk_adminkit.php:518
 msgid "Go to the %s support post for your version."
 msgstr "Gå til %s supportindlæg for din version."
 
-#: includes/mtekk_adminkit.php:587
+#: includes/mtekk_adminkit.php:617
 msgid "Settings successfully imported from the uploaded file."
 msgstr "Indstillinger importeret fra den uploadede fil."
 
-#: includes/mtekk_adminkit.php:587
+#: includes/mtekk_adminkit.php:617
 msgid "Undo the options import."
 msgstr "Fortryd import af indstillinger."
 
-#: includes/mtekk_adminkit.php:592
+#: includes/mtekk_adminkit.php:622
 msgid "Importing settings from file failed."
 msgstr "Importering af indstillinger fra fil mislykkedes."
 
-#: includes/mtekk_adminkit.php:611
+#: includes/mtekk_adminkit.php:641
 msgid "Settings successfully reset to the default values."
 msgstr "Indstillinger nulstillet til standardværdierne."
 
-#: includes/mtekk_adminkit.php:611
+#: includes/mtekk_adminkit.php:641
 msgid "Undo the options reset."
 msgstr "Fortryd nulstilling af indstillinger."
 
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:658
 msgid "Settings successfully undid the last operation."
 msgstr "Indstillinger fortrød seneste handling."
 
-#: includes/mtekk_adminkit.php:628
+#: includes/mtekk_adminkit.php:658
 msgid "Undo the last undo operation."
 msgstr "Fortryd seneste fortryd-handling."
 
-#: includes/mtekk_adminkit.php:663
+#: includes/mtekk_adminkit.php:693
 msgid "Settings successfully migrated."
 msgstr "Indstillinger migreret."
 
-#: includes/mtekk_adminkit.php:670
+#: includes/mtekk_adminkit.php:700
 msgid "Default settings successfully installed."
 msgstr "Standardindstillinger installeret."
 
-#: includes/mtekk_adminkit.php:771
+#: includes/mtekk_adminkit.php:801
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
 msgstr "Importer indstillinger fra en XML-fil, eksporter de nuværende indstillinger til en XML-fil eller nulstil til standardindstillinger."
 
-#: includes/mtekk_adminkit.php:774
+#: includes/mtekk_adminkit.php:804
 msgid "Settings File"
 msgstr "Fil med indstillinger"
 
-#: includes/mtekk_adminkit.php:777
+#: includes/mtekk_adminkit.php:807
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Vælg en XML-fil med indstillinger at uploade og importere indstillinger fra."
 
-#: breadcrumb_navxt_class.php:214 breadcrumb_navxt_class.php:222
-msgid "Home"
-msgstr "Forside"
-
-#: breadcrumb_navxt_class.php:251
+#: breadcrumb_navxt_class.php:291
 msgid "Page %htitle%"
 msgstr "Side %htitle%"
 
-#: breadcrumb_navxt_class.php:275
+#: breadcrumb_navxt_class.php:315
 msgid "404"
 msgstr "404"
 
-#: breadcrumb_navxt_class.php:280
+#: breadcrumb_navxt_class.php:320
 msgid "Search results for &#39;%htitle%&#39;"
 msgstr "Søgeresultater for &#39;%htitle%&#39;"
 
-#: breadcrumb_navxt_class.php:295
+#: breadcrumb_navxt_class.php:335
 msgid "Articles by: %htitle%"
 msgstr "Artikler af: %htitle%"

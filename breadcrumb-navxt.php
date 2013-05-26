@@ -54,7 +54,7 @@ require_once(dirname(__FILE__) . '/class.bcn_widget.php');
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	private $version = '4.2.60';
+	private $version = '4.3.90';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -95,11 +95,103 @@ class breadcrumb_navxt
 			//Instantiate our new admin object
 			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
+		add_action('init', array($this, 'wp_init'));
 	}
 	function init()
 	{
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
+	}
+	function wp_init()
+	{
+		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
+	}
+	function allowed_html($tags)
+	{
+		$allowed_html = array(
+					'a' => array(
+						'href' => true,
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'media' => true,
+						'dir' => true,
+						'relList' => true,
+						'rel' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'img' => array(
+						'alt' => true,
+						'align' => true,
+						'height' => true,
+						'width' => true,
+						'src' => true,
+						'id' => true,
+						'class' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'span' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h1' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					),
+					'h2' => array(
+						'title' => true,
+						'class' => true,
+						'id' => true,
+						'dir' => true,
+						'align' => true,
+						'lang' => true,
+						'xml:lang' => true,
+						'aria-hidden' => true,
+						'data-icon' => true,
+						'itemref' => true,
+						'itemid' => true,
+						'itemprop' => true,
+						'itemscope' => true,
+						'itemtype' => true
+					)
+		);
+		return mtekk_adminKit::array_merge_recursive($tags, $allowed_html);
 	}
 	public function get_version()
 	{

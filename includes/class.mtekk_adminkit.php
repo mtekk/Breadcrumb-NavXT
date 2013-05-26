@@ -30,6 +30,7 @@ abstract class mtekk_adminKit
 	protected $opt = array();
 	protected $message;
 	protected $support_url;
+	protected $allowed_html;
 	function __construct()
 	{
 		//Admin Init Hook
@@ -41,8 +42,14 @@ abstract class mtekk_adminKit
 		add_action('activate_' . $this->plugin_basename, array($this, 'install'));
 		//Initilizes l10n domain
 		$this->local();
+		add_action('wp_loaded', array($this, 'wp_loaded'));
 		//Register Help Output
 		//add_action('add_screen_help_and_options', array($this, 'help'));
+	}
+	function wp_loaded()
+	{
+		//Filter our allowed html tags
+		$this->allowed_html = apply_filters($this->unique_prefix . '_allowed_html', wp_kses_allowed_html('post'));
 	}
 	/**
 	 * Returns the internal mtekk_admin_class version
@@ -366,13 +373,13 @@ abstract class mtekk_adminKit
 					//Handle the HTML options
 					case 'h':
 						//May be better to use wp_kses here
-						$opts[$option] = stripslashes($input[$option]);
+						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						break;
 					//Handle the HTML options that must not be null
 					case 'H':
 						if(isset($input[$option]))
 						{
-							$opts[$option] = stripslashes($input[$option]);
+							$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						}
 						break;
 					//Handle the text options that must not be null

@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 3.2
-Tested up to: 3.4.2
-Stable tag: 4.2.0
+Requires at least: 3.3
+Tested up to: 3.5.1
+Stable tag: 4.3.0
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -18,20 +18,23 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * English - default -
 * Russian by Alexander Samsonov
 * German by Daniel Lang
-* Dutch by Joachim Jensen
 * French (France) by Emmanuel Beziat
-* Norwegian (Bokm�l) by Jan Rosvoldsve
+* Czech by jakubmachala
+* Danish by Joachim Jensen
 * Spanish (Spain) by Karin Sequen
-* Portuguese (Portugal) by Lu�s Rodrigues
+* Portuguese (Portugal) by Luís Rodrigues
 * Estonian by Martin Orn
 * Latvian by Martins Dzerve
 * Swedish by Patrik Spathon
+* Italian by Tamara Balestri
 * Azerbaijani by Zaur Bayramov
 
 The following were not included, but are in the process of being updated:
 
-* Italian by Tamara Balestri
+* Norwegian (Bokmål) by Jan Rosvoldsve
 * Malay by Ben Di
+* Arabic by Eid Aldikanji
+* Hungarian by Atis Papai
 * Hindi by Love Chandel
 
 The following translations are in need of a maintainer:
@@ -41,10 +44,28 @@ The following translations are in need of a maintainer:
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
 
 == Installation ==
+Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.
+`<div class="breadcrumbs">
+    <?php if(function_exists('bcn_display'))
+    {
+        bcn_display();
+    }?>
+</div>`
+Save the file (upload if applicable). Now you should have a breadcrumb trail on your WordPress powered site. To customize the breadcrumb trail you may edit the default values for the options in the administrative interface. This is located in your administration panel under Settings > Breadcrumb NavXT.
 
-Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
+Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/ "Go to Breadcrumb NavXT's Documentation.") page for more information.
 
 == Changelog ==
+= 4.3.0 =
+* Behaviour change: Home and Mainsite titles were removed.
+* Behaviour change: All HTML capable strings are now passed through wp_kses.
+* New feature: Added bcn_breadcrumb_url filter.
+* New feature: %title% and %htitle% now are replaced with the the “Site Title” for the home breadcrumb and the “Network Name” for mainsite breadcrumbs.
+* New feature: Support for the proposed Theme Hook Alliance tha_breadcrumb_navigation filter.
+* New feature: Added %ftitle% and %fhtitle% tags that are not affected by bcn_breadcrumb::trim().
+* Bug fix: Minor tweaks to the tabs in the admin page to better support the new version of jQuery UI tabs (in WordPress 3.5+).
+* Bug fix: Fixed issue where initial settings were not being translated due to the text domain not loading.
+* Bug fix: Added verbiage to clarify what the “Post Parent” selection for “Post Hierarchy” does. 
 = 4.2.0 =
 * Behaviour change: Date archives are only available for the 'post' post type.
 * New feature: All Custom Post Types can now either use a post parent, or taxonomy based hierarchy.
@@ -57,7 +78,7 @@ Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#install
 * Bug fix: `bcn_breadcrumb::title_trim()` no longer trims the title when the title length is equal to the max length.
 = 4.1.0 =
 * Behavior change: Made the behavior of posts using flat taxonomies match the behavior of using a hierarchical taxonomy when the post is not assigned a taxonomy term.
-* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don�t have a parent.
+* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don�t have a parent.
 * New feature: Pretext option for the included Widget, allows 'You are here:' type messages in the widget.
 * Bug fix: Textdomain was changed to the correct one in the widget.
 * Bug fix: Textdomain was changed from 'breadcrumb_navxt' to 'breadcrumb-navxt' for improved compatibility with the new GlotPress translation flow.

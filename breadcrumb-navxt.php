@@ -45,6 +45,11 @@ if(!function_exists('mb_strlen'))
 {
 	require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
 }
+//Include admin base class
+if(!class_exists('mtekk_adminKit'))
+{
+	require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
+}
 //Include the breadcrumb class
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');
 //Include the breadcrumb trail class
@@ -337,10 +342,10 @@ $breadcrumb_navxt = new breadcrumb_navxt($bcn_breadcrumb_trail);
  */
 function bcn_display($return = false, $linked = true, $reverse = false)
 {
-	global $bcn_admin;
-	if($bcn_admin !== null)
+	global $breadcrumb_navxt;
+	if($breadcrumb_navxt !== null)
 	{
-		return $bcn_admin->display($return, $linked, $reverse);
+		return $breadcrumb_navxt->display($return, $linked, $reverse);
 	}
 }
 /**
@@ -352,9 +357,9 @@ function bcn_display($return = false, $linked = true, $reverse = false)
  */
 function bcn_display_list($return = false, $linked = true, $reverse = false)
 {
-	global $bcn_admin;
-	if($bcn_admin !== null)
+	global $breadcrumb_navxt;
+	if($breadcrumb_navxt !== null)
 	{
-		return $bcn_admin->display_list($return, $linked, $reverse);
+		return $breadcrumb_navxt->display_list($return, $linked, $reverse);
 	}
 }

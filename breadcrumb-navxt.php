@@ -211,7 +211,7 @@ class breadcrumb_navxt
 	 * 
 	 * @param array $opts
 	 */
-	function find_posttypes(&$opts)
+	static function find_posttypes(&$opts)
 	{
 		global $wp_post_types, $wp_taxonomies;
 		//Loop through all of the post types in the array
@@ -266,7 +266,7 @@ class breadcrumb_navxt
 	 * 
 	 * @param $opts
 	 */
-	function find_taxonomies(&$opts)
+	static function find_taxonomies(&$opts)
 	{
 		global $wp_taxonomies;
 		//We'll add our custom taxonomy stuff at this time

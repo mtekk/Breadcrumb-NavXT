@@ -62,8 +62,6 @@ class bcn_admin extends mtekk_adminKit
 		$this->plugin_basename = $basename;
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
-		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
-		add_action('wp_loaded', array($this, 'wp_loaded'));
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}
@@ -83,6 +81,7 @@ class bcn_admin extends mtekk_adminKit
 	function wp_loaded()
 	{
 		
+		parent::wp_loaded();
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed

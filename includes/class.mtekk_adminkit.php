@@ -432,7 +432,7 @@ abstract class mtekk_adminKit
 	 * @param array $arg2 second array to merge into $arg1
 	 * @return array
 	 */
-	function array_merge_recursive($arg1, $arg2)
+	static function array_merge_recursive($arg1, $arg2)
 	{
 		foreach($arg2 as $key => $value)
 		{

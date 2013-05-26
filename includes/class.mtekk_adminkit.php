@@ -494,7 +494,7 @@ abstract class mtekk_adminKit
 			}
 			$this->message['updated fade'][] = $temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier),'<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this->version . '/#respond">', '</a>');
 		}
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Exports a XML options document
@@ -601,7 +601,7 @@ abstract class mtekk_adminKit
 		//Reset to the default error handler after we're done
 		restore_error_handler();
 		//Output any messages that there may be
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Resets the database settings array to the default set in opt
@@ -616,7 +616,7 @@ abstract class mtekk_adminKit
 		$this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Reset successful, let the user know
 		$this->message['updated fade'][] = __('Settings successfully reset to the default values.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier));
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Undos the last settings save/reset/import
@@ -633,7 +633,7 @@ abstract class mtekk_adminKit
 		$this->update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
 		$this->message['updated fade'][] = __('Settings successfully undid the last operation.', $this->identifier) . $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier));
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Upgrades input options array, sets to $this->opt, designed to be overwritten
@@ -676,7 +676,7 @@ abstract class mtekk_adminKit
 			//Send the success message
 			$this->message['updated fade'][] = __('Default settings successfully installed.', $this->identifier);
 		}
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * help action hook function, meant to be overridden
@@ -696,7 +696,7 @@ abstract class mtekk_adminKit
 	/**
 	 * Prints to screen all of the messages stored in the message member variable
 	 */
-	function message()
+	function messages()
 	{
 		if(count($this->message))
 		{

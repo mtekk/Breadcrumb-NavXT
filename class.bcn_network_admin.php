@@ -63,11 +63,8 @@ class bcn_network_admin extends mtekk_adminKit
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
 		add_action('network_admin_menu', array($this, 'add_page'));
-		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
-		add_action('wp_loaded', array($this, 'wp_loaded'));
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
-		add_action('init', array($this, 'wp_init'));
 	}
 	/**
 	 * admin initialization callback function
@@ -81,97 +78,6 @@ class bcn_network_admin extends mtekk_adminKit
 	{
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
-	}
-	function wp_init()
-	{
-		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
-	}
-	function allowed_html($tags)
-	{
-		$allowed_html = array(
-					'a' => array(
-						'href' => true,
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'media' => true,
-						'dir' => true,
-						'relList' => true,
-						'rel' => true,
-						'aria-hidden' => true,
-						'data-icon' => true,
-						'itemref' => true,
-						'itemid' => true,
-						'itemprop' => true,
-						'itemscope' => true,
-						'itemtype' => true
-					),
-					'img' => array(
-						'alt' => true,
-						'align' => true,
-						'height' => true,
-						'width' => true,
-						'src' => true,
-						'id' => true,
-						'class' => true,
-						'aria-hidden' => true,
-						'data-icon' => true,
-						'itemref' => true,
-						'itemid' => true,
-						'itemprop' => true,
-						'itemscope' => true,
-						'itemtype' => true
-					),
-					'span' => array(
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'dir' => true,
-						'align' => true,
-						'lang' => true,
-						'xml:lang' => true,
-						'aria-hidden' => true,
-						'data-icon' => true,
-						'itemref' => true,
-						'itemid' => true,
-						'itemprop' => true,
-						'itemscope' => true,
-						'itemtype' => true
-					),
-					'h1' => array(
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'dir' => true,
-						'align' => true,
-						'lang' => true,
-						'xml:lang' => true,
-						'aria-hidden' => true,
-						'data-icon' => true,
-						'itemref' => true,
-						'itemid' => true,
-						'itemprop' => true,
-						'itemscope' => true,
-						'itemtype' => true
-					),
-					'h2' => array(
-						'title' => true,
-						'class' => true,
-						'id' => true,
-						'dir' => true,
-						'align' => true,
-						'lang' => true,
-						'xml:lang' => true,
-						'aria-hidden' => true,
-						'data-icon' => true,
-						'itemref' => true,
-						'itemid' => true,
-						'itemprop' => true,
-						'itemscope' => true,
-						'itemtype' => true
-					)
-				);
-		return $allowed_html; //$this->array_merge_recursive($tags, $allowed_html);
 	}
 	function wp_loaded()
 	{

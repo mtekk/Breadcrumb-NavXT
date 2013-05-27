@@ -142,6 +142,12 @@ abstract class mtekk_adminKit
 			//Run the options fix function on init if fix button has been pressed
 			$this->opts_upgrade_wrapper();
 		}
+		//Admin Options update hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_options']))
+		{
+			//Temporarily add update function on init if form has been submitted
+			$this->opts_update();
+		}
 		//Add in the nice "settings" link to the plugins page
 		add_filter('plugin_action_links', array($this, 'filter_plugin_actions'), 10, 2);
 		//Register JS for tabs

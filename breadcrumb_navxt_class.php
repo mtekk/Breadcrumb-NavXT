@@ -64,7 +64,7 @@ class bcn_breadcrumb
 			}
 			else
 			{
-				$template = __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt');
+				$template = __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt');
 			}
 		}
 		if($url == NULL)
@@ -121,7 +121,7 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = wp_kses($template, $this->allowed_html);
+		$this->template = wp_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id), $this->allowed_html);
 	}
 	/**
 	 * Sets the internal breadcrumb ID
@@ -213,7 +213,7 @@ class bcn_breadcrumb
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.90';
+	private $version = '4.4.0';
 	//An array of breadcrumbs
 	public $trail = array();
 	//The options
@@ -236,19 +236,19 @@ class bcn_breadcrumb_trail
 			//Should the mainsite be shown
 			'bmainsite_display' => true,
 			//The breadcrumb template for the main site, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hmainsite_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hmainsite_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for the main site, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hmainsite_template_no_anchor' => '%htitle%',
 			//Should the home page be shown
 			'bhome_display' => true,
 			//The breadcrumb template for the home page, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hhome_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hhome_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for the home page, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hhome_template_no_anchor' => '%htitle%',
 			//Should the blog page be shown globally
 			'bblog_display' => true,
 			//The breadcrumb template for the blog page only in static front page mode, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hblog_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hblog_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for the blog page only in static front page mode, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hblog_template_no_anchor' => '%htitle%',
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
@@ -262,7 +262,7 @@ class bcn_breadcrumb_trail
 			'bcurrent_item_linked' => false,
 			//Static page options
 			//The anchor template for page breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_page_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hpost_page_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The anchor template for page breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_page_template_no_anchor' => '%htitle%',
 			//Just a link to the page on front property
@@ -274,7 +274,7 @@ class bcn_breadcrumb_trail
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
 			//The breadcrumb template for post breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_post_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hpost_post_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for post breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_post_template_no_anchor' => '%htitle%',
 			//Just a link for the page for posts
@@ -286,7 +286,7 @@ class bcn_breadcrumb_trail
 			//Attachment settings
 			//TODO: Need to move attachments to support via normal post handlers
 			//The breadcrumb template for attachment breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_attachment_template' => __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hpost_attachment_template' => __('<a title="Go to %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_attachment_template_no_anchor' => '%htitle%',
 			//404 page settings
@@ -296,33 +296,33 @@ class bcn_breadcrumb_trail
 			'S404_title' => __('404', 'breadcrumb-navxt'),
 			//Search page options
 			//The breadcrumb template for search breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hsearch_template' => __('Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;', 'breadcrumb-navxt'),
+			'Hsearch_template' => __('Search results for &#39;<a title="Go to the first page of search results for %ftitle%." href="%link%" class="%type%">%htitle%</a>&#39;', 'breadcrumb-navxt'),
 			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hsearch_template_no_anchor' => __('Search results for &#39;%htitle%&#39;', 'breadcrumb-navxt'),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_tag_template' => __('<a title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hpost_tag_template' => __('<a title="Go to the %ftitle% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for tag breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_tag_template_no_anchor' => '%htitle%',
 			//Post format related stuff
 			//The breadcrumb template for post format breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_format_template' => __('<a title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hpost_format_template' => __('<a title="Go to the %ftitle% tag archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for post format breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_format_template_no_anchor' => '%htitle%',
 			//Author page stuff
 			//The anchor template for author breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %ftitle%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The anchor template for author breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hauthor_template_no_anchor' => __('Articles by: %htitle%', 'breadcrumb-navxt'),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
 			//Category stuff
 			//The breadcrumb template for category breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hcategory_template' => __('<a title="Go to the %title% category archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hcategory_template' => __('<a title="Go to the %ftitle% category archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for category breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hcategory_template_no_anchor' => '%htitle%',
 			//The breadcrumb template for date breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hdate_template' => __('<a title="Go to the %title% archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hdate_template' => __('<a title="Go to the %ftitle% archives." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The breadcrumb template for date breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hdate_template_no_anchor' => '%htitle%'
 		);

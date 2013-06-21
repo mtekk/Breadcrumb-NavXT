@@ -515,7 +515,7 @@ class bcn_breadcrumb_trail
 	{
 		global $post;
 		//Get the current category object, filter applied within this call
-		$term = &get_term($id, $taxonomy);
+		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array($taxonomy), get_term_link($term, $taxonomy), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop

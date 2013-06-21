@@ -28,6 +28,7 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * Italian by Tamara Balestri
 * Azerbaijani by Zaur Bayramov
 * Catalan by Christian Eduardo
+* Turkish by Hakan er
 
 The following were not included, but are in the process of being updated:
 

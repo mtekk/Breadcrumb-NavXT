@@ -286,7 +286,7 @@ abstract class mtekk_adminKit
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are out of date.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		//Do a quick version check
@@ -295,7 +295,7 @@ abstract class mtekk_adminKit
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return true;
 		}
 		else if(!is_array($this->opt))
@@ -303,7 +303,7 @@ abstract class mtekk_adminKit
 			//Throw an error since it appears the options were never registered
 			$this->message['error'][] = __('Your plugin install is incomplete.', $this->identifier) . $this->admin_anchor('upgrade', __('Load default settings now.', $this->identifier), __('Complete now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		else if(!$this->opts_validate($this->opt))
@@ -311,7 +311,7 @@ abstract class mtekk_adminKit
 			//Throw an error since it appears the options contain invalid data
 			$this->message['error'][] = __('Your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		return true;

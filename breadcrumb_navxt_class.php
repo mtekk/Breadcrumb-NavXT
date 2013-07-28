@@ -723,6 +723,7 @@ class bcn_breadcrumb_trail
 	 */
 	function do_archive_by_post_type()
 	{
+		//FIXME get_post_type() may not always return a value, causing a PHP warning to be thrown
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_post_type() . '_template_no_anchor'], array('post-' . get_post_type() . '-archive', 'current-item')));
 		if($this->opt['bcurrent_item_linked'] || is_paged() && $this->opt['bpaged_display'])

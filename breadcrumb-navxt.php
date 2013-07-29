@@ -86,19 +86,19 @@ class breadcrumb_navxt
 		add_action('init', array($this, 'init'));
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', create_function('', 'return register_widget("'. $this->unique_prefix . '_widget");'));
-		//Load our main admin if in the dashboard
-		if(is_admin())
-		{
-			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
-			//Instantiate our new admin object
-			$this->admin = new bcn_admin($this->breadcrumb_trail, $this->plugin_basename);
-		}
 		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)
 		if(defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN)
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
 			//Instantiate our new admin object
 			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
+		}
+		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
+		else if(is_admin())
+		{
+			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
+			//Instantiate our new admin object
+			$this->admin = new bcn_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 	}
 	function init()

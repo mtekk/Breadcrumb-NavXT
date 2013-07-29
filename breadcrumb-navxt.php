@@ -67,7 +67,6 @@ class breadcrumb_navxt
 	protected $opt = null;
 	protected $breadcrumb_trail = null;
 	protected $admin = null;
-	protected $net_admin = null;
 	/**
 	 * Constructor for a new breadcrumb_navxt object
 	 * 
@@ -91,7 +90,7 @@ class breadcrumb_navxt
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
 			//Instantiate our new admin object
-			$this->net_admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
+			$this->admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
 		else if(is_admin())

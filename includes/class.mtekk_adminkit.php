@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	private $__version = '1.1';
+	private $__version = '1.2';
 	protected $version;
 	protected $full_name;
 	protected $short_name;
@@ -142,6 +142,12 @@ abstract class mtekk_adminKit
 			//Run the options fix function on init if fix button has been pressed
 			$this->opts_upgrade_wrapper();
 		}
+		//Admin Options update hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_options']))
+		{
+			//Temporarily add update function on init if form has been submitted
+			$this->opts_update();
+		}
 		//Add in the nice "settings" link to the plugins page
 		add_filter('plugin_action_links', array($this, 'filter_plugin_actions'), 10, 2);
 		//Register JS for tabs
@@ -151,7 +157,7 @@ abstract class mtekk_adminKit
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
-		$this->opt = mtekk_adminKit::parse_args(get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = $this->parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		//Run the opts fix filter
 		$this->opts_fix($this->opt);
 	}
@@ -229,30 +235,30 @@ abstract class mtekk_adminKit
 		//Call our little security function
 		$this->security();
 		//Try retrieving the options from the database
-		$opts = get_option($this->unique_prefix . '_options');
+		$opts = $this->get_option($this->unique_prefix . '_options');
 		//If there are no settings, copy over the default settings
 		if(!is_array($opts))
 		{
 			//Grab defaults from the object
 			$opts = $this->opt;
 			//Add the options
-			add_option($this->unique_prefix . '_options', $opts);
-			add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
+			$this->add_option($this->unique_prefix . '_options', $opts);
+			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
 			//Add the version, no need to autoload the db version
-			add_option($this->unique_prefix . '_version', $this->version, '', 'no');
+			$this->add_option($this->unique_prefix . '_version', $this->version, '', 'no');
 		}
 		else
 		{
 			//Retrieve the database version
-			$db_version = get_option($this->unique_prefix . '_version');
+			$db_version = $this->get_option($this->unique_prefix . '_version');
 			if($this->version !== $db_version)
 			{
 				//Run the settings update script
 				$this->opts_upgrade($opts, $db_version);
 				//Always have to update the version
-				update_option($this->unique_prefix . '_version', $this->version);
+				$this->update_option($this->unique_prefix . '_version', $this->version);
 				//Store the options
-				update_option($this->unique_prefix . '_options', $this->opt);
+				$this->update_option($this->unique_prefix . '_options', $this->opt);
 			}
 		}
 	}
@@ -262,11 +268,11 @@ abstract class mtekk_adminKit
 	function uninstall()
 	{
 		//Remove the option array setting
-		delete_option($this->unique_prefix . '_options');
+		$this->delete_option($this->unique_prefix . '_options');
 		//Remove the option backup array setting
-		delete_option($this->unique_prefix . '_options_bk');
+		$this->delete_option($this->unique_prefix . '_options_bk');
 		//Remove the version setting
-		delete_option($this->unique_prefix . '_version');
+		$this->delete_option($this->unique_prefix . '_version');
 	}
 	/**
 	 * Compares the supplided version with the internal version, places an upgrade warning if there is a missmatch
@@ -280,7 +286,7 @@ abstract class mtekk_adminKit
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are out of date.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		//Do a quick version check
@@ -289,7 +295,7 @@ abstract class mtekk_adminKit
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return true;
 		}
 		else if(!is_array($this->opt))
@@ -297,7 +303,7 @@ abstract class mtekk_adminKit
 			//Throw an error since it appears the options were never registered
 			$this->message['error'][] = __('Your plugin install is incomplete.', $this->identifier) . $this->admin_anchor('upgrade', __('Load default settings now.', $this->identifier), __('Complete now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		else if(!$this->opts_validate($this->opt))
@@ -305,7 +311,7 @@ abstract class mtekk_adminKit
 			//Throw an error since it appears the options contain invalid data
 			$this->message['error'][] = __('Your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
 			//Output any messages that there may be
-			$this->message();
+			$this->messages();
 			return false;
 		}
 		return true;
@@ -331,7 +337,7 @@ abstract class mtekk_adminKit
 	function opts_backup()
 	{
 		//Set the backup options in the DB to the current options
-		update_option($this->unique_prefix . '_options_bk', get_option($this->unique_prefix . '_options'));
+		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'));
 	}
 	/**
 	 * Runs recursivly through the opts array, sanitizing and merging in updates from the $input array
@@ -404,7 +410,7 @@ abstract class mtekk_adminKit
 	 * @param mixed $defaults (optional) The default values to validate against
 	 * @return mixed
 	 */
-	static function parse_args($args, $defaults = '')
+	function parse_args($args, $defaults = '')
 	{
 		if(is_object($args))
 		{
@@ -467,16 +473,16 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
 		//Update local options from database
-		$this->opt = mtekk_adminKit::parse_args(get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = $this->parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opts_update_prebk($this->opt);
 		//Update our backup options
-		update_option($this->unique_prefix . '_options_bk', $this->opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
 		$this->opts_update_loop($this->opt, $input);
 		//Commit the option changes
-		update_option($this->unique_prefix . '_options', $this->opt);
+		$this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save
 		if(count(array_diff_key($input, $this->opt)) == 0)
 		{
@@ -494,7 +500,7 @@ abstract class mtekk_adminKit
 			}
 			$this->message['updated fade'][] = $temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier),'<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this->version . '/#respond">', '</a>');
 		}
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Exports a XML options document
@@ -504,7 +510,7 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems 
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
 		//Update our internal settings
-		$this->opt = get_option($this->unique_prefix . '_options');
+		$this->opt = $this->get_option($this->unique_prefix . '_options');
 		//Create a DOM document
 		$dom = new DOMDocument('1.0', 'UTF-8');
 		//Adds in newlines and tabs to the output
@@ -589,7 +595,7 @@ abstract class mtekk_adminKit
 			//Make sure we safely import and upgrade settings if needed
 			$this->opts_upgrade($opts_temp, $version);
 			//Commit the loaded options to the database
-			update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Everything was successful, let the user know
 			$this->message['updated fade'][] = __('Settings successfully imported from the uploaded file.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier));
 		}
@@ -601,7 +607,7 @@ abstract class mtekk_adminKit
 		//Reset to the default error handler after we're done
 		restore_error_handler();
 		//Output any messages that there may be
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Resets the database settings array to the default set in opt
@@ -613,10 +619,10 @@ abstract class mtekk_adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		update_option($this->unique_prefix . '_options', $this->opt);
+		$this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Reset successful, let the user know
 		$this->message['updated fade'][] = __('Settings successfully reset to the default values.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier));
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Undos the last settings save/reset/import
@@ -626,14 +632,14 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_undo');
 		//Set the options array to the current options
-		$opt = get_option($this->unique_prefix . '_options');
+		$opt = $this->get_option($this->unique_prefix . '_options');
 		//Set the options in the DB to the backup options
-		update_option($this->unique_prefix . '_options', get_option($this->unique_prefix . '_options_bk'));
+		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'));
 		//Set the backup options to the undone options
-		update_option($this->unique_prefix . '_options_bk', $opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
 		$this->message['updated fade'][] = __('Settings successfully undid the last operation.', $this->identifier) . $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier));
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Upgrades input options array, sets to $this->opt, designed to be overwritten
@@ -657,15 +663,15 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_upgrade');
 		//Grab the database options
-		$opts = get_option($this->unique_prefix . '_options');
+		$opts = $this->get_option($this->unique_prefix . '_options');
 		if(is_array($opts))
 		{
 			//Feed the just read options into the upgrade function
-			$this->opts_upgrade($opts, get_option($this->unique_prefix . '_version'));
+			$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
 			//Always have to update the version
-			update_option($this->unique_prefix . '_version', $this->version);
+			$this->update_option($this->unique_prefix . '_version', $this->version);
 			//Store the options
-			update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Send the success message
 			$this->message['updated fade'][] = __('Settings successfully migrated.', $this->identifier);
 		}
@@ -676,7 +682,7 @@ abstract class mtekk_adminKit
 			//Send the success message
 			$this->message['updated fade'][] = __('Default settings successfully installed.', $this->identifier);
 		}
-		add_action('admin_notices', array($this, 'message'));
+		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * help action hook function, meant to be overridden
@@ -696,7 +702,7 @@ abstract class mtekk_adminKit
 	/**
 	 * Prints to screen all of the messages stored in the message member variable
 	 */
-	function message()
+	function messages()
 	{
 		if(count($this->message))
 		{
@@ -1011,5 +1017,48 @@ abstract class mtekk_adminKit
 				printf('<option value="%s" %s>%s</option>', $values[$key], selected(true, ($value == $values[$key]), false), $option);
 			}
 		}
+	}
+	/**
+	 * A local pass through for get_option so that we can hook in and pick the correct method if needed
+	 * 
+	 * @param string $option The name of the option to retrieve
+	 * @return mixed The value of the option
+	 */
+	function get_option($option)
+	{
+		return get_option($option);
+	}
+	/**
+	 * A local pass through for update_option so that we can hook in and pick the correct method if needed
+	 * 
+	 * @param string $option The name of the option to update
+	 * @param mixed $newvalue The new value to set the option to
+	 * 
+	 */
+	function update_option($option, $newvalue)
+	{
+		return update_option($option, $newvalue);
+	}
+	/**
+	 * A local pass through for add_option so that we can hook in and pick the correct method if needed
+	 * 
+	 * @param string $option The name of the option to update
+	 * @param mixed $value The new value to set the option to
+	 * @param null $deprecated Deprecated parameter
+	 * @param string $autoload Whether or not to autoload the option, it's a string because WP is special
+	 * 
+	 */
+	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
+	{
+		return add_option($option, $value, null, $autoload);
+	}
+	/**
+	 * A local pass through for delete_option so that we can hook in and pick the correct method if needed
+	 * 
+	 * @param string $option The name of the option to delete
+	 */
+	function delete_option($option)
+	{
+		return delete_option($option);
 	}
 }

@@ -1,10 +1,9 @@
-=== Breadcrumb NavXT ===
+﻿=== Breadcrumb NavXT ===
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 3.3
-Tested up to: 3.5.1
-Stable tag: 4.3.0
+Requires at least: 3.5
+Tested up to: 3.6
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -28,6 +27,8 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * Swedish by Patrik Spathon
 * Italian by Tamara Balestri
 * Azerbaijani by Zaur Bayramov
+* Catalan by Christian Eduardo
+* Turkish by Hakan er
 
 The following were not included, but are in the process of being updated:
 
@@ -56,6 +57,14 @@ Save the file (upload if applicable). Now you should have a breadcrumb trail on 
 Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/ "Go to Breadcrumb NavXT's Documentation.") page for more information.
 
 == Changelog ==
+= 4.4.0 =
+* New feature: Added `bcn_breadcrumb_url` filter.
+* New feature: Add resource ID to the `bcn_breadcrumb_title` filter.
+* New feature: Added `bcn_breadcrumb_template` filter.
+* New feature: Added `bcn_allowed_html` filter.
+* New feature: Added `bcn_template_tags` filter.
+* Bug fix: Fixed issue where invalid characters could end up in URLs due to other plugins.
+* Bug fix: Revise the allowed HTML for breadcrumbs in the trail.
 = 4.3.0 =
 * Behaviour change: Home and Mainsite titles were removed.
 * Behaviour change: All HTML capable strings are now passed through wp_kses.

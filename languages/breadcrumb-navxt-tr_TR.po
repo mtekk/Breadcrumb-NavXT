@@ -1,0 +1,753 @@
+# Translation of Breadcrumb NavXT in Turkish
+# This file is distributed under the same license as the Breadcrumb NavXT package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2013-06-21 14:09:24+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: Breadcrumb NavXT\n"
+
+#: breadcrumb_navxt_admin.php:534 breadcrumb_navxt_admin.php:611
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "Breadcrumb kuyruğunda gösterilecek hiyerarşi. Bu hiyerarşik olmayan bir yazı tipi olduğundan dolayı beklenileni sağlaması için \"Post Parent\" seçeneğinin ilave bir eklenti gerektirebileceğini unutmayın."
+
+#: breadcrumb_navxt_class.php:67 breadcrumb_navxt_class.php:239
+#: breadcrumb_navxt_class.php:245 breadcrumb_navxt_class.php:251
+#: breadcrumb_navxt_class.php:265 breadcrumb_navxt_class.php:277
+#: breadcrumb_navxt_class.php:289
+msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\"Git %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:299
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr "Arama sonuçları: &#39;<a title=\"Arama sonuçlarının ilk sayfasına git %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+
+#: breadcrumb_navxt_admin.php:432
+msgid "A collection of settings most likely to be modified are located under this tab."
+msgstr "Değiştirilmesi muhtemel ayarların bir bölümü bu sekme altında yer almaktadır."
+
+#: breadcrumb_navxt_admin.php:440
+msgid "Title Length"
+msgstr "Başlık Uzunluğu"
+
+#: breadcrumb_navxt_admin.php:445
+msgid "Limit the length of the breadcrumb title."
+msgstr "Breadcrumb başlık uzunluğunu sınırla."
+
+#: breadcrumb_navxt_admin.php:488
+msgid "Mainsite Breadcrumb"
+msgstr "Anasite Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:500
+msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
+msgstr "Tüm yazı tipleri (Yazılar, Sayfalar ve Özel Yazı Türleri) için ayarlar bu sekme altında yer almaktadır."
+
+#: breadcrumb_navxt_admin.php:500
+msgid "Post Types"
+msgstr "Yazı Tipleri"
+
+#: breadcrumb_navxt_admin.php:506
+msgid "Post Hierarchy Display"
+msgstr "Yazı Hiyerarşi Görünümü"
+
+#: breadcrumb_navxt_admin.php:510
+msgid "Post Hierarchy"
+msgstr "Yazı Hiyerarşisi"
+
+#: breadcrumb_navxt_admin.php:578
+msgid "%s Hierarchy Display"
+msgstr "%s Hiyerarşisi Görünümü"
+
+#: breadcrumb_navxt_admin.php:640
+msgid "Post Formats"
+msgstr "Yazı Biçimleri"
+
+#: breadcrumb_navxt_admin.php:450
+msgid "Max Title Length: "
+msgstr "Maksimum Başlık Uzunluğu: "
+
+#: breadcrumb_navxt_admin.php:501
+msgid "Posts"
+msgstr "Yazılar"
+
+#: breadcrumb_navxt_admin.php:518 breadcrumb_navxt_admin.php:587
+msgid "Post Parent"
+msgstr "Yazı Ebeveyni"
+
+#: breadcrumb_navxt_admin.php:607
+msgid "The hierarchy which the breadcrumb trail will show."
+msgstr "Breadcrumb kuyruğunda gösterilecek hiyerarşi."
+
+#: breadcrumb_navxt_admin.php:582
+msgid "%s Hierarchy"
+msgstr "%s Hiyerarşisi"
+
+#: breadcrumb_navxt_admin.php:625
+msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
+msgstr "Tüm sınıflandırmalar için (Kategoriler, Etiketler, ve özel sınıflandırmalar dahil) ayarlar bu sekme altında yer almaktadır."
+
+#: breadcrumb_navxt_admin.php:625
+msgid "Taxonomies"
+msgstr "Sınıflandırmalar"
+
+#: breadcrumb_navxt_admin.php:643
+msgid "Post Format Template"
+msgstr "Yazı Biçim Şablonu"
+
+#: breadcrumb_navxt_admin.php:643
+msgid "The template for post format breadcrumbs."
+msgstr "Yazı biçimi breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:644
+msgid "Post Format Template (Unlinked)"
+msgstr "Yazı Biçim Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:644
+msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan post_format breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:674
+msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
+msgstr "Yazar ve tarih arşivleri, arama ve 404 sayfaları için ayarlar bu sekme altında yer almaktadır."
+
+#: breadcrumb_navxt_admin.php:675
+msgid "Author Archives"
+msgstr "Yazar Arşivleri"
+
+#: breadcrumb_navxt_class.php:304 breadcrumb_navxt_class.php:309
+msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\" %title% etiket arşivlerine git.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:314
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "Yazar: <a title=\"Yazılarının ilk sayfasına git %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:321
+msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\" %title% kategori arşivlerine git.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: breadcrumb_navxt_class.php:325
+msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "<a title=\" %title% arşivlere git.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: includes/mtekk_adminkit.php:290
+msgid "Your settings are for a newer version."
+msgstr "Ayarlarınız daha yeni bir sürümü için."
+
+#: breadcrumb_navxt_widget.php:96
+msgid "Text to show before the trail:"
+msgstr "Kuyruktan önce gösterilecek metin"
+
+#: breadcrumb_navxt_widget.php:103
+msgid "Schema.org"
+msgstr "Schema.org"
+
+#: breadcrumb_navxt_admin.php:336
+msgid "Go to the Breadcrumb NavXT translation project."
+msgstr "Breadcrumb NavXT çeviri projesine gidin."
+
+#: breadcrumb_navxt_admin.php:36
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
+msgstr "PHP sürümünüz çok eski, lütfen yeni bir sürüme güncelleyin. Sürümünüz %1$s, Breadcrumb NavXT için %2$s sürümü gerekir"
+
+#: breadcrumb_navxt_widget.php:33
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "Kenar çubuğunuza bir breadcrumb kuyruğu ekler"
+
+#: breadcrumb_navxt_widget.php:92
+msgid "Title:"
+msgstr "Başlık:"
+
+#: breadcrumb_navxt_widget.php:100
+msgid "Output trail as:"
+msgstr "Kuyruk çıktısı olarak:"
+
+#: breadcrumb_navxt_widget.php:102
+msgid "List"
+msgstr "Liste"
+
+#: breadcrumb_navxt_widget.php:104
+msgid "Plain"
+msgstr "Düz"
+
+#: breadcrumb_navxt_widget.php:109
+msgid "Link the breadcrumbs"
+msgstr "Breadcrumbs bağlantısı"
+
+#: breadcrumb_navxt_widget.php:111
+msgid "Reverse the order of the trail"
+msgstr "Kuyruk sırasını tersine çevir"
+
+#: breadcrumb_navxt_widget.php:113
+msgid "Hide the trail on the front page"
+msgstr "Ön sayfada kuyruğu gizle"
+
+#: breadcrumb_navxt_admin.php:213
+msgid "Insufficient privileges to proceed."
+msgstr "Devam etmek için yetersiz yetki."
+
+#: breadcrumb_navxt_admin.php:329
+msgid "Tips for the settings are located below select options."
+msgstr "Ayarlar için ipuçları seçeneklerin altında yer almaktadır."
+
+#: breadcrumb_navxt_admin.php:330
+msgid "Resources"
+msgstr "Kaynaklar"
+
+#: breadcrumb_navxt_admin.php:331
+msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
+msgstr "%sEğitim ve İpuçları%s: Yazarın web sitesinde çeşitli kılavuzlar, eğitim ve ipuçlarını bulabilirsiniz."
+
+#: breadcrumb_navxt_admin.php:331
+msgid "Go to the Breadcrumb NavXT tag archive."
+msgstr "Breadcrumb NavXT etiket arşivine gidin."
+
+#: breadcrumb_navxt_admin.php:332
+msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
+msgstr "%sÇevrimiçi Belgeler%s: Daha detaylı teknik bilgiler için belgelere göz atın."
+
+#: breadcrumb_navxt_admin.php:332
+msgid "Go to the Breadcrumb NavXT online documentation"
+msgstr "Breadcrumb NavXT çevrimiçi belgelere gidin"
+
+#: breadcrumb_navxt_admin.php:333
+msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
+msgstr "%sBir Hata Bildir%s: Eğer bir hata bulduğunuzu düşünüyorsanız, WordPress sürümünüz ve hatanın yeniden nasıl oluşturulacağına ilişkin ayrıntıları ekleyin."
+
+#: breadcrumb_navxt_admin.php:333
+msgid "Go to the Breadcrumb NavXT support post for your version."
+msgstr "Sürümünüz için Breadcrumb NavXT destek yazısına gidin."
+
+#: breadcrumb_navxt_admin.php:334
+msgid "Giving Back"
+msgstr "İade"
+
+#: breadcrumb_navxt_admin.php:335
+msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
+msgstr "%sBağış%s: Breadcrumb NavXT sevdiniz ve geliştirilmesine yardımcı mı olmak istiyor sunuz? Yazara bir bira satın almayı düşünün."
+
+#: breadcrumb_navxt_admin.php:335
+msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
+msgstr "Breadcrumb NavXT'ye bir bağış yapmak için PayPal'a gidin."
+
+#: breadcrumb_navxt_admin.php:336
+msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
+msgstr "%sTercüme et%s: Dilinizi mevcut değil mi? Çevirisi için John Havlik ile iletişime geçin."
+
+#: breadcrumb_navxt_admin.php:341 breadcrumb_navxt_admin.php:432
+#: breadcrumb_navxt_admin.php:433
+msgid "General"
+msgstr "Genel"
+
+#: breadcrumb_navxt_admin.php:344
+msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
+msgstr "Bu sayfadaki ayarların etkili olabilmesi için, Breadcrumb NavXT bileşenini kullanmanız veya temanıza aşağıdaki kod bölümlerinden yerleştirmeniz gerekir."
+
+#: breadcrumb_navxt_admin.php:345
+msgid "Breadcrumb trail with separators"
+msgstr "Ayırıcılar ile Breadcrumb kuyruğu"
+
+#: breadcrumb_navxt_admin.php:351
+msgid "Breadcrumb trail in list form"
+msgstr "Liste biçiminde Breadcrumb kuyruğu"
+
+#: breadcrumb_navxt_admin.php:360
+msgid "Quick Start"
+msgstr "Hızlı Başlangıç"
+
+#: breadcrumb_navxt_admin.php:363
+msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
+msgstr "Yukarıda Hızlı Başlat bölümündeki kodu kullanarak, alttaki CSS breadcumb kuyruğunu şekillendirmeye temel olarak kullanılabilirsiniz."
+
+#: breadcrumb_navxt_admin.php:375
+msgid "Styling"
+msgstr "Şekillendirme"
+
+#: breadcrumb_navxt_admin.php:381
+msgid "Import/Export/Reset"
+msgstr "İçe aktar/Dışa aktar/Sıfırla"
+
+#: breadcrumb_navxt_admin.php:405 includes/mtekk_adminkit.php:786
+msgid "Import"
+msgstr "İçe aktar"
+
+#: breadcrumb_navxt_admin.php:406 includes/mtekk_adminkit.php:787
+msgid "Export"
+msgstr "Dışa aktar"
+
+#: breadcrumb_navxt_admin.php:407 includes/mtekk_adminkit.php:788
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: breadcrumb_navxt_admin.php:420
+msgid "Breadcrumb NavXT Settings"
+msgstr "Breadcrumb NavXT Ayarları"
+
+#: breadcrumb_navxt_admin.php:436
+msgid "Breadcrumb Separator"
+msgstr "Breadcrumb Ayırıcı"
+
+#: breadcrumb_navxt_admin.php:436
+msgid "Placed in between each breadcrumb."
+msgstr "Her breadcrumb arasına yerleştirilir."
+
+#: breadcrumb_navxt_admin.php:470 breadcrumb_navxt_admin.php:473
+msgid "Home Breadcrumb"
+msgstr "Anasayfa Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:473
+msgid "Place the home breadcrumb in the trail."
+msgstr "Breadcrumb kuyruğuna anasayfa yerleştirin."
+
+#: breadcrumb_navxt_admin.php:474
+msgid "Home Template"
+msgstr "Anasayfa Şablonu"
+
+#: breadcrumb_navxt_admin.php:474
+msgid "The template for the home breadcrumb."
+msgstr "Anasayfa breadcrumb için şablon."
+
+#: breadcrumb_navxt_admin.php:475
+msgid "Home Template (Unlinked)"
+msgstr "Anasayfa Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:475
+msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
+msgstr "Breadcrumb için bağlantı olmadığında kullanılan breadcrumb anasayfa şablonu."
+
+#: breadcrumb_navxt_admin.php:479 breadcrumb_navxt_admin.php:482
+msgid "Blog Breadcrumb"
+msgstr "Blog Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:482
+msgid "Place the blog breadcrumb in the trail."
+msgstr "Breadcrumb kuyruğuna blog yerleştirin."
+
+#: breadcrumb_navxt_admin.php:483
+msgid "Blog Template"
+msgstr "Blog Şablonu"
+
+#: breadcrumb_navxt_admin.php:483
+msgid "The template for the blog breadcrumb, used only in static front page environments."
+msgstr "Sadece, statik ön sayfa ortamında kullanılan blog breadcrumb şablonu."
+
+#: breadcrumb_navxt_admin.php:484
+msgid "Blog Template (Unlinked)"
+msgstr "Blog Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:484
+msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
+msgstr "Statik ön sayfa ortamında ve breadcrumb için bağlantı olmadığında kullanılan blog breadcrumb şablonu."
+
+#: breadcrumb_navxt_admin.php:491
+msgid "Main Site Breadcrumb"
+msgstr "Ana Site Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:491
+msgid "Place the main site home breadcrumb in the trail in an multisite setup."
+msgstr "Çoklu site kurulumlarında ana site anasayfa breadcrumb bağlantısını kuyruğa yerleştirir."
+
+#: breadcrumb_navxt_admin.php:492
+msgid "Main Site Home Template"
+msgstr "Ana Site Anasayfa Şablonu"
+
+#: breadcrumb_navxt_admin.php:492
+msgid "The template for the main site home breadcrumb, used only in multisite environments."
+msgstr "Çoklu site ortamında kullanılan breadcrumb ana site anasayfa şablonu."
+
+#: breadcrumb_navxt_admin.php:493
+msgid "Main Site Home Template (Unlinked)"
+msgstr "Ana Site Anasayfa Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:493
+msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
+msgstr "Sadece, çoklu site ortamlarında ve breadcrumb için bağlantı olmadığında kullanılan ana site anasayfa breadcrumb şablonu."
+
+#: breadcrumb_navxt_admin.php:461
+msgid "Current Item"
+msgstr "Mevcut Öğe"
+
+#: breadcrumb_navxt_admin.php:464
+msgid "Link Current Item"
+msgstr "Mevcut Öğeye Bağlantı"
+
+#: breadcrumb_navxt_admin.php:464
+msgid "Yes"
+msgstr "Evet"
+
+#: breadcrumb_navxt_admin.php:465
+msgid "Paged Breadcrumb"
+msgstr "Sayfalanmış Breadcrumb"
+
+#: breadcrumb_navxt_admin.php:465
+msgid "Include the paged breadcrumb in the breadcrumb trail."
+msgstr "Breadcrumb kuyruğuna sayfalı breadcrumb ekleyin."
+
+#: breadcrumb_navxt_admin.php:465
+msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
+msgstr "Kullanıcının ilk önce sayfalanmış yazı/sayfa yerine bir sayfada olduğunu belirtir."
+
+#: breadcrumb_navxt_admin.php:466
+msgid "Paged Template"
+msgstr "Sayfalanmış Şablon"
+
+#: breadcrumb_navxt_admin.php:466
+msgid "The template for paged breadcrumbs."
+msgstr "Sayfalanmış breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:504
+msgid "Post Template"
+msgstr "Yazı Şablonu"
+
+#: breadcrumb_navxt_admin.php:504
+msgid "The template for post breadcrumbs."
+msgstr "Yazı breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:505
+msgid "Post Template (Unlinked)"
+msgstr "Yazı Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:505
+msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan yazı breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:506
+msgid "Show the taxonomy leading to a post in the breadcrumb trail."
+msgstr "Breadcrumb kuyruğunda yazı için rehber sınıflandırması göster."
+
+#: breadcrumb_navxt_admin.php:514 breadcrumb_navxt_admin.php:626
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: breadcrumb_navxt_admin.php:515
+msgid "Dates"
+msgstr "Tarihler"
+
+#: breadcrumb_navxt_admin.php:516 breadcrumb_navxt_admin.php:633
+msgid "Tags"
+msgstr "Etiketler"
+
+#: breadcrumb_navxt_admin.php:538
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: breadcrumb_navxt_admin.php:541
+msgid "Page Template"
+msgstr "Sayfa Şablonu"
+
+#: breadcrumb_navxt_admin.php:541
+msgid "The template for page breadcrumbs."
+msgstr "Sayfa breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:542
+msgid "Page Template (Unlinked)"
+msgstr "Sayfa Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:542
+msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan sayfa breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:543
+msgid "Attachment Template"
+msgstr "Ek Şablonu"
+
+#: breadcrumb_navxt_admin.php:543
+msgid "The template for attachment breadcrumbs."
+msgstr "Ek breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:544
+msgid "Attachment Template (Unlinked)"
+msgstr "Ek Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:544
+msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan ek breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:742
+msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
+msgstr "<a title=\"Git %title%.\" href=\"%link%\">%htitle%</a>"
+
+#: breadcrumb_navxt_admin.php:743 breadcrumb_navxt_class.php:63
+msgid "%htitle%"
+msgstr "%htitle%"
+
+#: breadcrumb_navxt_admin.php:564 breadcrumb_navxt_admin.php:664
+msgid "%s Template"
+msgstr "%s Şablonu"
+
+#: breadcrumb_navxt_admin.php:564 breadcrumb_navxt_admin.php:664
+msgid "The template for %s breadcrumbs."
+msgstr "%s breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:565 breadcrumb_navxt_admin.php:665
+msgid "%s Template (Unlinked)"
+msgstr "%s Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:565 breadcrumb_navxt_admin.php:665
+msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan %s breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:570
+msgid "%s Root Page"
+msgstr "%s Kök Sayfası"
+
+#: breadcrumb_navxt_admin.php:573
+msgid "&mdash; Select &mdash;"
+msgstr "&mdash; Seç &mdash;"
+
+#: breadcrumb_navxt_admin.php:577
+msgid "%s Archive Display"
+msgstr "%s Arşiv Görünümü"
+
+#: breadcrumb_navxt_admin.php:577
+msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
+msgstr "Breadcrumb kuyruğunda %s yazı tipi arşivleri için breadcrumb göster."
+
+#: breadcrumb_navxt_admin.php:578
+msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
+msgstr "Breadcrumb kuyruğunda %s için rehber sınıflandırması göster."
+
+#: breadcrumb_navxt_admin.php:629
+msgid "Category Template"
+msgstr "Kategori Şablonu"
+
+#: breadcrumb_navxt_admin.php:629
+msgid "The template for category breadcrumbs."
+msgstr "Kategori breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:630
+msgid "Category Template (Unlinked)"
+msgstr "Kategori Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:630
+msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan kategori breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:636
+msgid "Tag Template"
+msgstr "Etiket Şablonu"
+
+#: breadcrumb_navxt_admin.php:636
+msgid "The template for tag breadcrumbs."
+msgstr "Etiket breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:637
+msgid "Tag Template (Unlinked)"
+msgstr "Etiket Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:637
+msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan etiket breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:674 breadcrumb_navxt_admin.php:683
+msgid "Miscellaneous"
+msgstr "Çeşitli"
+
+#: breadcrumb_navxt_admin.php:678
+msgid "Author Template"
+msgstr "Yazar Şablonu"
+
+#: breadcrumb_navxt_admin.php:678
+msgid "The template for author breadcrumbs."
+msgstr "Yazar breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:679
+msgid "Author Template (Unlinked)"
+msgstr "Yazar Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:679
+msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan yazar breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:680
+msgid "Author Display Format"
+msgstr "Yazar Gösterim Formatı"
+
+#: breadcrumb_navxt_admin.php:680
+msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
+msgstr "display_name kullanıcı profili altında diğer kullanıcıların profilindeki seçeneklere karşılık gelen \"Herkes tarafından görülecek ad\" içinde belirtilen adı kullanır."
+
+#: breadcrumb_navxt_admin.php:686
+msgid "Date Template"
+msgstr "Tarih Şablonu"
+
+#: breadcrumb_navxt_admin.php:686
+msgid "The template for date breadcrumbs."
+msgstr "Tarih breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:687
+msgid "Date Template (Unlinked)"
+msgstr "Tarih Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:687
+msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Sadece, breadcrumb için bağlantı olmadığında kullanılan tarih breadcrumbs şablonu."
+
+#: breadcrumb_navxt_admin.php:688
+msgid "Search Template"
+msgstr "Arama Şablonu"
+
+#: breadcrumb_navxt_admin.php:688
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
+msgstr "Sadece, arama sonuçları birkaç sayfaya yayıldığında kullanılan arama breadcrumbs için bağlantı şablonu."
+
+#: breadcrumb_navxt_admin.php:689
+msgid "Search Template (Unlinked)"
+msgstr "Arama Şablonu (Bağlantısız)"
+
+#: breadcrumb_navxt_admin.php:689
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
+msgstr "Sadece, arama sonuçları birkaç sayfaya yayıldığında ve breadcrumb için bağlantı olmadığında kullanılan arama breadcrumbs için bağlantı şablonu."
+
+#: breadcrumb_navxt_admin.php:690
+msgid "404 Title"
+msgstr "404 Başlığı"
+
+#: breadcrumb_navxt_admin.php:691
+msgid "404 Template"
+msgstr "404 Şablonu"
+
+#: breadcrumb_navxt_admin.php:691
+msgid "The template for 404 breadcrumbs."
+msgstr "404 breadcrumbs için şablon."
+
+#: breadcrumb_navxt_admin.php:697
+msgid "Save Changes"
+msgstr "Değişiklikleri Kaydet"
+
+#: includes/mtekk_adminkit.php:211
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: includes/mtekk_adminkit.php:281
+msgid "Your settings are out of date."
+msgstr "Ayarlarınız güncel değil."
+
+#: includes/mtekk_adminkit.php:281 includes/mtekk_adminkit.php:290
+msgid "Migrate the settings now."
+msgstr "Şimdi ayarları taşıyın."
+
+#: includes/mtekk_adminkit.php:281 includes/mtekk_adminkit.php:290
+msgid "Migrate now."
+msgstr "Şimdi taşıyın."
+
+#: includes/mtekk_adminkit.php:298
+msgid "Your plugin install is incomplete."
+msgstr "Eklenti kurulumunuz tamamlanmadı."
+
+#: includes/mtekk_adminkit.php:298
+msgid "Load default settings now."
+msgstr "Şimdi varsayılan ayarları yükle."
+
+#: includes/mtekk_adminkit.php:298
+msgid "Complete now."
+msgstr "Şimdi tamamla."
+
+#: includes/mtekk_adminkit.php:306
+msgid "Your plugin settings are invalid."
+msgstr "Eklenti ayarlarınız geçersiz."
+
+#: includes/mtekk_adminkit.php:306
+msgid "Attempt to fix settings now."
+msgstr "Şimdi ayarları düzeltmeyi deneyin."
+
+#: includes/mtekk_adminkit.php:306
+msgid "Fix now."
+msgstr "Şimdi düzelt."
+
+#: includes/mtekk_adminkit.php:484
+msgid "Settings successfully saved."
+msgstr "Ayarlar başarıyla kaydedildi."
+
+#: includes/mtekk_adminkit.php:484 includes/mtekk_adminkit.php:489
+msgid "Undo the options save."
+msgstr "Seçenekleri kaydetmeyi geri al."
+
+#: includes/mtekk_adminkit.php:484 includes/mtekk_adminkit.php:489
+#: includes/mtekk_adminkit.php:594 includes/mtekk_adminkit.php:618
+#: includes/mtekk_adminkit.php:635
+msgid "Undo"
+msgstr "Geri al"
+
+#: includes/mtekk_adminkit.php:489
+msgid "Some settings were not saved."
+msgstr "Bazı ayarlar kaydedilmedi."
+
+#: includes/mtekk_adminkit.php:490
+msgid "The following settings were not saved:"
+msgstr "Aşağıdaki ayarları kaydedilmedi:"
+
+#: includes/mtekk_adminkit.php:495
+msgid "Please include this message in your %sbug report%s."
+msgstr "Lütfen bu mesajı %sbug report%s içine dahil edin."
+
+#: includes/mtekk_adminkit.php:495
+msgid "Go to the %s support post for your version."
+msgstr "Sürümünüz için %s destek yazısına gidin."
+
+#: includes/mtekk_adminkit.php:594
+msgid "Settings successfully imported from the uploaded file."
+msgstr "Ayarlar yüklenen dosyadan başarıyla içe aktarıldı."
+
+#: includes/mtekk_adminkit.php:594
+msgid "Undo the options import."
+msgstr "Seçenekleri içe aktarmayı geri al."
+
+#: includes/mtekk_adminkit.php:599
+msgid "Importing settings from file failed."
+msgstr "Ayarları dosyadan içe aktarma başarısız oldu."
+
+#: includes/mtekk_adminkit.php:618
+msgid "Settings successfully reset to the default values."
+msgstr "Ayarlar varsayılan değerlere başarıyla sıfırlandı."
+
+#: includes/mtekk_adminkit.php:618
+msgid "Undo the options reset."
+msgstr "Seçenekleri sıfırlamayı geri al."
+
+#: includes/mtekk_adminkit.php:635
+msgid "Settings successfully undid the last operation."
+msgstr "Ayarlar son işleme başarıyla getirildi."
+
+#: includes/mtekk_adminkit.php:635
+msgid "Undo the last undo operation."
+msgstr "Son geri alma işlemini geri al."
+
+#: includes/mtekk_adminkit.php:670
+msgid "Settings successfully migrated."
+msgstr "Ayarlar başarıyla taşındı."
+
+#: includes/mtekk_adminkit.php:677
+msgid "Default settings successfully installed."
+msgstr "Varsayılan ayarlar başarıyla yüklendi."
+
+#: includes/mtekk_adminkit.php:778
+msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
+msgstr "Ayarları bir XML dosyasından içe aktar, mevcut ayarları bir XML dosyasına aktar veya varsayılan ayarlara sıfırla."
+
+#: includes/mtekk_adminkit.php:781
+msgid "Settings File"
+msgstr "Ayarlar Dosyası"
+
+#: includes/mtekk_adminkit.php:784
+msgid "Select a XML settings file to upload and import settings from."
+msgstr "Ayarları yüklemek ve içe aktarmak için bir XML ayarlar dosyası seçin."
+
+#: breadcrumb_navxt_class.php:272
+msgid "Page %htitle%"
+msgstr "Sayfa %htitle%"
+
+#: breadcrumb_navxt_class.php:296
+msgid "404"
+msgstr "404"
+
+#: breadcrumb_navxt_class.php:301
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "Arama sonuçları: &#39;%htitle%&#39;"
+
+#: breadcrumb_navxt_class.php:316
+msgid "Articles by: %htitle%"
+msgstr "Yazar: %htitle%"

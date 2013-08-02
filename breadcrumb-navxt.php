@@ -303,7 +303,7 @@ class breadcrumb_navxt
 	{
 		//Let's begin by grabbing the current settings for the site (works for both multisite and single installs)
 		$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
-		//If we're in multisite mode, look at the 
+		//If we're in multisite mode, look at the three BCN_SETTINGS globals
 		if(defined('MULTISITE') && MULTISITE)
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)

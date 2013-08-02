@@ -100,13 +100,13 @@ class breadcrumb_navxt
 			$this->admin = new bcn_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 	}
-	function init()
+	public function init()
 	{
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
 	}
-	function allowed_html($tags)
+	public function allowed_html($tags)
 	{
 		$allowed_html = array(
 					'a' => array(
@@ -291,7 +291,7 @@ class breadcrumb_navxt
 	 * @param string $bradcrumb_trail The string breadcrumb trail that we will replace
 	 * @return string The Breadcrumb NavXT assembled breadcrumb trail
 	 */
-	function tha_compat($breadcrumb_trail)
+	public function tha_compat($breadcrumb_trail)
 	{
 		//Return our breadcrumb trail
 		return $this->display(true);
@@ -299,7 +299,7 @@ class breadcrumb_navxt
 	/**
 	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
 	 */
-	function get_settings()
+	private function get_settings()
 	{
 		//Let's begin by grabbing the current settings for the site (works for both multisite and single installs)
 		$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);

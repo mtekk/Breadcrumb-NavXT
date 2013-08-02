@@ -297,6 +297,23 @@ class breadcrumb_navxt
 		return $this->display(true);
 	}
 	/**
+	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
+	 */
+	function get_settings()
+	{
+		//In BCN_USE_NETWORK_SETTINGS mode we will only use the network settings
+		if(defined('BCN_USE_NETWORK_SETTINGS') && BCN_USE_NETWORK_SETTINGS)
+		{
+			//Grab the current settings from the db
+			$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
+		}
+		else
+		{
+			//Grab the current settings from the db
+			$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+		}
+	}
+	/**
 	 * Outputs the breadcrumb trail
 	 * 
 	 * @param bool $return Whether to return or echo the trail.
@@ -305,8 +322,7 @@ class breadcrumb_navxt
 	 */
 	public function display($return = false, $linked = true, $reverse = false)
 	{
-		//Grab the current settings from the db
-		$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+		$this->get_settings();
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
 		return $this->breadcrumb_trail->display($return, $linked, $reverse);
@@ -321,8 +337,7 @@ class breadcrumb_navxt
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false)
 	{
-		//Grab the current settings from the db
-		$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+		$this->get_settings();
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
 		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);

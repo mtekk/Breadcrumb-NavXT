@@ -24,6 +24,7 @@ class bcn_breadcrumb_trail
 	private $version = '4.3.90';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
+	public $trail = array();
 	//The options
 	public $opt;
 	//Default constructor
@@ -37,6 +38,7 @@ class bcn_breadcrumb_trail
 		{
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}
+		$this->trail = &$this->breadcrumbs;
 		//Load the translation domain as the next part needs it		
 		//load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		//Initilize with default option values

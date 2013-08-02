@@ -298,6 +298,8 @@ class breadcrumb_navxt
 	}
 	/**
 	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
+	 * 
+	 * @since  5.0.0
 	 */
 	private function get_settings()
 	{

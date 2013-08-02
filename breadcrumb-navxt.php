@@ -301,16 +301,26 @@ class breadcrumb_navxt
 	 */
 	function get_settings()
 	{
-		//In BCN_USE_NETWORK_SETTINGS mode we will only use the network settings
-		if(defined('BCN_USE_NETWORK_SETTINGS') && BCN_USE_NETWORK_SETTINGS)
+		//Let's begin by grabbing the current settings for the site (works for both multisite and single installs)
+		$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
+		//If we're in multisite mode, look at the 
+		if(defined('MULTISITE') && MULTISITE)
 		{
-			//Grab the current settings from the db
-			$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
-		}
-		else
-		{
-			//Grab the current settings from the db
-			$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
+			{
+				//Grab the current settings from the db
+				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+			}
+			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
+			{
+				//Grab the current settings from the db
+				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->breadcrumb_trail->opt);
+			}
+			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
+			{
+				//Grab the current settings from the db
+				$this->breadcrumb_trail->opt = wp_parse_args($this->breadcrumb_trail->opt, get_option('bcn_options'));
+			}
 		}
 	}
 	/**

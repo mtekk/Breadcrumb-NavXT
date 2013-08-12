@@ -124,7 +124,9 @@ class breadcrumb_navxt
 						'itemid' => true,
 						'itemprop' => true,
 						'itemscope' => true,
-						'itemtype' => true
+						'itemtype' => true,
+						'xmlns:v' => true,
+						'property' => true
 					),
 					'img' => array(
 						'alt' => true,
@@ -140,7 +142,9 @@ class breadcrumb_navxt
 						'itemid' => true,
 						'itemprop' => true,
 						'itemscope' => true,
-						'itemtype' => true
+						'itemtype' => true,
+						'xmlns:v' => true,
+						'property' => true
 					),
 					'span' => array(
 						'title' => true,
@@ -156,7 +160,9 @@ class breadcrumb_navxt
 						'itemid' => true,
 						'itemprop' => true,
 						'itemscope' => true,
-						'itemtype' => true
+						'itemtype' => true,
+						'xmlns:v' => true,
+						'property' => true
 					),
 					'h1' => array(
 						'title' => true,
@@ -172,7 +178,9 @@ class breadcrumb_navxt
 						'itemid' => true,
 						'itemprop' => true,
 						'itemscope' => true,
-						'itemtype' => true
+						'itemtype' => true,
+						'xmlns:v' => true,
+						'property' => true
 					),
 					'h2' => array(
 						'title' => true,
@@ -188,7 +196,9 @@ class breadcrumb_navxt
 						'itemid' => true,
 						'itemprop' => true,
 						'itemscope' => true,
-						'itemtype' => true
+						'itemtype' => true,
+						'xmlns:v' => true,
+						'property' => true
 					)
 		);
 		return mtekk_adminKit::array_merge_recursive($tags, $allowed_html);

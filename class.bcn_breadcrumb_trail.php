@@ -989,7 +989,7 @@ class bcn_breadcrumb_trail
 				$li_class .= ' class="current_item"';
 			}
 			//Filter li_attributes adding attributes to the li element
-			$trail_str .= apply_filters('bcn_li_attributes', $li_class);
+			$trail_str .= apply_filters('bcn_li_attributes', $li_class, $breadcrumb->type, $breadcrumb->get_id());
 			//Trim titles, if needed
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{

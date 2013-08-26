@@ -114,7 +114,7 @@ class bcn_breadcrumb
 		}
 	}
 	/**
-	 * Sets the internal breadcrumb template
+	 * Function to set the internal breadcrumb template
 	 * 
 	 * @param string $template the template to use durring assebly
 	 */
@@ -124,14 +124,23 @@ class bcn_breadcrumb
 		$this->template = wp_kses($template, $this->allowed_html);
 	}
 	/**
-	 * Sets the internal breadcrumb ID
+	 * Function to set the internal breadcrumb ID
 	 *
 	 * @param int $id the id of the resource this breadcrumb represents
 	 */
-	 public function set_id($id)
-	 {
-	 	$this->id = $id;
-	 }
+	public function set_id($id)
+	{
+		$this->id = $id;
+	}
+	/**
+	 * Function to get the internal breadcrumb ID
+	 *
+	 * @return int the id of the resource this breadcrumb represents
+	 */
+	public function get_id()
+	{
+		return $this->id;
+	}
 	/**
 	 * Append a type entry to the type array
 	 * 

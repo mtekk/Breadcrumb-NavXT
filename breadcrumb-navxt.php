@@ -56,6 +56,7 @@ require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb_trail.php');
 //Include the WP 2.8+ widget class
 require_once(dirname(__FILE__) . '/class.bcn_widget.php');
+$breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
@@ -365,10 +366,16 @@ class breadcrumb_navxt
 		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);
 	}
 }
-//In the future there will be a hook for this so derivatives of bcn_breadcrumb_trail can use the admin
-$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-//Let's make an instance of our object takes care of everything
-$breadcrumb_navxt = new breadcrumb_navxt(apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail));
+//Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
+add_action('plugins_loaded', 'bcn_init', 15);
+function bcn_init()
+{
+	global $breadcrumb_navxt;
+	//In the future there will be a hook for this so derivatives of bcn_breadcrumb_trail can use the admin
+	$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
+	//Let's make an instance of our object takes care of everything
+	$breadcrumb_navxt = new breadcrumb_navxt(apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail));
+}
 /**
  * Outputs the breadcrumb trail
  * 

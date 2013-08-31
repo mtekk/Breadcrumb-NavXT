@@ -163,7 +163,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for a search page.
 	 */
-	private function do_search()
+	protected function do_search()
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_search_query(), $this->opt['Hsearch_template_no_anchor'], array('search', 'current-item')));
@@ -183,7 +183,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for an author page.
 	 */
-	private function do_author()
+	protected function do_author()
 	{
 		global $author;
 		//Get the Author name, note it is an object
@@ -217,7 +217,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO: Add logic for contextual taxonomy selection
 	 */
-	private function post_hierarchy($id, $type, $parent = NULL)
+	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
 		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
 		if($this->opt['bpost_' . $type . '_taxonomy_display'])
@@ -284,7 +284,7 @@ class bcn_breadcrumb_trail
 	 * TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
 	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
 	 */
-	private function post_terms($id, $taxonomy)
+	protected function post_terms($id, $taxonomy)
 	{
 		//Fills a temporary object with the terms for the post
 		$bcn_object = get_the_terms($id, $taxonomy);
@@ -321,13 +321,13 @@ class bcn_breadcrumb_trail
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * @TODO Evaluate if we need to do tax_ for a prefix
 	 */
-	private function term_parents($id, $taxonomy)
+	protected function term_parents($id, $taxonomy)
 	{
 		global $post;
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array($taxonomy), get_term_link($term, $taxonomy), $id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term, $taxonomy), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($term->parent && $term->parent != $id)
 		{
@@ -342,12 +342,12 @@ class bcn_breadcrumb_trail
 	 * @param int $id The id of the parent page.
 	 * @param int $frontpage The id of the front page.
 	 */
-	private function post_parents($id, $frontpage)
+	protected function post_parents($id, $frontpage)
 	{
 		//Use WordPress API, though a bit heavier than the old method, this will ensure compatibility with other plug-ins
 		$parent = get_post($id);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($id), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($id), $id));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($id), $this->opt['Hpost_' . $parent->post_type . '_template'], array('post', 'post-' . $parent->post_type), get_permalink($id), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($parent->post_parent >= 0 && $parent->post_parent != false && $id != $parent->post_parent && $frontpage != $parent->post_parent)
 		{
@@ -361,11 +361,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for posts
 	 * 
 	 */
-	private function do_post()
+	protected function do_post()
 	{
 		global $post, $page;
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post-' . $post->post_type, 'current-item'), NULL, $post->ID));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links
 		if($this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
 		{
@@ -399,11 +399,11 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @TODO Evaluate if this can be merged in with the do_post function
 	 */
-	private function do_attachment()
+	protected function do_attachment()
 	{
 		global $post;
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post-attachment', 'current-item'), NULL, $post->ID));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post', 'post-attachment', 'current-item'), NULL, $post->ID));
 		if($this->opt['bcurrent_item_linked'])
 		{
 			//Change the template over to the normal, linked one
@@ -443,13 +443,13 @@ class bcn_breadcrumb_trail
 	 * This function fills a breadcrumb for any taxonomy archive, was previously two separate functions
 	 * 
 	 */
-	private function do_archive_by_term()
+	protected function do_archive_by_term()
 	{
 		global $wp_query;
 		//Simmilar to using $post, but for things $post doesn't cover
 		$term = $wp_query->get_queried_object();
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $term->taxonomy . '_template_no_anchor'], array($term->taxonomy, 'current-item'), NULL, $term->term_id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $term->taxonomy . '_template_no_anchor'], array('archive', 'taxonomy', $term->taxonomy, 'current-item'), NULL, $term->term_id));
 		//If we're paged, let's link to the first page
 		if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 		{
@@ -469,14 +469,14 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for a date archive.
 	 *
 	 */
-	private function do_archive_by_date()
+	protected function do_archive_by_date()
 	{
 		global $wp_query;
 		//First deal with the day breadcrumb
 		if(is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('d'), $this->opt['Hdate_template_no_anchor'], array('date-day')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('d'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
 			//If this is a day archive, add current-item type
 			if(is_day())
 			{
@@ -495,7 +495,7 @@ class bcn_breadcrumb_trail
 		if(is_month() || is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('F'), $this->opt['Hdate_template_no_anchor'], array('date-month')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('F'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
 			//If this is a month archive, add current-item type
 			if(is_month())
 			{
@@ -511,7 +511,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('Y'), $this->opt['Hdate_template_no_anchor'], array('date-year')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('Y'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
 		//If this is a year archive, add current-item type
 		if(is_year())
 		{
@@ -531,10 +531,10 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for a post type archive (WP 3.1 feature)
 	 */
-	private function do_archive_by_post_type()
+	protected function do_archive_by_post_type()
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_post_type() . '_template_no_anchor'], array('post-' . get_post_type() . '-archive', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_post_type() . '_template_no_anchor'], array('archive', 'post-' . get_post_type() . '-archive', 'current-item')));
 		if($this->opt['bcurrent_item_linked'] || is_paged() && $this->opt['bpaged_display'])
 		{
 			$breadcrumb->set_template($this->opt['Hpost_' . get_post_type() . '_template']);
@@ -547,7 +547,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for the front page.
 	 */
-	private function do_front_page()
+	protected function do_front_page()
 	{
 		global $post, $current_site;
 		//Get the site name
@@ -575,7 +575,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for the home page.
 	 */
-	private function do_home()
+	protected function do_home()
 	{
 		global $post, $current_site;
 		//On everything else we need to link, but no current item (pre/suf)fixes
@@ -601,7 +601,7 @@ class bcn_breadcrumb_trail
 	 * @param object $object the post or taxonomy object used to attempt to find the title
 	 * @return string the title
 	 */
-	private function post_type_archive_title($object)
+	protected function post_type_archive_title($object)
 	{
 		if(isset($object->labels->name))
 		{
@@ -616,7 +616,7 @@ class bcn_breadcrumb_trail
 	 * @param string $post_type the name of the post type
 	 * @return bool
 	 */
-	private function is_builtin($post_type)
+	protected function is_builtin($post_type)
 	{
 		$type = get_post_type_object($post_type);
 		return $type->_builtin;
@@ -627,7 +627,7 @@ class bcn_breadcrumb_trail
 	 * @param string $post_type the name of the post type
 	 * @return bool
 	 */
-	private function has_archive($post_type)
+	protected function has_archive($post_type)
 	{
 		$type = get_post_type_object($post_type);
 		return $type->has_archive;
@@ -639,7 +639,7 @@ class bcn_breadcrumb_trail
 	 * @param string $type_str The type string variable, passed by reference
 	 * @param int $root_id The ID for the post type root
 	 */
-	private function find_type($type, &$type_str, &$root_id)
+	protected function find_type($type, &$type_str, &$root_id)
 	{
 		global $wp_taxonomies;
 		//We need to do special things for custom post types
@@ -687,7 +687,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO: this still needs to be cleaned up
 	 */
-	private function do_root()
+	protected function do_root()
 	{
 		global $post, $wp_query, $wp_taxonomies, $current_site;
 		//If this is an attachment then we need to change the queried object to the parent post
@@ -707,14 +707,14 @@ class bcn_breadcrumb_trail
 		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post', 'post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
 		}
 		else if(isset($type->taxonomy) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
 		{
 			//We end up using the post type in several places, give it a variable
 			$post_type = $wp_taxonomies[$type->taxonomy]->object_type[0];
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
 		}
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
 		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
@@ -729,7 +729,7 @@ class bcn_breadcrumb_trail
 			if($root_id && $root_id != $frontpage_id)
 			{
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post-' . $type_str)));
+				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str)));
 				//If we are at home, then we need to add the current item type
 				if(is_home())
 				{
@@ -758,7 +758,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for 404 pages.
 	 */
-	private function do_404()
+	protected function do_404()
 	{
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, prefix, and suffix
 		$this->breadcrumbs[] = new bcn_breadcrumb($this->opt['S404_title'], $this->opt['H404_template'], array('404', 'current-item'));
@@ -768,7 +768,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for paged pages.
 	 */
-	private function do_paged()
+	protected function do_paged()
 	{
 		global $paged, $page;
 		//Need to switch between paged and page for archives and singular (posts)
@@ -877,7 +877,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param bool $reverse[optional] Whether to reverse the trail or not.
 	 */
-	private function order($reverse = false)
+	protected function order($reverse = false)
 	{
 		if($reverse)
 		{

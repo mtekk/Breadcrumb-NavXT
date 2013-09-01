@@ -210,11 +210,21 @@ class breadcrumb_navxt
 	}
 	public function wp_loaded()
 	{
-		//First make sure our defaults are safe
-		$this->find_posttypes($this->opt);
-		$this->find_taxonomies($this->opt);
+		breadcrumb_navxt::setup_options($this->opt);
+	}
+	/**
+	 * Sets up the extended options for any CPTs, taxonomies or extensions
+	 * 
+	 * @param array $opt The options array, passed by reference
+	 */
+	static public function setup_options(&$opt)
+	{
+		//Add custom post types
+		breadcrumb_navxt::find_posttypes($opt);
+		//Add custom taxonomy types
+		breadcrumb_navxt::find_taxonomies($opt);
 		//Let others hook into our settings
-		$this->opt = apply_filters($this->unique_prefix . '_settings_init', $this->opt);
+		$opt = apply_filters('bcn_settings_init', $opt);
 	}
 	/**
 	 * Places settings into $opts array, if missing, for the registered post types

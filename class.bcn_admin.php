@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '4.3.90';
+	protected $version = '4.9.80';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -53,15 +53,16 @@ class bcn_admin extends mtekk_adminKit
 	protected $breadcrumb_trail = null;
 	/**
 	 * Administrative interface class default constructor
+	 * 
 	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
 	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(bcn_breadcrumb_trail $breadcrumb_trail, $basename)
+	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename)
 	{
-		$this->breadcrumb_trail = $breadcrumb_trail;
+		$this->breadcrumb_trail =& $breadcrumb_trail;
 		$this->plugin_basename = $basename;
 		//Grab defaults from the breadcrumb_trail object
-		$this->opt = $this->breadcrumb_trail->opt;
+		$this->opt =& $this->breadcrumb_trail->opt;
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}
@@ -80,8 +81,8 @@ class bcn_admin extends mtekk_adminKit
 	}
 	function wp_loaded()
 	{
-		
 		parent::wp_loaded();
+		breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
@@ -196,6 +197,8 @@ class bcn_admin extends mtekk_adminKit
 		breadcrumb_navxt::find_posttypes($this->opt);
 		//Add custom taxonomy types
 		breadcrumb_navxt::find_taxonomies($this->opt);
+		//Let others hook into our settings
+		$this->opt = apply_filters($this->unique_prefix . '_settings_init', $this->opt);
 	}
 	/**
 	 * help action hook function
@@ -341,7 +344,7 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 					<?php
-						do_action($this->unique_prefix . '_settings_general');
+						do_action($this->unique_prefix . '_settings_general', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
@@ -350,7 +353,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes', 'breadcrumb-navxt'));
 						$this->input_check(__('Paged Breadcrumb', 'breadcrumb-navxt'), 'bpaged_display', __('Include the paged breadcrumb in the breadcrumb trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first on paginated posts/pages.', 'breadcrumb-navxt'));
 						$this->input_text(__('Paged Template', 'breadcrumb-navxt'), 'Hpaged_template', 'large-text', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_settings_current_item');
+						do_action($this->unique_prefix . '_settings_current_item', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -359,7 +362,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', 'large-text', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', 'large-text', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_settings_home');
+						do_action($this->unique_prefix . '_settings_home', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -368,7 +371,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), (get_option('show_on_front') !== "page"));
 						$this->input_text(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', 'large-text', (get_option('show_on_front') !== "page"), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', 'large-text', (get_option('show_on_front') !== "page"), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_settings_blog');
+						do_action($this->unique_prefix . '_settings_blog', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -377,10 +380,10 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), !is_multisite());
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', 'large-text', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', 'large-text', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_settings_mainsite');
+						do_action($this->unique_prefix . '_settings_mainsite', $this->opt);
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_settings_tab_general'); ?>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_general', $this->opt); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
@@ -504,7 +507,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_settings_tab_post');
+			do_action($this->unique_prefix . '_after_settings_tab_post', $this->opt);
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
@@ -554,7 +557,7 @@ class bcn_admin extends mtekk_adminKit
 				<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_settings_tab_taxonomy'); ?>
+			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->opt); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
@@ -577,8 +580,9 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('404 Template', 'breadcrumb-navxt'), 'H404_template', 'large-text', false, __('The template for 404 breadcrumbs.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous'); ?>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous', $this->opt); ?>
 			</fieldset>
+			<?php do_action($this->unique_prefix . '_after_settings_tabs', $this->opt); ?>
 			</div>
 			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>
 		</form>

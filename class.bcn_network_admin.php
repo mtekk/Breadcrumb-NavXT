@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	protected $version = '4.4.90';
+	protected $version = '4.9.80';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';
@@ -81,8 +81,8 @@ class bcn_network_admin extends mtekk_adminKit
 	}
 	function wp_loaded()
 	{
-		
 		parent::wp_loaded();
+		breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
 	 * Return the URL of the settings page for the plugin

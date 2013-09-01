@@ -412,7 +412,7 @@ class bcn_network_admin extends mtekk_adminKit
 						</td>
 					</tr>
 					<?php
-						do_action($this->unique_prefix . '_network_settings_general');
+						do_action($this->unique_prefix . '_network_settings_general', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
@@ -421,7 +421,7 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes', 'breadcrumb-navxt'));
 						$this->input_check(__('Paged Breadcrumb', 'breadcrumb-navxt'), 'bpaged_display', __('Include the paged breadcrumb in the breadcrumb trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first on paginated posts/pages.', 'breadcrumb-navxt'));
 						$this->input_text(__('Paged Template', 'breadcrumb-navxt'), 'Hpaged_template', 'large-text', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_network_settings_current_item');
+						do_action($this->unique_prefix . '_network_settings_current_item', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -430,7 +430,7 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', 'large-text', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', 'large-text', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_network_settings_home');
+						do_action($this->unique_prefix . '_network_settings_home', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -439,7 +439,7 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', 'large-text', false, __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', 'large-text', false , __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_network_settings_blog');
+						do_action($this->unique_prefix . '_network_settings_blog', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
@@ -448,10 +448,10 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), !is_multisite());
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', 'large-text', false, __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
 						$this->input_text(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', 'large-text', false, __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_network_settings_mainsite');
+						do_action($this->unique_prefix . '_network_settings_mainsite', $this->opt);
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_network_settings_tab_general'); ?>
+				<?php do_action($this->unique_prefix . '_after_network_settings_tab_general', $this->opt); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
@@ -575,7 +575,7 @@ class bcn_network_admin extends mtekk_adminKit
 					<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_network_settings_tab_post');
+			do_action($this->unique_prefix . '_after_network_settings_tab_post', $this->opt);
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
@@ -625,7 +625,7 @@ class bcn_network_admin extends mtekk_adminKit
 				<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_network_settings_tab_taxonomy'); ?>
+			do_action($this->unique_prefix . '_after_network_settings_tab_taxonomy', $this->opt); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
@@ -648,8 +648,9 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_text(__('404 Template', 'breadcrumb-navxt'), 'H404_template', 'large-text', false, __('The template for 404 breadcrumbs.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_network_settings_tab_miscellaneous'); ?>
+				<?php do_action($this->unique_prefix . '_after_network_settings_tab_miscellaneous', $this->opt); ?>
 			</fieldset>
+			<?php do_action($this->unique_prefix . '_after_network_settings_tabs', $this->opt); ?>
 			</div>
 			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>
 		</form>

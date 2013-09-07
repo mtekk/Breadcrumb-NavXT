@@ -323,7 +323,6 @@ class bcn_breadcrumb_trail
 	 */
 	protected function term_parents($id, $taxonomy)
 	{
-		global $post;
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
@@ -359,7 +358,6 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for posts
-	 * 
 	 */
 	protected function do_post()
 	{

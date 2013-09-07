@@ -193,7 +193,7 @@ class bcn_breadcrumb
 			'%title%' => esc_attr(strip_tags($this->title)),
 			'%link%' => $this->url,
 			'%htitle%' => $this->title,
-			'%type%' => $this->type,
+			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
 			'%fhtitle%' => $this->_title
 			);

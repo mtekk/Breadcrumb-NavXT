@@ -404,7 +404,7 @@ class bcn_admin extends mtekk_adminKit
 								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates'));
 								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'));
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent'));
+								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'));
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -473,7 +473,7 @@ class bcn_admin extends mtekk_adminKit
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent'));
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'));
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{

@@ -4,6 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.5
 Tested up to: 3.6
+Stable tag: 4.4.0
+License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -57,6 +59,10 @@ Save the file (upload if applicable). Now you should have a breadcrumb trail on 
 Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/ "Go to Breadcrumb NavXT's Documentation.") page for more information.
 
 == Changelog ==
+= 5.0.0 =
+* New feature: Added `bcn_breadcrumb_trail_object` filter.
+* New feature: Added `bcn_li_attributes` filter.
+* New feature: Added Network Admin Settings page.
 = 4.4.0 =
 * New feature: Added `bcn_breadcrumb_url` filter.
 * New feature: Add resource ID to the `bcn_breadcrumb_title` filter.
@@ -69,12 +75,12 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * Behaviour change: Home and Mainsite titles were removed.
 * Behaviour change: All HTML capable strings are now passed through wp_kses.
 * New feature: Added bcn_breadcrumb_url filter.
-* New feature: %title% and %htitle% now are replaced with the the “Site Title” for the home breadcrumb and the “Network Name” for mainsite breadcrumbs.
+* New feature: %title% and %htitle% now are replaced with the the "Site Title" for the home breadcrumb and the "Network Name" for mainsite breadcrumbs.
 * New feature: Support for the proposed Theme Hook Alliance tha_breadcrumb_navigation filter.
 * New feature: Added %ftitle% and %fhtitle% tags that are not affected by bcn_breadcrumb::trim().
 * Bug fix: Minor tweaks to the tabs in the admin page to better support the new version of jQuery UI tabs (in WordPress 3.5+).
 * Bug fix: Fixed issue where initial settings were not being translated due to the text domain not loading.
-* Bug fix: Added verbiage to clarify what the “Post Parent” selection for “Post Hierarchy” does. 
+* Bug fix: Added verbiage to clarify what the "Post Parent" selection for "Post Hierarchy" does. 
 = 4.2.0 =
 * Behaviour change: Date archives are only available for the 'post' post type.
 * New feature: All Custom Post Types can now either use a post parent, or taxonomy based hierarchy.
@@ -87,7 +93,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * Bug fix: `bcn_breadcrumb::title_trim()` no longer trims the title when the title length is equal to the max length.
 = 4.1.0 =
 * Behavior change: Made the behavior of posts using flat taxonomies match the behavior of using a hierarchical taxonomy when the post is not assigned a taxonomy term.
-* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don�t have a parent.
+* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don't have a parent.
 * New feature: Pretext option for the included Widget, allows 'You are here:' type messages in the widget.
 * Bug fix: Textdomain was changed to the correct one in the widget.
 * Bug fix: Textdomain was changed from 'breadcrumb_navxt' to 'breadcrumb-navxt' for improved compatibility with the new GlotPress translation flow.
@@ -192,8 +198,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * Bug fix: Now selects the first category hierarchy of a post instead of the last.
 = 3.2.1 =
 * New feature: Translations for Belorussian now included thanks to "Fat Cow".
-* Bug fix: The `bcn_display()` and `bcn_display_list()` wrapper functions obey the
-`$return parameter`.
+* Bug fix: The `bcn_display()` and `bcn_display_list()` wrapper functions obey the `$return parameter`.
 * Bug fix: Anchors now will be valid HTML even when a page/category/post title has HTML tags in it.
 * Bug fix: Revised `bcn_breadcrumb_trail::category_parents` to work around a bug in `get_category` that causes a WP_Error to be thrown.
 * Bug fix: Importing settings XML files should no longer corrupt HTML entities.
@@ -242,3 +247,8 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * Bug fix: Compatible with all polyglot like plugins.
 * Bug fix: Compatible with Viper007bond's Breadcrumb Titles for Pages plugin (but 3.0.0 can replace it as well)
 * Bug fix: Author page support should be fixed on some setups where it did not work before.
+
+== Upgrade Notice ==
+
+= 5.0.0 =
+This version is for the developers, those who like to extend things gracefully. Several new hooks were introduced, while others were tweaked to be more usefull.

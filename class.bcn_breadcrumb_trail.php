@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '4.3.90';
+	private $version = '4.9.90';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -173,7 +173,7 @@ class bcn_breadcrumb_trail
 			//Since we are paged and are linking the root breadcrumb, time to change to the regular template
 			$breadcrumb->set_template($this->opt['Hsearch_template']);
 			//Figure out the hyperlink for the anchor
-			$url = get_option('home') . '?s=' . str_replace(' ', '+', get_search_query());
+			$url = home_url('?s=' . str_replace(' ', '+', get_search_query()));
 			//Figure out the anchor for the search
 			$breadcrumb->set_url($url);
 		}

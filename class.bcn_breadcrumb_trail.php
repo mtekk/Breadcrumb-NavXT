@@ -220,7 +220,7 @@ class bcn_breadcrumb_trail
 	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
 		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
-		if($this->opt['bpost_' . $type . '_taxonomy_display'])
+		if ( array_key_exists( 'bpost_' . $type . '_taxonomy_display', $this->opt ) )
 		{
 			//Check if we have a date 'taxonomy' request
 			if($this->opt['Spost_' . $type . '_taxonomy_type'] == 'date')

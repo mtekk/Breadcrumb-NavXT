@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.5
 Tested up to: 3.7.1
-Stable tag: 4.4.0
+Stable tag: 5.0.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 

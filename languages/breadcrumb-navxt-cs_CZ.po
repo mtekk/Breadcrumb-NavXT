@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-02-14 02:35:45+0000\n"
+"PO-Revision-Date: 2013-11-21 02:03:59+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,744 +10,767 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: breadcrumb_navxt_admin.php:443 breadcrumb_navxt_admin.php:520
+#: class.bcn_network_admin.php:377
+msgid "Breadcrumb NavXT Network Settings"
+msgstr "Síťová nastavení Breadcrumb NavXT"
+
+msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "Přidá drobečkovou navigaci zobrazující návštěvníkovi cestu k aktuálnímu umístění. Pro podrobnosti k používání tohoto pluginu navštivte <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+
+#: class.bcn_admin.php:423 class.bcn_admin.php:500
+#: class.bcn_network_admin.php:491 class.bcn_network_admin.php:568
 msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
 msgstr "Struktura, kterou zobrazí řetězec drobečkové navigace. Mějte na paměti, že možnost \"Rodič příspěvku\" může pro korektní fungování vyžadovat další plugin, protože tento typ obsahu není strukturovaný."
 
-#: breadcrumb_navxt_class.php:97 breadcrumb_navxt_class.php:258
-#: breadcrumb_navxt_class.php:264 breadcrumb_navxt_class.php:270
-#: breadcrumb_navxt_class.php:284 breadcrumb_navxt_class.php:296
-#: breadcrumb_navxt_class.php:308
+#: class.bcn_breadcrumb.php:67 class.bcn_breadcrumb_trail.php:49
+#: class.bcn_breadcrumb_trail.php:55 class.bcn_breadcrumb_trail.php:61
+#: class.bcn_breadcrumb_trail.php:75 class.bcn_breadcrumb_trail.php:87
+#: class.bcn_breadcrumb_trail.php:99
 msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Zobrazit %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:318
+#: class.bcn_breadcrumb_trail.php:109
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr "Výhledky hledání pro &#39;<a title=\"Zobrazit první stránku výsledků hledání pro %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
-#: breadcrumb_navxt_admin.php:341
+#: class.bcn_admin.php:321 class.bcn_network_admin.php:389
 msgid "A collection of settings most likely to be modified are located under this tab."
 msgstr "Sestava nastavení, které budete pravděpodobně chtít použít, je zde."
 
-#: breadcrumb_navxt_admin.php:349
+#: class.bcn_admin.php:329 class.bcn_network_admin.php:397
 msgid "Title Length"
 msgstr "Délka titulku"
 
-#: breadcrumb_navxt_admin.php:354
+#: class.bcn_admin.php:334 class.bcn_network_admin.php:402
 msgid "Limit the length of the breadcrumb title."
 msgstr "Omezte délku titulku v názvu drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:397
+#: class.bcn_admin.php:377 class.bcn_network_admin.php:445
 msgid "Mainsite Breadcrumb"
 msgstr "Navigace hlavního webu"
 
-#: breadcrumb_navxt_admin.php:409
+#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
 msgstr "Nastavení všech typů obsahu jsou umístěna zde (Příspěvky, Stránky a vlastní typy obsahu)."
 
-#: breadcrumb_navxt_admin.php:409
+#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
 msgid "Post Types"
 msgstr "Typy obsahu"
 
-#: breadcrumb_navxt_admin.php:415
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
 msgid "Post Hierarchy Display"
 msgstr "Zobrazení hierarchie příspěvku"
 
-#: breadcrumb_navxt_admin.php:419
+#: class.bcn_admin.php:399 class.bcn_network_admin.php:467
 msgid "Post Hierarchy"
 msgstr "Hierarchie příspěvku"
 
-#: breadcrumb_navxt_admin.php:487
+#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
 msgid "%s Hierarchy Display"
 msgstr "Zobrazení hierarchie %s"
 
-#: breadcrumb_navxt_admin.php:549
+#: class.bcn_admin.php:529 class.bcn_network_admin.php:597
 msgid "Post Formats"
 msgstr "Formáty příspěvku"
 
-#: breadcrumb_navxt_admin.php:359
+#: class.bcn_admin.php:339 class.bcn_network_admin.php:407
 msgid "Max Title Length: "
 msgstr "Maximální délka titulku:"
 
-#: breadcrumb_navxt_admin.php:410
+#: class.bcn_admin.php:390 class.bcn_network_admin.php:458
 msgid "Posts"
 msgstr "Příspěvky"
 
-#: breadcrumb_navxt_admin.php:427 breadcrumb_navxt_admin.php:496
+#: class.bcn_admin.php:407 class.bcn_admin.php:476
+#: class.bcn_network_admin.php:475 class.bcn_network_admin.php:544
 msgid "Post Parent"
 msgstr "Rodič příspěvku"
 
-#: breadcrumb_navxt_admin.php:516
+#: class.bcn_admin.php:496 class.bcn_network_admin.php:564
 msgid "The hierarchy which the breadcrumb trail will show."
 msgstr "Hierarchie, kterou zobrazí řetězec drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:491
+#: class.bcn_admin.php:471 class.bcn_network_admin.php:539
 msgid "%s Hierarchy"
 msgstr "Hierarchie %s"
 
-#: breadcrumb_navxt_admin.php:534
+#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
 msgstr "Nastavení všech taxonomií (včetně Rubrik, Tagů a vlastních taxonomií) jsou umístěna zde."
 
-#: breadcrumb_navxt_admin.php:534
+#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
 msgid "Taxonomies"
 msgstr "Taxonomie"
 
-#: breadcrumb_navxt_admin.php:552
+#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
 msgid "Post Format Template"
 msgstr "Šablona formátu příspěvku"
 
-#: breadcrumb_navxt_admin.php:552
+#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
 msgid "The template for post format breadcrumbs."
 msgstr "Šablona pro formát příspěvku drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:553
+#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
 msgid "Post Format Template (Unlinked)"
 msgstr "Šablona formátu příspěvku (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:553
+#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona pro post_format drobečkovou navigaci, použita pouze, když není drobečková navigace s odkazem."
 
-#: breadcrumb_navxt_admin.php:583
+#: class.bcn_admin.php:563 class.bcn_network_admin.php:631
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
 msgstr "Nastavení pro autora a archiv data, hledání a stránky 404 jsou umístěna zde."
 
-#: breadcrumb_navxt_admin.php:584
+#: class.bcn_admin.php:564 class.bcn_network_admin.php:632
 msgid "Author Archives"
 msgstr "Archivy autora"
 
-#: breadcrumb_navxt_class.php:323 breadcrumb_navxt_class.php:328
+#: class.bcn_breadcrumb_trail.php:114 class.bcn_breadcrumb_trail.php:119
 msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Zobrazit archivy štítku %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:333
+#: class.bcn_breadcrumb_trail.php:124
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "Články od: <a title=\"Zobrazit první stránku příspěvků od %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:340
+#: class.bcn_breadcrumb_trail.php:131
 msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Zobrazit archivy rubriky %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: breadcrumb_navxt_class.php:344
+#: class.bcn_breadcrumb_trail.php:135
 msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "<a title=\"Zobrazit archivy %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: includes/mtekk_adminkit.php:313
+#: includes/class.mtekk_adminkit.php:296
 msgid "Your settings are for a newer version."
 msgstr "Vaše nastavení je určeno pro novější verzi."
 
-#: breadcrumb_navxt_widget.php:96
+#: class.bcn_widget.php:96
 msgid "Text to show before the trail:"
 msgstr "Text k zobrazení před řetězcem:"
 
-#: breadcrumb_navxt_widget.php:103
+#: class.bcn_widget.php:103
 msgid "Schema.org"
 msgstr "Schema.org"
 
-#: breadcrumb_navxt_admin.php:245
+#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Otevřít projekt překladu pluginu Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:36
+#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
+#: class.bcn_network_admin.php:25
 msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
 msgstr "Vaše verze PHP je příliš zastaralá, proveďte prosím aktualizaci na novější. Používáte verzi %1$s, Breadcrumb NavXT vyžaduje %2$s"
 
-#: breadcrumb_navxt_widget.php:33
+#: class.bcn_widget.php:33
 msgid "Adds a breadcrumb trail to your sidebar"
 msgstr "Přidá řetězec drobečkové navigace do sidebaru"
 
-#: breadcrumb_navxt_widget.php:92
+#: class.bcn_widget.php:92
 msgid "Title:"
 msgstr "Titulek:"
 
-#: breadcrumb_navxt_widget.php:100
+#: class.bcn_widget.php:100
 msgid "Output trail as:"
 msgstr "Výstup řetězce jako:"
 
-#: breadcrumb_navxt_widget.php:102
+#: class.bcn_widget.php:102
 msgid "List"
 msgstr "Seznam"
 
-#: breadcrumb_navxt_widget.php:104
+#: class.bcn_widget.php:104
 msgid "Plain"
 msgstr "Čistý"
 
-#: breadcrumb_navxt_widget.php:109
+#: class.bcn_widget.php:109
 msgid "Link the breadcrumbs"
 msgstr "Nalinkovat drobečkovou navigaci"
 
-#: breadcrumb_navxt_widget.php:111
+#: class.bcn_widget.php:111
 msgid "Reverse the order of the trail"
 msgstr "Obrátit pořadí řetězce"
 
-#: breadcrumb_navxt_widget.php:113
+#: class.bcn_widget.php:113
 msgid "Hide the trail on the front page"
 msgstr "Skrýt řetězec z domovské stránky"
 
-#: breadcrumb_navxt_admin.php:122
+#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
 msgid "Insufficient privileges to proceed."
 msgstr "Nedostatečná práva k pokračování"
 
-#: breadcrumb_navxt_admin.php:238
+#: class.bcn_admin.php:220 class.bcn_network_admin.php:288
 msgid "Tips for the settings are located below select options."
 msgstr "Typy pro nastavení jsou umístění pod výběrem možnosti."
 
-#: breadcrumb_navxt_admin.php:239
+#: class.bcn_admin.php:221 class.bcn_network_admin.php:289
 msgid "Resources"
 msgstr "Zdroje"
 
-#: breadcrumb_navxt_admin.php:240
+#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sTutoriály a návody%: Na webových stránkách je k dispozici několik tutoriálů a návodů."
 
-#: breadcrumb_navxt_admin.php:240
+#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Otevřít  archiv tagů Breadcrumb NavXT."
 
-#: breadcrumb_navxt_admin.php:241
+#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sOnline dokumentace%: Navštivte dokumentaci pro více hlubších technických informací."
 
-#: breadcrumb_navxt_admin.php:241
+#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Otevřít online dokumentaci Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:242
+#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%sNahlašte chybu%: Pokud si myslíte, že jste nalezli chybu, přiložte prosím verzi vašeho WordPressu a podrobné informace o výskytu chyby."
 
-#: breadcrumb_navxt_admin.php:242
+#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Otevřít vlákno podpory pro vaši verzi Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:243
+#: class.bcn_admin.php:225 class.bcn_network_admin.php:293
 msgid "Giving Back"
 msgstr "Dát zpět"
 
-#: breadcrumb_navxt_admin.php:244
+#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%Přispějte%: Líbí se vám Breadcrumb NavXT a chtěli byste přispět na jeho vývoj? Zvažte zakoupení piva pro autora."
 
-#: breadcrumb_navxt_admin.php:244
+#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Otevřít PayPal pro odeslání příspěvku na Breadcrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:245
+#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%Překlad%: Není k dispozici váš jazyk? Kontaktujte Johna Havlik pro přeložení."
 
-#: breadcrumb_navxt_admin.php:250 breadcrumb_navxt_admin.php:341
-#: breadcrumb_navxt_admin.php:342
+#: class.bcn_admin.php:232 class.bcn_admin.php:321 class.bcn_admin.php:322
+#: class.bcn_network_admin.php:300 class.bcn_network_admin.php:389
+#: class.bcn_network_admin.php:390
 msgid "General"
 msgstr "Obecné"
 
-#: breadcrumb_navxt_admin.php:253
+#: class.bcn_admin.php:235 class.bcn_network_admin.php:303
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "Aby bylo nastavení na této stránce platné, musíte buď použít Breadcrumb NavXT widget nebo vložit kód níže do vaší šablony."
 
-#: breadcrumb_navxt_admin.php:254
+#: class.bcn_admin.php:236 class.bcn_network_admin.php:304
 msgid "Breadcrumb trail with separators"
 msgstr "Řetězec drobečkové navigace s oddělovačem"
 
-#: breadcrumb_navxt_admin.php:260
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:310
 msgid "Breadcrumb trail in list form"
 msgstr "Řetězec drobečkové navigace jako vysouvací pole formuláře"
 
-#: breadcrumb_navxt_admin.php:269
+#: class.bcn_admin.php:251 class.bcn_network_admin.php:319
 msgid "Quick Start"
 msgstr "Rychlý start"
 
-#: breadcrumb_navxt_admin.php:272
+#: class.bcn_admin.php:254 class.bcn_network_admin.php:322
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Použijte kód ze sekce Rychlý start níže, následující CSS může být použito jako základ pro stylování vaší drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:284
+#: class.bcn_admin.php:266 class.bcn_network_admin.php:334
 msgid "Styling"
 msgstr "Stylování"
 
-#: breadcrumb_navxt_admin.php:290
+#: class.bcn_admin.php:272 class.bcn_network_admin.php:340
 msgid "Import/Export/Reset"
 msgstr "Import/Export/Reset"
 
-#: breadcrumb_navxt_admin.php:314 includes/mtekk_adminkit.php:809
+#: class.bcn_admin.php:296 class.bcn_network_admin.php:364
+#: includes/class.mtekk_adminkit.php:792
 msgid "Import"
 msgstr "Import"
 
-#: breadcrumb_navxt_admin.php:315 includes/mtekk_adminkit.php:810
+#: class.bcn_admin.php:297 class.bcn_network_admin.php:365
+#: includes/class.mtekk_adminkit.php:793
 msgid "Export"
 msgstr "Export"
 
-#: breadcrumb_navxt_admin.php:316 includes/mtekk_adminkit.php:811
+#: class.bcn_admin.php:298 class.bcn_network_admin.php:366
+#: includes/class.mtekk_adminkit.php:794
 msgid "Reset"
 msgstr "Reset"
 
-#: breadcrumb_navxt_admin.php:329
+#: class.bcn_admin.php:309
 msgid "Breadcrumb NavXT Settings"
 msgstr "Nastavení BreadCrumb NavXT"
 
-#: breadcrumb_navxt_admin.php:345
+#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
 msgid "Breadcrumb Separator"
 msgstr "Oddělovač prvků"
 
-#: breadcrumb_navxt_admin.php:345
+#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
 msgid "Placed in between each breadcrumb."
 msgstr "Je vložen mezi každý prvek"
 
-#: breadcrumb_navxt_admin.php:379 breadcrumb_navxt_admin.php:382
+#: class.bcn_admin.php:359 class.bcn_admin.php:362
+#: class.bcn_network_admin.php:427 class.bcn_network_admin.php:430
 msgid "Home Breadcrumb"
 msgstr "Úvodní prvek"
 
-#: breadcrumb_navxt_admin.php:382
+#: class.bcn_admin.php:362 class.bcn_network_admin.php:430
 msgid "Place the home breadcrumb in the trail."
 msgstr "Vložit do řetězce úvodní prvek"
 
-#: breadcrumb_navxt_admin.php:383
+#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
 msgid "Home Template"
 msgstr "Šablona úvodního prvku"
 
-#: breadcrumb_navxt_admin.php:383
+#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
 msgid "The template for the home breadcrumb."
 msgstr "Šablona pro úvodní prvek"
 
-#: breadcrumb_navxt_admin.php:384
+#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
 msgid "Home Template (Unlinked)"
 msgstr "Úvodní šablona (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:384
+#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Šablona pro úvodní prvek zobrazena v případě, že není použit odkaz."
 
-#: breadcrumb_navxt_admin.php:388 breadcrumb_navxt_admin.php:391
+#: class.bcn_admin.php:368 class.bcn_admin.php:371
+#: class.bcn_network_admin.php:436 class.bcn_network_admin.php:439
 msgid "Blog Breadcrumb"
 msgstr "Prvek blogu"
 
-#: breadcrumb_navxt_admin.php:391
+#: class.bcn_admin.php:371 class.bcn_network_admin.php:439
 msgid "Place the blog breadcrumb in the trail."
 msgstr "Vložit prvek blogu do řetězce."
 
-#: breadcrumb_navxt_admin.php:392
+#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
 msgid "Blog Template"
 msgstr "Šablona blogu"
 
-#: breadcrumb_navxt_admin.php:392
+#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "Šablona prvku blogu, je použita pouze v případě prostředí se statickou domovskou stránkou."
 
-#: breadcrumb_navxt_admin.php:393
+#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
 msgid "Blog Template (Unlinked)"
 msgstr "Šablona blogu (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:393
+#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Šablona pro prvek blogu, použita pouze v případě prostředí se statickou domovskou stránkou a bez odkazu."
 
-#: breadcrumb_navxt_admin.php:400
+#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
 msgid "Main Site Breadcrumb"
 msgstr "Prvek hlavní stránky"
 
-#: breadcrumb_navxt_admin.php:400
+#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Vloží prvek hlavní stránky do řetězce v multisite systému."
 
-#: breadcrumb_navxt_admin.php:401
+#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
 msgid "Main Site Home Template"
 msgstr "Šablona úvodu hlavní stránky:"
 
-#: breadcrumb_navxt_admin.php:401
+#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Šablona pro úvodní prvek hlavní stránky, bude použita pouze v multisite systému."
 
-#: breadcrumb_navxt_admin.php:402
+#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Šablona úvodu hlavní stránky (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:402
+#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Šablona pro úvodní prvek hlavní stránky, bude použita pouze v multisite systému a bez odkazu."
 
-#: breadcrumb_navxt_admin.php:370
+#: class.bcn_admin.php:350 class.bcn_network_admin.php:418
 msgid "Current Item"
 msgstr "Současná položka"
 
-#: breadcrumb_navxt_admin.php:373
+#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
 msgid "Link Current Item"
 msgstr "Současná položka jako odkaz"
 
-#: breadcrumb_navxt_admin.php:373
+#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
 msgid "Yes"
 msgstr "Ano"
 
-#: breadcrumb_navxt_admin.php:374
+#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
 msgid "Paged Breadcrumb"
 msgstr "Stránkovaný prvek"
 
-#: breadcrumb_navxt_admin.php:374
+#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Zahrnout stránkovaný prvek v řetězci drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:374
+#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Indikuje, že je uživatel na jiné, než první stránce stránkovaného výpisu příspěvků / stránek."
 
-#: breadcrumb_navxt_admin.php:375
+#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
 msgid "Paged Template"
 msgstr "Stránkovaná šablona"
 
-#: breadcrumb_navxt_admin.php:375
+#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
 msgid "The template for paged breadcrumbs."
 msgstr "Šablona pro stránkovaný prvek drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:413
+#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
 msgid "Post Template"
 msgstr "Šablona příspěvku"
 
-#: breadcrumb_navxt_admin.php:413
+#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
 msgid "The template for post breadcrumbs."
 msgstr "Šablona příspěvku v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:414
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
 msgid "Post Template (Unlinked)"
 msgstr "Šablona příspěvku (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:414
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona příspěvku v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:415
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
 msgid "Show the taxonomy leading to a post in the breadcrumb trail."
 msgstr "Zobrazit taxonomii vedoucí k příspěvku v řetězci drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:423 breadcrumb_navxt_admin.php:535
+#: class.bcn_admin.php:403 class.bcn_admin.php:515
+#: class.bcn_network_admin.php:471 class.bcn_network_admin.php:583
 msgid "Categories"
 msgstr "Rubriky"
 
-#: breadcrumb_navxt_admin.php:424
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:472
 msgid "Dates"
 msgstr "Data"
 
-#: breadcrumb_navxt_admin.php:425 breadcrumb_navxt_admin.php:542
+#: class.bcn_admin.php:405 class.bcn_admin.php:522
+#: class.bcn_network_admin.php:473 class.bcn_network_admin.php:590
 msgid "Tags"
 msgstr "Tagy"
 
-#: breadcrumb_navxt_admin.php:447
+#: class.bcn_admin.php:427 class.bcn_network_admin.php:495
 msgid "Pages"
 msgstr "Stránky"
 
-#: breadcrumb_navxt_admin.php:450
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
 msgid "Page Template"
 msgstr "Šablona stránky"
 
-#: breadcrumb_navxt_admin.php:450
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
 msgid "The template for page breadcrumbs."
 msgstr "Šablona stránky v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:451
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
 msgid "Page Template (Unlinked)"
 msgstr "Šablona stránky (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:451
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona stránky v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:452
+#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
 msgid "Attachment Template"
 msgstr "Šablona přílohy"
 
-#: breadcrumb_navxt_admin.php:452
+#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
 msgid "The template for attachment breadcrumbs."
 msgstr "Šablona přílohy v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:453
+#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
 msgid "Attachment Template (Unlinked)"
 msgstr "Šablona přílohy (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:453
+#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona přílohy v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:651
+#: breadcrumb-navxt.php:247
 msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
 msgstr "<a title=\"Otevřít %title%\" href=\"%link%\">%htitle%</a>"
 
-#: breadcrumb_navxt_admin.php:652 breadcrumb_navxt_class.php:93
+#: breadcrumb-navxt.php:248 class.bcn_breadcrumb.php:63
 msgid "%htitle%"
 msgstr "%htitle%"
 
-#: breadcrumb_navxt_admin.php:473 breadcrumb_navxt_admin.php:573
+#: class.bcn_admin.php:453 class.bcn_admin.php:553
+#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
 msgid "%s Template"
 msgstr "Šablona %"
 
-#: breadcrumb_navxt_admin.php:473 breadcrumb_navxt_admin.php:573
+#: class.bcn_admin.php:453 class.bcn_admin.php:553
+#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
 msgid "The template for %s breadcrumbs."
 msgstr "Šablona pro %s drobečkovou navigaci."
 
-#: breadcrumb_navxt_admin.php:474 breadcrumb_navxt_admin.php:574
+#: class.bcn_admin.php:454 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
 msgid "%s Template (Unlinked)"
 msgstr "Šablona %s (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:474 breadcrumb_navxt_admin.php:574
+#: class.bcn_admin.php:454 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona pro %s drobečkovou navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:479
+#: class.bcn_admin.php:459 class.bcn_network_admin.php:527
 msgid "%s Root Page"
 msgstr "Kořenová stránka %s"
 
-#: breadcrumb_navxt_admin.php:482
+#: class.bcn_admin.php:462 class.bcn_network_admin.php:530
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Vybrat &mdash;"
 
-#: breadcrumb_navxt_admin.php:486
+#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
 msgid "%s Archive Display"
 msgstr "Zobrazení archivu %s"
 
-#: breadcrumb_navxt_admin.php:486
+#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Zobrazit prvky pro archiv typů příspěvku %s v řetězci drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:487
+#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
 msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
 msgstr "Zobrazit taxonomii vedoucí k %s v řetězci drobečkové navigace."
 
-#: breadcrumb_navxt_admin.php:538
+#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
 msgid "Category Template"
 msgstr "Šablona rubriky"
 
-#: breadcrumb_navxt_admin.php:538
+#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
 msgid "The template for category breadcrumbs."
 msgstr "Šablona rubriky v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:539
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
 msgid "Category Template (Unlinked)"
 msgstr "Šablona rubriky (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:539
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona rubriky v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:545
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
 msgid "Tag Template"
 msgstr "Šablona tagu"
 
-#: breadcrumb_navxt_admin.php:545
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
 msgid "The template for tag breadcrumbs."
 msgstr "Šablona pro tag v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:546
+#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
 msgid "Tag Template (Unlinked)"
 msgstr "Šablona tagu (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:546
+#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona tagu v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:583 breadcrumb_navxt_admin.php:592
+#: class.bcn_admin.php:563 class.bcn_admin.php:572
+#: class.bcn_network_admin.php:631 class.bcn_network_admin.php:640
 msgid "Miscellaneous"
 msgstr "Různé"
 
-#: breadcrumb_navxt_admin.php:587
+#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
 msgid "Author Template"
 msgstr "Šablona autora"
 
-#: breadcrumb_navxt_admin.php:587
+#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
 msgid "The template for author breadcrumbs."
 msgstr "Šablona autora v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:588
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
 msgid "Author Template (Unlinked)"
 msgstr "Šablona autora (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:588
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona autora v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:589
+#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
 msgid "Author Display Format"
 msgstr "Formát zobrazení autora"
 
-#: breadcrumb_navxt_admin.php:589
+#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name používá jméno specifikované v \"Zobrazovat jméno veřejně jako\" v uživatelském profilu, další korespondují s hodnotami v uživatelském profilu."
 
-#: breadcrumb_navxt_admin.php:595
+#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
 msgid "Date Template"
 msgstr "Šablona data"
 
-#: breadcrumb_navxt_admin.php:595
+#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
 msgid "The template for date breadcrumbs."
 msgstr "Šablona pro datum v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:596
+#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
 msgid "Date Template (Unlinked)"
 msgstr "Formát data (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:596
+#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Šablona pro formát data v drobečkové navigaci, bude použita pouze bez odkazu."
 
-#: breadcrumb_navxt_admin.php:597
+#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
 msgid "Search Template"
 msgstr "Šablona hledání"
 
-#: breadcrumb_navxt_admin.php:597
+#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Šablona pro výsledky vyhledávání, bude použita pouze v případě, že výsledky vyhledávání přesahují jednu stránku."
 
-#: breadcrumb_navxt_admin.php:598
+#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
 msgid "Search Template (Unlinked)"
 msgstr "Šablona hledání (bez odkazu)"
 
-#: breadcrumb_navxt_admin.php:598
+#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Šablona pro výsledky vyhledávání, bude použita pouze v případě, že výsledky vyhledávání přesahují jednu stránku a není použit odkaz."
 
-#: breadcrumb_navxt_admin.php:599
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:647
 msgid "404 Title"
 msgstr "Titulek 404"
 
-#: breadcrumb_navxt_admin.php:600
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
 msgid "404 Template"
 msgstr "Šablona 404"
 
-#: breadcrumb_navxt_admin.php:600
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
 msgid "The template for 404 breadcrumbs."
 msgstr "Šablona pro 404 v drobečkové navigaci."
 
-#: breadcrumb_navxt_admin.php:606
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:655
 msgid "Save Changes"
 msgstr "Uložit změny"
 
-#: includes/mtekk_adminkit.php:234
+#: includes/class.mtekk_adminkit.php:217
 msgid "Settings"
 msgstr "Nastavení"
 
-#: includes/mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:287
 msgid "Your settings are out of date."
 msgstr "Naše nastavení je zastaralé."
 
-#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
+#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
 msgid "Migrate the settings now."
 msgstr "Migrovat nastavení nyní."
 
-#: includes/mtekk_adminkit.php:304 includes/mtekk_adminkit.php:313
+#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
 msgid "Migrate now."
 msgstr "Migrovat nyní."
 
-#: includes/mtekk_adminkit.php:321
+#: includes/class.mtekk_adminkit.php:304
 msgid "Your plugin install is incomplete."
 msgstr "Instalace pluginu není kompletní."
 
-#: includes/mtekk_adminkit.php:321
+#: includes/class.mtekk_adminkit.php:304
 msgid "Load default settings now."
 msgstr "Nahraje výchozí nastavení."
 
-#: includes/mtekk_adminkit.php:321
+#: includes/class.mtekk_adminkit.php:304
 msgid "Complete now."
 msgstr "Hotovo."
 
-#: includes/mtekk_adminkit.php:329
+#: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin settings are invalid."
 msgstr "Nastavení pluginu není správné."
 
-#: includes/mtekk_adminkit.php:329
+#: includes/class.mtekk_adminkit.php:312
 msgid "Attempt to fix settings now."
 msgstr "Pokus o opravu nastavení."
 
-#: includes/mtekk_adminkit.php:329
+#: includes/class.mtekk_adminkit.php:312
 msgid "Fix now."
 msgstr "Opravit."
 
-#: includes/mtekk_adminkit.php:507
+#: includes/class.mtekk_adminkit.php:490
 msgid "Settings successfully saved."
 msgstr "Nastavení úspěšně uloženo."
 
-#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
+#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
 msgid "Undo the options save."
 msgstr "Vrátit změny nastavení."
 
-#: includes/mtekk_adminkit.php:507 includes/mtekk_adminkit.php:512
-#: includes/mtekk_adminkit.php:617 includes/mtekk_adminkit.php:641
-#: includes/mtekk_adminkit.php:658
+#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
+#: includes/class.mtekk_adminkit.php:600 includes/class.mtekk_adminkit.php:624
+#: includes/class.mtekk_adminkit.php:641
 msgid "Undo"
 msgstr "Vrátit"
 
-#: includes/mtekk_adminkit.php:512
+#: includes/class.mtekk_adminkit.php:495
 msgid "Some settings were not saved."
 msgstr "Některá nastavení nebyla uložena."
 
-#: includes/mtekk_adminkit.php:513
+#: includes/class.mtekk_adminkit.php:496
 msgid "The following settings were not saved:"
 msgstr "Následující nastavení nebyla uložena:"
 
-#: includes/mtekk_adminkit.php:518
+#: includes/class.mtekk_adminkit.php:501
 msgid "Please include this message in your %sbug report%s."
 msgstr "Přidejte prosím tuto zprávu do vašeho %sbug report%s."
 
-#: includes/mtekk_adminkit.php:518
+#: includes/class.mtekk_adminkit.php:501
 msgid "Go to the %s support post for your version."
 msgstr "Otevřete si příspěvek podpory %s pro vaši verzi."
 
-#: includes/mtekk_adminkit.php:617
+#: includes/class.mtekk_adminkit.php:600
 msgid "Settings successfully imported from the uploaded file."
 msgstr "Nastavení úspěšně importováno z nahraného souboru."
 
-#: includes/mtekk_adminkit.php:617
+#: includes/class.mtekk_adminkit.php:600
 msgid "Undo the options import."
 msgstr "Vrátit zpět importování nastavení."
 
-#: includes/mtekk_adminkit.php:622
+#: includes/class.mtekk_adminkit.php:605
 msgid "Importing settings from file failed."
 msgstr "Importování nastavení ze souboru selhalo."
 
-#: includes/mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:624
 msgid "Settings successfully reset to the default values."
 msgstr "Nastavení úspěšně navráceno k výchozím hodnotám."
 
-#: includes/mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:624
 msgid "Undo the options reset."
 msgstr "Vrátit vrácení nastavení."
 
-#: includes/mtekk_adminkit.php:658
+#: includes/class.mtekk_adminkit.php:641
 msgid "Settings successfully undid the last operation."
 msgstr "Nastavení úspěšně vrátilo poslední operaci."
 
-#: includes/mtekk_adminkit.php:658
+#: includes/class.mtekk_adminkit.php:641
 msgid "Undo the last undo operation."
 msgstr "Vrátit poslední operací vrácení."
 
-#: includes/mtekk_adminkit.php:693
+#: includes/class.mtekk_adminkit.php:676
 msgid "Settings successfully migrated."
 msgstr "Nastavení úspěšně migrováno."
 
-#: includes/mtekk_adminkit.php:700
+#: includes/class.mtekk_adminkit.php:683
 msgid "Default settings successfully installed."
 msgstr "Výchozí nastavení úspěšně nainstalováno."
 
-#: includes/mtekk_adminkit.php:801
+#: includes/class.mtekk_adminkit.php:784
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
 msgstr "Importoval nastavení z XML souboru, exportovat současné nastavení do XML souboru nebo vrátit výchozí nastavení."
 
-#: includes/mtekk_adminkit.php:804
+#: includes/class.mtekk_adminkit.php:787
 msgid "Settings File"
 msgstr "Soubor nastavení"
 
-#: includes/mtekk_adminkit.php:807
+#: includes/class.mtekk_adminkit.php:790
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Vyberte XML soubor nastavení pro nahrání a importování nastavení."
 
-#: breadcrumb_navxt_class.php:291
+#: class.bcn_breadcrumb_trail.php:82
 msgid "Page %htitle%"
 msgstr "Stránka %htitle%"
 
-#: breadcrumb_navxt_class.php:315
+#: class.bcn_breadcrumb_trail.php:106
 msgid "404"
 msgstr "404"
 
-#: breadcrumb_navxt_class.php:320
+#: class.bcn_breadcrumb_trail.php:111
 msgid "Search results for &#39;%htitle%&#39;"
 msgstr "Výsledky hledání pro &#39;%htitle%&#39;"
 
-#: breadcrumb_navxt_class.php:335
+#: class.bcn_breadcrumb_trail.php:126
 msgid "Articles by: %htitle%"
 msgstr "Články od: %htitle%"

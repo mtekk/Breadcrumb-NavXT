@@ -3,7 +3,7 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.5
-Tested up to: 3.6
+Tested up to: 3.7.1
 Stable tag: 4.4.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -18,31 +18,24 @@ Breadcrumb NavXT distributes with translations for the following languages:
 
 * English - default -
 * Russian by Alexander Samsonov
+* Catalan by Christian Eduardo
 * German by Daniel Lang
-* French (France) by Emmanuel Beziat
+* French (France) by Emmanuel Beziat, Erwan Lescop, and Serge Rauber
+* Greek by Giorgos Kounenis
+* Turkish by Hakan Er
 * Czech by jakubmachala
+* Norwegian (Bokmål) by Jan Rosvoldsve
 * Danish by Joachim Jensen
+* Lithuanian by Johannes Rau
 * Spanish (Spain) by Karin Sequen
+* Japanese by Kojima Toshiyasu
 * Portuguese (Portugal) by Luís Rodrigues
 * Estonian by Martin Orn
-* Latvian by Martins Dzerve
 * Swedish by Patrik Spathon
+* Dutch by Renée Klein
 * Italian by Tamara Balestri
+* Finnish by Ville Pilvio
 * Azerbaijani by Zaur Bayramov
-* Catalan by Christian Eduardo
-* Turkish by Hakan er
-
-The following were not included, but are in the process of being updated:
-
-* Norwegian (Bokmål) by Jan Rosvoldsve
-* Malay by Ben Di
-* Arabic by Eid Aldikanji
-* Hungarian by Atis Papai
-* Hindi by Love Chandel
-
-The following translations are in need of a maintainer:
-
-* Japanese originally maintained by Kazuhiro Terada
 
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
 
@@ -60,9 +53,13 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 5.0.0 =
+* Behavior Change: Moved `bcn_breadcrumb_trail::trail` to `bcn_breadcrumb_trail::breadcrumbs`
+* Behavior Change: When WordPress is in multisite/network mode, the settings set in the network settings page take priority over subsite settings.
 * New feature: Added `bcn_breadcrumb_trail_object` filter.
 * New feature: Added `bcn_li_attributes` filter.
+* New feature: Added `bcn_breadcrumb_types` filter.
 * New feature: Added Network Admin Settings page.
+* New feature: Added `xmlns:v` and `property` to the valid tag attributes.
 = 4.4.0 =
 * New feature: Added `bcn_breadcrumb_url` filter.
 * New feature: Add resource ID to the `bcn_breadcrumb_title` filter.
@@ -251,4 +248,4 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Upgrade Notice ==
 
 = 5.0.0 =
-This version is for the developers, those who like to extend things gracefully. Several new hooks were introduced, while others were tweaked to be more usefull.
+This version is for the developers, those who like to extend things gracefully. Several new hooks were introduced, while others were tweaked to be more useful. If you have WordPress setup as a multisite install/in network mode, the new Breadcrumb NavXT network settings page will take priority over the individual sub site settings pages. This is a major change from previous versions. See [Controlling Breadcrumb NavXT Settings From the Network Settings Page](http://mtekk.us/archives/guides/controlling-breadcrumb-navxt-settings-from-the-network-settings-page/"Go to the article on controlling the settings hierarchy") for more information on the new settings modes.

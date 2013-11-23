@@ -241,7 +241,7 @@ class breadcrumb_navxt
 			if(!$post_type->_builtin)
 			{
 				//If the post type does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('Hpost_' . $post_type->name . '_template', $opts) || !$post_type->hierarchical && !array_key_exists('Spost_' . $post_type->name . '_taxonomy_type', $opts))
+				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
@@ -296,7 +296,7 @@ class breadcrumb_navxt
 			if(!$taxonomy->_builtin)
 			{
 				//If the taxonomy does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('H' . $taxonomy->name . '_template', $opts))
+				if(!isset($opts['H' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
 					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<a title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');

@@ -212,6 +212,10 @@ class breadcrumb_navxt
 	{
 		breadcrumb_navxt::setup_options($this->opt);
 	}
+	public function uninstall()
+	{
+		$this->admin->uninstall();
+	}
 	/**
 	 * Sets up the extended options for any CPTs, taxonomies or extensions
 	 * 

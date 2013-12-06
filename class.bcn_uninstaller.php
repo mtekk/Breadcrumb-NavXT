@@ -141,11 +141,11 @@ class bcn_uninstaller extends bcn_uninstaller_abstract {
 	{	
 		// load dependencies if applicable
 		
-		if(!class_exists('bcn_admin'))									
+		if(!class_exists('breadcrumb_navxt'))									
 			require_once($this->_getPluginPath());
 			
 		// uninstall		
-		$bcn_admin->uninstall();
+		$breadcrumb_navxt->uninstall();
 	}	
 	
 	/**

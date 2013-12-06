@@ -299,12 +299,47 @@ class bcn_admin extends mtekk_adminKit
 		));
 	}
 	/**
+	 * A message function that checks for the BCN_SETTINGS_* define statement
+	 */
+    function multisite_settings_warn()
+    {
+		if(defined('MULTISITE') && MULTISITE)
+		{
+			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
+			{
+				
+			}
+			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
+			{
+				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
+			}
+			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
+			{
+				$this->message['updated fade'][] = __('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt');
+			}
+			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
+			{
+				$this->message['updated fade'][] = __('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt');
+			}
+			//Fall through if no settings mode was set
+			else
+			{
+				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK.', 'breadcrumb-navxt');
+				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
+			}
+		}
+    }
+	/**
 	 * The administrative page for Breadcrumb NavXT
 	 */
 	function admin_page()
 	{
 		global $wp_taxonomies, $wp_post_types;
 		$this->security();
+		//Do a check for multisite settings mode
+		$this->multisite_settings_warn();
+		//Display our messages
+		$this->messages();
 		?>
 		<div class="wrap"><div id="icon-options-general" class="icon32"></div><h2><?php _e('Breadcrumb NavXT Settings', 'breadcrumb-navxt'); ?></h2>
 		<?php

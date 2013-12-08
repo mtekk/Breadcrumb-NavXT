@@ -385,9 +385,9 @@ add_action('plugins_loaded', 'bcn_init', 15);
 function bcn_init()
 {
 	global $breadcrumb_navxt;
-	//In the future there will be a hook for this so derivatives of bcn_breadcrumb_trail can use the admin
+	//Create an instance of bcn_breadcrumb_trail
 	$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-	//Let's make an instance of our object takes care of everything
+	//Let's make an instance of our object that takes care of everything
 	$breadcrumb_navxt = new breadcrumb_navxt(apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail));
 }
 /**

@@ -187,9 +187,9 @@ class bcn_admin extends mtekk_adminKit
 			breadcrumb_navxt::find_posttypes($this->opt);
 			//Add custom taxonomy types
 			breadcrumb_navxt::find_taxonomies($this->opt);
-			//Save the passed in opts to the object's option array
-			$this->opt = $opts;
 		}
+		//Save the passed in opts to the object's option array
+		$this->opt = $opts;
 	}
 	function opts_update_prebk(&$opts)
 	{

@@ -583,7 +583,7 @@ abstract class mtekk_adminKit
 				if($options->getAttribute('name') === $this->short_name)
 				{
 					//Grab the file version
-					$version = explode('.', $options->getAttribute('version'));
+					$version = $options->getAttribute('version');
 					//Loop around all of the options
 					foreach($options->getelementsByTagName('option') as $child)
 					{

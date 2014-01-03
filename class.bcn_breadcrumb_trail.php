@@ -66,7 +66,7 @@ class bcn_breadcrumb_trail
 			'hseparator' => ' &gt; ',
 			//Whether or not we should trim the breadcrumb titles
 			'blimit_title' => false,
-			//The maximum title lenght
+			//The maximum title length
 			'amax_title_length' => 20,
 			//Current item options, really only applies to static pages and posts unless other current items are linked
 			'bcurrent_item_linked' => false,

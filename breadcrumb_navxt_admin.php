@@ -32,7 +32,7 @@ function bcn_plugold()
 {
 	if(current_user_can('activate_plugins'))
 	{
-		printf('<div class="error"><p>' . __('Breadcrumb NavXT was just updated from a pre-5.0 version, please go to your plugins page and activate "Breadcrumb NavXT". Also, deactivate "Breadcrumb NavXT 5.0 Migration Compatibility Layer" to make this message disappear.', 'breadcrumb-navxt') . '</p></div>');
+		printf('<div class="error"><p>' . __('Breadcrumb NavXT was just updated from a pre-5.0 version, please go to your plugins page and activate "Breadcrumb NavXT". Also, deactivate the "Breadcrumb NavXT 5.0 Migration Compatibility Layer" plugin to make this message disappear.', 'breadcrumb-navxt') . '</p></div>');
 	}
 }
 //If we are in the admin, let's print a warning

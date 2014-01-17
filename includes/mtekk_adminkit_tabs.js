@@ -17,9 +17,18 @@ function mtekk_admin_tabulator_init(){
 		jQuery('#hasadmintabs > ul').append('<li><a href="#'+id+'" class="nav-tab '+cssc+'" title="'+title+'"><span>'+caption+"<\/span><\/a><\/li>");
 		jQuery(this).find('h3.tab-title').hide();
 	});
-	/* init the tabs plugin */
-	var tabs = jQuery("#hasadmintabs").tabs();
 	var form   = jQuery('#'+objectL10n.mtad_uid+'-options');
+	/* init the tabs plugin */
+	var tabs = jQuery("#hasadmintabs").tabs({
+		beforeActivate: function(event, ui){
+				form.find('input').each(function(){
+					if(!this.checkValidity()){
+						form.find(':submit').click();
+						event.preventDefault();
+					}
+				});
+			}
+		});
 	var action = form.attr("action").split('#', 1) + '#' + jQuery('#hasadmintabs > fieldset').eq(tabs.tabs('option', 'selected')).attr('id');
 	form.get(0).setAttribute("action", action);
 	/* handler for opening the last tab after submit (compability version) */

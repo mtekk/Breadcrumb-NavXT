@@ -60,11 +60,11 @@ class bcn_breadcrumb
 		{
 			if($url == NULL)
 			{
-				$template = $this->template = __('%htitle%', 'breadcrumb-navxt');
+				$template = $this->template = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 			}
 			else
 			{
-				$template = __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt');
+				$template = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt');
 			}
 		}
 		if($url == NULL)

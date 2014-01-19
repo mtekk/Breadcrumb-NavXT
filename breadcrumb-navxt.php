@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.0.1
+Version: 5.0.40
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	private $version = '5.0.1';
+	private $version = '5.0.40';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -253,8 +253,8 @@ class breadcrumb_navxt
 				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
 					//Add the necessary option array members
-					$opts['Hpost_' . $post_type->name . '_template'] = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
-					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('%htitle%', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template'] = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%">%htitle%</a></span>', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 					$opts['bpost_' . $post_type->name . '_archive_display'] = $post_type->has_archive;
 					//Do type dependent tasks
 					if($post_type->hierarchical)
@@ -308,8 +308,8 @@ class breadcrumb_navxt
 				if(!isset($opts['H' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
-					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<a title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
-					$opts['H' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('%%htitle%%', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['H' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span typeof="v:Breadcrumb"><span property="v:title">%%htitle%%</span></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 				}
 			}
 		}

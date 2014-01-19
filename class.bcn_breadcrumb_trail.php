@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2013  John Havlik  (email : mtekkmonkey@gmail.com)
+	Copyright 2007-2014  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '5.0.0';
+	private $version = '5.0.1';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -66,7 +66,7 @@ class bcn_breadcrumb_trail
 			'hseparator' => ' &gt; ',
 			//Whether or not we should trim the breadcrumb titles
 			'blimit_title' => false,
-			//The maximum title lenght
+			//The maximum title length
 			'amax_title_length' => 20,
 			//Current item options, really only applies to static pages and posts unless other current items are linked
 			'bcurrent_item_linked' => false,
@@ -969,21 +969,17 @@ class bcn_breadcrumb_trail
 			//On the first run we need to add in a class for the home breadcrumb
 			if($trail_str === '<li')
 			{
-				$trail_str .= ' class="home';
 				$li_class .= ' class="home';
 				if($key === 0)
 				{
-					$trail_str .= ' current_item';
 					$li_class .= ' current_item';
 				}
-				$trail_str .= '"';
 				$li_class .= '"';
 			}
 			//If we are on the current item there are some things that must be done
 			else if($key === 0)
 			{
 				//Add in a class for current_item
-				$trail_str .= ' class="current_item"';
 				$li_class .= ' class="current_item"';
 			}
 			//Filter li_attributes adding attributes to the li element

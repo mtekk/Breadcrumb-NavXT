@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.5
-Tested up to: 3.7.1
-Stable tag: 5.0.0
+Tested up to: 3.8.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -52,6 +52,11 @@ Save the file (upload if applicable). Now you should have a breadcrumb trail on 
 Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/ "Go to Breadcrumb NavXT's Documentation.") page for more information.
 
 == Changelog ==
+= 5.0.1 = 
+* Behavior Change: Notify multisite users when settings may be overridden by the network settings and vice versa.
+* Bug fix: Updated tab style to match WordPress 3.8 look and feel.
+* Bug fix: Fixed issue where `bcn_breadcrumb_trail::display_list()` would produce multiple instances of the class attribute.
+* Bug fix: Fixed several issues with the uninstaller.
 = 5.0.0 =
 * Behavior Change: Moved `bcn_breadcrumb_trail::trail` to `bcn_breadcrumb_trail::breadcrumbs`
 * Behavior Change: When WordPress is in multisite/network mode, the settings set in the network settings page take priority over subsite settings.
@@ -60,6 +65,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * New feature: Added `bcn_breadcrumb_types` filter.
 * New feature: Added Network Admin Settings page.
 * New feature: Added `xmlns:v` and `property` to the valid tag attributes.
+* Bug fix: The current_item breadcrumb for search results should result in a valid HTTPS link when appropriate.
 = 4.4.0 =
 * New feature: Added `bcn_breadcrumb_url` filter.
 * New feature: Add resource ID to the `bcn_breadcrumb_title` filter.

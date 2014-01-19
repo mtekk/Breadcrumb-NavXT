@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2009-2013  John Havlik  (email : mtekkmonkey@gmail.com)
+	Copyright 2009-2014  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -583,7 +583,7 @@ abstract class mtekk_adminKit
 				if($options->getAttribute('name') === $this->short_name)
 				{
 					//Grab the file version
-					$version = explode('.', $options->getAttribute('version'));
+					$version = $options->getAttribute('version');
 					//Loop around all of the options
 					foreach($options->getelementsByTagName('option') as $child)
 					{
@@ -744,12 +744,7 @@ abstract class mtekk_adminKit
 	 */
 	function admin_page()
 	{
-		//Admin Options update hook
-		if(isset($_POST[$this->unique_prefix . '_admin_options']))
-		{
-			//Temporarily add update function on init if form has been submitted
-			$this->opts_update();
-		}
+	    
 	}
 	/**
 	 * Function prototype to prevent errors

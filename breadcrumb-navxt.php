@@ -3,14 +3,14 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.0.0
+Version: 5.0.1
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
 TextDomain: breadcrumb-navxt
 DomainPath: /languages/
 */
-/*  Copyright 2007-2013  John Havlik  (email : mtekkmonkey@gmail.com)
+/*  Copyright 2007-2014  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	private $version = '5.0.0';
+	private $version = '5.0.1';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -127,6 +127,7 @@ class breadcrumb_navxt
 						'itemscope' => true,
 						'itemtype' => true,
 						'xmlns:v' => true,
+						'typeof' => true,
 						'property' => true
 					),
 					'img' => array(
@@ -145,6 +146,7 @@ class breadcrumb_navxt
 						'itemscope' => true,
 						'itemtype' => true,
 						'xmlns:v' => true,
+						'typeof' => true,
 						'property' => true
 					),
 					'span' => array(
@@ -163,6 +165,7 @@ class breadcrumb_navxt
 						'itemscope' => true,
 						'itemtype' => true,
 						'xmlns:v' => true,
+						'typeof' => true,
 						'property' => true
 					),
 					'h1' => array(
@@ -181,6 +184,7 @@ class breadcrumb_navxt
 						'itemscope' => true,
 						'itemtype' => true,
 						'xmlns:v' => true,
+						'typeof' => true,
 						'property' => true
 					),
 					'h2' => array(
@@ -199,6 +203,7 @@ class breadcrumb_navxt
 						'itemscope' => true,
 						'itemtype' => true,
 						'xmlns:v' => true,
+						'typeof' => true,
 						'property' => true
 					)
 		);
@@ -211,6 +216,10 @@ class breadcrumb_navxt
 	public function wp_loaded()
 	{
 		breadcrumb_navxt::setup_options($this->opt);
+	}
+	public function uninstall()
+	{
+		$this->admin->uninstall();
 	}
 	/**
 	 * Sets up the extended options for any CPTs, taxonomies or extensions
@@ -381,9 +390,9 @@ add_action('plugins_loaded', 'bcn_init', 15);
 function bcn_init()
 {
 	global $breadcrumb_navxt;
-	//In the future there will be a hook for this so derivatives of bcn_breadcrumb_trail can use the admin
+	//Create an instance of bcn_breadcrumb_trail
 	$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-	//Let's make an instance of our object takes care of everything
+	//Let's make an instance of our object that takes care of everything
 	$breadcrumb_navxt = new breadcrumb_navxt(apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail));
 }
 /**

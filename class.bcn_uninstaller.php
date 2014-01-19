@@ -139,13 +139,19 @@ class bcn_uninstaller extends bcn_uninstaller_abstract {
 	 */
 	private function _uninstallAdmin()
 	{	
-		// load dependencies if applicable
-		
-		if(!class_exists('bcn_admin'))									
+		//Grab our global breadcrumb_navxt object
+		global $breadcrumb_navxt;
+		//Load dependencies if applicable
+		if(!class_exists('breadcrumb_navxt'))
+		{
 			require_once($this->_getPluginPath());
-			
-		// uninstall		
-		$bcn_admin->uninstall();
+		}
+		//Initalize $breadcrumb_navxt so we can use it
+		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
+		//Let's make an instance of our object takes care of everything
+		$breadcrumb_navxt = new breadcrumb_navxt($bcn_breadcrumb_trail);
+		//Uninstall
+		$breadcrumb_navxt->uninstall();
 	}	
 	
 	/**
@@ -163,11 +169,8 @@ class bcn_uninstaller extends bcn_uninstaller_abstract {
 		// decide what to do
 		switch($this->_plugin)
 		{
-			case 'breadcrumb_navxt_admin.php':
+			case 'breadcrumb-navxt.php':
 				return $this->_uninstallAdmin();
-				
-			case 'breadcrumb_navxt_class.php':
-				return true;
 															
 			default:
 				throw new BadMethodCallException(sprintf('Invalid Plugin ("%s") in %s::uninstall().', $this->_plugin , get_class($this)), 30102);				

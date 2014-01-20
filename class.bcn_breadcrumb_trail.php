@@ -111,9 +111,9 @@ class bcn_breadcrumb_trail
 			'Hsearch_template_no_anchor' => __('Search results for &#39;%htitle%&#39;', 'breadcrumb-navxt'),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_tag_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
+			'Htax_post_tag_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for tag breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_tag_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			'Htax_post_tag_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
 			//Post format related stuff
 			//The breadcrumb template for post format breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hpost_format_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
@@ -128,9 +128,9 @@ class bcn_breadcrumb_trail
 			'Sauthor_name' => 'display_name',
 			//Category stuff
 			//The breadcrumb template for category breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hcategory_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% category archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
+			'Htax_category_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% category archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for category breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hcategory_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			'Htax_category_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
 			//The breadcrumb template for date breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
 			'Hdate_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for date breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
@@ -281,7 +281,7 @@ class bcn_breadcrumb_trail
 	 * @param int $id The id of the post to find the terms for.
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
-	 * TODO Need to implement this cleaner, fix up the entire tag_ thing, as this is now generic
+	 * TODO Need to implement this cleaner
 	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
 	 */
 	protected function post_terms($id, $taxonomy)
@@ -308,7 +308,7 @@ class bcn_breadcrumb_trail
 				$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . str_replace(
 					array('%title%', '%link%', '%htitle%', '%type%'),
 					array($term->name, get_term_link($term, $taxonomy), $term->name, $term->taxonomy),
-					$this->opt['H' . $term->taxonomy . '_template']));
+					$this->opt['Htax_' . $term->taxonomy . '_template']));
 				$is_first = false;
 			}
 		}
@@ -319,14 +319,13 @@ class bcn_breadcrumb_trail
 	 * This recursive functions fills the trail with breadcrumbs for parent terms.
 	 * @param int $id The id of the term.
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
-	 * @TODO Evaluate if we need to do tax_ for a prefix
 	 */
 	protected function term_parents($id, $taxonomy)
 	{
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term, $taxonomy), $id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term, $taxonomy), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($term->parent && $term->parent != $id)
 		{
@@ -447,11 +446,11 @@ class bcn_breadcrumb_trail
 		//Simmilar to using $post, but for things $post doesn't cover
 		$term = $wp_query->get_queried_object();
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['H' . $term->taxonomy . '_template_no_anchor'], array('archive', 'taxonomy', $term->taxonomy, 'current-item'), NULL, $term->term_id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $term->taxonomy . '_template_no_anchor'], array('archive', 'taxonomy', $term->taxonomy, 'current-item'), NULL, $term->term_id));
 		//If we're paged, let's link to the first page
 		if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 		{
-			$breadcrumb->set_template($this->opt['H' . $term->taxonomy . '_template']);
+			$breadcrumb->set_template($this->opt['Htax_' . $term->taxonomy . '_template']);
 			//Figure out the anchor for current category
 			$breadcrumb->set_url(get_term_link($term, $term->taxonomy));
 		}

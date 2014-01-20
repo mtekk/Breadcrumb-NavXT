@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '5.0.1';
+	protected $version = '5.0.40';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -182,6 +182,11 @@ class bcn_admin extends mtekk_adminKit
 				{
 					unset($opts['Smainsite_title']);
 				}
+			}
+			//Upgrading to 5.1.0
+			if(version_compare($version, '5.1.0', '<'))
+			{
+				
 			}
 			//Add custom post types
 			breadcrumb_navxt::find_posttypes($opts);
@@ -555,15 +560,15 @@ class bcn_admin extends mtekk_adminKit
 				<h3><?php _e('Categories', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_text(__('Category Template', 'breadcrumb-navxt'), 'Hcategory_template', 'large-text', false, __('The template for category breadcrumbs.', 'breadcrumb-navxt'));
-						$this->input_text(__('Category Template (Unlinked)', 'breadcrumb-navxt'), 'Hcategory_template_no_anchor', 'large-text', false, __('The template for category breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_text(__('Category Template', 'breadcrumb-navxt'), 'Htax_category_template', 'large-text', false, __('The template for category breadcrumbs.', 'breadcrumb-navxt'));
+						$this->input_text(__('Category Template (Unlinked)', 'breadcrumb-navxt'), 'Htax_category_template_no_anchor', 'large-text', false, __('The template for category breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
 				<h3><?php _e('Tags', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_text(__('Tag Template', 'breadcrumb-navxt'), 'Hpost_tag_template', 'large-text', false, __('The template for tag breadcrumbs.', 'breadcrumb-navxt'));
-						$this->input_text(__('Tag Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_tag_template_no_anchor', 'large-text', false, __('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_text(__('Tag Template', 'breadcrumb-navxt'), 'Htax_post_tag_template', 'large-text', false, __('The template for tag breadcrumbs.', 'breadcrumb-navxt'));
+						$this->input_text(__('Tag Template (Unlinked)', 'breadcrumb-navxt'), 'Htax_post_tag_template_no_anchor', 'large-text', false, __('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
 				<h3><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h3>
@@ -590,8 +595,8 @@ class bcn_admin extends mtekk_adminKit
 				<h3><?php echo mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_text(sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name), 'H' . $taxonomy->name . '_template', 'large-text', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $label_lc));
-						$this->input_text(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name), 'H' . $taxonomy->name . '_template_no_anchor', 'large-text', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $label_lc));
+						$this->input_text(sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name), 'Htax_' . $taxonomy->name . '_template', 'large-text', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $label_lc));
+						$this->input_text(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name), 'Htax_' . $taxonomy->name . '_template_no_anchor', 'large-text', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $label_lc));
 					?>
 				</table>
 				<?php

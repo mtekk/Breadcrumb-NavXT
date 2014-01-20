@@ -308,8 +308,8 @@ class breadcrumb_navxt
 				if(!isset($opts['H' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
-					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
-					$opts['H' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span typeof="v:Breadcrumb"><span property="v:title">%%htitle%%</span></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span typeof="v:Breadcrumb"><span property="v:title">%%htitle%%</span></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 				}
 			}
 		}

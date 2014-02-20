@@ -186,7 +186,10 @@ class bcn_admin extends mtekk_adminKit
 			//Upgrading to 5.1.0
 			if(version_compare($version, '5.1.0', '<'))
 			{
-				
+				foreach($opts as $key => $option)
+				{
+					
+				}
 			}
 			//Add custom post types
 			breadcrumb_navxt::find_posttypes($opts);

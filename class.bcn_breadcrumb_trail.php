@@ -701,12 +701,13 @@ class bcn_breadcrumb_trail
 		$root_id = -1;
 		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
-		//These two are for taxonomy archives and for a single custom post type
+		//If this is a custom post type with a post type archive, add it
 		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post', 'post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
 		}
+		//Otherwise, if this is a custom taxonomy with an archive, add it
 		else if(isset($type->taxonomy) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
 		{
 			//We end up using the post type in several places, give it a variable
@@ -727,7 +728,7 @@ class bcn_breadcrumb_trail
 			if($root_id && $root_id != $frontpage_id)
 			{
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str)));
+				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
 				//If we are at home, then we need to add the current item type
 				if(is_home())
 				{

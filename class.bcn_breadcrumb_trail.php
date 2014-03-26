@@ -187,7 +187,7 @@ class bcn_breadcrumb_trail
 	{
 		global $author;
 		//Get the Author name, note it is an object
-		$curauth = (isset($_GET['author_name'])) ? get_userdatabylogin($author_name) : get_userdata(intval($author));
+		$curauth = (isset($_GET['author_name'])) ? get_userdatabylogin($author_name) : get_userdata($author->ID);
 		//Setup array of valid author_name values
 		$valid_author_name = array('display_name', 'nickname', 'first_name', 'last_name');
 		//This translation allows us to easily select the display type later on

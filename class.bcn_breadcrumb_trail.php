@@ -186,8 +186,6 @@ class bcn_breadcrumb_trail
 	protected function do_author()
 	{
 		global $authordata;
-		//Get the Author name, note it is an object
-		$curauth = (isset($_GET['author_name'])) ? get_userdatabylogin($author_name) : $authordata;
 		//Setup array of valid author_name values
 		$valid_author_name = array('display_name', 'nickname', 'first_name', 'last_name');
 		//This translation allows us to easily select the display type later on
@@ -197,13 +195,13 @@ class bcn_breadcrumb_trail
 		{
 			//TODO Evaluate the need for this filter call
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $curauth->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $curauth->ID));
+			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $authordata->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $authordata->ID));
 			//If we're paged, or allowing the current item to be linked, let's link to the first page
 			if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 			{
 				//Set the template to our one containing an anchor
 				$breadcrumb->set_template($this->opt['Hauthor_template']);
-				$breadcrumb->set_url(get_author_posts_url($curauth->ID));
+				$breadcrumb->set_url(get_author_posts_url($authordata->ID));
 			}
 		}
 	}

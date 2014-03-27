@@ -21,20 +21,20 @@ function mtekk_admin_tabulator_init(){
 	/* init the tabs plugin */
 	var tabs = jQuery("#hasadmintabs").tabs({
 		beforeActivate: function(event, ui){
-				form.find('input').each(function(){
-					if(!this.checkValidity()){
-						form.find(':submit').click();
-						event.preventDefault();
-					}
-				});
-			}
+			form.find('input').each(function(){
+				if(!this.checkValidity()){
+					form.find(':submit').click();
+					event.preventDefault();
+				}
+			});
+			/* Update form action for reload on tab traversal*/
+			var action = form.attr("action").split('#', 1) + '#' + ui.newPanel[0].id;
+			form.get(0).setAttribute("action", action);
+		},
+		create: function(event, ui){
+			/* Update form action for reload of current tab on page load */
+			var action = form.attr("action").split('#', 1) + '#' + ui.panel[0].id;
+			form.get(0).setAttribute("action", action);
+		}
 		});
-	var action = form.attr("action").split('#', 1) + '#' + jQuery('#hasadmintabs > fieldset').eq(tabs.tabs('option', 'selected')).attr('id');
-	form.get(0).setAttribute("action", action);
-	/* handler for opening the last tab after submit (compability version) */
-	jQuery('#hasadmintabs ul a').click(function(i){
-		var form   = jQuery('#'+objectL10n.mtad_uid+'-options');
-		var action = form.attr("action").split('#', 1) + jQuery(this).attr('href');
-		form.get(0).setAttribute("action", action);
-	});
 }

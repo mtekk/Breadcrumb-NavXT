@@ -69,7 +69,7 @@ class bcn_breadcrumb
 		}
 		if($url == NULL)
 		{
-				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id), $this->allowed_html);
+				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 		}
 		else
 		{

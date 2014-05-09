@@ -69,7 +69,7 @@ class bcn_admin extends mtekk_adminKit
 	/**
 	 * admin initialization callback function
 	 * 
-	 * is bound to wpordpress action 'admin_init' on instantiation
+	 * is bound to wordpress action 'admin_init' on instantiation
 	 * 
 	 * @since  3.2.0
 	 * @return void

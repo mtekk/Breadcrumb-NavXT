@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	protected $version = '5.0.40';
+	protected $version = '5.0.52';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -190,7 +190,7 @@ class bcn_admin extends mtekk_adminKit
 				foreach($wp_taxonomies as $taxonomy)
 				{
 					//If we have the old options style for it, update
-					if(isset($opts['H' . $taxonomy->name . '_template']))
+					if($taxonomy->name !== 'post_format' && isset($opts['H' . $taxonomy->name . '_template']))
 					{
 						//Migrate to the new setting name
 						$opts['Htax_' . $taxonomy->name . '_template'] = $opts['H' . $taxonomy->name . '_template'];

@@ -186,9 +186,19 @@ class bcn_admin extends mtekk_adminKit
 			//Upgrading to 5.1.0
 			if(version_compare($version, '5.1.0', '<'))
 			{
-				foreach($opts as $key => $option)
+				global $wp_taxonomies;
+				foreach($wp_taxonomies as $taxonomy)
 				{
-					
+					//If we have the old options style for it, update
+					if(isset($opts['H' . $taxonomy->name . '_template']))
+					{
+						//Migrate to the new setting name
+						$opts['Htax_' . $taxonomy->name . '_template'] = $opts['H' . $taxonomy->name . '_template'];
+						$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = $opts['H' . $taxonomy->name . '_template_no_anchor'];
+						//Clean up old settings
+						unset($opts['H' . $taxonomy->name . '_template']);
+						unset($opts['H' . $taxonomy->name . '_template_no_anchor']);
+					}
 				}
 			}
 			//Add custom post types

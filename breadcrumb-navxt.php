@@ -340,12 +340,12 @@ class breadcrumb_navxt
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
-				//Grab the current settings from the db
+				//Grab the current settings for the current local site from the db
 				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				//Grab the current settings from the db
+				//Grab the current settings for the current local site from the db
 				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->breadcrumb_trail->opt);
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)

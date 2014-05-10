@@ -19,6 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
+	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false);
 	//Default constructor
 	function __construct()
 	{
@@ -35,7 +36,8 @@ class bcn_widget extends WP_Widget
 	}
 	function widget($args, $instance)
 	{
-		extract($args);
+		//Make sure we grab defaults in the case of out of date instance settings being sent
+		$instance =  wp_parse_args((array) $instance, $this->defaults);
 		//A bit of a hack but we need the DB settings to know if we should exit early
 		$opt = get_option('bcn_options');
 		//If we are on the front page and don't display on the front, return early
@@ -44,10 +46,10 @@ class bcn_widget extends WP_Widget
 			return;
 		}
 		//Manditory before widget junk
-		echo $before_widget;
+		echo $args['before_widget'];
 		if(!empty($instance['title']))
 		{
-			echo $before_title . $instance['title'] . $after_title;
+			echo $args['before_title'] . $instance['title'] . $args['after_title'];
 		}
 		//We'll want to switch between the two breadcrumb output types
 		if($instance['type'] == 'list')
@@ -59,7 +61,7 @@ class bcn_widget extends WP_Widget
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" itemprop="breadcrumbs">' . $instance['pretext'];
+			echo '<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">' . $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';
@@ -72,7 +74,7 @@ class bcn_widget extends WP_Widget
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 		}
 		//Manditory after widget junk
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 	function update($new_instance, $old_instance)
 	{
@@ -87,7 +89,7 @@ class bcn_widget extends WP_Widget
 	}
 	function form($instance)
 	{
-		$instance = wp_parse_args((array) $instance, array('title' => '', 'pretext' => '', 'type' => 'plain', 'linked' => true, 'reverse' => false, 'front' => false));?>
+		$instance = wp_parse_args((array) $instance, $this->defaults);?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"> <?php _e('Title:', 'breadcrumb-navxt'); ?></label>
 			<input class="widefat" type="text" name="<?php echo $this->get_field_name('title'); ?>" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo esc_attr($instance['title']);?>" />
@@ -100,7 +102,7 @@ class bcn_widget extends WP_Widget
 			<label for="<?php echo $this->get_field_id('type'); ?>"> <?php _e('Output trail as:', 'breadcrumb-navxt'); ?></label>
 			<select name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>">
 				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
-				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Schema.org', 'breadcrumb-navxt'); ?></option>
+				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Google (RDFa) Breadcrumbs', 'breadcrumb-navxt'); ?></option>
 				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
 			</select>
 		</p>

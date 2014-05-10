@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.0.1
+Version: 5.0.50
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	private $version = '5.0.1';
+	private $version = '5.0.50';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -250,11 +250,11 @@ class breadcrumb_navxt
 			if(!$post_type->_builtin)
 			{
 				//If the post type does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('Hpost_' . $post_type->name . '_template', $opts) || !$post_type->hierarchical && !array_key_exists('Spost_' . $post_type->name . '_taxonomy_type', $opts))
+				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
 					//Add the necessary option array members
-					$opts['Hpost_' . $post_type->name . '_template'] = __('<a title="Go to %title%." href="%link%">%htitle%</a>', 'breadcrumb-navxt');
-					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('%htitle%', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template'] = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%">%htitle%</a></span>', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 					$opts['bpost_' . $post_type->name . '_archive_display'] = $post_type->has_archive;
 					//Do type dependent tasks
 					if($post_type->hierarchical)
@@ -305,11 +305,11 @@ class breadcrumb_navxt
 			if(!$taxonomy->_builtin)
 			{
 				//If the taxonomy does not have settings in the options array yet, we need to load some defaults
-				if(!array_key_exists('H' . $taxonomy->name . '_template', $opts))
+				if(!isset($opts['Htax_' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
-					$opts['H' . $taxonomy->name . '_template'] = __(sprintf('<a title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
-					$opts['H' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('%%htitle%%', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %%title%% %s archives." href="%%link%%">%%htitle%%</a></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span typeof="v:Breadcrumb"><span property="v:title">%%htitle%%</span></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 				}
 			}
 		}
@@ -340,12 +340,12 @@ class breadcrumb_navxt
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
-				//Grab the current settings from the db
+				//Grab the current settings for the current local site from the db
 				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				//Grab the current settings from the db
+				//Grab the current settings for the current local site from the db
 				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->breadcrumb_trail->opt);
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)

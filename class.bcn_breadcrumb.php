@@ -60,16 +60,16 @@ class bcn_breadcrumb
 		{
 			if($url == NULL)
 			{
-				$template = $this->template = __('%htitle%', 'breadcrumb-navxt');
+				$template = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 			}
 			else
 			{
-				$template = __('<a title="Go to %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt');
+				$template = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt');
 			}
 		}
 		if($url == NULL)
 		{
-				$this->template_no_anchor = wp_kses($template, $this->allowed_html);
+				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 		}
 		else
 		{
@@ -121,7 +121,7 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = wp_kses($template, $this->allowed_html);
+		$this->template = wp_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id), $this->allowed_html);
 	}
 	/**
 	 * Function to set the internal breadcrumb ID

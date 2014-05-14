@@ -255,7 +255,14 @@ class breadcrumb_navxt
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%">%htitle%</a></span>', 'breadcrumb-navxt');
 					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
-					$opts['bpost_' . $post_type->name . '_archive_display'] = $post_type->has_archive;
+					if($post_type->has_archive == true || is_string($post_type->has_archive))
+					{
+						$opts['bpost_' . $post_type->name . '_archive_display'] = true;
+					}
+					else
+					{
+						$opts['bpost_' . $post_type->name . '_archive_display'] = false;		
+					}
 					//Do type dependent tasks
 					if($post_type->hierarchical)
 					{

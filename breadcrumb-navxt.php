@@ -280,6 +280,11 @@ class breadcrumb_navxt
 					//Loop through all of the possible taxonomies
 					foreach($wp_taxonomies as $taxonomy)
 					{
+						//Check for non-public taxonomies
+						if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+						{
+							continue;
+						}
 						//Activate the first taxonomy valid for this post type and exit the loop
 						if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 						{

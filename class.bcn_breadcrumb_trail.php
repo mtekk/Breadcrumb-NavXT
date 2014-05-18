@@ -981,7 +981,7 @@ class bcn_breadcrumb_trail
 			}
 			//Filter li_attributes adding attributes to the li element
 			$li_attribs = apply_filters('bcn_li_attributes', $li_class, $breadcrumb->type, $breadcrumb->get_id());
-			//Trim titles, if needed
+			//Trim titles, if requested
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
 				//Trim the breadcrumb's title

@@ -962,10 +962,9 @@ class bcn_breadcrumb_trail
 		//The main compiling loop
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
-			$trail_str .= '<li';
 			$li_class = '';
 			//On the first run we need to add in a class for the home breadcrumb
-			if($trail_str === '<li')
+			if($trail_str === '')
 			{
 				$li_class .= ' class="home';
 				if($key === 0)
@@ -981,16 +980,15 @@ class bcn_breadcrumb_trail
 				$li_class .= ' class="current_item"';
 			}
 			//Filter li_attributes adding attributes to the li element
-			$trail_str .= apply_filters('bcn_li_attributes', $li_class, $breadcrumb->type, $breadcrumb->get_id());
+			$li_attribs = apply_filters('bcn_li_attributes', $li_class, $breadcrumb->type, $breadcrumb->get_id());
 			//Trim titles, if needed
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
 				//Trim the breadcrumb's title
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
 			}
-			//Place in the breadcrumb's assembled elements
-			$trail_str .= '>' . $breadcrumb->assemble($linked);
-			$trail_str .= "</li>\n";
+			//Assemble the breadrumb and wrap with li's
+			$trail_str .= sprintf("<li%s>%s</li>\n", $li_attribs, $breadcrumb->assemble($linked));
 		}
 		//Should we return or echo the assembled trail?
 		if($return)

@@ -904,7 +904,7 @@ class bcn_breadcrumb_trail
 		//The main compiling loop
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
-			//Must branch if we are reversing the output or not
+			//We do different things for the separator based on the breadcrumb order
 			if($reverse)
 			{
 				//Add in the separator only if we are the 2nd or greater element
@@ -945,8 +945,8 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in list form.
 	 *
-	 * @return void Void if Option to print out breadcrumb trail was chosen.
-	 * @return string String-Data of breadcrumb trail.
+	 * @return void Void if option to print out breadcrumb trail was chosen.
+	 * @return string String version of the breadcrumb trail.
 	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not. 

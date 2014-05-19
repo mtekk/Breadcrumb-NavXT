@@ -355,12 +355,14 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for posts
+	 * 
+	 * @param $post WP_POST Instance of WP_POST object to create a breadcrumb for
 	 */
-	protected function do_post()
+	protected function do_post($post)
 	{
-		global $post, $page;
+		global $page;
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links
 		if($this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
 		{
@@ -391,8 +393,6 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for an attachment page.
-	 * 
-	 * @TODO Evaluate if this can be merged in with the do_post function
 	 */
 	protected function do_attachment()
 	{
@@ -408,29 +408,8 @@ class bcn_breadcrumb_trail
 		}
 		//Get the parent's information
 		$parent = get_post($post->post_parent);
-		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post->post_parent), $this->opt['Hpost_' . $parent->post_type . '_template'], array($parent->post_type), get_permalink($post->post_parent), $post->post_parent));
-		//We need to treat flat and hiearchical post attachment hierachies differently
-		if(is_post_type_hierarchical($parent->post_type))
-		{
-			//Done with the current item, now on to the parents
-			$frontpage = get_option('page_on_front');
-			//If there is a parent page let's find it
-			if($parent->post_parent && $parent->ID != $parent->post_parent && $frontpage != $parent->post_parent)
-			{
-				$this->post_parents($parent->post_parent, $frontpage);
-			}
-			else if(!$this->is_builtin($parent->post_type))
-			{
-				//Handle the post's taxonomy
-				$this->post_hierarchy($post->post_parent, $parent->post_type);	
-			}
-		}
-		else
-		{
-			//Handle the post's taxonomy
-			$this->post_hierarchy($post->post_parent, $parent->post_type);
-		}
+		//Take care of the parent's breadcrumb
+		$this->do_post($parent);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -628,7 +607,7 @@ class bcn_breadcrumb_trail
 		return $type->has_archive;
 	}
 	/**
-	 * This function populates our type_str and posts_id variables
+	 * This function populates our type_str and root_id variables
 	 * 
 	 * @param post $type A post object we are using to figureout the type
 	 * @param string $type_str The type string variable, passed by reference
@@ -672,7 +651,7 @@ class bcn_breadcrumb_trail
 		}
 		else
 		{
-			$type_str = "post";
+			$type_str = 'post';
 		}
 	}
 	/**
@@ -696,8 +675,12 @@ class bcn_breadcrumb_trail
 			$type = $wp_query->get_queried_object();
 		}
 		$root_id = -1;
+		$type_str = '';
 		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
+		/**
+		 * TODO: Split this portion off into its own function
+		 */
 		//If this is a custom post type with a post type archive, add it
 		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
 		{
@@ -712,6 +695,9 @@ class bcn_breadcrumb_trail
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
 		}
+		/**
+		 * End TODO
+		 */
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
 		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
 		{
@@ -821,7 +807,7 @@ class bcn_breadcrumb_trail
 			//For all other post types
 			else
 			{
-				$this->do_post();
+				$this->do_post($GLOBALS['post']);
 			}
 		}
 		//For searches
@@ -893,7 +879,9 @@ class bcn_breadcrumb_trail
 	 * @return string String-Data of breadcrumb trail.
 	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
-	 * @param bool $reverse[optional] Whether to reverse the output or not. 
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
+	 * 
+	 * TODO: Fold display and display_list together, two functions are very simmilar 
 	 */
 	public function display($return = false, $linked = true, $reverse = false)
 	{

@@ -356,9 +356,9 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for posts
 	 * 
-	 * @param $post WP_POST Instance of WP_POST object to create a breadcrumb for
+	 * @param $post WP_Post Instance of WP_Post object to create a breadcrumb for
 	 */
-	protected function do_post($post)
+	protected function do_post(WP_Post $post)
 	{
 		global $page;
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type

@@ -23,11 +23,8 @@ class bcn_widget extends WP_Widget
 	//Default constructor
 	function __construct()
 	{
-		global $l10n;
-		// the global and the check might become obsolete in
-		// further wordpress versions
-		// @see https://core.trac.wordpress.org/ticket/10527		
-		if(!isset($l10n['breadcrumb-navxt']))
+		//@see https://core.trac.wordpress.org/ticket/10527		
+		if(!is_textdomain_loaded('breadcrumb-navxt'))
 		{
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}

@@ -23,7 +23,7 @@ class bcn_widget extends WP_Widget
 	//Default constructor
 	function __construct()
 	{
-		//@see https://core.trac.wordpress.org/ticket/10527		
+		//@see https://core.trac.wordpress.org/ticket/10527
 		if(!is_textdomain_loaded('breadcrumb-navxt'))
 		{
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');

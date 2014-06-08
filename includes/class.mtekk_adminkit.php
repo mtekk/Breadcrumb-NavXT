@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	private $__version = '1.2';
+	const __version = '1.2';
 	protected $version;
 	protected $full_name;
 	protected $short_name;
@@ -56,7 +56,7 @@ abstract class mtekk_adminKit
 	 */
 	function get_admin_class_version()
 	{
-		return $__version;
+		return self::__version;
 	}
 	/**
 	 * Return the URL of the settings page for the plugin
@@ -395,10 +395,13 @@ abstract class mtekk_adminKit
 							$opts[$option] = esc_html($input[$option]);
 						}
 						break;
-					//Treat everything else as a normal string
+					//Deal with strings that can be null
 					case 's':
-					default:
 						$opts[$option] = esc_html($input[$option]);
+						break;
+					//By default we have nothing to do, allows for internal settings
+					default:
+						break;
 				}
 			}
 		}

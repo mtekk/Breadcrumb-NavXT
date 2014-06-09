@@ -344,6 +344,7 @@ abstract class mtekk_adminKit
 	 * 
 	 * @param array $opts good, clean array
 	 * @param array $input unsanitzed input array, not trusted at all
+	 * @todo This function should probably get a filter thrown within it to be more extensible
 	 */
 	protected function opts_update_loop(&$opts, $input)
 	{

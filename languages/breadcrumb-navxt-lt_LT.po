@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-11-21 01:59:26+0000\n"
+"PO-Revision-Date: 2014-06-03 14:48:40+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,153 +10,199 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: class.bcn_network_admin.php:377
-msgid "Breadcrumb NavXT Network Settings"
-msgstr "Breadcrumb NavXT Tinklas Nustatymai"
-
-msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-msgstr "Prideda breadcrumb navigaciją rodyti lankytojas&#39;s kelias į savo dabartinę vietą. Daugiau informacijos apie tai, kaip naudoti šią įskiepiai vizito <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-
-#: class.bcn_admin.php:423 class.bcn_admin.php:500
-#: class.bcn_network_admin.php:491 class.bcn_network_admin.php:568
-msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
-msgstr "Hierarchija, kuris yra tinklalapio takas būtų galima parodyti. Atkreipkite dėmesį, kad  \"Rašyti tėvų\" variantas, gali prireikti papildomo įskiepio dirbti taip, kaip tikėtasi, nes tai ne hierarchinė pranešimas tipas."
+#: class.bcn_admin.php:492 class.bcn_network_admin.php:559
+msgid "Attachments"
+msgstr "Priedas"
 
 #: class.bcn_breadcrumb.php:67 class.bcn_breadcrumb_trail.php:49
 #: class.bcn_breadcrumb_trail.php:55 class.bcn_breadcrumb_trail.php:61
 #: class.bcn_breadcrumb_trail.php:75 class.bcn_breadcrumb_trail.php:87
 #: class.bcn_breadcrumb_trail.php:99
-msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr ""
-"<a title=\"Eiti į %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>\n"
-"\n"
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:114 class.bcn_breadcrumb_trail.php:119
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:131
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:135
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_network_admin.php:401
+msgid "Warning: Individual site settings will override any settings set in this page."
+msgstr "Įspėjimas: Individualūs vietos nustatymai bus panaikinti visus nustatytus šiame puslapyje nustatymus."
+
+#: class.bcn_network_admin.php:409 class.bcn_network_admin.php:413
+msgid "Warning: Individual site settings may override any settings set in this page."
+msgstr "Įspėjimas: Individualūs svetainės parametrus gali panaikinti visus nustatytus šiame puslapyje nustatymus."
+
+#: class.bcn_widget.php:105
+msgid "Google (RDFa) Breadcrumbs"
+msgstr "Google (RDFa) Breadcrumbs"
+
+#: breadcrumb-navxt.php:256
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
+
+#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:63
+msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+
+#: breadcrumb_navxt_admin.php:35
+msgid "Breadcrumb NavXT was just updated from a pre-5.0 version, please go to your plugins page and activate \"Breadcrumb NavXT\". Also, deactivate the \"Breadcrumb NavXT 5.0 Migration Compatibility Layer\" plugin to make this message disappear."
+msgstr "Breadcrumb NavXT buvo tiesiog atnaujinta iš anksto 5,0 versijos, eikite į jūsų plugins puslapyje ir įjungti \"Breadcrumb NavXT\". Be to, išjunkite \"Breadcrumb NavXT 5.0 Migration Compatibility Layer\" įskiepiai, kad šis pranešimas išnyks."
+
+#: class.bcn_admin.php:337 class.bcn_admin.php:351
+msgid "Warning: Your network settings will override any settings set in this page."
+msgstr "Įspėjimas: Jūsų tinklo nustatymai bus panaikinti visus nustatytus šiame puslapyje nustatymus."
+
+#: class.bcn_admin.php:341 class.bcn_admin.php:345
+msgid "Warning: Your network settings may override any settings set in this page."
+msgstr "Įspėjimas: Jūsų tinklo nustatymai gali panaikinti visus nustatytus šiame puslapyje nustatymus."
+
+#: class.bcn_admin.php:350 class.bcn_network_admin.php:418
+msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
+msgstr "Įspėjimas: Ne BCN_NUSTATYMAI_* apibrėžti pareiškimą rasti, įsipareigojimų nevykdymą BCN_SETTINGS_FAVOR_NETWORK."
+
+#: class.bcn_network_admin.php:434
+msgid "Breadcrumb NavXT Network Settings"
+msgstr "Breadcrumb NavXT Tinklas Nustatymai"
+
+msgid "Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT "
+
+msgid "http://mtekk.us/code/breadcrumb-navxt/"
+msgstr "http://mtekk.us/code/breadcrumb-navxt/"
+
+msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "Prideda breadcrumb navigaciją rodyti lankytojas&#39;s kelias į savo dabartinę vietą. Daugiau informacijos apie tai, kaip naudoti šią įskiepiai vizito <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+
+msgid "John Havlik"
+msgstr "John Havlik"
+
+msgid "http://mtekk.us/"
+msgstr "http://mtekk.us/"
+
+#: class.bcn_admin.php:481 class.bcn_admin.php:563
+#: class.bcn_network_admin.php:548 class.bcn_network_admin.php:630
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "Hierarchija, kuris yra tinklalapio takas būtų galima parodyti. Atkreipkite dėmesį, kad  \"Rašyti tėvų\" variantas, gali prireikti papildomo įskiepio dirbti taip, kaip tikėtasi, nes tai ne hierarchinė pranešimas tipas."
 
 #: class.bcn_breadcrumb_trail.php:109
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr "Paieškos rezultatai &#39;<a title=\"Eiti į pirmąjį puslapį paieškos rezultatų %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
-#: class.bcn_admin.php:321 class.bcn_network_admin.php:389
+#: class.bcn_admin.php:379 class.bcn_network_admin.php:446
 msgid "A collection of settings most likely to be modified are located under this tab."
 msgstr "Nustatymų greičiausiai rinkinys turi būti pakeista yra pagal šį skirtuką."
 
-#: class.bcn_admin.php:329 class.bcn_network_admin.php:397
+#: class.bcn_admin.php:387 class.bcn_network_admin.php:454
 msgid "Title Length"
 msgstr "pavadinimas ilgis"
 
-#: class.bcn_admin.php:334 class.bcn_network_admin.php:402
+#: class.bcn_admin.php:392 class.bcn_network_admin.php:459
 msgid "Limit the length of the breadcrumb title."
 msgstr "Apriboti breadcrumb pavadinimo ilgį."
 
-#: class.bcn_admin.php:377 class.bcn_network_admin.php:445
+#: class.bcn_admin.php:435 class.bcn_network_admin.php:502
 msgid "Mainsite Breadcrumb"
 msgstr "Nuoroda į pagrindinį puslapį"
 
-#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
+#: class.bcn_admin.php:447 class.bcn_network_admin.php:514
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
 msgstr "Už visas po tipų (Pranešimai, puslapius, ir Custom Standartinė tipai) yra nustatymai pagal šį skirtuką."
 
-#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
+#: class.bcn_admin.php:447 class.bcn_network_admin.php:514
 msgid "Post Types"
 msgstr "Standartinė tipai"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
+#: class.bcn_admin.php:453 class.bcn_network_admin.php:520
 msgid "Post Hierarchy Display"
 msgstr "Pradėti hierarchija Rodyti"
 
-#: class.bcn_admin.php:399 class.bcn_network_admin.php:467
+#: class.bcn_admin.php:457 class.bcn_network_admin.php:524
 msgid "Post Hierarchy"
 msgstr "Pradėti hierarchija"
 
-#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
+#: class.bcn_admin.php:530 class.bcn_network_admin.php:597
 msgid "%s Hierarchy Display"
 msgstr "%s hierarchija Rodyti"
 
-#: class.bcn_admin.php:529 class.bcn_network_admin.php:597
+#: class.bcn_admin.php:592 class.bcn_network_admin.php:659
 msgid "Post Formats"
 msgstr "Standartinė formatai"
 
-#: class.bcn_admin.php:339 class.bcn_network_admin.php:407
+#: class.bcn_admin.php:397 class.bcn_network_admin.php:464
 msgid "Max Title Length: "
 msgstr "Maksimalus Pavadinimas Ilgis:"
 
-#: class.bcn_admin.php:390 class.bcn_network_admin.php:458
+#: class.bcn_admin.php:448 class.bcn_network_admin.php:515
 msgid "Posts"
 msgstr "Pranešimai"
 
-#: class.bcn_admin.php:407 class.bcn_admin.php:476
-#: class.bcn_network_admin.php:475 class.bcn_network_admin.php:544
+#: class.bcn_admin.php:465 class.bcn_admin.php:539
+#: class.bcn_network_admin.php:532 class.bcn_network_admin.php:606
 msgid "Post Parent"
 msgstr "Standartinė tėvų"
 
-#: class.bcn_admin.php:496 class.bcn_network_admin.php:564
+#: class.bcn_admin.php:559 class.bcn_network_admin.php:626
 msgid "The hierarchy which the breadcrumb trail will show."
 msgstr "Hierarchija, kuri tinklalapio takas bus rodomas."
 
-#: class.bcn_admin.php:471 class.bcn_network_admin.php:539
+#: class.bcn_admin.php:534 class.bcn_network_admin.php:601
 msgid "%s Hierarchy"
 msgstr "%s hierarchija"
 
-#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
+#: class.bcn_admin.php:577 class.bcn_network_admin.php:644
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
 msgstr "Už visų taksonomijos (įskaitant Kategorijos, žodžius ir nestandartinių taksonomijos) yra nustatymai pagal šį skirtuką."
 
-#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
+#: class.bcn_admin.php:577 class.bcn_network_admin.php:644
 msgid "Taxonomies"
 msgstr "taksonomijos"
 
-#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
+#: class.bcn_admin.php:595 class.bcn_network_admin.php:662
 msgid "Post Format Template"
 msgstr "Standartinė Formatas šabloną"
 
-#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
+#: class.bcn_admin.php:595 class.bcn_network_admin.php:662
 msgid "The template for post format breadcrumbs."
 msgstr "Už pašto formato breadcrumbs šablonas."
 
-#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
+#: class.bcn_admin.php:596 class.bcn_network_admin.php:663
 msgid "Post Format Template (Unlinked)"
 msgstr "Pranešimo formatas šablonas (atspari)"
 
-#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
+#: class.bcn_admin.php:596 class.bcn_network_admin.php:663
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Už post_format džiūvėsėliai šablonas, naudojamas tik tada, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:563 class.bcn_network_admin.php:631
+#: class.bcn_admin.php:626 class.bcn_network_admin.php:693
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
 msgstr "Už autorius ir data archyvuose, kratas ir 404 puslapių parametrai yra pagal šį skirtuką."
 
-#: class.bcn_admin.php:564 class.bcn_network_admin.php:632
+#: class.bcn_admin.php:627 class.bcn_network_admin.php:694
 msgid "Author Archives"
 msgstr "Autorius Archyvas"
-
-#: class.bcn_breadcrumb_trail.php:114 class.bcn_breadcrumb_trail.php:119
-msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Eiti į %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
 #: class.bcn_breadcrumb_trail.php:124
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "straipsniai: <a title=\"Eiti į pirmąjį puslapį pranešimų per %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: class.bcn_breadcrumb_trail.php:131
-msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Eiti į %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: class.bcn_breadcrumb_trail.php:135
-msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Eiti į %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
 #: includes/class.mtekk_adminkit.php:296
 msgid "Your settings are for a newer version."
 msgstr "Jūsų nustatymai yra skirtos naujesnės versijos."
 
-#: class.bcn_widget.php:96
+#: class.bcn_widget.php:98
 msgid "Text to show before the trail:"
 msgstr "Tekstas, kuris bus rodomas prieš Trail:"
 
-#: class.bcn_widget.php:103
-msgid "Schema.org"
-msgstr "Schema.org"
-
-#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
+#: class.bcn_admin.php:250 class.bcn_network_admin.php:318
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Eiti į Breadcrumb NavXT vertimo projektą."
 
@@ -165,35 +211,35 @@ msgstr "Eiti į Breadcrumb NavXT vertimo projektą."
 msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
 msgstr "Jūsų PHP versija yra per sena, prašome atnaujinti į naujesnę versiją. Jūsų versija yra%1$s Breadcrumb NavXT reikia %2$S"
 
-#: class.bcn_widget.php:33
+#: class.bcn_widget.php:34
 msgid "Adds a breadcrumb trail to your sidebar"
 msgstr "Prideda parankinės Breadcrumb takas"
 
-#: class.bcn_widget.php:92
+#: class.bcn_widget.php:94
 msgid "Title:"
 msgstr "Titel:"
 
-#: class.bcn_widget.php:100
+#: class.bcn_widget.php:102
 msgid "Output trail as:"
 msgstr "Išėjimo takas kaip:"
 
-#: class.bcn_widget.php:102
+#: class.bcn_widget.php:104
 msgid "List"
 msgstr "sąrašas"
 
-#: class.bcn_widget.php:104
+#: class.bcn_widget.php:106
 msgid "Plain"
 msgstr "paprastas"
 
-#: class.bcn_widget.php:109
+#: class.bcn_widget.php:111
 msgid "Link the breadcrumbs"
 msgstr "nuoroda Breadcrumbs"
 
-#: class.bcn_widget.php:111
+#: class.bcn_widget.php:113
 msgid "Reverse the order of the trail"
 msgstr "Sukeisti takai tvarka"
 
-#: class.bcn_widget.php:113
+#: class.bcn_widget.php:115
 msgid "Hide the trail on the front page"
 msgstr "Slėpti takas pagrindiniame puslapyje"
 
@@ -201,449 +247,441 @@ msgstr "Slėpti takas pagrindiniame puslapyje"
 msgid "Insufficient privileges to proceed."
 msgstr "Nepakankami įgaliojimai tęsti."
 
-#: class.bcn_admin.php:220 class.bcn_network_admin.php:288
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:311
 msgid "Tips for the settings are located below select options."
 msgstr "Patarimai nustatymų yra žemiau pasirinkite Funkcijos."
 
-#: class.bcn_admin.php:221 class.bcn_network_admin.php:289
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:312
 msgid "Resources"
 msgstr "ištekliai"
 
-#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:313
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sPamokos ir How Tos%s: Yra keletas vadovai, vadovėliai, ir kaip tos galima rasti autoriaus svetainėje."
 
-#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:313
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Eiti į Breadcrumb NavXT tag archive."
 
-#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:314
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sDokumentacijos online%s: Patikrinkite daugiau indepth techninės informacijos dokumentacijoje."
 
-#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:314
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Eiti į Breadcrumb NavXT online dokumentacijoje"
 
-#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:315
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%sPranešk apie klaidą%s: Jei manote, kad suradote klaidą, nurodykite savo WordPress versiją ir informaciją apie tai, kaip atkurti klaidą."
 
-#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:315
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Eiti į Breadcrumb NavXT remti postą savo versiją"
 
-#: class.bcn_admin.php:225 class.bcn_network_admin.php:293
+#: class.bcn_admin.php:248 class.bcn_network_admin.php:316
 msgid "Giving Back"
 msgstr "Suteikus Atgal"
 
-#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
+#: class.bcn_admin.php:249 class.bcn_network_admin.php:317
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%sPaaukoti%s: Meilė Breadcrumb NavXT ir norite padėti plėtrą? Apsvarstykite pirkti autoriui alus."
 
-#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
+#: class.bcn_admin.php:249 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Eiti į PayPal duoti auką Breadcrumb NavXT."
 
-#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
+#: class.bcn_admin.php:250 class.bcn_network_admin.php:318
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sIšversti%s: Ar jūsų kalba nėra? Susisiekite John Havlík gauti versti."
 
-#: class.bcn_admin.php:232 class.bcn_admin.php:321 class.bcn_admin.php:322
-#: class.bcn_network_admin.php:300 class.bcn_network_admin.php:389
-#: class.bcn_network_admin.php:390
+#: class.bcn_admin.php:255 class.bcn_admin.php:379 class.bcn_admin.php:380
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:446
+#: class.bcn_network_admin.php:447
 msgid "General"
 msgstr "Bendras"
 
-#: class.bcn_admin.php:235 class.bcn_network_admin.php:303
+#: class.bcn_admin.php:258 class.bcn_network_admin.php:326
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "Dėl šio puslapio nustatymai įsigaliotų, turite naudoti pridedamą Breadcrumb NavXT valdikliui, ar vietos arba Kodekso skirsniuose į savo temą."
 
-#: class.bcn_admin.php:236 class.bcn_network_admin.php:304
+#: class.bcn_admin.php:259 class.bcn_network_admin.php:327
 msgid "Breadcrumb trail with separators"
 msgstr "Breadcrumb takas su separatorių"
 
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:310
+#: class.bcn_admin.php:265 class.bcn_network_admin.php:333
 msgid "Breadcrumb trail in list form"
 msgstr "Breadcrumb takas sąrašo forma"
 
-#: class.bcn_admin.php:251 class.bcn_network_admin.php:319
+#: class.bcn_admin.php:274 class.bcn_network_admin.php:342
 msgid "Quick Start"
 msgstr "Quick Start"
 
-#: class.bcn_admin.php:254 class.bcn_network_admin.php:322
+#: class.bcn_admin.php:277 class.bcn_network_admin.php:345
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Naudojant kodą iš Quick Start ankstesniame skyriuje, taip CSS gali būti naudojami kaip bazė stiliaus jūsų tinklalapio puslapių seką."
 
-#: class.bcn_admin.php:266 class.bcn_network_admin.php:334
+#: class.bcn_admin.php:289 class.bcn_network_admin.php:357
 msgid "Styling"
 msgstr "Styling"
 
-#: class.bcn_admin.php:272 class.bcn_network_admin.php:340
+#: class.bcn_admin.php:295 class.bcn_network_admin.php:363
 msgid "Import/Export/Reset"
 msgstr "Importas/Eksportas/Atkurti"
 
-#: class.bcn_admin.php:296 class.bcn_network_admin.php:364
-#: includes/class.mtekk_adminkit.php:792
+#: class.bcn_admin.php:319 class.bcn_network_admin.php:387
+#: includes/class.mtekk_adminkit.php:787
 msgid "Import"
 msgstr "Importas"
 
-#: class.bcn_admin.php:297 class.bcn_network_admin.php:365
-#: includes/class.mtekk_adminkit.php:793
+#: class.bcn_admin.php:320 class.bcn_network_admin.php:388
+#: includes/class.mtekk_adminkit.php:788
 msgid "Export"
 msgstr "Eksportas"
 
-#: class.bcn_admin.php:298 class.bcn_network_admin.php:366
-#: includes/class.mtekk_adminkit.php:794
+#: class.bcn_admin.php:321 class.bcn_network_admin.php:389
+#: includes/class.mtekk_adminkit.php:789
 msgid "Reset"
 msgstr "Atstatyti"
 
-#: class.bcn_admin.php:309
+#: class.bcn_admin.php:367
 msgid "Breadcrumb NavXT Settings"
 msgstr "Breadcrumb NavXT Nustatymai"
 
-#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
+#: class.bcn_admin.php:383 class.bcn_network_admin.php:450
 msgid "Breadcrumb Separator"
 msgstr "Breadcrumb separatorius"
 
-#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
+#: class.bcn_admin.php:383 class.bcn_network_admin.php:450
 msgid "Placed in between each breadcrumb."
 msgstr "Dedami tarpusavyje breadcrumb."
 
-#: class.bcn_admin.php:359 class.bcn_admin.php:362
-#: class.bcn_network_admin.php:427 class.bcn_network_admin.php:430
+#: class.bcn_admin.php:417 class.bcn_admin.php:420
+#: class.bcn_network_admin.php:484 class.bcn_network_admin.php:487
 msgid "Home Breadcrumb"
 msgstr "Home Breadcrumb"
 
-#: class.bcn_admin.php:362 class.bcn_network_admin.php:430
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
 msgid "Place the home breadcrumb in the trail."
 msgstr ""
 "Patalpinti namo breadcrumb į seką.\n"
 "\t\n"
 
-#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:488
 msgid "Home Template"
 msgstr "Pagrindinis Šablonas"
 
-#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:488
 msgid "The template for the home breadcrumb."
 msgstr "Namams šablonas už breadcrumb."
 
-#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:489
 msgid "Home Template (Unlinked)"
 msgstr "Pagrindinis šablonas (atspari)"
 
-#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:489
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Namams už tinklalapio šablonas, naudojamas, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:368 class.bcn_admin.php:371
-#: class.bcn_network_admin.php:436 class.bcn_network_admin.php:439
+#: class.bcn_admin.php:426 class.bcn_admin.php:429
+#: class.bcn_network_admin.php:493 class.bcn_network_admin.php:496
 msgid "Blog Breadcrumb"
 msgstr "Blog Breadcrumb"
 
-#: class.bcn_admin.php:371 class.bcn_network_admin.php:439
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:496
 msgid "Place the blog breadcrumb in the trail."
 msgstr ""
 "Patalpinti blog breadcrumb į seką.\n"
 "\t\n"
 
-#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:497
 msgid "Blog Template"
 msgstr "Blog šablonas"
 
-#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:497
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "šablonas už blog breadcrumb, used only in static front page environments."
 
-#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:498
 msgid "Blog Template (Unlinked)"
 msgstr "Blog šablonas (Atspari)"
 
-#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:498
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Už dienoraštį tinklalapio šablonas, naudojamas tik statinio tituliniame puslapyje aplinkoje, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:505
 msgid "Main Site Breadcrumb"
 msgstr "Titulinis Breadcrumb"
 
-#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:505
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Padėkite Pagrindinė svetainė namo tinklalapio puslapių tvarką sudarydamas keliose setup takas."
 
-#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
+#: class.bcn_admin.php:439 class.bcn_network_admin.php:506
 msgid "Main Site Home Template"
 msgstr "Titulinis Pagrindinis Šablonas"
 
-#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
+#: class.bcn_admin.php:439 class.bcn_network_admin.php:506
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Svetainės pagrindinį namuose tinklalapio šablonas, naudojamas tik keliose aplinkose."
 
-#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:440 class.bcn_network_admin.php:507
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Svetainės pagrindinį namuose tinklalapio šablonas, naudojamas tik keliose aplinkose."
 
-#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:440 class.bcn_network_admin.php:507
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Svetainės pagrindinį namuose tinklalapio, naudojamas tik keliose aplinkose ir kai tinklalapio šablonas nėra susiję."
 
-#: class.bcn_admin.php:350 class.bcn_network_admin.php:418
+#: class.bcn_admin.php:408 class.bcn_network_admin.php:475
 msgid "Current Item"
 msgstr "Aktualus Prekės"
 
-#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:478
 msgid "Link Current Item"
 msgstr "Nuoroda Aktualus Prekės"
 
-#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:478
 msgid "Yes"
 msgstr "Taip"
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
 msgid "Paged Breadcrumb"
 msgstr "Puslapi Breadcrumb"
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Įtraukti puslapi breadcrumb į breadcrumb juostą."
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Nurodo, kad vartotojas yra puslapyje išskyrus ant sunumeruoti pranešimų / puslapius pirmas."
 
-#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:480
 msgid "Paged Template"
 msgstr "Puslapi Šablonas"
 
-#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:480
 msgid "The template for paged breadcrumbs."
 msgstr "Už puslapio breadcrumbs šablonas."
 
-#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
+#: class.bcn_admin.php:451 class.bcn_network_admin.php:518
 msgid "Post Template"
 msgstr "Standartinė šabloną"
 
-#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
+#: class.bcn_admin.php:451 class.bcn_network_admin.php:518
 msgid "The template for post breadcrumbs."
 msgstr "Už pašto breadcrumbs šablonas."
 
-#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
+#: class.bcn_admin.php:452 class.bcn_network_admin.php:519
 msgid "Post Template (Unlinked)"
 msgstr "Rašyti šablonas (atspari)"
 
-#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
+#: class.bcn_admin.php:452 class.bcn_network_admin.php:519
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Už pašto breadcrumbs, naudojamas tik tada, kai breadcrumb nėra susijęs šablonas."
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
+#: class.bcn_admin.php:453 class.bcn_network_admin.php:520
 msgid "Show the taxonomy leading to a post in the breadcrumb trail."
 msgstr "Rodyti taksonomiją, padėsiantį į tinklalapio takas paštu."
 
-#: class.bcn_admin.php:403 class.bcn_admin.php:515
-#: class.bcn_network_admin.php:471 class.bcn_network_admin.php:583
+#: class.bcn_admin.php:461 class.bcn_admin.php:578
+#: class.bcn_network_admin.php:528 class.bcn_network_admin.php:645
 msgid "Categories"
 msgstr "Kategorijos"
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:462 class.bcn_network_admin.php:529
 msgid "Dates"
 msgstr "datos"
 
-#: class.bcn_admin.php:405 class.bcn_admin.php:522
-#: class.bcn_network_admin.php:473 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:463 class.bcn_admin.php:585
+#: class.bcn_network_admin.php:530 class.bcn_network_admin.php:652
 msgid "Tags"
 msgstr "Tags"
 
-#: class.bcn_admin.php:427 class.bcn_network_admin.php:495
+#: class.bcn_admin.php:485 class.bcn_network_admin.php:552
 msgid "Pages"
 msgstr "Puslapiai"
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:488 class.bcn_network_admin.php:555
 msgid "Page Template"
 msgstr "Page Web Šablono"
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:488 class.bcn_network_admin.php:555
 msgid "The template for page breadcrumbs."
 msgstr "Už puslapio šablonas breadcrumbs."
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
+#: class.bcn_admin.php:489 class.bcn_network_admin.php:556
 msgid "Page Template (Unlinked)"
 msgstr "Page Web Šablono (atspari)"
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
+#: class.bcn_admin.php:489 class.bcn_network_admin.php:556
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Už puslapio breadcrumbs šablonas,naudojamas tik tada kai breadcrumb nėra susiję."
 
-#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
+#: class.bcn_admin.php:495 class.bcn_network_admin.php:562
 msgid "Attachment Template"
 msgstr "Priedas Šablonas"
 
-#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
+#: class.bcn_admin.php:495 class.bcn_network_admin.php:562
 msgid "The template for attachment breadcrumbs."
 msgstr "Kabinami ant breadcrumbs šablonas."
 
-#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
+#: class.bcn_admin.php:496 class.bcn_network_admin.php:563
 msgid "Attachment Template (Unlinked)"
 msgstr "Priedas šablonas (atspari)"
 
-#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
+#: class.bcn_admin.php:496 class.bcn_network_admin.php:563
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Kabinami ant breadcrumbs šablonas, naudojamas tik tada, kai breadcrumb nėra susiję."
 
-#: breadcrumb-navxt.php:247
-msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
-msgstr "<a title=\"eiti į %title%.\" href=\"%link%\">%htitle%</a>"
-
-#: breadcrumb-navxt.php:248 class.bcn_breadcrumb.php:63
-msgid "%htitle%"
-msgstr "%htitle%"
-
-#: class.bcn_admin.php:453 class.bcn_admin.php:553
-#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
+#: class.bcn_admin.php:516 class.bcn_admin.php:616
+#: class.bcn_network_admin.php:583 class.bcn_network_admin.php:683
 msgid "%s Template"
 msgstr "%s šablonas"
 
-#: class.bcn_admin.php:453 class.bcn_admin.php:553
-#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
+#: class.bcn_admin.php:516 class.bcn_admin.php:616
+#: class.bcn_network_admin.php:583 class.bcn_network_admin.php:683
 msgid "The template for %s breadcrumbs."
 msgstr "šablonas %s breadcrumbs."
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
+#: class.bcn_admin.php:517 class.bcn_admin.php:617
+#: class.bcn_network_admin.php:584 class.bcn_network_admin.php:684
 msgid "%s Template (Unlinked)"
 msgstr "%s šablonas (atspari)"
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
+#: class.bcn_admin.php:517 class.bcn_admin.php:617
+#: class.bcn_network_admin.php:584 class.bcn_network_admin.php:684
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "%s breadcrumbs šablonas, naudojamas tik tada, kai breadcrumb nėra susiję."
 
-#: class.bcn_admin.php:459 class.bcn_network_admin.php:527
+#: class.bcn_admin.php:522 class.bcn_network_admin.php:589
 msgid "%s Root Page"
 msgstr "%s Root Page"
 
-#: class.bcn_admin.php:462 class.bcn_network_admin.php:530
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:592
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Pasirinkti &mdash;"
 
-#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
+#: class.bcn_admin.php:529 class.bcn_network_admin.php:596
 msgid "%s Archive Display"
 msgstr "%s Archyvas Rodyti"
 
-#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
+#: class.bcn_admin.php:529 class.bcn_network_admin.php:596
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Rodyti breadcrumb už %s arba tipo pareigoms archyvų tinklalapio takas."
 
-#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
+#: class.bcn_admin.php:530 class.bcn_network_admin.php:597
 msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
 msgstr "Rodyti taksonomiją, vedantį į%s į breadcrumb juostą."
 
-#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:581 class.bcn_network_admin.php:648
 msgid "Category Template"
 msgstr "Kategorija Šablonas"
 
-#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:581 class.bcn_network_admin.php:648
 msgid "The template for category breadcrumbs."
 msgstr "Kategorijos už breadcrumbs šablonas."
 
-#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
+#: class.bcn_admin.php:582 class.bcn_network_admin.php:649
 msgid "Category Template (Unlinked)"
 msgstr "Kategorija šablonas (atspari)"
 
-#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
+#: class.bcn_admin.php:582 class.bcn_network_admin.php:649
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Kategorijos breadcrumb šablonas, naudojamas tik tada, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
+#: class.bcn_admin.php:588 class.bcn_network_admin.php:655
 msgid "Tag Template"
 msgstr "Tag Šablonas"
 
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
+#: class.bcn_admin.php:588 class.bcn_network_admin.php:655
 msgid "The template for tag breadcrumbs."
 msgstr "Tag breadcrumbs šablonas."
 
-#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
+#: class.bcn_admin.php:589 class.bcn_network_admin.php:656
 msgid "Tag Template (Unlinked)"
 msgstr "Tag šablonas (atspari)"
 
-#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
+#: class.bcn_admin.php:589 class.bcn_network_admin.php:656
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "šablonas už Tag breadcrumbs, naudojamas tik tada, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:563 class.bcn_admin.php:572
-#: class.bcn_network_admin.php:631 class.bcn_network_admin.php:640
+#: class.bcn_admin.php:626 class.bcn_admin.php:635
+#: class.bcn_network_admin.php:693 class.bcn_network_admin.php:702
 msgid "Miscellaneous"
 msgstr "įvairialypis"
 
-#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:697
 msgid "Author Template"
 msgstr "Autorius Šablonas"
 
-#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:697
 msgid "The template for author breadcrumbs."
 msgstr "šablonas už autoriaus breadcrumbs"
 
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:698
 msgid "Author Template (Unlinked)"
 msgstr "Autorius šablonas (atspari)"
 
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:698
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Autoriaus džiūvėsėliai šablonas, naudojamas tik tada, kai tinklalapio nėra susiję."
 
-#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:699
 msgid "Author Display Format"
 msgstr "Autorius Ekranas Formatas"
 
-#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:699
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_namenaudoja pavadinimą, nurodytą \"Display name viešai kaip\" pagal vartotojo aprašymą kiti atitinka variantų vartotojo profilį."
 
-#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:638 class.bcn_network_admin.php:705
 msgid "Date Template"
 msgstr "data Šablonas"
 
-#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:638 class.bcn_network_admin.php:705
 msgid "The template for date breadcrumbs."
 msgstr "Datos ir breadcrumbs šablonas."
 
-#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:639 class.bcn_network_admin.php:706
 msgid "Date Template (Unlinked)"
 msgstr "Data šablonas (atspari)"
 
-#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:639 class.bcn_network_admin.php:706
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Datos ir breadcrumbs, naudojamas tik tada, kai tinklalapio nėra susijęs šablonas."
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
+#: class.bcn_admin.php:640 class.bcn_network_admin.php:707
 msgid "Search Template"
 msgstr "Paieška Šablonas"
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
+#: class.bcn_admin.php:640 class.bcn_network_admin.php:707
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Saito šablonas paieškos breadcrumbs, naudojamas tik tada, kai paieškos rezultatai span kelis puslapius."
 
-#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:708
 msgid "Search Template (Unlinked)"
 msgstr "Paieška šablonas (atspari)"
 
-#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:708
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Saito šablonas paieškos breadcrumbs, naudojamas tik tada, kai paieškos rezultatai span kelis puslapius ir naršymo nėra susiję."
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:647
+#: class.bcn_admin.php:642 class.bcn_network_admin.php:709
 msgid "404 Title"
 msgstr "404 Titras"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:643 class.bcn_network_admin.php:710
 msgid "404 Template"
 msgstr "404 Šablonas"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:643 class.bcn_network_admin.php:710
 msgid "The template for 404 breadcrumbs."
 msgstr "Šablonas už 404 breadcrumbs."
 
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:655
+#: class.bcn_admin.php:650 class.bcn_network_admin.php:717
 msgid "Save Changes"
 msgstr "Išsaugoti pakeitimus"
 
@@ -753,15 +791,15 @@ msgstr "Nustatymai sėkmingai perkelti."
 msgid "Default settings successfully installed."
 msgstr "Gamykliniai nustatymai sėkmingai įdiegta."
 
-#: includes/class.mtekk_adminkit.php:784
+#: includes/class.mtekk_adminkit.php:779
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
 msgstr "Importuoti nustatymus iš XML failą, eksporto dabartinius nustatymus XML failo arba iš naujo į numatytuosius nustatymus."
 
-#: includes/class.mtekk_adminkit.php:787
+#: includes/class.mtekk_adminkit.php:782
 msgid "Settings File"
 msgstr "Nustatymai failą"
 
-#: includes/class.mtekk_adminkit.php:790
+#: includes/class.mtekk_adminkit.php:785
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Pasirinkite XML failą su nustatymais įkelti ir importuoti nustatymus."
 

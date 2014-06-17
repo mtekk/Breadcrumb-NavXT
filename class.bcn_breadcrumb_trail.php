@@ -505,12 +505,12 @@ class bcn_breadcrumb_trail
 	protected function do_archive_by_post_type()
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_post_type() . '_template_no_anchor'], array('archive', 'post-' . get_post_type() . '-archive', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_query_var('post_type') . '_template_no_anchor'], array('archive', 'post-' . get_query_var('post_type') . '-archive', 'current-item')));
 		if($this->opt['bcurrent_item_linked'] || is_paged() && $this->opt['bpaged_display'])
 		{
-			$breadcrumb->set_template($this->opt['Hpost_' . get_post_type() . '_template']);
+			$breadcrumb->set_template($this->opt['Hpost_' . get_query_var('post_type') . '_template']);
 			//Deal with the anchor
-			$breadcrumb->set_url(get_post_type_archive_link(get_post_type()));
+			$breadcrumb->set_url(get_post_type_archive_link(get_query_var('post_type')));
 		}
 	}
 	/**

@@ -361,12 +361,12 @@ class bcn_breadcrumb_trail
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links
-		if($this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
+		if(is_attachment() || $this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
 		{
 			//Change the template over to the normal, linked one
 			$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
 			//Add the link
-			$breadcrumb->set_url(get_permalink());
+			$breadcrumb->set_url(get_permalink($post));
 		}
 		//If we have page, force it to go through the parent tree
 		if($post->post_type === 'page')

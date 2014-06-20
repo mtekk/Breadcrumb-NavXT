@@ -769,7 +769,7 @@ class bcn_breadcrumb_trail
 	 */
 	public function fill()
 	{
-		global $wpdb, $post, $wp_query, $paged, $page;
+		global $wpdb, $wp_query, $paged, $page;
 		//Check to see if the trail is already populated
 		if(count($this->breadcrumbs) > 0)
 		{

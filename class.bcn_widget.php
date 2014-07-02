@@ -35,8 +35,8 @@ class bcn_widget extends WP_Widget
 	{
 		//Make sure we grab defaults in the case of out of date instance settings being sent
 		$instance =  wp_parse_args((array) $instance, $this->defaults);
-		$instance['title'] = apply_filters('widget_title', $instance['title']);
-		$instance['pretext'] = apply_filters('widget_text', $instance['pretext']);
+		$instance['title'] = apply_filters('widget_title', $instance['title'], $instance);
+		$instance['pretext'] = apply_filters('widget_text', $instance['pretext'], $instance);
 		//A bit of a hack but we need the DB settings to know if we should exit early
 		$opt = get_option('bcn_options');
 		//If we are on the front page and don't display on the front, return early

@@ -19,8 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const __version = '1.2';
-	protected $version;
+	const version = '1.2';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -56,7 +55,7 @@ abstract class mtekk_adminKit
 	 */
 	function get_admin_class_version()
 	{
-		return self::__version;
+		return mtekk_adminKit::version;
 	}
 	/**
 	 * Return the URL of the settings page for the plugin
@@ -245,18 +244,18 @@ abstract class mtekk_adminKit
 			$this->add_option($this->unique_prefix . '_options', $opts);
 			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
 			//Add the version, no need to autoload the db version
-			$this->add_option($this->unique_prefix . '_version', $this->version, '', 'no');
+			$this->add_option($this->unique_prefix . '_version', $this::version, '', 'no');
 		}
 		else
 		{
 			//Retrieve the database version
 			$db_version = $this->get_option($this->unique_prefix . '_version');
-			if($this->version !== $db_version)
+			if($this::version !== $db_version)
 			{
 				//Run the settings update script
 				$this->opts_upgrade($opts, $db_version);
 				//Always have to update the version
-				$this->update_option($this->unique_prefix . '_version', $this->version);
+				$this->update_option($this->unique_prefix . '_version', $this::version);
 				//Store the options
 				$this->update_option($this->unique_prefix . '_options', $this->opt);
 			}
@@ -281,7 +280,7 @@ abstract class mtekk_adminKit
 	function version_check($version)
 	{
 		//Do a quick version check
-		if(version_compare($version, $this->version, '<') && is_array($this->opt))
+		if(version_compare($version, $this::version, '<') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are out of date.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
@@ -290,7 +289,7 @@ abstract class mtekk_adminKit
 			return false;
 		}
 		//Do a quick version check
-		else if(version_compare($version, $this->version, '>') && is_array($this->opt))
+		else if(version_compare($version, $this::version, '>') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
 			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
@@ -502,7 +501,7 @@ abstract class mtekk_adminKit
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->message['updated fade'][] = $temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier),'<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this->version . '/#respond">', '</a>');
+			$this->message['updated fade'][] = $temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier),'<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -529,7 +528,7 @@ abstract class mtekk_adminKit
 		$plugnode = $parnode->appendChild($node);
 		//Add some attributes that identify the plugin and version for the options export
 		$plugnode->setAttribute('name', $this->short_name);
-		$plugnode->setAttribute('version', $this->version);
+		$plugnode->setAttribute('version', $this::version);
 		//Change our headder to text/xml for direct save
 		header('Cache-Control: public');
 		//The next two will cause good browsers to download instead of displaying the file
@@ -654,7 +653,7 @@ abstract class mtekk_adminKit
 	function opts_upgrade($opts, $version)
 	{
 		//We don't support using newer versioned option files in older releases
-		if(version_compare($this->version, $version, '>='))
+		if(version_compare($this::version, $version, '>='))
 		{
 			$this->opt = $opts;
 		}
@@ -673,7 +672,7 @@ abstract class mtekk_adminKit
 			//Feed the just read options into the upgrade function
 			$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
 			//Always have to update the version
-			$this->update_option($this->unique_prefix . '_version', $this->version);
+			$this->update_option($this->unique_prefix . '_version', $this::version);
 			//Store the options
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Send the success message

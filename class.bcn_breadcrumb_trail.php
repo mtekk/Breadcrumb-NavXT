@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '5.1.0';
+	const version = '5.1.0';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -141,7 +141,7 @@ class bcn_breadcrumb_trail
 	 */
 	public function get_version()
 	{
-		return $this->version;
+		return self::version;
 	}
 	/**
 	 * Adds a breadcrumb to the breadcrumb trail

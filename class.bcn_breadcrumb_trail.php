@@ -182,7 +182,14 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_author()
 	{
-		global $authordata;
+		if(get_query_var('author_name'))
+		{
+			$authordata = get_user_by('slug', get_query_var('author_name'));	
+		}
+		else
+		{
+			$authordata = get_userdata(get_query_var('author'));
+		}
 		//Setup array of valid author_name values
 		$valid_author_name = array('display_name', 'nickname', 'first_name', 'last_name');
 		//This translation allows us to easily select the display type later on

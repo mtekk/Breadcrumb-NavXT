@@ -141,6 +141,7 @@ class bcn_breadcrumb_trail
 	 */
 	public function get_version()
 	{
+		_deprecated_function( __FUNCTION__, '5.2', 'bcn_breadcrumb_trail::version' );
 		return self::version;
 	}
 	/**
@@ -923,7 +924,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this->version . " -->\n";
+			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
 			echo $credits . $trail_str;
 		}
 	}
@@ -983,7 +984,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this->version . " -->\n";
+			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
 			echo $credits . $trail_str;
 		}
 	}

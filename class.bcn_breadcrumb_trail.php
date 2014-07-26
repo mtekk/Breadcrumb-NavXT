@@ -190,9 +190,8 @@ class bcn_breadcrumb_trail
 		//Make sure user picks only safe values
 		if(in_array($author_name, $valid_author_name))
 		{
-			//TODO Evaluate the need for this filter call
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(apply_filters('the_author', $authordata->$author_name), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $authordata->ID));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_author_meta($author_name, $authordata->ID), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $authordata->ID));
 			//If we're paged, or allowing the current item to be linked, let's link to the first page
 			if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
 			{

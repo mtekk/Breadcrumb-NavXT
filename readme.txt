@@ -21,21 +21,19 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * Catalan by Christian Eduardo
 * German by Daniel Lang
 * French (France) by Emmanuel Beziat, Erwan Lescop, and Serge Rauber
-* Greek by Giorgos Kounenis
 * Turkish by Hakan Er
 * Czech by jakubmachala
 * Norwegian (Bokmål) by Jan Rosvoldsve
 * Danish by Joachim Jensen
 * Lithuanian by Johannes Rau
 * Spanish (Spain) by Karin Sequen
-* Japanese by Kojima Toshiyasu
 * Portuguese (Portugal) by Luís Rodrigues
 * Estonian by Martin Orn
 * Swedish by Patrik Spathon
 * Dutch by Renée Klein
 * Italian by Tamara Balestri
 * Finnish by Ville Pilvio
-* Azerbaijani by Zaur Bayramov
+* Chinese (China) by Amos Lee
 
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
 
@@ -270,6 +268,9 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 * Bug fix: Author page support should be fixed on some setups where it did not work before.
 
 == Upgrade Notice ==
+
+= 5.1.0 =
+This version fixes a ton of bugs, plus adds a new filter and features support for RDFa Breadcrumb by default.
 
 = 5.0.0 =
 This version is for the developers, those who like to extend things gracefully. Several new hooks were introduced, while others were tweaked to be more useful. If you have WordPress setup as a multisite install/in network mode, the new Breadcrumb NavXT network settings page will take priority over the individual sub site settings pages. This is a major change from previous versions. See [Controlling Breadcrumb NavXT Settings From the Network Settings Page](http://mtekk.us/archives/guides/controlling-breadcrumb-navxt-settings-from-the-network-settings-page/"Go to the article on controlling the settings hierarchy") for more information on the new settings modes.

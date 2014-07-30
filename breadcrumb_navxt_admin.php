@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT 5.0 Migration Compatibility Layer DO NOT ACTIVATE
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: This exists to ease the transition to the new 5.0 plugin layout. Will produce the 'Breadcrumb NavXT was just updated from a pre-5.0 version, please go to your plugins page and activate "Breadcrumb NavXT". Also, deactivate "Breadcrumb NavXT 5.0 Migration Compatibility Layer" to make this message disappear.' message. Do not activate or rely on this, it will not be included in Breadcrumb NavXT 5.2.
-Version: 5.1.0
+Version: 5.1.1
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2

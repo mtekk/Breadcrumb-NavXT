@@ -359,9 +359,15 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param $post WP_Post Instance of WP_Post object to create a breadcrumb for
 	 */
-	protected function do_post(WP_Post $post)
+	protected function do_post($post)
 	{
 		global $page;
+		//If we did not get a WP_Post object, warn developer and return early
+		if(!is_object($post) || get_class($post) !== 'WP_Post')
+		{
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$post global is not of type WP_Post', 'breadcrumb-navxt'), '5.1.1');
+			return;
+		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links

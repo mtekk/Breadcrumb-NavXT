@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	private $version = '5.1.1';
+	const version = '5.1.50';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -141,7 +141,8 @@ class bcn_breadcrumb_trail
 	 */
 	public function get_version()
 	{
-		return $this->version;
+		_deprecated_function( __FUNCTION__, '5.2', 'bcn_breadcrumb_trail::version' );
+		return self::version;
 	}
 	/**
 	 * Adds a breadcrumb to the breadcrumb trail
@@ -933,7 +934,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this->version . " -->\n";
+			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
 			echo $credits . $trail_str;
 		}
 	}
@@ -993,7 +994,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this->version . " -->\n";
+			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
 			echo $credits . $trail_str;
 		}
 	}

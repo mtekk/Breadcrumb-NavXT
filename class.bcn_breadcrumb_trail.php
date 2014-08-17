@@ -362,7 +362,6 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_post($post)
 	{
-		global $page;
 		//If we did not get a WP_Post object, warn developer and return early
 		if(!is_object($post) || get_class($post) !== 'WP_Post')
 		{
@@ -372,7 +371,7 @@ class bcn_breadcrumb_trail
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
 		//If the current item is to be linked, or this is a paged post, add in links
-		if(is_attachment() || $this->opt['bcurrent_item_linked'] || ($page > 1 && $this->opt['bpaged_display']))
+		if(is_attachment() || $this->opt['bcurrent_item_linked'] || (get_query_var('page') > 1 && $this->opt['bpaged_display']))
 		{
 			//Change the template over to the normal, linked one
 			$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);

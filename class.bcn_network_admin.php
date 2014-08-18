@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	const version = '5.1.0';
+	const version = '5.1.50';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';
@@ -448,27 +448,6 @@ class bcn_network_admin extends mtekk_adminKit
 				<table class="form-table">
 					<?php
 						$this->input_text(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', 'regular-text', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
-					?>
-					<tr valign="top">
-						<th scope="row">
-							<?php _e('Title Length', 'breadcrumb-navxt'); ?>						
-						</th>
-						<td>
-							<label>
-								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
-								<?php _e('Limit the length of the breadcrumb title.', 'breadcrumb-navxt'); ?>				
-							</label><br />
-							<ul>
-								<li>
-									<label for="amax_title_length">
-										<?php _e('Max Title Length: ','breadcrumb-navxt');?>
-										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
-									</label>
-								</li>
-							</ul>							
-						</td>
-					</tr>
-					<?php
 						do_action($this->unique_prefix . '_network_settings_general', $this->opt);
 					?>
 				</table>
@@ -709,6 +688,28 @@ class bcn_network_admin extends mtekk_adminKit
 						$this->input_text(__('404 Title', 'breadcrumb-navxt'), 'S404_title', 'regular-text');
 						$this->input_text(__('404 Template', 'breadcrumb-navxt'), 'H404_template', 'large-text', false, __('The template for 404 breadcrumbs.', 'breadcrumb-navxt'));
 					?>
+				</table>
+				<h3><?php _e('Deprecated', 'breadcrumb-navxt'); ?></h3>
+				<table class="form-table">
+					<tr valign="top">
+						<th scope="row">
+							<?php _e('Title Length', 'breadcrumb-navxt'); ?>						
+						</th>
+						<td>
+							<label>
+								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
+								<?php _e('Limit the length of the breadcrumb title. (Deprecated, do not set)', 'breadcrumb-navxt'); ?>				
+							</label><br />
+							<ul>
+								<li>
+									<label for="amax_title_length">
+										<?php _e('Max Title Length: ','breadcrumb-navxt');?>
+										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
+									</label>
+								</li>
+							</ul>							
+						</td>
+					</tr>
 				</table>
 				<?php do_action($this->unique_prefix . '_after_network_settings_tab_miscellaneous', $this->opt); ?>
 			</fieldset>

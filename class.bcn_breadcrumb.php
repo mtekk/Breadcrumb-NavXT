@@ -152,12 +152,14 @@ class bcn_breadcrumb
 		$this->type[] = $type;
 	}
 	/**
-	 * This function will intelligently trim the title to the value passed in through $max_length.
+	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
 	 * 
 	 * @param int $max_length of the title.
+	 * @deprecated since 5.2.0
 	 */
 	public function title_trim($max_length)
 	{
+		_deprecated_function(__FUNCTION__, '5.2.0');
 		//To preserve HTML entities, must decode before splitting
 		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
 		$title_length = mb_strlen($this->title);

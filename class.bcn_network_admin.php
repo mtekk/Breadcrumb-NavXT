@@ -698,7 +698,7 @@ class bcn_network_admin extends mtekk_adminKit
 						<td>
 							<label>
 								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
-								<?php _e('Limit the length of the breadcrumb title. (Deprecated, do not set)', 'breadcrumb-navxt'); ?>				
+								<?php _e('Limit the length of the breadcrumb title. (Deprecated, use CSS instead)', 'breadcrumb-navxt'); ?>				
 							</label><br />
 							<ul>
 								<li>

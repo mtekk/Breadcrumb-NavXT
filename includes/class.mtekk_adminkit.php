@@ -480,17 +480,26 @@ abstract class mtekk_adminKit
 		$this->opts_update_prebk($this->opt);
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
+		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
 		$this->opts_update_loop($this->opt, $input);
 		//Commit the option changes
-		$this->update_option($this->unique_prefix . '_options', $this->opt);
+		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save
-		if(count(array_diff_key($input, $this->opt)) == 0)
+		if($updated && count(array_diff_key($input, $this->opt)) == 0)
 		{
 			//Let the user know everything went ok
 			$this->message['updated fade'][] = __('Settings successfully saved.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier));
+		}
+		else if(!$updated && count(array_diff_key($opt_prev, $this->opt)) == 0)
+		{
+			$this->message['updated fade'][] = __('Settings did not change, nothing to save.', $this->identifier);
+		}
+		else if(!$updated)
+		{
+			$this->message['error fade'][] = __('Settings were not saved.', $this->identifier);
 		}
 		else
 		{

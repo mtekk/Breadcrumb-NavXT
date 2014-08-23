@@ -82,7 +82,7 @@ class breadcrumb_navxt
 		//We set the plugin basename here
 		$this->plugin_basename = plugin_basename(__FILE__);
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
-		add_action('wp_loaded', array($this, 'wp_loaded'));
+		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
 		add_action('init', array($this, 'init'));
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', create_function('', 'return register_widget("'. $this->unique_prefix . '_widget");'));

@@ -156,7 +156,7 @@ abstract class mtekk_adminKit
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
-		$this->opt = $this->parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		//Run the opts fix filter
 		$this->opts_fix($this->opt);
 	}
@@ -413,7 +413,7 @@ abstract class mtekk_adminKit
 	 * @param mixed $defaults (optional) The default values to validate against
 	 * @return mixed
 	 */
-	function parse_args($args, $defaults = '')
+	static function parse_args($args, $defaults = '')
 	{
 		if(is_object($args))
 		{
@@ -476,7 +476,7 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
 		//Update local options from database
-		$this->opt = $this->parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opts_update_prebk($this->opt);
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);

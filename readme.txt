@@ -3,7 +3,7 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.7
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 5.1.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -39,7 +39,7 @@ Don't see your language on the list? Stop by [Breadcrumb NavXT's translation pro
 
 == Installation ==
 Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.
-`<div class="breadcrumbs">
+`<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
     <?php if(function_exists('bcn_display'))
     {
         bcn_display();
@@ -51,10 +51,10 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 5.1.1 =
-= Bug fix: Fixed issue where attachments and their parents have the same link when 'link current item' is enabled.
-= Bug fix: Pass the same parameters into the widget title and (pre) text filters as the default WordPress widgets.
-= Bug fix: Fixed issue where PHP warnings would be thrown on author pages for authors that do not have any posts.
-= Bug fix: Reduced severity of `$post` global not being of type `WP_Post`, will silently exit on non-WP_DEBUG enabled sites.
+* Bug fix: Fixed issue where attachments and their parents have the same link when 'link current item' is enabled.
+* Bug fix: Pass the same parameters into the widget title and (pre) text filters as the default WordPress widgets.
+* Bug fix: Fixed issue where PHP warnings would be thrown on author pages for authors that do not have any posts.
+* Bug fix: Reduced severity of `$post` global not being of type `WP_Post`, will silently exit on non-WP_DEBUG enabled sites.
 = 5.1.0 =
 * Behavior change: `bcn_breadcrumb_trail::do_post()` now expects to be passed in a valid WP_Post object.
 * Behavior change: `breadcrumb_navxt::version` changed to a constant to allow uninstantiated access of the plugin version.

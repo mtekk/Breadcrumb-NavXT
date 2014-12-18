@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.2';
+	const version = '1.3';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -78,6 +78,8 @@ abstract class mtekk_adminKit
 	}
 	/**
 	 * Returns a properly formed nonced anchor to the specified URI
+	 * 
+	 * TODO add parameter for appending IDs to the end of a nonced url
 	 * 
 	 * @param string $uri The URI that the anchor should be for
 	 * @param string $mode The nonce "mode", a unique string at the end of the standardized nonce identifier
@@ -149,10 +151,18 @@ abstract class mtekk_adminKit
 		}
 		//Add in the nice "settings" link to the plugins page
 		add_filter('plugin_action_links', array($this, 'filter_plugin_actions'), 10, 2);
+		if(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG)
+		{
+			$suffix = '';
+		}
+		else
+		{
+			$suffix = '.min';
+		}
 		//Register JS for tabs
-		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs.js', dirname(__FILE__) . '/mtekk_adminkit_tabs.js'), array('jquery-ui-tabs'));
+		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'));
 		//Register CSS for tabs
-		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs.css', dirname(__FILE__) . '/mtekk_adminkit_tabs.css'));
+		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.css'));
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now

@@ -588,7 +588,7 @@ class bcn_breadcrumb_trail
 		{
 			//Core filter use here is ok for time being
 			//TODO: Recheck validitiy prior to each release
-			return apply_filters('post_type_archive_title', $object->labels->name);
+			return apply_filters('post_type_archive_title', $object->labels->name, $object->name);
 		}
 	}
 	/**

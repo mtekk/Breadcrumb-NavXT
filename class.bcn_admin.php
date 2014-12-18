@@ -361,7 +361,7 @@ class bcn_admin extends mtekk_adminKit
 		//Display our messages
 		$this->messages();
 		?>
-		<div class="wrap"><div id="icon-options-general" class="icon32"></div><h2><?php _e('Breadcrumb NavXT Settings', 'breadcrumb-navxt'); ?></h2>
+		<div class="wrap"><h2><?php _e('Breadcrumb NavXT Settings', 'breadcrumb-navxt'); ?></h2>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
 		if(!$this->version_check(get_option($this->unique_prefix . '_version')))
@@ -647,9 +647,6 @@ class bcn_admin extends mtekk_adminKit
 			</div>
 			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>
 		</form>
-		<?php 
-		//Need to add a separate menu thing for this
-		$this->import_form(); ?>
 		</div>
 		<?php
 	}

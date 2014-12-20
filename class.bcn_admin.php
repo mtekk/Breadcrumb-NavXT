@@ -350,12 +350,25 @@ class bcn_admin extends mtekk_adminKit
 		}
     }
 	/**
+	 * A message function that checks for deprecated settings that are set and warns the user
+	 */
+	function deprecated_settings_warn()
+	{
+		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
+		if(isset($this->opt['blimit_title']) && $this->opt['blimit_title'])
+		{
+			$this->message['updated fade'][] = sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
+		}
+	}
+	/**
 	 * The administrative page for Breadcrumb NavXT
 	 */
 	function admin_page()
 	{
 		global $wp_taxonomies, $wp_post_types;
 		$this->security();
+		//Do a check on deprecated settings
+		$this->deprecated_settings_warn();
 		//Do a check for multisite settings mode
 		$this->multisite_settings_warn();
 		//Display our messages
@@ -628,7 +641,7 @@ class bcn_admin extends mtekk_adminKit
 						<td>
 							<label>
 								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
-								<?php printf(__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>			
+								<?php printf(__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
 							</label><br />
 							<ul>
 								<li>

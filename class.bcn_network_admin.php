@@ -474,7 +474,7 @@ class bcn_network_admin extends mtekk_adminKit
 					?>
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-engroup">
 					<?php 
 						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', 'large-text', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
@@ -483,7 +483,7 @@ class bcn_network_admin extends mtekk_adminKit
 					?>
 				</table>
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-engroup">
 					<?php
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'));
 						$this->input_text(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', 'large-text', false, __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
@@ -492,7 +492,7 @@ class bcn_network_admin extends mtekk_adminKit
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-engroup">
 					<?php
 						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), !is_multisite());
 						$this->input_text(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', 'large-text', false, __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
@@ -651,8 +651,8 @@ class bcn_network_admin extends mtekk_adminKit
 				<h3><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_text(__('Post Format Template', 'breadcrumb-navxt'), 'Hpost_format_template', 'large-text', false, __('The template for post format breadcrumbs.', 'breadcrumb-navxt'));
-						$this->input_text(__('Post Format Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_format_template_no_anchor', 'large-text', false, __('The template for post_format breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_text(__('Post Format Template', 'breadcrumb-navxt'), 'Htax_post_format_template', 'large-text', false, __('The template for post format breadcrumbs.', 'breadcrumb-navxt'));
+						$this->input_text(__('Post Format Template (Unlinked)', 'breadcrumb-navxt'), 'Htax_post_format_template_no_anchor', 'large-text', false, __('The template for post_format breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
 			<?php

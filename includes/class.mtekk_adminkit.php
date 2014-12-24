@@ -79,22 +79,20 @@ abstract class mtekk_adminKit
 	/**
 	 * Returns a properly formed nonced anchor to the specified URI
 	 * 
-	 * TODO add parameter for appending IDs to the end of a nonced url
-	 * 
 	 * @param string $uri The URI that the anchor should be for
 	 * @param string $mode The nonce "mode", a unique string at the end of the standardized nonce identifier
 	 * @param mixed $value (optional) The value to place in the query string 
 	 * @param string $title (optional) The text to use in the title portion of the anchor
 	 * @param string $text (optional) The text that will be surrounded by the anchor tags
-	 * @param string $extras (optional) This text is placed within the opening anchor tag, good for adding id, classe, rel field
+	 * @param string $anchor_extras (optional) This text is placed within the opening anchor tag, good for adding id, classe, rel field
 	 * @return string the assembled anchor
 	 */
-	function nonced_anchor($uri, $mode, $value = 'true', $title = '', $text = '', $extras = '')
+	function nonced_anchor($uri, $mode, $value = 'true', $title = '', $text = '', $anchor_extras = '')
 	{
 		//Assemble our url, nonce and all
-		$url = wp_nonce_url($uri . '&' . $this->unique_prefix . '_' . $mode . '=' . $value, $this->unique_prefix . '_' . $mode);
+		$url = wp_nonce_url(add_query_arg($this->unique_prefix . '_' . $mode, $value, $uri), $this->unique_prefix . '_' . $mode);
 		//Return a valid anchor
-		return ' <a title="' . $title . '" href="' . $url . '" '. $extras . '>' . $text . '</a>';
+		return ' <a title="' . $title . '" href="' . $url . '" '. $anchor_extras . '>' . $text . '</a>';
 	}
 	/**
 	 * Abstracts the check_admin_referer so that all the end user has to supply is the mode

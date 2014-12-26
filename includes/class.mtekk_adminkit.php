@@ -37,7 +37,6 @@ abstract class mtekk_adminKit
 		//WordPress Admin interface hook
 		add_action('admin_menu', array($this, 'add_page'));
 		//Installation Script hook
-		//register_activation_hook($this->plugin_basename, array($this, 'install'));
 		add_action('activate_' . $this->plugin_basename, array($this, 'install'));
 		//Initilizes l10n domain
 		$this->local();
@@ -157,6 +156,8 @@ abstract class mtekk_adminKit
 		{
 			$suffix = '.min';
 		}
+		//Register JS for enable/disable settings groups
+		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for tabs
 		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
 		//Register CSS for tabs

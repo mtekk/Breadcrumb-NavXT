@@ -317,6 +317,8 @@ class bcn_admin extends mtekk_adminKit
 			'mtad_export' => __('Export', 'breadcrumb-navxt'),
 			'mtad_reset' => __('Reset', 'breadcrumb-navxt'),
 		));
+		//Enqueue the admin enable/disable groups javascript
+		wp_enqueue_script('mtekk_adminkit_engroups');
 	}
 	/**
 	 * A message function that checks for the BCN_SETTINGS_* define statement
@@ -435,7 +437,7 @@ class bcn_admin extends mtekk_adminKit
 			<fieldset id="post" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_text(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', 'large-text', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
 						$this->input_text(__('Post Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_post_template_no_anchor', 'large-text', false, __('The template for post breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
@@ -500,7 +502,7 @@ class bcn_admin extends mtekk_adminKit
 					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
 				<h3><?php echo $post_type->labels->singular_name; ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_text(sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template', 'large-text', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc));
 						$this->input_text(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template_no_anchor', 'large-text', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));

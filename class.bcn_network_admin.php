@@ -388,6 +388,8 @@ class bcn_network_admin extends mtekk_adminKit
 			'mtad_export' => __('Export', 'breadcrumb-navxt'),
 			'mtad_reset' => __('Reset', 'breadcrumb-navxt'),
 		));
+		//Enqueue the admin enable/disable groups javascript
+		wp_enqueue_script('mtekk_adminkit_engroups');
 	}
 	/**
 	 * A message function that checks for the BCN_SETTINGS_* define statement
@@ -505,11 +507,11 @@ class bcn_network_admin extends mtekk_adminKit
 			<fieldset id="post" class="bcn_options">
 				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
 				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_text(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', 'large-text', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
 						$this->input_text(__('Post Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_post_template_no_anchor', 'large-text', false, __('The template for post breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->input_check(__('Post Hierarchy Display', 'breadcrumb-navxt'), 'bpost_post_taxonomy_display', __('Show the hierarchy (specified below) leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'));
+						$this->input_check(__('Post Hierarchy Display', 'breadcrumb-navxt'), 'bpost_post_taxonomy_display', __('Show the hierarchy (specified below) leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -517,11 +519,11 @@ class bcn_network_admin extends mtekk_adminKit
 						</th>
 						<td>
 							<?php
-								$this->input_radio('Spost_post_taxonomy_type', 'category', __('Categories'));
-								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'));
-								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'));
+								$this->input_radio('Spost_post_taxonomy_type', 'category', __('Categories'), false, 'adminkit-enset');
+								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'), false, 'adminkit-enset');
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'));
+								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -533,7 +535,7 @@ class bcn_network_admin extends mtekk_adminKit
 									//We only want custom taxonomies
 									if(($taxonomy->object_type == 'post' || is_array($taxonomy->object_type) && in_array('post', $taxonomy->object_type)) && !$taxonomy->_builtin)
 									{
-										$this->input_radio('Spost_post_taxonomy_type', $taxonomy->name, mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'));
+										$this->input_radio('Spost_post_taxonomy_type', $taxonomy->name, mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'), false, 'adminkit-enset');
 									}
 								}
 							?>
@@ -570,7 +572,7 @@ class bcn_network_admin extends mtekk_adminKit
 					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
 				<h3><?php echo $post_type->labels->singular_name; ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_text(sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template', 'large-text', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc));
 						$this->input_text(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template_no_anchor', 'large-text', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));
@@ -586,7 +588,7 @@ class bcn_network_admin extends mtekk_adminKit
 					</tr>
 					<?php
 						$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
-						$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc));
+						$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset-ctrl adminkit-enset');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -607,7 +609,7 @@ class bcn_network_admin extends mtekk_adminKit
 									//We only want custom taxonomies
 									if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 									{
-										$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', $taxonomy->name, $taxonomy->labels->singular_name);
+										$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', $taxonomy->name, $taxonomy->labels->singular_name, false, 'adminkit-enset');
 									}
 								}
 							?>

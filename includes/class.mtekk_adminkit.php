@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.3';
+	const version = '1.4';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;

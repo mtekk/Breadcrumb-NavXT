@@ -46,7 +46,7 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function __construct($title = '', $template = '', $type = '', $url = NULL, $id = NULL)
+	public function __construct($title = '', $template = '', array $type = array(), $url = NULL, $id = NULL)
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));

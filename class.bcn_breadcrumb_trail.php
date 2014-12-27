@@ -662,32 +662,15 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
-	 * A Breadcrumb Trail Filling Function 
-	 *
-	 * Handles only the root page stuff for post types, including the "page for posts"
+	 * A Breadcrumb Trail Filling Function
 	 * 
-	 * TODO: this still needs to be cleaned up
+	 * Deals with the post type archive and taxonomy archives
+	 * 
+	 * @param (WP_Post|WP_Taxonomy) $type The post or taxonomy to generate the archive breadcrumb for
 	 */
-	protected function do_root()
+	protected function do_type_archive($type)
 	{
-		global $post, $wp_query, $wp_taxonomies, $current_site;
-		//If this is an attachment then we need to change the queried object to the parent post
-		if(is_attachment())
-		{
-			$type = get_post($post->post_parent);
-		}
-		else
-		{
-			//Simmilar to using $post, but for things $post doesn't cover
-			$type = $wp_query->get_queried_object();
-		}
-		$root_id = -1;
-		$type_str = '';
-		//Find our type string and root_id
-		$this->find_type($type, $type_str, $root_id);
-		/**
-		 * TODO: Split this portion off into its own function
-		 */
+		global $wp_taxonomies;
 		//If this is a custom post type with a post type archive, add it
 		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
 		{
@@ -702,9 +685,33 @@ class bcn_breadcrumb_trail
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
 		}
-		/**
-		 * End TODO
-		 */
+	}
+	/**
+	 * A Breadcrumb Trail Filling Function 
+	 *
+	 * Handles only the root page stuff for post types, including the "page for posts"
+	 * 
+	 * TODO: this still needs to be cleaned up
+	 */
+	protected function do_root()
+	{
+		global $post, $wp_query, $current_site;
+		//If this is an attachment then we need to change the queried object to the parent post
+		if(is_attachment())
+		{
+			$type = get_post($post->post_parent);
+		}
+		else
+		{
+			//Simmilar to using $post, but for things $post doesn't cover
+			$type = $wp_query->get_queried_object();
+		}
+		$root_id = -1;
+		$type_str = '';
+		//Find our type string and root_id
+		$this->find_type($type, $type_str, $root_id);
+		//Generate the archive 'root' for the particular type
+		$this->do_type_archive($type);
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
 		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
 		{

@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.1.50';
+	const version = '5.1.60';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -247,7 +247,7 @@ class bcn_breadcrumb_trail
 						}
 					}
 					//Fill out the term hiearchy
-					$this->term_parents($bcn_object[$bcn_use_term]->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+					$parent = $this->term_parents($bcn_object[$bcn_use_term]->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
 				}
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
@@ -259,12 +259,12 @@ class bcn_breadcrumb_trail
 					$parent = get_post($id);
 					$parent = $parent->post_parent;
 				}
-				//Done with the current item, now on to the parents
+				//Grab the frontpage, we'll need it shortly
 				$bcn_frontpage = get_option('page_on_front');
 				//If there is a parent page let's find it
 				if($parent && $id != $parent && $bcn_frontpage != $parent)
 				{
-					$this->post_parents($parent, $bcn_frontpage);
+					$parent = $this->post_parents($parent, $bcn_frontpage);
 				}
 			}
 			//Handle the rest of the taxonomies, including tags
@@ -273,6 +273,13 @@ class bcn_breadcrumb_trail
 				$this->post_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
 			}
 		}
+		//If we never got a good parent for the type_archive, make it now
+		if($parent == NULL)
+		{
+			$parent = get_post($id);
+		}
+		//
+		$this->type_archive($parent);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -319,6 +326,7 @@ class bcn_breadcrumb_trail
 	 * This recursive functions fills the trail with breadcrumbs for parent terms.
 	 * @param int $id The id of the term.
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
+	 * @return WP_Term The term we stopped at
 	 */
 	protected function term_parents($id, $taxonomy)
 	{
@@ -330,8 +338,9 @@ class bcn_breadcrumb_trail
 		if($term->parent && $term->parent != $id)
 		{
 			//Figure out the rest of the term hiearchy via recursion
-			$this->term_parents($term->parent, $taxonomy);
+			$term = $this->term_parents($term->parent, $taxonomy);
 		}
+		return $term;
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -339,6 +348,7 @@ class bcn_breadcrumb_trail
 	 * This recursive functions fills the trail with breadcrumbs for parent posts/pages.
 	 * @param int $id The id of the parent page.
 	 * @param int $frontpage The id of the front page.
+	 * @return WP_Post The parent we stopped at
 	 */
 	protected function post_parents($id, $frontpage)
 	{
@@ -350,8 +360,9 @@ class bcn_breadcrumb_trail
 		if($parent->post_parent >= 0 && $parent->post_parent != false && $id != $parent->post_parent && $frontpage != $parent->post_parent)
 		{
 			//If valid, recursively call this function
-			$this->post_parents($parent->post_parent, $frontpage);
+			$parent = $this->post_parents($parent->post_parent, $frontpage);
 		}
+		return $parent;
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -614,6 +625,31 @@ class bcn_breadcrumb_trail
 		return $type->has_archive;
 	}
 	/**
+	 * A Breadcrumb Trail Filling Function
+	 * 
+	 * Deals with the post type archive and taxonomy archives
+	 * 
+	 * @param (WP_Post|WP_Taxonomy) $type The post or taxonomy to generate the archive breadcrumb for
+	 */
+	protected function type_archive($type)
+	{
+		global $wp_taxonomies;
+		//If this is a custom post type with a post type archive, add it
+		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
+		{
+			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post', 'post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
+		}
+		//Otherwise, if this is a custom taxonomy with an archive, add it
+		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
+		{
+			//We end up using the post type in several places, give it a variable
+			$post_type = $wp_taxonomies[$type->taxonomy]->object_type[0];
+			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
+		}
+	}
+	/**
 	 * This function populates our type_str and root_id variables
 	 * 
 	 * @param post $type A post object we are using to figureout the type
@@ -662,31 +698,6 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
-	 * A Breadcrumb Trail Filling Function
-	 * 
-	 * Deals with the post type archive and taxonomy archives
-	 * 
-	 * @param (WP_Post|WP_Taxonomy) $type The post or taxonomy to generate the archive breadcrumb for
-	 */
-	protected function do_type_archive($type)
-	{
-		global $wp_taxonomies;
-		//If this is a custom post type with a post type archive, add it
-		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
-		{
-			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post', 'post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
-		}
-		//Otherwise, if this is a custom taxonomy with an archive, add it
-		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
-		{
-			//We end up using the post type in several places, give it a variable
-			$post_type = $wp_taxonomies[$type->taxonomy]->object_type[0];
-			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
-		}
-	}
-	/**
 	 * A Breadcrumb Trail Filling Function 
 	 *
 	 * Handles only the root page stuff for post types, including the "page for posts"
@@ -710,8 +721,6 @@ class bcn_breadcrumb_trail
 		$type_str = '';
 		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
-		//Generate the archive 'root' for the particular type
-		$this->do_type_archive($type);
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
 		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
 		{

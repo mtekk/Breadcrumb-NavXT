@@ -21,6 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
+	const version = '5.1.0';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -45,7 +46,7 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function __construct($title = '', $template = '', $type = '', $url = NULL, $id = NULL)
+	public function __construct($title = '', $template = '', array $type = array(), $url = NULL, $id = NULL)
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
@@ -151,12 +152,14 @@ class bcn_breadcrumb
 		$this->type[] = $type;
 	}
 	/**
-	 * This function will intelligently trim the title to the value passed in through $max_length.
+	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
 	 * 
 	 * @param int $max_length of the title.
+	 * @deprecated since 5.2.0
 	 */
 	public function title_trim($max_length)
 	{
+		_deprecated_function(__FUNCTION__, '5.2.0');
 		//To preserve HTML entities, must decode before splitting
 		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
 		$title_length = mb_strlen($this->title);

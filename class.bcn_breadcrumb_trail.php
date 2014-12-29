@@ -629,7 +629,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * Deals with the post type archive and taxonomy archives
 	 * 
-	 * @param (WP_Post|WP_Taxonomy) $type The post or taxonomy to generate the archive breadcrumb for
+	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
 	 */
 	protected function type_archive($type)
 	{
@@ -644,7 +644,7 @@ class bcn_breadcrumb_trail
 		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
 		{
 			//We end up using the post type in several places, give it a variable
-			$post_type = $wp_taxonomies[$type->taxonomy]->object_type[0];
+			$post_type = apply_filters('bcn_type_archive_post_type', $wp_taxonomies[$type->taxonomy]->object_type[0]);
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($post_type)), $this->opt['Hpost_' . $post_type . '_template'], array('post', 'post-' . $post_type . '-archive'), get_post_type_archive_link($post_type)));
 		}
@@ -860,11 +860,23 @@ class bcn_breadcrumb_trail
 			{
 				$this->do_archive_by_term();
 			}
+			$this->type_archive($type);
 		}
 		//For 404 pages
 		else if(is_404())
 		{
 			$this->do_404();
+		}
+		else
+		{
+			//If we are here, there may have been problems detecting the type
+			$type = $wp_query->get_queried_object();
+			//If it looks, walks, and quacks like a taxonomy, treat is as one
+			if(isset($type->taxonomy))
+			{
+				$this->do_archive_by_term();
+				$this->type_archive($type);
+			}
 		}
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())

@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2007-2014  John Havlik  (email : john.havlik@mtekk.us)
+/*  Copyright 2007-2015  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
 */
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 //Do a PHP version check, require 5.2 or newer
-if(version_compare(phpversion(), '5.2.0', '<'))
+if(version_compare(phpversion(), '5.3.0', '<'))
 {
 	//Only purpose of this function is to echo out the PHP version error
 	function bcn_phpold()
 	{
-		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.2.0');
+		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.3.0');
 	}
 	//If we are in the admin, let's print a warning then return
 	if(is_admin())
@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '5.1.60';
+	const version = '5.2.0';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';

@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2009-2014  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2009-2015  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '5.1.0';
+	const version = '5.2.0';
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false);
 	//Default constructor
 	function __construct()

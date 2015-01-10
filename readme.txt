@@ -14,7 +14,16 @@ Breadcrumb NavXT, the successor to the popular WordPress plugin Breadcrumb Navig
 
 = PHP Requirements =
 Breadcrumb NavXT 5.2 and newer require PHP5.3
-Breadcrumb NavXT 5.1.1 and older require PHP5.2 
+Breadcrumb NavXT 5.1.1 and older require PHP5.2
+
+= Features (non-exhaustive) =
+* RDFa compatible breadcrumb generation.
+* Extensive breadcrumb customization control via a settings page with appropriate default values for most use cases.
+* Network admin settings page for managing breadcrumb settings for all subsites with [configurable global priority](http://mtekk.us/archives/guides/controlling-breadcrumb-navxt-settings-from-the-network-settings-page/ "Go to the article on configuring the network settings priority.").
+* Built in WordPress Widget.
+* Extensible via OOP and provided [actions](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/2/#action_reference "Go to the Breadcrumb NavXT Documentation's action reference.") and [filters](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/2/#filter_reference "Go to the Breadcrumb NavXT Documentation's filter reference.").
+* WPML compatible (enhanced compatibility with WPML extensions plugin).
+* bbPress compatible (enhanced compatibility with bbPress extension plugin).
 
 = Translations =
 
@@ -64,7 +73,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Changelog ==
 = 5.2.0 =
 * Deprecated: The Max Breadcrumb Length setting has been deprecated in favor of [using CSS styling to perform the length limiting](http://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/ "Go to the article presenting how to shorten the breadcrumb title length using CSS").
-* Behavior change: The archive page for a post type is now generated for the top ancestor post rather than for the current page when “post parent” is used as the post’s hierarchy.
+* Behavior change: The archive page for a post type is now generated for the top ancestor post rather than for the current page when "post parent" is used as the post's hierarchy.
 * Behavior change: Now requires PHP5.3 or newer.
 * New feature: Added `bcn_type_archive_post_type` filter.
 * New feature: Settings depending on another setting to be enabled are disabled when the dependency setting is disabled.

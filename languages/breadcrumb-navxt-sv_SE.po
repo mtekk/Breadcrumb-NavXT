@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-11-21 02:01:45+0000\n"
+"PO-Revision-Date: 2014-12-31 07:58:59+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,151 +10,232 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: class.bcn_network_admin.php:377
+#: class.bcn_admin.php:362 class.bcn_network_admin.php:432
+msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
+msgstr ""
+
+#: class.bcn_admin.php:362 class.bcn_admin.php:646
+#: class.bcn_network_admin.php:432 class.bcn_network_admin.php:716
+msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
+msgstr ""
+
+#: class.bcn_admin.php:417
+msgid "Blog Breadcrumb "
+msgstr ""
+
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
+msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
+msgstr ""
+
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
+msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
+msgstr ""
+
+#: class.bcn_admin.php:637 class.bcn_network_admin.php:707
+msgid "Deprecated"
+msgstr "Borttagen"
+
+#: class.bcn_admin.php:646 class.bcn_network_admin.php:716
+msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:379
+msgid "$post global is not of type WP_Post"
+msgstr ""
+
+#: includes/class.mtekk_adminkit.php:507
+msgid "Settings did not change, nothing to save."
+msgstr "Inställningarna ändrades inte, inget att spara."
+
+#: includes/class.mtekk_adminkit.php:511
+msgid "Settings were not saved."
+msgstr "Inställningarna sparades inte."
+
+#: class.bcn_admin.php:483 class.bcn_network_admin.php:553
+msgid "Attachments"
+msgstr "Bilagor"
+
+#: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
+#: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
+#: class.bcn_breadcrumb_trail.php:72 class.bcn_breadcrumb_trail.php:84
+#: class.bcn_breadcrumb_trail.php:96
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:111 class.bcn_breadcrumb_trail.php:116
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:128
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:132
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr ""
+
+#: class.bcn_network_admin.php:403
+msgid "Warning: Individual site settings will override any settings set in this page."
+msgstr ""
+
+#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
+msgid "Warning: Individual site settings may override any settings set in this page."
+msgstr ""
+
+#: class.bcn_widget.php:105
+msgid "Google (RDFa) Breadcrumbs"
+msgstr ""
+
+#: breadcrumb-navxt.php:256
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Gå till %title%.\" href=\"%link%\">%htitle%</a></span>"
+
+#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:64
+msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+
+#: class.bcn_admin.php:336 class.bcn_admin.php:350
+msgid "Warning: Your network settings will override any settings set in this page."
+msgstr "Varning: Din nätvärks inställning över skriver inställningar på denna sida."
+
+#: class.bcn_admin.php:340 class.bcn_admin.php:344
+msgid "Warning: Your network settings may override any settings set in this page."
+msgstr "Varning: Din nätvärks inställning kan skiva över inställningar på denna sida."
+
+#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
+msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
+msgstr ""
+
+#: class.bcn_network_admin.php:449
 msgid "Breadcrumb NavXT Network Settings"
 msgstr "Breadcrumb NavXT Nätverksinställningar"
+
+msgid "Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT"
+
+msgid "http://mtekk.us/code/breadcrumb-navxt/"
+msgstr "http://mtekk.us/code/breadcrumb-navxt/"
 
 msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
 msgstr "Lägger till en sökväg navigering visar besökarens väg till sin nuvarande plats. För information om hur du använder detta plugin besök <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
 
-#: class.bcn_admin.php:423 class.bcn_admin.php:500
-#: class.bcn_network_admin.php:491 class.bcn_network_admin.php:568
+msgid "John Havlik"
+msgstr "John Havlik"
+
+msgid "http://mtekk.us/"
+msgstr "http://mtekk.us/"
+
+#: class.bcn_admin.php:472 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
 msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
 msgstr "Hierarkin som länkstigen visar. Observera att \"Post Parent\" alternativet kan kräva ytterligare plugin för att bete sig som förväntat eftersom detta är en icke-hierarkisk posttyp."
 
-#: class.bcn_breadcrumb.php:67 class.bcn_breadcrumb_trail.php:49
-#: class.bcn_breadcrumb_trail.php:55 class.bcn_breadcrumb_trail.php:61
-#: class.bcn_breadcrumb_trail.php:75 class.bcn_breadcrumb_trail.php:87
-#: class.bcn_breadcrumb_trail.php:99
-msgid "<a title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Gå till %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: class.bcn_breadcrumb_trail.php:109
+#: class.bcn_breadcrumb_trail.php:106
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr "Sök resultat för &#39;<a title=\"Gå till första sidan för sökresultat av %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
-#: class.bcn_admin.php:321 class.bcn_network_admin.php:389
+#: class.bcn_admin.php:391 class.bcn_network_admin.php:461
 msgid "A collection of settings most likely to be modified are located under this tab."
 msgstr "En samling inställningar som mest sannolikt ändras finns under denna flik."
 
-#: class.bcn_admin.php:329 class.bcn_network_admin.php:397
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:711
 msgid "Title Length"
 msgstr "Titel längd"
 
-#: class.bcn_admin.php:334 class.bcn_network_admin.php:402
-msgid "Limit the length of the breadcrumb title."
-msgstr "Begränsa längden av brödspårs titeln."
-
-#: class.bcn_admin.php:377 class.bcn_network_admin.php:445
+#: class.bcn_admin.php:426 class.bcn_network_admin.php:496
 msgid "Mainsite Breadcrumb"
 msgstr "Huvudsidans brödspår"
 
-#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
 msgstr "Inställningarna för alla post typer (Inlägg, Sidor och egna post typer) finns under denna tabb."
 
-#: class.bcn_admin.php:389 class.bcn_network_admin.php:457
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "Post Types"
 msgstr "Post Typer"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
 msgid "Post Hierarchy Display"
 msgstr "Post hierarki visning"
 
-#: class.bcn_admin.php:399 class.bcn_network_admin.php:467
+#: class.bcn_admin.php:448 class.bcn_network_admin.php:518
 msgid "Post Hierarchy"
 msgstr "Post hierarki"
 
-#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
 msgid "%s Hierarchy Display"
 msgstr "%s Hierarki visning"
 
-#: class.bcn_admin.php:529 class.bcn_network_admin.php:597
+#: class.bcn_admin.php:583 class.bcn_network_admin.php:653
 msgid "Post Formats"
 msgstr "Post Format"
 
-#: class.bcn_admin.php:339 class.bcn_network_admin.php:407
+#: class.bcn_admin.php:651 class.bcn_network_admin.php:721
 msgid "Max Title Length: "
 msgstr "Max Titel längd"
 
-#: class.bcn_admin.php:390 class.bcn_network_admin.php:458
+#: class.bcn_admin.php:439 class.bcn_network_admin.php:509
 msgid "Posts"
 msgstr "Inlägg"
 
-#: class.bcn_admin.php:407 class.bcn_admin.php:476
-#: class.bcn_network_admin.php:475 class.bcn_network_admin.php:544
+#: class.bcn_admin.php:456 class.bcn_admin.php:530
+#: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
 msgid "Post Parent"
 msgstr "Inläggs förälder"
 
-#: class.bcn_admin.php:496 class.bcn_network_admin.php:564
+#: class.bcn_admin.php:550 class.bcn_network_admin.php:620
 msgid "The hierarchy which the breadcrumb trail will show."
 msgstr "Hierarkin som länkstigen visar."
 
-#: class.bcn_admin.php:471 class.bcn_network_admin.php:539
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:595
 msgid "%s Hierarchy"
 msgstr "%s Hierarki"
 
-#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
 msgstr "Inställningarna för alla taxonomier (inklusive Kategorier, taggar och anpassade taxonomier) är placerade under den här fliken."
 
-#: class.bcn_admin.php:514 class.bcn_network_admin.php:582
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "Taxonomies"
 msgstr "Taxonomier"
 
-#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "Post Format Template"
 msgstr "Inläggs formats mall"
 
-#: class.bcn_admin.php:532 class.bcn_network_admin.php:600
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "The template for post format breadcrumbs."
 msgstr "Mallen för post format länkstig."
 
-#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "Post Format Template (Unlinked)"
 msgstr "Post formats mall (olänkad)"
 
-#: class.bcn_admin.php:533 class.bcn_network_admin.php:601
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för post_format länkstigen som används endast när länkstigen inte är länkad."
 
-#: class.bcn_admin.php:563 class.bcn_network_admin.php:631
+#: class.bcn_admin.php:617 class.bcn_network_admin.php:687
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
 msgstr "Inställningarna för författare och datum arkiv, sökningar och 404 sidor finns under denna flik."
 
-#: class.bcn_admin.php:564 class.bcn_network_admin.php:632
+#: class.bcn_admin.php:618 class.bcn_network_admin.php:688
 msgid "Author Archives"
 msgstr "Författar arkiv"
 
-#: class.bcn_breadcrumb_trail.php:114 class.bcn_breadcrumb_trail.php:119
-msgid "<a title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Gå till %title% tagg arkivet.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: class.bcn_breadcrumb_trail.php:124
+#: class.bcn_breadcrumb_trail.php:121
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "Artiklar av: <a title=\"Gå till första sidan för %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: class.bcn_breadcrumb_trail.php:131
-msgid "<a title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Gå till %title% kategori arkiv.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: class.bcn_breadcrumb_trail.php:135
-msgid "<a title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "<a title=\"Gå till %title% arkiv.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:304
 msgid "Your settings are for a newer version."
 msgstr "Dina inställningar är för en nyare version."
 
-#: class.bcn_widget.php:96
+#: class.bcn_widget.php:98
 msgid "Text to show before the trail:"
 msgstr "Text som ska visas innan spåret:"
 
-#: class.bcn_widget.php:103
-msgid "Schema.org"
-msgstr "Schema.org"
-
-#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Gå till \"Breadcrumb NavXT\" översättnings projekt."
 
@@ -163,35 +244,35 @@ msgstr "Gå till \"Breadcrumb NavXT\" översättnings projekt."
 msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
 msgstr "Din PHP version är för gammal, vänligen uppdatera till en nyare version. Din version är %1$s, Breadcrumb NavXT kräver %2$s"
 
-#: class.bcn_widget.php:33
+#: class.bcn_widget.php:32
 msgid "Adds a breadcrumb trail to your sidebar"
 msgstr "Lägger till breadcrumb till din sidebar"
 
-#: class.bcn_widget.php:92
+#: class.bcn_widget.php:94
 msgid "Title:"
 msgstr "Titel:"
 
-#: class.bcn_widget.php:100
+#: class.bcn_widget.php:102
 msgid "Output trail as:"
 msgstr "Skriv ut breadcrumb som:"
 
-#: class.bcn_widget.php:102
+#: class.bcn_widget.php:104
 msgid "List"
 msgstr "Lista"
 
-#: class.bcn_widget.php:104
+#: class.bcn_widget.php:106
 msgid "Plain"
 msgstr "Simpel"
 
-#: class.bcn_widget.php:109
+#: class.bcn_widget.php:111
 msgid "Link the breadcrumbs"
 msgstr "Länka Breadcrumb"
 
-#: class.bcn_widget.php:111
+#: class.bcn_widget.php:113
 msgid "Reverse the order of the trail"
 msgstr "Omvänd ordning i breadcrumb"
 
-#: class.bcn_widget.php:113
+#: class.bcn_widget.php:115
 msgid "Hide the trail on the front page"
 msgstr "Göm spåret på förstasidan"
 
@@ -199,578 +280,562 @@ msgstr "Göm spåret på förstasidan"
 msgid "Insufficient privileges to proceed."
 msgstr "Otillräcklig privilegier för att fortsätta."
 
-#: class.bcn_admin.php:220 class.bcn_network_admin.php:288
+#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
 msgid "Tips for the settings are located below select options."
 msgstr "Tips för inställningarna finns under varje val."
 
-#: class.bcn_admin.php:221 class.bcn_network_admin.php:289
+#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
 msgid "Resources"
 msgstr "Resurser"
 
-#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sTutorials och guider%s: Det finns flera guider och tutorials tillgängliga på skaparens hemsida."
 
-#: class.bcn_admin.php:222 class.bcn_network_admin.php:290
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Gå till Breadcrumb NavXT tagg arkiv"
 
-#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sOnline dokumentation%s: Kolla dokumentationen för mer teknisk information."
 
-#: class.bcn_admin.php:223 class.bcn_network_admin.php:291
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Gå till Breadcrumb NavXT online dokumentation"
 
-#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%SRapportera en bug%s: Om du tror att du hittat en bug, var vänlig och inkludera WordPress version och detaljer hur man återskapar buggen"
 
-#: class.bcn_admin.php:224 class.bcn_network_admin.php:292
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Gå till Breadcrumb NavXT support och skicka din version."
 
-#: class.bcn_admin.php:225 class.bcn_network_admin.php:293
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
 msgid "Giving Back"
 msgstr "Ge tillbaka"
 
-#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%sDonera%s: Gillar du Breadcrumb NavXT och vill hjälpa utvecklingen? Överväg att köpa skaparen en öl. "
 
-#: class.bcn_admin.php:226 class.bcn_network_admin.php:294
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Gå till PayPal för att donera till Breadcrumb NavXT."
 
-#: class.bcn_admin.php:227 class.bcn_network_admin.php:295
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sÖversätt%s: Finns inte ditt språk? Kontakta John Havlik om översättning."
 
-#: class.bcn_admin.php:232 class.bcn_admin.php:321 class.bcn_admin.php:322
-#: class.bcn_network_admin.php:300 class.bcn_network_admin.php:389
-#: class.bcn_network_admin.php:390
+#: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
+#: class.bcn_network_admin.php:462
 msgid "General"
 msgstr "Allmänt"
 
-#: class.bcn_admin.php:235 class.bcn_network_admin.php:303
+#: class.bcn_admin.php:255 class.bcn_network_admin.php:326
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "För inställningarna på den här sidan att börja gälla måste du antingen använda den medföljande Breadcrumb NavXT widget, eller placera koden snutten nedan i ditt tema."
 
-#: class.bcn_admin.php:236 class.bcn_network_admin.php:304
+#: class.bcn_admin.php:256 class.bcn_network_admin.php:327
 msgid "Breadcrumb trail with separators"
 msgstr "Breadcrumb spår med separator"
 
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:310
+#: class.bcn_admin.php:262 class.bcn_network_admin.php:333
 msgid "Breadcrumb trail in list form"
 msgstr "Breadcrumb spår i list form"
 
-#: class.bcn_admin.php:251 class.bcn_network_admin.php:319
+#: class.bcn_admin.php:271 class.bcn_network_admin.php:342
 msgid "Quick Start"
 msgstr "Snabbstart"
 
-#: class.bcn_admin.php:254 class.bcn_network_admin.php:322
+#: class.bcn_admin.php:274 class.bcn_network_admin.php:345
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Vid användning av koden från \"Snabb start\" sektionen ovan, följande CSS kan användas som bas för att styla ditt breadcrumb spår."
 
-#: class.bcn_admin.php:266 class.bcn_network_admin.php:334
+#: class.bcn_admin.php:286 class.bcn_network_admin.php:357
 msgid "Styling"
 msgstr "Styling"
 
-#: class.bcn_admin.php:272 class.bcn_network_admin.php:340
+#: class.bcn_admin.php:292 class.bcn_network_admin.php:363
 msgid "Import/Export/Reset"
 msgstr "Importera/Exportera/Återställ"
 
-#: class.bcn_admin.php:296 class.bcn_network_admin.php:364
-#: includes/class.mtekk_adminkit.php:792
+#: class.bcn_admin.php:316 class.bcn_network_admin.php:387
+#: includes/class.mtekk_adminkit.php:808
 msgid "Import"
 msgstr "Importera"
 
-#: class.bcn_admin.php:297 class.bcn_network_admin.php:365
-#: includes/class.mtekk_adminkit.php:793
+#: class.bcn_admin.php:317 class.bcn_network_admin.php:388
+#: includes/class.mtekk_adminkit.php:809
 msgid "Export"
 msgstr "Exportera"
 
-#: class.bcn_admin.php:298 class.bcn_network_admin.php:366
-#: includes/class.mtekk_adminkit.php:794
+#: class.bcn_admin.php:318 class.bcn_network_admin.php:389
+#: includes/class.mtekk_adminkit.php:810
 msgid "Reset"
 msgstr "Återställ"
 
-#: class.bcn_admin.php:309
+#: class.bcn_admin.php:379
 msgid "Breadcrumb NavXT Settings"
 msgstr "Breadcrumb NavXT Inställningar"
 
-#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Breadcrumb Separator"
 msgstr "Breadcrumb separator"
 
-#: class.bcn_admin.php:325 class.bcn_network_admin.php:393
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Placed in between each breadcrumb."
 msgstr "Placeras i mellan varje breadcrumb."
 
-#: class.bcn_admin.php:359 class.bcn_admin.php:362
-#: class.bcn_network_admin.php:427 class.bcn_network_admin.php:430
+#: class.bcn_admin.php:408 class.bcn_admin.php:411
+#: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
 msgid "Home Breadcrumb"
 msgstr "Hem Breadcrumb"
 
-#: class.bcn_admin.php:362 class.bcn_network_admin.php:430
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:481
 msgid "Place the home breadcrumb in the trail."
 msgstr "Placera hem breadcrumb i spåret."
 
-#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "Home Template"
 msgstr "Hem mall"
 
-#: class.bcn_admin.php:363 class.bcn_network_admin.php:431
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "The template for the home breadcrumb."
 msgstr "Mallen för hem breadcrumb."
 
-#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "Home Template (Unlinked)"
 msgstr "Hem mall (olänkad)"
 
-#: class.bcn_admin.php:364 class.bcn_network_admin.php:432
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Mallen för hem breadcrumb, används när breadcrumb inte är länkat."
 
-#: class.bcn_admin.php:368 class.bcn_admin.php:371
-#: class.bcn_network_admin.php:436 class.bcn_network_admin.php:439
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
+#: class.bcn_network_admin.php:490
 msgid "Blog Breadcrumb"
 msgstr "Blogg breadcrumb"
 
-#: class.bcn_admin.php:371 class.bcn_network_admin.php:439
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:490
 msgid "Place the blog breadcrumb in the trail."
 msgstr "Placera blogg breadcrumb i spåret."
 
-#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "Blog Template"
 msgstr "Blogg mall"
 
-#: class.bcn_admin.php:372 class.bcn_network_admin.php:440
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "Mallen för blogg breadcrumb, används endast vid statisk framsida."
 
-#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "Blog Template (Unlinked)"
 msgstr "Blogg mall (olänkad)"
 
-#: class.bcn_admin.php:373 class.bcn_network_admin.php:441
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Mallen för blogg breadcrumb, används endast vid statisk framsida och när den inte är länkad."
 
-#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Main Site Breadcrumb"
 msgstr "Huvudsidans Breadcrumb"
 
-#: class.bcn_admin.php:380 class.bcn_network_admin.php:448
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Placera huvudsidans hem breadcrumb i spåret i en multisite."
 
-#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "Main Site Home Template"
 msgstr "Huvudsidans hem mall"
 
-#: class.bcn_admin.php:381 class.bcn_network_admin.php:449
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Mallen för huvudsidans hem breadcrumb, används endast i multisite."
 
-#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Huvudsidans hem mall (olänkad) "
 
-#: class.bcn_admin.php:382 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Mallen för huvudsidans hem breadcrumb, används endast i multisite och inte länkad."
 
-#: class.bcn_admin.php:350 class.bcn_network_admin.php:418
+#: class.bcn_admin.php:399 class.bcn_network_admin.php:469
 msgid "Current Item"
 msgstr "Nuvarande punkt"
 
-#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Link Current Item"
 msgstr "Länk Nuvarande punkt"
 
-#: class.bcn_admin.php:353 class.bcn_network_admin.php:421
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Yes"
 msgstr "Ja"
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Paged Breadcrumb"
 msgstr "Flersidig breadcrumb"
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Inkludera den paged breadcrumb i breadcrumb spåret."
 
-#: class.bcn_admin.php:354 class.bcn_network_admin.php:422
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Betyder att användaren är på en annan sida än den första på ett flersidigt inlägg / sida."
 
-#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "Paged Template"
 msgstr "Flersidig mall"
 
-#: class.bcn_admin.php:355 class.bcn_network_admin.php:423
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "The template for paged breadcrumbs."
 msgstr "Mallen för fler sido breadcrumbs."
 
-#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "Post Template"
 msgstr "Inläggs mall"
 
-#: class.bcn_admin.php:393 class.bcn_network_admin.php:461
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "The template for post breadcrumbs."
 msgstr "Mallen för inlägg breadcrumb."
 
-#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "Post Template (Unlinked)"
 msgstr "Inläggs mall (olänkad)"
 
-#: class.bcn_admin.php:394 class.bcn_network_admin.php:462
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för inläggs breadcrumbs, använd endast då den inte är länkad."
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:463
-msgid "Show the taxonomy leading to a post in the breadcrumb trail."
-msgstr "Visa den taxonomi som leder till ett inlägg i breadcrumb spåret."
-
-#: class.bcn_admin.php:403 class.bcn_admin.php:515
-#: class.bcn_network_admin.php:471 class.bcn_network_admin.php:583
+#: class.bcn_admin.php:452 class.bcn_admin.php:569
+#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
 msgid "Categories"
 msgstr "Kategorier"
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:453 class.bcn_network_admin.php:523
 msgid "Dates"
 msgstr "Datum"
 
-#: class.bcn_admin.php:405 class.bcn_admin.php:522
-#: class.bcn_network_admin.php:473 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:454 class.bcn_admin.php:576
+#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
 msgid "Tags"
 msgstr "Taggar"
 
-#: class.bcn_admin.php:427 class.bcn_network_admin.php:495
+#: class.bcn_admin.php:476 class.bcn_network_admin.php:546
 msgid "Pages"
 msgstr "Sidor"
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "Page Template"
 msgstr "Sidmall"
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "The template for page breadcrumbs."
 msgstr "Mallen för sido breadcrumbs."
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "Page Template (Unlinked)"
 msgstr "Sidmall (olänkad)"
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:499
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för sido breadcrumbs, endast då den inte är länkad."
 
-#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "Attachment Template"
 msgstr "bilags mall"
 
-#: class.bcn_admin.php:432 class.bcn_network_admin.php:500
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "The template for attachment breadcrumbs."
 msgstr "Mallen för attachments breadcrumbs."
 
-#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "Attachment Template (Unlinked)"
 msgstr "Bilags mall (olänkad)"
 
-#: class.bcn_admin.php:433 class.bcn_network_admin.php:501
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för attachments breadcrumbs, endast då den inte är länkad."
 
-#: breadcrumb-navxt.php:247
-msgid "<a title=\"Go to %title%.\" href=\"%link%\">%htitle%</a>"
-msgstr "<a title=\"Gå till %title%.\" href=\"%link%\">%htitle%</a>"
-
-#: breadcrumb-navxt.php:248 class.bcn_breadcrumb.php:63
-msgid "%htitle%"
-msgstr "%htitle%"
-
-#: class.bcn_admin.php:453 class.bcn_admin.php:553
-#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "%s Template"
 msgstr "%s mall"
 
-#: class.bcn_admin.php:453 class.bcn_admin.php:553
-#: class.bcn_network_admin.php:521 class.bcn_network_admin.php:621
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "The template for %s breadcrumbs."
 msgstr "Mallen för %s breadcrumbs."
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "%s Template (Unlinked)"
 msgstr "%s mall (olänkad)"
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:622
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för %s breadcrumb, används endast när den inte är länkad."
 
-#: class.bcn_admin.php:459 class.bcn_network_admin.php:527
+#: class.bcn_admin.php:513 class.bcn_network_admin.php:583
 msgid "%s Root Page"
 msgstr "%s rotsida"
 
-#: class.bcn_admin.php:462 class.bcn_network_admin.php:530
+#: class.bcn_admin.php:516 class.bcn_network_admin.php:586
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Välj &mdash;"
 
-#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "%s Archive Display"
 msgstr "%s arkiv visning"
 
-#: class.bcn_admin.php:466 class.bcn_network_admin.php:534
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Visa breadcrumb för %s post typs arkiv i breadcrumb spåret."
 
-#: class.bcn_admin.php:467 class.bcn_network_admin.php:535
-msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
-msgstr "Visa den taxonomi som leder till /s i breadcrumb spåret."
-
-#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "Category Template"
 msgstr "Kategori mall"
 
-#: class.bcn_admin.php:518 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "The template for category breadcrumbs."
 msgstr "Mallen för kategori breadcrumbs"
 
-#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "Category Template (Unlinked)"
 msgstr "Kategori mall (olänkad)"
 
-#: class.bcn_admin.php:519 class.bcn_network_admin.php:587
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för kategori breadcrumb, används endast då den inte är länkad."
 
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "Tag Template"
 msgstr "Tagg mall"
 
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:593
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "The template for tag breadcrumbs."
 msgstr "Mallen för tagg breadcrumbs."
 
-#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "Tag Template (Unlinked)"
 msgstr "Tagg mall (olänkad)"
 
-#: class.bcn_admin.php:526 class.bcn_network_admin.php:594
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för tagg breadcrumb, används endast när den inte är länkad."
 
-#: class.bcn_admin.php:563 class.bcn_admin.php:572
-#: class.bcn_network_admin.php:631 class.bcn_network_admin.php:640
+#: class.bcn_admin.php:617 class.bcn_admin.php:626
+#: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "Author Template"
 msgstr "Författar mall"
 
-#: class.bcn_admin.php:567 class.bcn_network_admin.php:635
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "The template for author breadcrumbs."
 msgstr "Mallen för kategori breadcrumbs"
 
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "Author Template (Unlinked)"
 msgstr "Författar mall (olänkad)"
 
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:636
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för författar breadcrumb, används endast när den inte är länkad."
 
-#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "Author Display Format"
 msgstr "Författar visnings format"
 
-#: class.bcn_admin.php:569 class.bcn_network_admin.php:637
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name använder namnet angett i \"Display name publicly as\" enligt användarprofilen andra motsvarar alternativ i användarens profil."
 
-#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "Date Template"
 msgstr "Datum mall"
 
-#: class.bcn_admin.php:575 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "The template for date breadcrumbs."
 msgstr "Mallen för datum breadcrumbs."
 
-#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "Date Template (Unlinked)"
 msgstr "Datum mall (olänkad)"
 
-#: class.bcn_admin.php:576 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Mallen för datum breadcrumb, används endast när den inte är länkad."
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "Search Template"
 msgstr "Sök mall"
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:645
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Länk mall för sök breadcrumb, används endast när sökresultaten täcker flera sidor."
 
-#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "Search Template (Unlinked)"
 msgstr "Sök mall (olänkad)"
 
-#: class.bcn_admin.php:578 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Mallen för sök breadcrumb, används endast när sökresultaten täcker flera sidor och den inte är länkad."
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:647
+#: class.bcn_admin.php:633 class.bcn_network_admin.php:703
 msgid "404 Title"
 msgstr "404 Titel"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "404 Template"
 msgstr "404 Mall"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "The template for 404 breadcrumbs."
 msgstr "Mallen för 404 breadcrumbs."
 
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:655
+#: class.bcn_admin.php:663 class.bcn_network_admin.php:733
 msgid "Save Changes"
 msgstr "Spara ändringar"
 
-#: includes/class.mtekk_adminkit.php:217
+#: includes/class.mtekk_adminkit.php:225
 msgid "Settings"
 msgstr "Inställningar"
 
-#: includes/class.mtekk_adminkit.php:287
+#: includes/class.mtekk_adminkit.php:295
 msgid "Your settings are out of date."
 msgstr "Dina inställningar är föråldrade."
 
-#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate the settings now."
 msgstr "Migrera inställningarna nu."
 
-#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate now."
 msgstr "Migrera nu."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin install is incomplete."
 msgstr "Installationen är inte klar."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Load default settings now."
 msgstr "Ladda default inställningarna nu."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Complete now."
 msgstr "Färdigställ nu."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Your plugin settings are invalid."
 msgstr "Dina inställningar är ogiltiga."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Attempt to fix settings now."
 msgstr "Försök fixa inställningarna nu."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Fix now."
 msgstr "Fixa nu."
 
-#: includes/class.mtekk_adminkit.php:490
+#: includes/class.mtekk_adminkit.php:503
 msgid "Settings successfully saved."
 msgstr "Inställningarna sparade."
 
-#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
 msgid "Undo the options save."
 msgstr "Ångra sparade inställningar."
 
-#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
-#: includes/class.mtekk_adminkit.php:600 includes/class.mtekk_adminkit.php:624
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
+#: includes/class.mtekk_adminkit.php:621 includes/class.mtekk_adminkit.php:645
+#: includes/class.mtekk_adminkit.php:662
 msgid "Undo"
 msgstr "Ångra"
 
-#: includes/class.mtekk_adminkit.php:495
+#: includes/class.mtekk_adminkit.php:516
 msgid "Some settings were not saved."
 msgstr "Vissa inställningar sparades inte."
 
-#: includes/class.mtekk_adminkit.php:496
+#: includes/class.mtekk_adminkit.php:517
 msgid "The following settings were not saved:"
 msgstr "Följande inställningar sparades inte:"
 
-#: includes/class.mtekk_adminkit.php:501
+#: includes/class.mtekk_adminkit.php:522
 msgid "Please include this message in your %sbug report%s."
 msgstr "Var vänlig och inkludera detta meddelande i din %sbug rapport%s."
 
-#: includes/class.mtekk_adminkit.php:501
+#: includes/class.mtekk_adminkit.php:522
 msgid "Go to the %s support post for your version."
 msgstr "Gå till %s support och skicka din version."
 
-#: includes/class.mtekk_adminkit.php:600
+#: includes/class.mtekk_adminkit.php:621
 msgid "Settings successfully imported from the uploaded file."
 msgstr "Inställningarna importerades framgångsrikt från filen."
 
-#: includes/class.mtekk_adminkit.php:600
+#: includes/class.mtekk_adminkit.php:621
 msgid "Undo the options import."
 msgstr "Ångra inställnings importeringen."
 
-#: includes/class.mtekk_adminkit.php:605
+#: includes/class.mtekk_adminkit.php:626
 msgid "Importing settings from file failed."
 msgstr "Importering av inställningar från fil misslyckades."
 
-#: includes/class.mtekk_adminkit.php:624
+#: includes/class.mtekk_adminkit.php:645
 msgid "Settings successfully reset to the default values."
 msgstr "Inställningarna återställdes till standardvärdena."
 
-#: includes/class.mtekk_adminkit.php:624
+#: includes/class.mtekk_adminkit.php:645
 msgid "Undo the options reset."
 msgstr "Ångra inställnings återställningen."
 
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:662
 msgid "Settings successfully undid the last operation."
 msgstr "Inställningarna ogjorde framgångsrikt den senaste åtgärden."
 
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:662
 msgid "Undo the last undo operation."
 msgstr "Ångra senaste operationen."
 
-#: includes/class.mtekk_adminkit.php:676
+#: includes/class.mtekk_adminkit.php:697
 msgid "Settings successfully migrated."
 msgstr "Inställningarna har migrerats."
 
-#: includes/class.mtekk_adminkit.php:683
+#: includes/class.mtekk_adminkit.php:704
 msgid "Default settings successfully installed."
 msgstr "Default inställningarna sparade."
 
-#: includes/class.mtekk_adminkit.php:784
+#: includes/class.mtekk_adminkit.php:800
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
 msgstr "Importera inställningar från en XML-fil, exportera de aktuella inställningarna till en XML-fil, eller återställ till standard inställningar."
 
-#: includes/class.mtekk_adminkit.php:787
+#: includes/class.mtekk_adminkit.php:803
 msgid "Settings File"
 msgstr "Inställnings fil"
 
-#: includes/class.mtekk_adminkit.php:790
+#: includes/class.mtekk_adminkit.php:806
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Välj en XML inställnings fil att ladda upp och importera inställningar från."
 
-#: class.bcn_breadcrumb_trail.php:82
+#: class.bcn_breadcrumb_trail.php:79
 msgid "Page %htitle%"
 msgstr "Sid %htitle%"
 
-#: class.bcn_breadcrumb_trail.php:106
+#: class.bcn_breadcrumb_trail.php:103
 msgid "404"
 msgstr "404"
 
-#: class.bcn_breadcrumb_trail.php:111
+#: class.bcn_breadcrumb_trail.php:108
 msgid "Search results for &#39;%htitle%&#39;"
 msgstr "Sök resultat för &#39;%htitle%&#39;"
 
-#: class.bcn_breadcrumb_trail.php:126
+#: class.bcn_breadcrumb_trail.php:123
 msgid "Articles by: %htitle%"
 msgstr "Inlägg av: %htitle%"

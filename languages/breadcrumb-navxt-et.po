@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-06-04 18:10:49+0000\n"
+"PO-Revision-Date: 2015-01-04 10:59:13+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,34 +10,75 @@ msgstr ""
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
-#: class.bcn_admin.php:492 class.bcn_network_admin.php:559
+#: class.bcn_admin.php:362 class.bcn_network_admin.php:432
+msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
+msgstr "Hoiatus: Kasutad taunitud määrangut \"Pealkirja pikkus\" (vaata Muud &gt; Taunitud), palun %1$suse CSS asemel%2$s."
+
+#: class.bcn_admin.php:362 class.bcn_admin.php:646
+#: class.bcn_network_admin.php:432 class.bcn_network_admin.php:716
+msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
+msgstr "Mine juhendi juurde, mis selgitab teekonna raja pealkirjade kärpimist CSS-i abil"
+
+#: class.bcn_admin.php:417
+msgid "Blog Breadcrumb "
+msgstr "Blog Breadcrumb"
+
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
+msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
+msgstr "Kuva hierarhia (selgitatud allpool), mis viib postitusele teekonna raja jäljes."
+
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
+msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
+msgstr "Kuva hierarhia (selgitatud allpool), mis viib %s juurde teekonna raja jäljes."
+
+#: class.bcn_admin.php:637 class.bcn_network_admin.php:707
+msgid "Deprecated"
+msgstr "Taunitud"
+
+#: class.bcn_admin.php:646 class.bcn_network_admin.php:716
+msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
+msgstr "Piira teekonna raja pealkirja pikkust. (Taunitud, %suse CSS-i asemel%s)"
+
+#: class.bcn_breadcrumb_trail.php:379
+msgid "$post global is not of type WP_Post"
+msgstr "$post global ei ole WP_Post tüüp"
+
+#: includes/class.mtekk_adminkit.php:507
+msgid "Settings did not change, nothing to save."
+msgstr "Seadistusi ei salvestatud, polnud midagi salvestada."
+
+#: includes/class.mtekk_adminkit.php:511
+msgid "Settings were not saved."
+msgstr "Seadistusi ei salvestatud."
+
+#: class.bcn_admin.php:483 class.bcn_network_admin.php:553
 msgid "Attachments"
 msgstr "Manused"
 
-#: class.bcn_breadcrumb.php:67 class.bcn_breadcrumb_trail.php:49
-#: class.bcn_breadcrumb_trail.php:55 class.bcn_breadcrumb_trail.php:61
-#: class.bcn_breadcrumb_trail.php:75 class.bcn_breadcrumb_trail.php:87
-#: class.bcn_breadcrumb_trail.php:99
+#: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
+#: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
+#: class.bcn_breadcrumb_trail.php:72 class.bcn_breadcrumb_trail.php:84
+#: class.bcn_breadcrumb_trail.php:96
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Mine artiklile %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 
-#: class.bcn_breadcrumb_trail.php:114 class.bcn_breadcrumb_trail.php:119
+#: class.bcn_breadcrumb_trail.php:111 class.bcn_breadcrumb_trail.php:116
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Mine sildiarhiivile %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 
-#: class.bcn_breadcrumb_trail.php:131
+#: class.bcn_breadcrumb_trail.php:128
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Mine rubriigiarhiivile %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 
-#: class.bcn_breadcrumb_trail.php:135
+#: class.bcn_breadcrumb_trail.php:132
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Mine arhiivile %title%\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
 
-#: class.bcn_network_admin.php:401
+#: class.bcn_network_admin.php:403
 msgid "Warning: Individual site settings will override any settings set in this page."
 msgstr "Hoiatus: Eraldiseisvad saidi seaded kirjutavad üle kõik sellel lehel tehtud seadistused."
 
-#: class.bcn_network_admin.php:409 class.bcn_network_admin.php:413
+#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
 msgid "Warning: Individual site settings may override any settings set in this page."
 msgstr "Hoiatus: Eraldiseisvad saidi seaded võivad kirjutada üle kõik sellel lehel tehtud seadistused."
 
@@ -49,27 +90,23 @@ msgstr "Google (RDFa) teekonnarada"
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Mine artiklile %title%.\" href=\"%link%\">%htitle%</a></span>"
 
-#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:63
+#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:64
 msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
 msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
 
-#: breadcrumb_navxt_admin.php:35
-msgid "Breadcrumb NavXT was just updated from a pre-5.0 version, please go to your plugins page and activate \"Breadcrumb NavXT\". Also, deactivate the \"Breadcrumb NavXT 5.0 Migration Compatibility Layer\" plugin to make this message disappear."
-msgstr "Breadcrumb NavXT uuendati just pre-5.0 versioonilt. Palun mine oma pluginate lehele ja aktiveeri \"Breadcrumb NavXT\". Samuti deaktiveeri plugin \"Breadcrumb NavXT 5.0 Migration Compatibility Layer\", et see sõnum kaoks."
-
-#: class.bcn_admin.php:337 class.bcn_admin.php:351
+#: class.bcn_admin.php:336 class.bcn_admin.php:350
 msgid "Warning: Your network settings will override any settings set in this page."
 msgstr "Hoiatus: Sinu võrguseaded kirjutavad üle kõik sellel lehel tehtud seadistused."
 
-#: class.bcn_admin.php:341 class.bcn_admin.php:345
+#: class.bcn_admin.php:340 class.bcn_admin.php:344
 msgid "Warning: Your network settings may override any settings set in this page."
 msgstr "Hoiatus: Sinu võrguseaded võivad kirjutada üle kõik sellel lehel tehtud seadistused."
 
-#: class.bcn_admin.php:350 class.bcn_network_admin.php:418
+#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
 msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
 msgstr "Hoiatus: Ei leitud BCN_SETTINGS_* defineeritud avaldusi, taastan BCN_SETTINGS_FAVOR_NETWORK vaikeseaded."
 
-#: class.bcn_network_admin.php:434
+#: class.bcn_network_admin.php:449
 msgid "Breadcrumb NavXT Network Settings"
 msgstr "Breadcrumb NavXT võrgu seaded"
 
@@ -88,113 +125,109 @@ msgstr "John Havlik"
 msgid "http://mtekk.us/"
 msgstr "http://mtekk.us/"
 
-#: class.bcn_admin.php:481 class.bcn_admin.php:563
-#: class.bcn_network_admin.php:548 class.bcn_network_admin.php:630
+#: class.bcn_admin.php:472 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
 msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
 msgstr "Hierarhia, mida teekonna rada kuvab. Pane tähele, et valik \"Postituse vanem\" võib vajada täiendavat pluginat, et käituda ootuspäraselt, sest see on mitte-hierarhiline postiruse tüüp."
 
-#: class.bcn_breadcrumb_trail.php:109
+#: class.bcn_breadcrumb_trail.php:106
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 msgstr "Otsingu tulemused &#39;<a title=\"Mine esimesele otsingutulemuse lehele %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
-#: class.bcn_admin.php:379 class.bcn_network_admin.php:446
+#: class.bcn_admin.php:391 class.bcn_network_admin.php:461
 msgid "A collection of settings most likely to be modified are located under this tab."
 msgstr "Seaded, mida peamiselt on vaja muuta, asuvad selle kaardi all."
 
-#: class.bcn_admin.php:387 class.bcn_network_admin.php:454
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:711
 msgid "Title Length"
 msgstr "Pealkirja pikkus"
 
-#: class.bcn_admin.php:392 class.bcn_network_admin.php:459
-msgid "Limit the length of the breadcrumb title."
-msgstr "Piira teekonna raja pealkirja pikkust"
-
-#: class.bcn_admin.php:435 class.bcn_network_admin.php:502
+#: class.bcn_admin.php:426 class.bcn_network_admin.php:496
 msgid "Mainsite Breadcrumb"
 msgstr "Pealehe teekonna rada"
 
-#: class.bcn_admin.php:447 class.bcn_network_admin.php:514
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
 msgstr "Kõikide postituste tüüpide seaded (postitused, lehed, kohandatud postituse tüübid) asuvad selle kaardi all."
 
-#: class.bcn_admin.php:447 class.bcn_network_admin.php:514
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "Post Types"
 msgstr "Postituse tüübid"
 
-#: class.bcn_admin.php:453 class.bcn_network_admin.php:520
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
 msgid "Post Hierarchy Display"
 msgstr "Postituse hierarhia kuvamine"
 
-#: class.bcn_admin.php:457 class.bcn_network_admin.php:524
+#: class.bcn_admin.php:448 class.bcn_network_admin.php:518
 msgid "Post Hierarchy"
 msgstr "Postituse hierarhia"
 
-#: class.bcn_admin.php:530 class.bcn_network_admin.php:597
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
 msgid "%s Hierarchy Display"
 msgstr "%s hierarhia kuvamine"
 
-#: class.bcn_admin.php:592 class.bcn_network_admin.php:659
+#: class.bcn_admin.php:583 class.bcn_network_admin.php:653
 msgid "Post Formats"
 msgstr "Postituse formaadid"
 
-#: class.bcn_admin.php:397 class.bcn_network_admin.php:464
+#: class.bcn_admin.php:651 class.bcn_network_admin.php:721
 msgid "Max Title Length: "
 msgstr "Lubatud pealkirja pikkus"
 
-#: class.bcn_admin.php:448 class.bcn_network_admin.php:515
+#: class.bcn_admin.php:439 class.bcn_network_admin.php:509
 msgid "Posts"
 msgstr "Postitused"
 
-#: class.bcn_admin.php:465 class.bcn_admin.php:539
-#: class.bcn_network_admin.php:532 class.bcn_network_admin.php:606
+#: class.bcn_admin.php:456 class.bcn_admin.php:530
+#: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
 msgid "Post Parent"
 msgstr "Postituse vanem"
 
-#: class.bcn_admin.php:559 class.bcn_network_admin.php:626
+#: class.bcn_admin.php:550 class.bcn_network_admin.php:620
 msgid "The hierarchy which the breadcrumb trail will show."
 msgstr "Hierarhia, mida teekonna rada kuvab"
 
-#: class.bcn_admin.php:534 class.bcn_network_admin.php:601
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:595
 msgid "%s Hierarchy"
 msgstr "%s hierarhia"
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
 msgstr "Süstemaatikate seaded (sh Rubriigid, Sildid ja kohandatud süstemaatikad) asuvad selle kaardi all."
 
-#: class.bcn_admin.php:577 class.bcn_network_admin.php:644
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "Taxonomies"
 msgstr "Süstemaatikad"
 
-#: class.bcn_admin.php:595 class.bcn_network_admin.php:662
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "Post Format Template"
 msgstr "Postituse formaadi templiit"
 
-#: class.bcn_admin.php:595 class.bcn_network_admin.php:662
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "The template for post format breadcrumbs."
 msgstr "Teekonna raja postituse formaadi templiit."
 
-#: class.bcn_admin.php:596 class.bcn_network_admin.php:663
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "Post Format Template (Unlinked)"
 msgstr "Postituse formaadi templiit (linkimata)"
 
-#: class.bcn_admin.php:596 class.bcn_network_admin.php:663
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "post_format teekonna raja templiit, kasutatakse ainult siis, kui teekonna rada ei ole lingitud."
 
-#: class.bcn_admin.php:626 class.bcn_network_admin.php:693
+#: class.bcn_admin.php:617 class.bcn_network_admin.php:687
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
 msgstr "Autori ja kuupäeva arhiivi, otsingute, 404 lehtede seaded asuvad selle kaardi all."
 
-#: class.bcn_admin.php:627 class.bcn_network_admin.php:694
+#: class.bcn_admin.php:618 class.bcn_network_admin.php:688
 msgid "Author Archives"
 msgstr "Autori arhiiv"
 
-#: class.bcn_breadcrumb_trail.php:124
+#: class.bcn_breadcrumb_trail.php:121
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 msgstr "Artiklid: <a title=\"Mine esimesele postituste lehele %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
-#: includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:304
 msgid "Your settings are for a newer version."
 msgstr "Sinu seaded on uuema versiooni jaoks."
 
@@ -202,7 +235,7 @@ msgstr "Sinu seaded on uuema versiooni jaoks."
 msgid "Text to show before the trail:"
 msgstr "Tekst, mida kuvada enne teekonna rada"
 
-#: class.bcn_admin.php:250 class.bcn_network_admin.php:318
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "Go to the Breadcrumb NavXT translation project."
 msgstr "Breadcrumb NavXT tõlke projekt."
 
@@ -211,7 +244,7 @@ msgstr "Breadcrumb NavXT tõlke projekt."
 msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
 msgstr "Sinu PHP versioon on liiga vana. Palun uuenda seda. Sinu versioon on %1$s, Breadcrumb NavXT nõuab versiooni %2$s"
 
-#: class.bcn_widget.php:34
+#: class.bcn_widget.php:32
 msgid "Adds a breadcrumb trail to your sidebar"
 msgstr "Lisa teekonna rada äärepaanile"
 
@@ -247,570 +280,562 @@ msgstr "Peida rada avalehel"
 msgid "Insufficient privileges to proceed."
 msgstr "Puuduvad õigused, et jätkata."
 
-#: class.bcn_admin.php:243 class.bcn_network_admin.php:311
+#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
 msgid "Tips for the settings are located below select options."
 msgstr "Seadete näpunäited paiknevad valikute all."
 
-#: class.bcn_admin.php:244 class.bcn_network_admin.php:312
+#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
 msgid "Resources"
 msgstr "Vahendid"
 
-#: class.bcn_admin.php:245 class.bcn_network_admin.php:313
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
 msgstr "%sJuhendid ja õpetused%s: Mitmeid juhendeid ja õpetusi leiate autori veebilehelt."
 
-#: class.bcn_admin.php:245 class.bcn_network_admin.php:313
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "Go to the Breadcrumb NavXT tag archive."
 msgstr "Mine Breadcrumb NavXT sildi arhiivi."
 
-#: class.bcn_admin.php:246 class.bcn_network_admin.php:314
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
 msgstr "%sOnline dokumentatsioon%s: Uurige sügavuti tehnilise teabe dokumentatsiooni."
 
-#: class.bcn_admin.php:246 class.bcn_network_admin.php:314
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "Go to the Breadcrumb NavXT online documentation"
 msgstr "Mine Breadcrumb NavXT online dokumentatsiooni lehele"
 
-#: class.bcn_admin.php:247 class.bcn_network_admin.php:315
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
 msgstr "%sRaporteeri vigadest%s: Kui sa arvad, et oled leidnud vea, siis lisa oma Wordpressi versiooni number ja detailne kirjeldus, kuidas viga esile kutsuda."
 
-#: class.bcn_admin.php:247 class.bcn_network_admin.php:315
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "Go to the Breadcrumb NavXT support post for your version."
 msgstr "Mine Breadcrumb NavXT oma versiooni tugi postitusse."
 
-#: class.bcn_admin.php:248 class.bcn_network_admin.php:316
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
 msgid "Giving Back"
 msgstr "Tagasiandmine"
 
-#: class.bcn_admin.php:249 class.bcn_network_admin.php:317
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
 msgstr "%sAnneta%s: Sulle meeldib Breadcrumb NavXT ja soovid toetada selle arendust? Kaaluge autorile õlle ostmist."
 
-#: class.bcn_admin.php:249 class.bcn_network_admin.php:317
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
 msgstr "Mine PayPal lehele, et sooritada annetud Breadcrumb NavXT autorile."
 
-#: class.bcn_admin.php:250 class.bcn_network_admin.php:318
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sTõlgi%s: Kas sinu keel ei ole saadaval? Kontakteeru John Havlikuga."
 
-#: class.bcn_admin.php:255 class.bcn_admin.php:379 class.bcn_admin.php:380
-#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:446
-#: class.bcn_network_admin.php:447
+#: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
+#: class.bcn_network_admin.php:462
 msgid "General"
 msgstr "Peamine"
 
-#: class.bcn_admin.php:258 class.bcn_network_admin.php:326
+#: class.bcn_admin.php:255 class.bcn_network_admin.php:326
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
 msgstr "Selleks, et sinu veebilehel need seaded jõustuksid, pead sa kas kasutama Breadcrumb NavXT pluginat või lisa allolevad koodiread oma teemasse."
 
-#: class.bcn_admin.php:259 class.bcn_network_admin.php:327
+#: class.bcn_admin.php:256 class.bcn_network_admin.php:327
 msgid "Breadcrumb trail with separators"
 msgstr "Teekonna rada koos eraldajatega"
 
-#: class.bcn_admin.php:265 class.bcn_network_admin.php:333
+#: class.bcn_admin.php:262 class.bcn_network_admin.php:333
 msgid "Breadcrumb trail in list form"
 msgstr "Teekonna rada nimekirja formaadis"
 
-#: class.bcn_admin.php:274 class.bcn_network_admin.php:342
+#: class.bcn_admin.php:271 class.bcn_network_admin.php:342
 msgid "Quick Start"
 msgstr "Kiire alustamine"
 
-#: class.bcn_admin.php:277 class.bcn_network_admin.php:345
+#: class.bcn_admin.php:274 class.bcn_network_admin.php:345
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
 msgstr "Kasutades koodi Kiire alustamise sektsioonist, kasutatakse järgnevat CSSi baas stiilina sinu teekonna raja puhul."
 
-#: class.bcn_admin.php:289 class.bcn_network_admin.php:357
+#: class.bcn_admin.php:286 class.bcn_network_admin.php:357
 msgid "Styling"
 msgstr "Stiil"
 
-#: class.bcn_admin.php:295 class.bcn_network_admin.php:363
+#: class.bcn_admin.php:292 class.bcn_network_admin.php:363
 msgid "Import/Export/Reset"
 msgstr "Import/Eksport/Lähtestamine"
 
-#: class.bcn_admin.php:319 class.bcn_network_admin.php:387
-#: includes/class.mtekk_adminkit.php:787
+#: class.bcn_admin.php:316 class.bcn_network_admin.php:387
+#: includes/class.mtekk_adminkit.php:808
 msgid "Import"
 msgstr "Import"
 
-#: class.bcn_admin.php:320 class.bcn_network_admin.php:388
-#: includes/class.mtekk_adminkit.php:788
+#: class.bcn_admin.php:317 class.bcn_network_admin.php:388
+#: includes/class.mtekk_adminkit.php:809
 msgid "Export"
 msgstr "Eksport"
 
-#: class.bcn_admin.php:321 class.bcn_network_admin.php:389
-#: includes/class.mtekk_adminkit.php:789
+#: class.bcn_admin.php:318 class.bcn_network_admin.php:389
+#: includes/class.mtekk_adminkit.php:810
 msgid "Reset"
 msgstr "Lähtestamine"
 
-#: class.bcn_admin.php:367
+#: class.bcn_admin.php:379
 msgid "Breadcrumb NavXT Settings"
 msgstr "Breadcrumb NavXT seaded"
 
-#: class.bcn_admin.php:383 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Breadcrumb Separator"
 msgstr "Teekonna raja eraldaja"
 
-#: class.bcn_admin.php:383 class.bcn_network_admin.php:450
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Placed in between each breadcrumb."
 msgstr "Paigutatakse iga teekonna elemendi vahele"
 
-#: class.bcn_admin.php:417 class.bcn_admin.php:420
-#: class.bcn_network_admin.php:484 class.bcn_network_admin.php:487
+#: class.bcn_admin.php:408 class.bcn_admin.php:411
+#: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
 msgid "Home Breadcrumb"
 msgstr "Avalehe rada"
 
-#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:481
 msgid "Place the home breadcrumb in the trail."
 msgstr "Lisa avaleht teekonna rajale"
 
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:488
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "Home Template"
 msgstr "Avalehe mall"
 
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:488
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "The template for the home breadcrumb."
 msgstr "Avalehe teekonna raja mall."
 
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:489
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "Home Template (Unlinked)"
 msgstr "Avalehe mall (ei ole lingitud)"
 
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:489
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
 msgstr "Avalehe teekonna raja mall. Kasutatakse kui teekonna rada ei ole lingitav."
 
-#: class.bcn_admin.php:426 class.bcn_admin.php:429
-#: class.bcn_network_admin.php:493 class.bcn_network_admin.php:496
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
+#: class.bcn_network_admin.php:490
 msgid "Blog Breadcrumb"
 msgstr "Blogi teekonna rada"
 
-#: class.bcn_admin.php:429 class.bcn_network_admin.php:496
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:490
 msgid "Place the blog breadcrumb in the trail."
 msgstr "Aseta blogi teekond rajale."
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:497
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "Blog Template"
 msgstr "Blogi teekonna rada"
 
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:497
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "The template for the blog breadcrumb, used only in static front page environments."
 msgstr "Blogi teekonna raja mall. Kasutatakse ainult staatilise avalehe puhul."
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "Blog Template (Unlinked)"
 msgstr "Blogi mall (linkimata)"
 
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:498
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
 msgstr "Blogi teekonna raja mall, mida kasutatakse ainult staatilise avalehe puhul ja siis kui teekonna rada ei ole lingitud."
 
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:505
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Main Site Breadcrumb"
 msgstr "Peamise saidi teekonna rada"
 
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:505
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
 msgstr "Aseta peamise saidi avalehe teekond rajale mitmiksaidi seadetes."
 
-#: class.bcn_admin.php:439 class.bcn_network_admin.php:506
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "Main Site Home Template"
 msgstr "Peamise saidi avalehe mall"
 
-#: class.bcn_admin.php:439 class.bcn_network_admin.php:506
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
 msgstr "Peamise saidi avalehe mall, mida kasutatakse ainult mitmiksaidi puhul."
 
-#: class.bcn_admin.php:440 class.bcn_network_admin.php:507
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "Main Site Home Template (Unlinked)"
 msgstr "Peamise saidi avalehe mall (linkimata)"
 
-#: class.bcn_admin.php:440 class.bcn_network_admin.php:507
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
 msgstr "Peamise saidi avalehe mall, mida kasutatakse ainult mitmiksaitide puhul ja siis kui teekonna rada ei ole lingitud."
 
-#: class.bcn_admin.php:408 class.bcn_network_admin.php:475
+#: class.bcn_admin.php:399 class.bcn_network_admin.php:469
 msgid "Current Item"
 msgstr "Avatud element"
 
-#: class.bcn_admin.php:411 class.bcn_network_admin.php:478
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Link Current Item"
 msgstr "Lingi avatud element"
 
-#: class.bcn_admin.php:411 class.bcn_network_admin.php:478
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Yes"
 msgstr "Jah"
 
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Paged Breadcrumb"
 msgstr "Lehekülgedele jaotatud teekonna rada"
 
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Lisa lehekülgedele jaotatud rada teekonna rajale"
 
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:479
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Osutab, et kasutaja on lehele, mis ei ole esimene leht jaotatud postituste/lehtedel"
 
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:480
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "Paged Template"
 msgstr "Jaotatud mall"
 
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:480
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "The template for paged breadcrumbs."
 msgstr "Lehekülgedele jaotatud teekonna raja mall."
 
-#: class.bcn_admin.php:451 class.bcn_network_admin.php:518
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "Post Template"
 msgstr "Postituste mall"
 
-#: class.bcn_admin.php:451 class.bcn_network_admin.php:518
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "The template for post breadcrumbs."
 msgstr "Postituste teekonna raja mall"
 
-#: class.bcn_admin.php:452 class.bcn_network_admin.php:519
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "Post Template (Unlinked)"
 msgstr "Postituste mall (linkimata)"
 
-#: class.bcn_admin.php:452 class.bcn_network_admin.php:519
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Postituste teekonna raja mall. Kasutatakse ainult siis kui teekonna rada on linkimata."
 
-#: class.bcn_admin.php:453 class.bcn_network_admin.php:520
-msgid "Show the taxonomy leading to a post in the breadcrumb trail."
-msgstr "Kuva postitusele viivat teekonna raja süstemaatikat."
-
-#: class.bcn_admin.php:461 class.bcn_admin.php:578
-#: class.bcn_network_admin.php:528 class.bcn_network_admin.php:645
+#: class.bcn_admin.php:452 class.bcn_admin.php:569
+#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
 msgid "Categories"
 msgstr "Kategooriad"
 
-#: class.bcn_admin.php:462 class.bcn_network_admin.php:529
+#: class.bcn_admin.php:453 class.bcn_network_admin.php:523
 msgid "Dates"
 msgstr "Kuupäevad"
 
-#: class.bcn_admin.php:463 class.bcn_admin.php:585
-#: class.bcn_network_admin.php:530 class.bcn_network_admin.php:652
+#: class.bcn_admin.php:454 class.bcn_admin.php:576
+#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
 msgid "Tags"
 msgstr "Sildid"
 
-#: class.bcn_admin.php:485 class.bcn_network_admin.php:552
+#: class.bcn_admin.php:476 class.bcn_network_admin.php:546
 msgid "Pages"
 msgstr "Lehed"
 
-#: class.bcn_admin.php:488 class.bcn_network_admin.php:555
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "Page Template"
 msgstr "Lehe mall"
 
-#: class.bcn_admin.php:488 class.bcn_network_admin.php:555
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "The template for page breadcrumbs."
 msgstr "Mall lehe teekonna raja jaoks."
 
-#: class.bcn_admin.php:489 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "Page Template (Unlinked)"
 msgstr "Lehe mall (linkimata)"
 
-#: class.bcn_admin.php:489 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Lehe teekonna raja mall. Kasutatakse ainult siis, kui teekonna rada on linkimata."
 
-#: class.bcn_admin.php:495 class.bcn_network_admin.php:562
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "Attachment Template"
 msgstr "Manuse mall"
 
-#: class.bcn_admin.php:495 class.bcn_network_admin.php:562
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "The template for attachment breadcrumbs."
 msgstr "Manuse teekonna raja mall."
 
-#: class.bcn_admin.php:496 class.bcn_network_admin.php:563
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "Attachment Template (Unlinked)"
 msgstr "Manuse mall (linkimata)"
 
-#: class.bcn_admin.php:496 class.bcn_network_admin.php:563
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Manuse teekonna raja mall. Kasutatakse ainult juhul, kui teekonna rada on linkimata."
 
-#: class.bcn_admin.php:516 class.bcn_admin.php:616
-#: class.bcn_network_admin.php:583 class.bcn_network_admin.php:683
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "%s Template"
 msgstr "%s Mall"
 
-#: class.bcn_admin.php:516 class.bcn_admin.php:616
-#: class.bcn_network_admin.php:583 class.bcn_network_admin.php:683
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "The template for %s breadcrumbs."
 msgstr "%s teekonna raja mall"
 
-#: class.bcn_admin.php:517 class.bcn_admin.php:617
-#: class.bcn_network_admin.php:584 class.bcn_network_admin.php:684
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "%s Template (Unlinked)"
 msgstr "%s Mall (linkimata)"
 
-#: class.bcn_admin.php:517 class.bcn_admin.php:617
-#: class.bcn_network_admin.php:584 class.bcn_network_admin.php:684
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "%s teekonna raja mall. Kasutatakse ainult siis, kui teekonna rada on linkimata."
 
-#: class.bcn_admin.php:522 class.bcn_network_admin.php:589
+#: class.bcn_admin.php:513 class.bcn_network_admin.php:583
 msgid "%s Root Page"
 msgstr "%s juur lehekülg"
 
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:592
+#: class.bcn_admin.php:516 class.bcn_network_admin.php:586
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Vali &mdash;"
 
-#: class.bcn_admin.php:529 class.bcn_network_admin.php:596
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "%s Archive Display"
 msgstr "%s arhiivi kuvamine"
 
-#: class.bcn_admin.php:529 class.bcn_network_admin.php:596
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Kuva %s teekonna riba postituse tüüpi arhiivi teekonna ribal."
 
-#: class.bcn_admin.php:530 class.bcn_network_admin.php:597
-msgid "Show the taxonomy leading to a %s in the breadcrumb trail."
-msgstr "Kuva süstemaatika juhtimist %s teekonna ribas."
-
-#: class.bcn_admin.php:581 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "Category Template"
 msgstr "Kategooria mall"
 
-#: class.bcn_admin.php:581 class.bcn_network_admin.php:648
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "The template for category breadcrumbs."
 msgstr "Kategooria teekonna rea mall"
 
-#: class.bcn_admin.php:582 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "Category Template (Unlinked)"
 msgstr "Kategooria mall (linkimata)"
 
-#: class.bcn_admin.php:582 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Kategooria teekonna riba mall. Kasutatakse ainult siis, kui teekonna riba ei ole lingitud."
 
-#: class.bcn_admin.php:588 class.bcn_network_admin.php:655
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "Tag Template"
 msgstr "Sildi mall"
 
-#: class.bcn_admin.php:588 class.bcn_network_admin.php:655
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "The template for tag breadcrumbs."
 msgstr "Siltide teekonna riba mall"
 
-#: class.bcn_admin.php:589 class.bcn_network_admin.php:656
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "Tag Template (Unlinked)"
 msgstr "Sildi mall (linkimata)"
 
-#: class.bcn_admin.php:589 class.bcn_network_admin.php:656
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Siltide teekonna riba mall. Kasutatakse ainult siis, kui teekonna riba ei ole lingitud."
 
-#: class.bcn_admin.php:626 class.bcn_admin.php:635
-#: class.bcn_network_admin.php:693 class.bcn_network_admin.php:702
+#: class.bcn_admin.php:617 class.bcn_admin.php:626
+#: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
 msgid "Miscellaneous"
 msgstr "Varia"
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:697
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "Author Template"
 msgstr "Autori mall"
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:697
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "The template for author breadcrumbs."
 msgstr "Autori teekonna riba mall."
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:698
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "Author Template (Unlinked)"
 msgstr "Autori mall (linkimata)"
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:698
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Autori teekonna riba mall. Kasutatakse ainult juhul, kui teekonna riba on linkimata."
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "Author Display Format"
 msgstr "Autori kuvamise formaat"
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name kasutab nime, mis on määratud \"Näite nimeks\" kasutaja profiili all."
 
-#: class.bcn_admin.php:638 class.bcn_network_admin.php:705
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "Date Template"
 msgstr "Kuupäeva mall"
 
-#: class.bcn_admin.php:638 class.bcn_network_admin.php:705
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "The template for date breadcrumbs."
 msgstr "Kuupäeva teekonna riba mall."
 
-#: class.bcn_admin.php:639 class.bcn_network_admin.php:706
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "Date Template (Unlinked)"
 msgstr "Kuupäeva mall (linkimata)"
 
-#: class.bcn_admin.php:639 class.bcn_network_admin.php:706
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Kuupäeva teekonna riba mall. Kasutatakse ainult juhul, kui teekonna riba on linkimata."
 
-#: class.bcn_admin.php:640 class.bcn_network_admin.php:707
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "Search Template"
 msgstr "Otsingu mall"
 
-#: class.bcn_admin.php:640 class.bcn_network_admin.php:707
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Otsingu teekonna riba ankru mall. Kasutatakse ainult juhul, kui otsingu tulemused jaotuvad mitmele lehele."
 
-#: class.bcn_admin.php:641 class.bcn_network_admin.php:708
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "Search Template (Unlinked)"
 msgstr "Otsingu mall (linkimata)"
 
-#: class.bcn_admin.php:641 class.bcn_network_admin.php:708
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Otsingu teekonna riba ankru mall. Kasutatakse ainult siis, kui otsingu tulemused jaotuvad mitmele lehele ja kui teekonna riba on linkimata."
 
-#: class.bcn_admin.php:642 class.bcn_network_admin.php:709
+#: class.bcn_admin.php:633 class.bcn_network_admin.php:703
 msgid "404 Title"
 msgstr "404 pealkiri"
 
-#: class.bcn_admin.php:643 class.bcn_network_admin.php:710
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "404 Template"
 msgstr "404 mall"
 
-#: class.bcn_admin.php:643 class.bcn_network_admin.php:710
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "The template for 404 breadcrumbs."
 msgstr "404 teekonna riba mall."
 
-#: class.bcn_admin.php:650 class.bcn_network_admin.php:717
+#: class.bcn_admin.php:663 class.bcn_network_admin.php:733
 msgid "Save Changes"
 msgstr "Salvesta muudatused"
 
-#: includes/class.mtekk_adminkit.php:217
+#: includes/class.mtekk_adminkit.php:225
 msgid "Settings"
 msgstr "Seaded"
 
-#: includes/class.mtekk_adminkit.php:287
+#: includes/class.mtekk_adminkit.php:295
 msgid "Your settings are out of date."
 msgstr "Sinu seaded on aegunud."
 
-#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate the settings now."
 msgstr "Suuna seaded ümber."
 
-#: includes/class.mtekk_adminkit.php:287 includes/class.mtekk_adminkit.php:296
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate now."
 msgstr "Suuna nüüd."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin install is incomplete."
 msgstr "Sinu plugina install on lõpetamata."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Load default settings now."
 msgstr "Laadi vaikeseaded nüüd."
 
-#: includes/class.mtekk_adminkit.php:304
+#: includes/class.mtekk_adminkit.php:312
 msgid "Complete now."
 msgstr "Vii nüüd lõpule."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Your plugin settings are invalid."
 msgstr "Sinu plugina seaded on vigased."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Attempt to fix settings now."
 msgstr "Püüa parandada seadeid nüüd."
 
-#: includes/class.mtekk_adminkit.php:312
+#: includes/class.mtekk_adminkit.php:320
 msgid "Fix now."
 msgstr "Paranda nüüd."
 
-#: includes/class.mtekk_adminkit.php:490
+#: includes/class.mtekk_adminkit.php:503
 msgid "Settings successfully saved."
 msgstr "Seaded on edukalt salvestatud."
 
-#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
 msgid "Undo the options save."
 msgstr "Pööra seadete salvestamine tagasi."
 
-#: includes/class.mtekk_adminkit.php:490 includes/class.mtekk_adminkit.php:495
-#: includes/class.mtekk_adminkit.php:600 includes/class.mtekk_adminkit.php:624
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
+#: includes/class.mtekk_adminkit.php:621 includes/class.mtekk_adminkit.php:645
+#: includes/class.mtekk_adminkit.php:662
 msgid "Undo"
 msgstr "Pööra tagasi"
 
-#: includes/class.mtekk_adminkit.php:495
+#: includes/class.mtekk_adminkit.php:516
 msgid "Some settings were not saved."
 msgstr "Mõned seadetest ei salvestunud."
 
-#: includes/class.mtekk_adminkit.php:496
+#: includes/class.mtekk_adminkit.php:517
 msgid "The following settings were not saved:"
 msgstr "Järgnevaid seadeid ei salvestatud:"
 
-#: includes/class.mtekk_adminkit.php:501
+#: includes/class.mtekk_adminkit.php:522
 msgid "Please include this message in your %sbug report%s."
 msgstr "Palun lisa see sõnum oma %svea raportisse%s."
 
-#: includes/class.mtekk_adminkit.php:501
+#: includes/class.mtekk_adminkit.php:522
 msgid "Go to the %s support post for your version."
 msgstr "Mine %s oma versiooni tugi postitusse."
 
-#: includes/class.mtekk_adminkit.php:600
+#: includes/class.mtekk_adminkit.php:621
 msgid "Settings successfully imported from the uploaded file."
 msgstr "Seaded imporditi edukalt üleslaetud failist."
 
-#: includes/class.mtekk_adminkit.php:600
+#: includes/class.mtekk_adminkit.php:621
 msgid "Undo the options import."
 msgstr "Pööra valikute import tagasi."
 
-#: includes/class.mtekk_adminkit.php:605
+#: includes/class.mtekk_adminkit.php:626
 msgid "Importing settings from file failed."
 msgstr "Valikute import failist ebaõnnestus."
 
-#: includes/class.mtekk_adminkit.php:624
+#: includes/class.mtekk_adminkit.php:645
 msgid "Settings successfully reset to the default values."
 msgstr "Seaded pöörati edukalt tagasi vaikeseadeteks."
 
-#: includes/class.mtekk_adminkit.php:624
+#: includes/class.mtekk_adminkit.php:645
 msgid "Undo the options reset."
 msgstr "Tühista valikute tagasipööramine."
 
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:662
 msgid "Settings successfully undid the last operation."
 msgstr "Viimase operatsiooni seaded tühistati edukalt."
 
-#: includes/class.mtekk_adminkit.php:641
+#: includes/class.mtekk_adminkit.php:662
 msgid "Undo the last undo operation."
 msgstr "Tühista viimane tagasipööramine operatsioon."
 
-#: includes/class.mtekk_adminkit.php:676
+#: includes/class.mtekk_adminkit.php:697
 msgid "Settings successfully migrated."
 msgstr "Seaded on edualt suunatud."
 
-#: includes/class.mtekk_adminkit.php:683
+#: includes/class.mtekk_adminkit.php:704
 msgid "Default settings successfully installed."
 msgstr "Vaikeseaded on edukalt installeeritud."
 
-#: includes/class.mtekk_adminkit.php:779
+#: includes/class.mtekk_adminkit.php:800
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
 msgstr "Impordi seaded XML failist, ekspordi praegused seaded XML faili või taasta vaikeseaded."
 
-#: includes/class.mtekk_adminkit.php:782
+#: includes/class.mtekk_adminkit.php:803
 msgid "Settings File"
 msgstr "Seadete fail"
 
-#: includes/class.mtekk_adminkit.php:785
+#: includes/class.mtekk_adminkit.php:806
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Valid XML fail üleslaadimiseks ja impordi sellest seaded."
 
-#: class.bcn_breadcrumb_trail.php:82
+#: class.bcn_breadcrumb_trail.php:79
 msgid "Page %htitle%"
 msgstr "Leht %htitle%"
 
-#: class.bcn_breadcrumb_trail.php:106
+#: class.bcn_breadcrumb_trail.php:103
 msgid "404"
 msgstr "404"
 
-#: class.bcn_breadcrumb_trail.php:111
+#: class.bcn_breadcrumb_trail.php:108
 msgid "Search results for &#39;%htitle%&#39;"
 msgstr "Otsitulemused &#39;%htitle%&#39;"
 
-#: class.bcn_breadcrumb_trail.php:126
+#: class.bcn_breadcrumb_trail.php:123
 msgid "Articles by: %htitle%"
 msgstr "Artiklid: %htitle%"

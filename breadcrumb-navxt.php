@@ -7,8 +7,8 @@ Version: 5.2.0
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
-TextDomain: breadcrumb-navxt
-DomainPath: /languages/
+Text Domain: breadcrumb-navxt
+Domain Path: /languages/
 */
 /*  Copyright 2007-2015  John Havlik  (email : john.havlik@mtekk.us)
 

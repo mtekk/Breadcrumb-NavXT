@@ -170,10 +170,8 @@ class bcn_breadcrumb_trail
 		{
 			//Since we are paged and are linking the root breadcrumb, time to change to the regular template
 			$breadcrumb->set_template($this->opt['Hsearch_template']);
-			//Figure out the hyperlink for the anchor
-			$url = home_url('?s=' . str_replace(' ', '+', get_search_query()));
 			//Figure out the anchor for the search
-			$breadcrumb->set_url($url);
+			$breadcrumb->set_url(get_search_link());
 		}
 	}
 	/**

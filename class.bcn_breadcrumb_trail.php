@@ -715,6 +715,11 @@ class bcn_breadcrumb_trail
 		if(is_attachment())
 		{
 			$type = get_post($post->post_parent);
+			//If the parent of the attachment is a page, exit early (works around bug where is_single() returns true for an attachment to a page)
+			if($type->post_type == 'page')
+			{
+				return;
+			}
 		}
 		else
 		{

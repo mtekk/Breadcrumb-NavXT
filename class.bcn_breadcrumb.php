@@ -29,7 +29,7 @@ class bcn_breadcrumb
 	//The breadcrumb's no anchor template, used durring assembly when there won't be an anchor
 	protected $template_no_anchor = '%title%';
 	//Boolean, is this element linked
-	protected $linked;
+	protected $linked = false;
 	//The link the breadcrumb leads to, null if $linked == false
 	protected $url;
 	//The corresponding resource ID
@@ -57,9 +57,9 @@ class bcn_breadcrumb
 		//Set the title
 		$this->set_title($title);
 		//Assign the breadcrumb template
-		if($template == NULL)
+		if($template == NULL || $url == '')
 		{
-			if($url == NULL)
+			if($url == NULL || $url == '')
 			{
 				$template = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 			}
@@ -68,7 +68,7 @@ class bcn_breadcrumb
 				$template = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt');
 			}
 		}
-		if($url == NULL)
+		if($url == NULL || $url == '')
 		{
 				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 		}
@@ -109,7 +109,7 @@ class bcn_breadcrumb
 	{
 		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id));
 		//Set linked to true if we set a non-null $url
-		if($url)
+		if($url && $url != '')
 		{
 			$this->linked = true;
 		}

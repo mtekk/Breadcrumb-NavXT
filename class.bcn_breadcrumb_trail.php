@@ -422,10 +422,16 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink());
 		}
-		//Get the parent's information
-		$parent = get_post($post->post_parent);
-		//Take care of the parent's breadcrumb
-		$this->do_post($parent);
+		//Done with the current item, now on to the parents
+		$frontpage = get_option('page_on_front');
+		//Make sure the id is valid, and that we won't end up spinning in a loop
+		if($post->post_parent >= 0 && $post->post_parent != false && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
+		{
+			//Get the parent's information
+			$parent = get_post($post->post_parent);
+			//Take care of the parent's breadcrumb
+			$this->do_post($parent);
+		}
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function

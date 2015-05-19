@@ -272,11 +272,11 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//If we never got a good parent for the type_archive, make it now
-		if($parent == NULL)
+		if(!($parent instanceof WP_Post))
 		{
 			$parent = get_post($id);
 		}
-		//
+		//Finish off with trying to find the type archive
 		$this->type_archive($parent);
 	}
 	/**

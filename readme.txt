@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 5.2
+Tested up to: 4.2.2
+Stable tag: 5.2.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -34,7 +34,6 @@ Breadcrumb NavXT distributes with translations for the following languages:
 * Catalan by Christian Eduardo
 * German by Daniel Lang
 * French (France) by Emmanuel Beziat, Erwan Lescop, and Serge Rauber
-* Turkish by Hakan Er
 * Czech by jakubmachala
 * Norwegian (Bokmål) by Jan Rosvoldsve
 * Danish by Joachim Jensen
@@ -71,6 +70,14 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 5.2.1 =
+* Bug fix: Added additional checks for empty URLs and templates within `bcn_breadcrumb` to prevent various bugs when empty URLs and/or templates are passed in.
+* Bug fix: Move away from building URLs for search breadcrumbs and instead using `get_search_link()` to fix support for pretty permalinks.
+* Bug fix: Fixed issue where media items (attachments) that have not been attached to a post yet would cause an incorrect breadcrumb trail to be generated.
+* Bug fix: Fixed issue where attachments of the front page would cause PHP Warnings.
+* Bug fix: Fixed issue where attachments of the front page would have duplicate breadcrumbs for the home page.
+* Bug fix: Fixed issue where attachments of pages would have an extraneous breadcrumb relating to the page for posts.
+* Bug fix: Fixed issue with the text domain/domain path in the plugin header.
 = 5.2.0 =
 * Deprecated: The Max Breadcrumb Length setting has been deprecated in favor of [using CSS styling to perform the length limiting](http://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/ "Go to the article presenting how to shorten the breadcrumb title length using CSS").
 * Behavior change: The archive page for a post type is now generated for the top ancestor post rather than for the current page when "post parent" is used as the post's hierarchy.
@@ -305,11 +312,11 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Upgrade Notice ==
 
+= 5.2.1 =
+This version requires PHP5.3 or newer. This is a bug fix release with four bug fixes relating to attachments and a few other bug fixes.
+
 = 5.2.0 =
 This version requires PHP5.3 or newer. Some improvements to the settings page were made. Additionally, note that the Max Breadcrumb Length setting has been deprecated in favor of [using CSS styling to perform the length limiting](http://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/ "Go to the article presenting how to shorten the breadcrumb title length using CSS").ion enhances compatibility with bbPress. 
 
 = 5.1.0 =
 This version fixes a ton of bugs, plus adds a new filter and features support for RDFa Breadcrumb by default.
-
-= 5.0.0 =
-This version is for the developers, those who like to extend things gracefully. Several new hooks were introduced, while others were tweaked to be more useful. If you have WordPress setup as a multisite install/in network mode, the new Breadcrumb NavXT network settings page will take priority over the individual sub site settings pages. This is a major change from previous versions. See [Controlling Breadcrumb NavXT Settings From the Network Settings Page](http://mtekk.us/archives/guides/controlling-breadcrumb-navxt-settings-from-the-network-settings-page/"Go to the article on controlling the settings hierarchy") for more information on the new settings modes.

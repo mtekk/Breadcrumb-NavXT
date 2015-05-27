@@ -56,10 +56,10 @@ class bcn_breadcrumb
 		$this->set_id($id);
 		//Set the title
 		$this->set_title($title);
-		//Assign the breadcrumb template
-		if($template == NULL || $url == '')
+		//Assign the breadcrumb template, need strict comparison as we only want to enter if we had a blank URL, not NULL URL
+		if($template == NULL || $url === '')
 		{
-			if($url == NULL || $url == '')
+			if($url == NULL || $url === '')
 			{
 				$template = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
 			}
@@ -68,7 +68,8 @@ class bcn_breadcrumb
 				$template = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt');
 			}
 		}
-		if($url == NULL || $url == '')
+		//Loose comparison, evaluates to true if URL is '' or NULL
+		if($url == NULL)
 		{
 				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 		}

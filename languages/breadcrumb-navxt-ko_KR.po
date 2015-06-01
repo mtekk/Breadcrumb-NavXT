@@ -1,12 +1,12 @@
-# Translation of Breadcrumb NavXT in Catalan
+# Translation of Breadcrumb NavXT in Korean
 # This file is distributed under the same license as the Breadcrumb NavXT package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-05-23 08:32:55+0000\n"
+"PO-Revision-Date: 2014-10-13 04:13:56+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Breadcrumb NavXT\n"
 
@@ -53,7 +53,7 @@ msgstr ""
 
 #: class.bcn_admin.php:483 class.bcn_network_admin.php:553
 msgid "Attachments"
-msgstr "Adjunts"
+msgstr "첨부파일"
 
 #: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
 #: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
@@ -76,15 +76,15 @@ msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" titl
 
 #: class.bcn_network_admin.php:403
 msgid "Warning: Individual site settings will override any settings set in this page."
-msgstr "Av&iacute;s: la configuraci&oacute; de llocs individuals prevaldr&agrave; sobre valors establerts en aquesta p&agrave;gina."
+msgstr "주의사항: 각종 사이트 설정과 현재 페이지의 설정이 충돌하면 사이트 설정을 사용합니다."
 
 #: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
 msgid "Warning: Individual site settings may override any settings set in this page."
-msgstr "Av&iacute;s: la configuraci&oacute; de llocs individuals ha de prevaler sobre valors establerts en aquesta p&agrave;gina."
+msgstr "주의사항: 각종 사이트 설정과 현재 페이지의 설정이 충돌하면 사이트 설정이 우선시 될수 있습니다."
 
 #: class.bcn_widget.php:105
 msgid "Google (RDFa) Breadcrumbs"
-msgstr "Google (RDFa) Breadcrumbs"
+msgstr "구글 (RDFa) Breadcrumbs"
 
 #: breadcrumb-navxt.php:256
 msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
@@ -96,19 +96,19 @@ msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span>
 
 #: class.bcn_admin.php:336 class.bcn_admin.php:350
 msgid "Warning: Your network settings will override any settings set in this page."
-msgstr "Av&iacute;s: la configuraci&oacute; de xarxa prevaldr&agrave; sobre valors establerts en aquesta p&agrave;gina."
+msgstr "주의사항: 현재 네트워크 설정과 현재 페이지의 설정이 충돌하면 네트워크 설정을 사용합니다."
 
 #: class.bcn_admin.php:340 class.bcn_admin.php:344
 msgid "Warning: Your network settings may override any settings set in this page."
-msgstr "Av&iacute;s: la configuraci&oacute; de xarxa ha de prevaler sobre valors establerts en aquesta p&agrave;gina."
+msgstr "주의사항: 현재 네트워크 설정과 현재 페이지의 설정이 충돌하면 네트워크 설정이 우선시 될수 있습니다."
 
 #: class.bcn_admin.php:349 class.bcn_network_admin.php:420
 msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
-msgstr "Av&iacute;s: No es trobat definits BCN_SETTINGS_*, es fará servir per defecte BCN_SETTINGS_FAVOR_NETWORK."
+msgstr "주의사항: BCN_SETTINGS_* 설정을 찾을 수 없습니다. 기본값인 BCN_SETTINGS_FAVOR_NETWORK 을 사용합니다."
 
 #: class.bcn_network_admin.php:449
 msgid "Breadcrumb NavXT Network Settings"
-msgstr "Configuraci&oacute; de la xarxa Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT 네트워크 설정"
 
 msgid "Breadcrumb NavXT"
 msgstr "Breadcrumb NavXT"
@@ -117,7 +117,7 @@ msgid "http://mtekk.us/code/breadcrumb-navxt/"
 msgstr "http://mtekk.us/code/breadcrumb-navxt/"
 
 msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-msgstr "Afegeix una ruta de navegaci&oacute; que mostra la traject&ograve;ria del visitant a la seva ubicaci&oacute; actual. Per obtenir més informaci&oacute; sobre com utilitzar aquesta visitat <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "방문자의 경로를 현재 위치에 표시하는 breadcrumb 을 추가합니다. 이 플러그인의 자세한 사용법은  <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a> 를 클릭하세요."
 
 msgid "John Havlik"
 msgstr "John Havlik"
@@ -128,714 +128,714 @@ msgstr "http://mtekk.us/"
 #: class.bcn_admin.php:472 class.bcn_admin.php:554
 #: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
 msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
-msgstr "La jerarquia en la qual es mostra la ruta de molles. Prengui nota que l'opció de \"Entrada/Pàgina Superior\" pot requerir un plugin addicional per a comportar-se com s'espera, ja que aquest és un tipus de publicació sense jerarquia."
+msgstr "Breadcrumb 트레일이 보여줄 구조입니다. 참고로, 현재 설정은 구조가 없는 포스트 타입이므로, 상위 포스트(Post Parent) 옵션을 사용하려면 다른 플러그인을 추가해야 합니다."
 
 #: class.bcn_breadcrumb_trail.php:106
 msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
-msgstr "Resultats de recerca per a &#39;<a title=\"Anar a la primer pàgina dels resultats de recerca per a %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr " &#39; 검색 결과 <a title=\"%title% 검색 결과의 첫 번째 페이지로 이동합니다.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
 
 #: class.bcn_admin.php:391 class.bcn_network_admin.php:461
 msgid "A collection of settings most likely to be modified are located under this tab."
-msgstr "Un conjunt d'ajustaments que probablement seran modificats es troba en aquesta pestanya."
+msgstr "자주 변경되는 설정들은 보통 이 탭에 있습니다."
 
 #: class.bcn_admin.php:641 class.bcn_network_admin.php:711
 msgid "Title Length"
-msgstr "Longitud del títol"
+msgstr "타이틀 길이"
 
 #: class.bcn_admin.php:426 class.bcn_network_admin.php:496
 msgid "Mainsite Breadcrumb"
-msgstr "Molles (Breadcrumbs) del Lloc Principal"
+msgstr "메인사이트 Breadcrumb"
 
 #: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
-msgstr "Els ajustaments per a tots els tipus d'entrades (Entrades, Pàgines, Personalitzades) es troben en aquesta pestanya."
+msgstr "모든 포스타 타입 (Posts, Pages Custom Post Types)의 설정은 이 탭에 있습니다."
 
 #: class.bcn_admin.php:438 class.bcn_network_admin.php:508
 msgid "Post Types"
-msgstr "Tipus d'Entrades"
+msgstr "포스트 타입"
 
 #: class.bcn_admin.php:444 class.bcn_network_admin.php:514
 msgid "Post Hierarchy Display"
-msgstr "Jerarquia per a desplegar entrades"
+msgstr "포스트 구조 표시"
 
 #: class.bcn_admin.php:448 class.bcn_network_admin.php:518
 msgid "Post Hierarchy"
-msgstr "Jerarquia d'entrades"
+msgstr "포스트 구조"
 
 #: class.bcn_admin.php:521 class.bcn_network_admin.php:591
 msgid "%s Hierarchy Display"
-msgstr "%s Jerarquia de Desplegament"
+msgstr "%s 구조 표시"
 
 #: class.bcn_admin.php:583 class.bcn_network_admin.php:653
 msgid "Post Formats"
-msgstr "Formats d'Entrades"
+msgstr "포스트 포맷"
 
 #: class.bcn_admin.php:651 class.bcn_network_admin.php:721
 msgid "Max Title Length: "
-msgstr "Longitud Màxima del Títol:"
+msgstr "최대 제목 길이"
 
 #: class.bcn_admin.php:439 class.bcn_network_admin.php:509
 msgid "Posts"
-msgstr "Entrades"
+msgstr "포스트"
 
 #: class.bcn_admin.php:456 class.bcn_admin.php:530
 #: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
 msgid "Post Parent"
-msgstr "Entrada o Pàgina superior"
+msgstr "상위 포스트"
 
 #: class.bcn_admin.php:550 class.bcn_network_admin.php:620
 msgid "The hierarchy which the breadcrumb trail will show."
-msgstr "La jerarquia que mostrarà la ruta de molles."
+msgstr "Breadcrumb trail 이 보여줄 구조"
 
 #: class.bcn_admin.php:525 class.bcn_network_admin.php:595
 msgid "%s Hierarchy"
-msgstr "%s Jerarquia"
+msgstr "%s 구조"
 
 #: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
-msgstr "Els ajustaments per a totes les taxonomies (incloent Categories, Etiquetes i Personalitzades) estan en aquesta pestanya. "
+msgstr "분류체계 (Categories, Tags and Custom Taxonomies)는 이 탭에 있습니다."
 
 #: class.bcn_admin.php:568 class.bcn_network_admin.php:638
 msgid "Taxonomies"
-msgstr "Taxonomies"
+msgstr "분류체계"
 
 #: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "Post Format Template"
-msgstr "Plantilla per a Format de l'Entrada"
+msgstr "포스트 포맷 템플릿"
 
 #: class.bcn_admin.php:586 class.bcn_network_admin.php:656
 msgid "The template for post format breadcrumbs."
-msgstr "La plantilla per al format de la ruta de molles en l'entrada"
+msgstr "post_format breadcrumbs 템플릿입니다."
 
 #: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "Post Format Template (Unlinked)"
-msgstr "Plantilla per a Format de l'Entrada (sense enllaç)"
+msgstr "포스트 포맷 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:587 class.bcn_network_admin.php:657
 msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla per al format de la ruta de molles en l'entrada, utilitzat només quan la molla no té enllaç. "
+msgstr "post_format breadcrumbs 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:617 class.bcn_network_admin.php:687
 msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
-msgstr "Els ajustaments per a autor i arxius, recerques, i pàgines 404 estan en aquesta pestanya."
+msgstr "작성자, Date Archives, 검색, 404 페이지 등은 이 탭에 있습니다."
 
 #: class.bcn_admin.php:618 class.bcn_network_admin.php:688
 msgid "Author Archives"
-msgstr "Arxius d'Autor "
+msgstr "작성자 백업"
 
 #: class.bcn_breadcrumb_trail.php:121
 msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "Articles per: <a title=\"Anar a la primer pàgina d'entrades per %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
 
 #: includes/class.mtekk_adminkit.php:304
 msgid "Your settings are for a newer version."
-msgstr "Els seus ajustaments són per a una versió més nova."
+msgstr "새 버전을 위한 설정입니다."
 
 #: class.bcn_widget.php:98
 msgid "Text to show before the trail:"
-msgstr "Text a mostrar abans de les molles:"
+msgstr "Breadcrumb 트레일 전에 보여줄 글자"
 
 #: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "Go to the Breadcrumb NavXT translation project."
-msgstr "Anar al projecte de traducció de Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT 번역 프로젝트 페이지로 이동합니다."
 
 #: breadcrumb-navxt.php:35 class.bcn_admin.php:25
 #: class.bcn_network_admin.php:25
 msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
-msgstr "La seva versió de PHP és massa antiga, per favor, actualitzi a la nova versió. La seva versió és %1$s, el plugin Breadcrumb NavXT requereix la versió %2$s "
+msgstr "지원되지 않는 PHP 버전을 사용하고 있고 (%1$s). Breadcrumb NavXT 는 %2$s 이 필요합니다. PHP를 업그레이드 한 후 다시 시도 하세요."
 
 #: class.bcn_widget.php:32
 msgid "Adds a breadcrumb trail to your sidebar"
-msgstr "Agrega una ruta de navegació en la seva barra lateral"
+msgstr "Breadcrumb trail 을 사이트바에 추가합니다."
 
 #: class.bcn_widget.php:94
 msgid "Title:"
-msgstr "Títol:"
+msgstr "제목:"
 
 #: class.bcn_widget.php:102
 msgid "Output trail as:"
-msgstr "Mostrar ruta com:"
+msgstr "Output 트레일:"
 
 #: class.bcn_widget.php:104
 msgid "List"
-msgstr "Llista"
+msgstr "리스트"
 
 #: class.bcn_widget.php:106
 msgid "Plain"
-msgstr "Text pla"
+msgstr "기본"
 
 #: class.bcn_widget.php:111
 msgid "Link the breadcrumbs"
-msgstr "Enllaç a la Ruta"
+msgstr "Breadcrumbs 링크"
 
 #: class.bcn_widget.php:113
 msgid "Reverse the order of the trail"
-msgstr "Invertir l'ordre de la ruta"
+msgstr "트레일 순서 뒤집기"
 
 #: class.bcn_widget.php:115
 msgid "Hide the trail on the front page"
-msgstr "Ocultar la ruta de la pàgina principal"
+msgstr "처음페이지에 트레일 숨기기"
 
 #: class.bcn_admin.php:95 class.bcn_network_admin.php:165
 msgid "Insufficient privileges to proceed."
-msgstr "No té privilegis per a procedir."
+msgstr "권한이 충분하지 않습니다."
 
 #: class.bcn_admin.php:240 class.bcn_network_admin.php:311
 msgid "Tips for the settings are located below select options."
-msgstr "Trobarà tips per als ajustaments sota cada opció."
+msgstr "설정 팁과 도움말은 \"Select Options\" 아래에 있습니다."
 
 #: class.bcn_admin.php:241 class.bcn_network_admin.php:312
 msgid "Resources"
-msgstr "Recursos"
+msgstr "리소스"
 
 #: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
-msgstr "%sTutorials i Instructius%s: En el *website de l'autor estan disponibles diverses guies, tutorials i instructius."
+msgstr "%sTutorials and How Tos%s: 저자의 웹사이트에 가면 자세한 사용설명서, 힌트/팁이 있습니다."
 
 #: class.bcn_admin.php:242 class.bcn_network_admin.php:313
 msgid "Go to the Breadcrumb NavXT tag archive."
-msgstr "Anar a l'arxiu d'etiquetes de Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT 태그 백업으로 가기"
 
 #: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
-msgstr "%sDocumentació En Línia%s: Revisi la documentació per a més informació tècnica."
+msgstr "%sOnline Documentation%s: 더 구체적인 기술적인 정보는 Documentation을 참고하세요."
 
 #: class.bcn_admin.php:243 class.bcn_network_admin.php:314
 msgid "Go to the Breadcrumb NavXT online documentation"
-msgstr "Anar a la documentació en línia de Breadcrumb NavXT (en anglès)"
+msgstr "Breadcrumb NavXT 온라인 설명서"
 
 #: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
-msgstr "%sReportar Errors%s: Si pensa que ha trobat un error, per favor inclogui la seva versió de WordPress i els detalls de com es reproduïx l'error."
+msgstr "%sReport a Bug%s: 버그가 발견되었다면, WordPress 버전과 함께, 구체적인 스텝을 설명해 주세요 (이왕이면 English로)"
 
 #: class.bcn_admin.php:244 class.bcn_network_admin.php:315
 msgid "Go to the Breadcrumb NavXT support post for your version."
-msgstr "Anar a la documentació en línia de Breadcrumb NavXT para la seva versió. "
+msgstr "현재 버전 Breadcrumb NavXT 기술 지원 페이지"
 
 #: class.bcn_admin.php:245 class.bcn_network_admin.php:316
 msgid "Giving Back"
-msgstr "Donar de tornada"
+msgstr "도네이션"
 
 #: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
-msgstr "%sDonar%s: Li agrada Breadcrumb NavXT i desitja col·laborar amb el desenvolupament? Consideri comprar-li a l'autor una cervesa."
+msgstr "%sDonate%s: Breadcrumb NavXT 개발자에게 도네이션 하고 싶으시면 맥주 한잔이라도 사주세요!"
 
 #: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
-msgstr "Anar a la pàgina de Paypal para donar-li un donatiu a. Breadcrumb NavXT."
+msgstr "Paypal을 사용해서 Breadcrumb NavXT 개발자에게 도네이션하기"
 
 #: class.bcn_admin.php:247 class.bcn_network_admin.php:318
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
-msgstr "%sTraduir%s: No està disponible en el seu idioma? Comuniqui's amb John Havlik para col·laborar amb la traducció."
+msgstr "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 
 #: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
 #: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
 #: class.bcn_network_admin.php:462
 msgid "General"
-msgstr "General"
+msgstr "일반"
 
 #: class.bcn_admin.php:255 class.bcn_network_admin.php:326
 msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
-msgstr "Perquè prenguin efecte els ajustaments en aquesta pàgina, ha d'incloure el widget del plugin o col·locar el codi en la seva plantilla."
+msgstr "현재 페이지에 있는 설정을 적용하기 위해서는, Breadcrumb NavXT 위젯을 사용하거나, 아래에 있는 코드중 하나를 Theme에 추가해야 합니다."
 
 #: class.bcn_admin.php:256 class.bcn_network_admin.php:327
 msgid "Breadcrumb trail with separators"
-msgstr "Ruta de Navegació amb Separadors"
+msgstr "Breadcrumb 트레일 구분자"
 
 #: class.bcn_admin.php:262 class.bcn_network_admin.php:333
 msgid "Breadcrumb trail in list form"
-msgstr "Ruta de Navegació com Llistat"
+msgstr "Breadcrumb 트레일 (리스트)"
 
 #: class.bcn_admin.php:271 class.bcn_network_admin.php:342
 msgid "Quick Start"
-msgstr "Inici Ràpid"
+msgstr "퀵스타트"
 
 #: class.bcn_admin.php:274 class.bcn_network_admin.php:345
 msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
-msgstr "Fent servir el codi d'Inici Ràpid de la secció anterior, el següent CSS pot utilitzar-se com base per a donar-li estil a la seva ruta de navegació."
+msgstr "위에 있는 퀵스타트 섹션의 코드를 사용하면, 다음의 CSS 코드를 Breadcrumb의 스타일링에 사용할수 있습니다."
 
 #: class.bcn_admin.php:286 class.bcn_network_admin.php:357
 msgid "Styling"
-msgstr "Estilo"
+msgstr "스타일링"
 
 #: class.bcn_admin.php:292 class.bcn_network_admin.php:363
 msgid "Import/Export/Reset"
-msgstr "Importar/Exportar/Reiniciar"
+msgstr "가져오기/내보내기/초기화"
 
 #: class.bcn_admin.php:316 class.bcn_network_admin.php:387
 #: includes/class.mtekk_adminkit.php:808
 msgid "Import"
-msgstr "Importar"
+msgstr "가져오기"
 
 #: class.bcn_admin.php:317 class.bcn_network_admin.php:388
 #: includes/class.mtekk_adminkit.php:809
 msgid "Export"
-msgstr "Exportar"
+msgstr "내보내기"
 
 #: class.bcn_admin.php:318 class.bcn_network_admin.php:389
 #: includes/class.mtekk_adminkit.php:810
 msgid "Reset"
-msgstr "Reiniciar"
+msgstr "초기화"
 
 #: class.bcn_admin.php:379
 msgid "Breadcrumb NavXT Settings"
-msgstr "Opcions de Configuració de Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT 설정"
 
 #: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Breadcrumb Separator"
-msgstr "Separador de Navegació"
+msgstr "Breadcrumb 구분자"
 
 #: class.bcn_admin.php:395 class.bcn_network_admin.php:465
 msgid "Placed in between each breadcrumb."
-msgstr "Col·locat enmig de cada opció de navegació."
+msgstr "breadcrumb 사이에 표시합니다."
 
 #: class.bcn_admin.php:408 class.bcn_admin.php:411
 #: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
 msgid "Home Breadcrumb"
-msgstr "Incloure l'Inici"
+msgstr "홈 Breadcrumb"
 
 #: class.bcn_admin.php:411 class.bcn_network_admin.php:481
 msgid "Place the home breadcrumb in the trail."
-msgstr "Col·locar un enllaç a la pàgina d'inici en la ruta de navegació."
+msgstr "트레일에 홈 breadcrumb 을 표시합니다."
 
 #: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "Home Template"
-msgstr "Plantilla de la Pàgina d'Inici"
+msgstr "홈 템플릿"
 
 #: class.bcn_admin.php:412 class.bcn_network_admin.php:482
 msgid "The template for the home breadcrumb."
-msgstr "La plantilla de la ruta de navegació per a la pàgina d'inici."
+msgstr "홈 Breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "Home Template (Unlinked)"
-msgstr "Plantilla de la Pàgina d'Inici (sense vincle)"
+msgstr "홈 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:413 class.bcn_network_admin.php:483
 msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a la pàgina d'inici, quan l'element d'inici no està enllaçat."
+msgstr "링크가 없을때 사용되는 홈 breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:420 class.bcn_network_admin.php:487
 #: class.bcn_network_admin.php:490
 msgid "Blog Breadcrumb"
-msgstr "Incloure Inici (del Blog)"
+msgstr "블로그 Breadcrumb"
 
 #: class.bcn_admin.php:420 class.bcn_network_admin.php:490
 msgid "Place the blog breadcrumb in the trail."
-msgstr "Col·locar un enllaç a la pàgina d'inici en la ruta de navegació."
+msgstr "트레일에 블로그 breadcrumb을 표시합니다."
 
 #: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "Blog Template"
-msgstr "Plantilla del Blog"
+msgstr "블로그 템플릿"
 
 #: class.bcn_admin.php:421 class.bcn_network_admin.php:491
 msgid "The template for the blog breadcrumb, used only in static front page environments."
-msgstr "La plantilla de la ruta de navegació per al blog, utilitzat només quan la pàgina inicial és una pàgina estàtica."
+msgstr "블로그 breadcrumb 템플릿입니다. (Static 홈페이지 환경에서만 사용)"
 
 #: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "Blog Template (Unlinked)"
-msgstr "Plantilla del Blog (sense vincle)"
+msgstr "블로그 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:422 class.bcn_network_admin.php:492
 msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per al blog, utilitzat només quan la pàgina inicial és una pàgina estàtica i l'element d'inici no està enllaçat."
+msgstr "링크가 없을때 사용되는 블로그 breadcrumb 템플릿입니다. (Static 홈페이지 환경에서만 사용)"
 
 #: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Main Site Breadcrumb"
-msgstr "Ruta del Lloc Principal"
+msgstr "메인 사이트 Breadcrumb"
 
 #: class.bcn_admin.php:429 class.bcn_network_admin.php:499
 msgid "Place the main site home breadcrumb in the trail in an multisite setup."
-msgstr "Col·locar un enllaç a la pàgina d'inici del lloc principal en la ruta de navegació d'una configuració amb múltiples blogs."
+msgstr "멀티사이트 환경에서 메인 사이트 홈 Breadcrumb을 표시합니다."
 
 #: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "Main Site Home Template"
-msgstr "Plantilla d'Inici del Lloc Principal"
+msgstr "메인 사이트 홈 템플릿"
 
 #: class.bcn_admin.php:430 class.bcn_network_admin.php:500
 msgid "The template for the main site home breadcrumb, used only in multisite environments."
-msgstr "La plantilla d'enllaç per a la pàgina d'inici del lloc principal, utilitzada només en configuracions amb múltiples blogs."
+msgstr "멀티사이트 환경에서 사용되는 메인 사이트 홈 Breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "Main Site Home Template (Unlinked)"
-msgstr "Plantilla d'Inici del Lloc Principal (sense vincle)"
+msgstr "메인 사이트 홈 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:431 class.bcn_network_admin.php:501
 msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
-msgstr "La plantilla d'enllaç per a la pàgina d'inici del lloc principal, utilitzada només en configuracions amb múltiples blogs i l'element de navegació no està enllaçat."
+msgstr "멀티사이트 환경에서 사용되는 메인 사이트 홈 Breadcrumb 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:399 class.bcn_network_admin.php:469
 msgid "Current Item"
-msgstr "Item Actual"
+msgstr "현재아이템"
 
 #: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Link Current Item"
-msgstr "Incloure Vincle a Ítem Actual"
+msgstr "현재아이템 링크"
 
 #: class.bcn_admin.php:402 class.bcn_network_admin.php:472
 msgid "Yes"
-msgstr "Si"
+msgstr "예"
 
 #: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Paged Breadcrumb"
-msgstr "Ruta de Navegació paginada"
+msgstr "Breadcrumb 페이지화"
 
 #: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Include the paged breadcrumb in the breadcrumb trail."
-msgstr "Incloure la navegació paginada en la ruta de navegació"
+msgstr "페이지화 된 Breadcrumb을 Breadcrumb 트레일에 추가합니다."
 
 #: class.bcn_admin.php:403 class.bcn_network_admin.php:473
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
-msgstr "Mostrar que l'usuari està en una pàgina distinta a la primera d'una entrada/arxiu amb múltiples pàgines. "
+msgstr "사용자가 현재 페이지화 된 포스트나 페이지 밖의 페이지에 있음을 표시합니다."
 
 #: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "Paged Template"
-msgstr "Plantilla d'Entrada paginada"
+msgstr "페이지화 템플릿"
 
 #: class.bcn_admin.php:404 class.bcn_network_admin.php:474
 msgid "The template for paged breadcrumbs."
-msgstr "Plantilla de ruta de navegació d'entrades de diverses pàgines."
+msgstr "페이지화 breadcrumb 템플릿"
 
 #: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "Post Template"
-msgstr "Plantilla d'Entrades"
+msgstr "포스트 템플릿"
 
 #: class.bcn_admin.php:442 class.bcn_network_admin.php:512
 msgid "The template for post breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a entrades."
+msgstr "breadcrumb포스트 템플릿"
 
 #: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "Post Template (Unlinked)"
-msgstr "Plantilla de l'Entrada (sense vincle)"
+msgstr "템플릿 포스트 (Unlinked)"
 
 #: class.bcn_admin.php:443 class.bcn_network_admin.php:513
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a entrades, quan l'element no està enllaçat."
+msgstr "breadcrumb포스트 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:452 class.bcn_admin.php:569
 #: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
 msgid "Categories"
-msgstr "Categories"
+msgstr "카테고리"
 
 #: class.bcn_admin.php:453 class.bcn_network_admin.php:523
 msgid "Dates"
-msgstr "Dates"
+msgstr "날짜"
 
 #: class.bcn_admin.php:454 class.bcn_admin.php:576
 #: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
 msgid "Tags"
-msgstr "Etiquetes"
+msgstr "태그"
 
 #: class.bcn_admin.php:476 class.bcn_network_admin.php:546
 msgid "Pages"
-msgstr "Pàgines"
+msgstr "페이지"
 
 #: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "Page Template"
-msgstr "Plantilla de la Pàgina"
+msgstr "페이지 템플릿"
 
 #: class.bcn_admin.php:479 class.bcn_network_admin.php:549
 msgid "The template for page breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a pàgines."
+msgstr "페이지 breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "Page Template (Unlinked)"
-msgstr "Plantilla de la Pàgina (sense vincle)"
+msgstr "페이지 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:480 class.bcn_network_admin.php:550
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a pàgines, quan l'element no està enllaçat."
+msgstr "페이지 breadcrumb 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "Attachment Template"
-msgstr "Plantilla d'Arxiu Adjunt"
+msgstr "첨부파일 템플릿"
 
 #: class.bcn_admin.php:486 class.bcn_network_admin.php:556
 msgid "The template for attachment breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a arxius adjunts."
+msgstr "breadcrumbs 첨부파일 템플릿입니다."
 
 #: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "Attachment Template (Unlinked)"
-msgstr "Plantilla de l'Arxiu Adjunt (sense vincle)"
+msgstr "첨부파일 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:487 class.bcn_network_admin.php:557
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a arxius adjunts, quan l'element no està enllaçat."
+msgstr "breadcrumbs 첨부파일 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:507 class.bcn_admin.php:607
 #: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "%s Template"
-msgstr "Plantilla de %s"
+msgstr "%s 템플릿"
 
 #: class.bcn_admin.php:507 class.bcn_admin.php:607
 #: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
 msgid "The template for %s breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a %s."
+msgstr "%s breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:508 class.bcn_admin.php:608
 #: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "%s Template (Unlinked)"
-msgstr "Plantilla de %s (sense vincle)"
+msgstr "%s 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:508 class.bcn_admin.php:608
 #: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a %s, quan l'element no està enllaçat."
+msgstr "%s breadcrumb 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:513 class.bcn_network_admin.php:583
 msgid "%s Root Page"
-msgstr "%s Pàgina Arrel"
+msgstr "%s 루트 페이지"
 
 #: class.bcn_admin.php:516 class.bcn_network_admin.php:586
 msgid "&mdash; Select &mdash;"
-msgstr "&mdash; Seleccioni &mdash;"
+msgstr "&mdash; &mdash; 선택하세요."
 
 #: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "%s Archive Display"
-msgstr "Desplegament d'Arxius de %s"
+msgstr "%s 백업 표시"
 
 #: class.bcn_admin.php:520 class.bcn_network_admin.php:590
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
-msgstr "Mostrar la ruta de navegació per als %s arxius de les entrades de tipus."
+msgstr "%s 포스트 타입 백업을 표시합니다."
 
 #: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "Category Template"
-msgstr "Plantilla de Categoria"
+msgstr "카테고리 템플릿"
 
 #: class.bcn_admin.php:572 class.bcn_network_admin.php:642
 msgid "The template for category breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a categories."
+msgstr "카테고리 breadcrumbs 템플릿 입니다."
 
 #: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "Category Template (Unlinked)"
-msgstr "Plantilla de la Categoria (sense vincle)"
+msgstr "카테고리 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:573 class.bcn_network_admin.php:643
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a categories, quan l'element no està enllaçat."
+msgstr "카테고리 breadcrumbs 템플릿 입니다. (Unlinked)"
 
 #: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "Tag Template"
-msgstr "Plantilla de l'Etiqueta"
+msgstr "태그 템플릿"
 
 #: class.bcn_admin.php:579 class.bcn_network_admin.php:649
 msgid "The template for tag breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a etiquetes."
+msgstr "태그 Breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "Tag Template (Unlinked)"
-msgstr "Plantilla de l'Etiqueta (sense vincle)"
+msgstr "태그 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:580 class.bcn_network_admin.php:650
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a etiquetes, quan l'element no està enllaçat."
+msgstr "태그 Breadcrumb 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:617 class.bcn_admin.php:626
 #: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
 msgid "Miscellaneous"
-msgstr "Miscel·lanis"
+msgstr "기타설정"
 
 #: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "Author Template"
-msgstr "Plantilla d'Autor"
+msgstr "작성자 템플릿"
 
 #: class.bcn_admin.php:621 class.bcn_network_admin.php:691
 msgid "The template for author breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a autors."
+msgstr "작성자 breadcrumb 템플릿 입니다."
 
 #: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "Author Template (Unlinked)"
-msgstr "Plantilla de l'Autor (sense vincle)"
+msgstr "작성자 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:622 class.bcn_network_admin.php:692
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a autors, quan l'element no està enllaçat."
+msgstr "작성자 breadcrumb 템플릿 입니다. (Unlinked)"
 
 #: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "Author Display Format"
-msgstr "Format de Desplegament d'Autor"
+msgstr "작성자 표시 포맷"
 
 #: class.bcn_admin.php:623 class.bcn_network_admin.php:693
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
-msgstr "display_name utilitza el nom especificat en \"Mostrar aquest nom públicament\" en el perfil de l'usuari, l'altres opcions corresponen als camps nom (first_name), cognom (last_name) i alies (nickname) en el perfil de l'usuari."
+msgstr "display_name 은 사용자 프로파일에 있는 \"Display name publicly as\" 필드 정보를 사용합니다."
 
 #: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "Date Template"
-msgstr "Plantilla de la Data"
+msgstr "날짜 템플릿"
 
 #: class.bcn_admin.php:629 class.bcn_network_admin.php:699
 msgid "The template for date breadcrumbs."
-msgstr "La plantilla de la ruta de navegació per a dates."
+msgstr "날짜 breadcrumb 템플릿입니다."
 
 #: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "Date Template (Unlinked)"
-msgstr "Plantilla de la Data (sense vincle)"
+msgstr "날짜 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:630 class.bcn_network_admin.php:700
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a dates, quan l'element no està enllaçat."
+msgstr "날짜 breadcrumb 템플릿입니다. (Unlinked)"
 
 #: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "Search Template"
-msgstr "Plantilla de la Recerca"
+msgstr "검색 템플릿"
 
 #: class.bcn_admin.php:631 class.bcn_network_admin.php:701
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
-msgstr "Plantilla del vincle a la primera pàgina de resultats de recerca en la ruta de navegació, utilitzat només quan aquests ocupen més d'una pàgina."
+msgstr "검색 Breadcrumb을 위한 표시이고, 검색 결과가 여러 페이지에 걸쳐 나올때만 사용됩니다."
 
 #: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "Search Template (Unlinked)"
-msgstr "Plantilla de la Recerca (sense vincle)"
+msgstr "검색 템플릿 (Unlinked)"
 
 #: class.bcn_admin.php:632 class.bcn_network_admin.php:702
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegació per a la primera pàgina de resultats de recerca, utilitzat només quan aquests ocupen més d'una pàgina i l'element no està enllaçat."
+msgstr "검색 Breadcrumb을 위한 표시이고, 검색 결과가 여러 페이지에 걸쳐 나올때만 사용됩니다. (Unlinked)"
 
 #: class.bcn_admin.php:633 class.bcn_network_admin.php:703
 msgid "404 Title"
-msgstr "Títol Error 404."
+msgstr "404 제목"
 
 #: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "404 Template"
-msgstr "Plantilla d'Error 404."
+msgstr "404 템플릿"
 
 #: class.bcn_admin.php:634 class.bcn_network_admin.php:704
 msgid "The template for 404 breadcrumbs."
-msgstr "La plantilla per a la ruta de la pàgina d'error 404."
+msgstr "404 Breadcrumbs 템플릿입니다."
 
 #: class.bcn_admin.php:663 class.bcn_network_admin.php:733
 msgid "Save Changes"
-msgstr "Gravar Canvis"
+msgstr "변경 저장"
 
 #: includes/class.mtekk_adminkit.php:225
 msgid "Settings"
-msgstr "Configuracions"
+msgstr "설정"
 
 #: includes/class.mtekk_adminkit.php:295
 msgid "Your settings are out of date."
-msgstr "Els paràmetres estan desactualitzats."
+msgstr "기존설정이 최신 설정과 호환되지 않습니다."
 
 #: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate the settings now."
-msgstr "Migrar la configuració ara."
+msgstr "설정을 최신버전으로 업그레이드 하세요."
 
 #: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate now."
-msgstr "Migrar ara."
+msgstr "지금 업그레이드"
 
 #: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin install is incomplete."
-msgstr "La instal·lació del plugin no s'ha completat."
+msgstr "플러그인이 제대로 설치되지 않았습니다."
 
 #: includes/class.mtekk_adminkit.php:312
 msgid "Load default settings now."
-msgstr "Carregar els ajustaments predeterminats ara."
+msgstr "기본값을 설정합니다."
 
 #: includes/class.mtekk_adminkit.php:312
 msgid "Complete now."
-msgstr "Completar ara."
+msgstr "설치 종료"
 
 #: includes/class.mtekk_adminkit.php:320
 msgid "Your plugin settings are invalid."
-msgstr "Els ajustaments del plugin no són vàlids."
+msgstr "현재 플러그인 설정에 문제가 있습니다."
 
 #: includes/class.mtekk_adminkit.php:320
 msgid "Attempt to fix settings now."
-msgstr "Intentar arreglar els ajustaments ara."
+msgstr "설정문제를 자동으로 해결합니다."
 
 #: includes/class.mtekk_adminkit.php:320
 msgid "Fix now."
-msgstr "Arreglar ara."
+msgstr "지금 해결"
 
 #: includes/class.mtekk_adminkit.php:503
 msgid "Settings successfully saved."
-msgstr "Ajustaments guardats amb èxit."
+msgstr "설정이 성공적으로 저장되었습니다."
 
 #: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
 msgid "Undo the options save."
-msgstr "Desfer modificació d'opcions."
+msgstr "이전설정으로 되돌아갑니다."
 
 #: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
 #: includes/class.mtekk_adminkit.php:621 includes/class.mtekk_adminkit.php:645
 #: includes/class.mtekk_adminkit.php:662
 msgid "Undo"
-msgstr "Desfer"
+msgstr "되돌리기"
 
 #: includes/class.mtekk_adminkit.php:516
 msgid "Some settings were not saved."
-msgstr "Alguns ajustaments no van ser gravats."
+msgstr "모든 설정이 저장되진 않았습니다."
 
 #: includes/class.mtekk_adminkit.php:517
 msgid "The following settings were not saved:"
-msgstr "Els següents ajustaments no van ser gravats:"
+msgstr "저장되지 않은 설정:"
 
 #: includes/class.mtekk_adminkit.php:522
 msgid "Please include this message in your %sbug report%s."
-msgstr "Per favor, incloure aquest missatge en el seu %sreporti de bugs%s."
+msgstr "이 메시지를 %sbug report%s 에 포함해 주세요: "
 
 #: includes/class.mtekk_adminkit.php:522
 msgid "Go to the %s support post for your version."
-msgstr "Anar a la documentació en línia de %s per a la seva versió."
+msgstr "현재버전의 %s 지원 포스트로 바로 가기"
 
 #: includes/class.mtekk_adminkit.php:621
 msgid "Settings successfully imported from the uploaded file."
-msgstr "Els ajustaments de Breadcrumb NavXT es van importar reeixidament des de l'arxiu."
+msgstr "업로드된 파일을 통해 설정 불러오기에 성공했습니다."
 
 #: includes/class.mtekk_adminkit.php:621
 msgid "Undo the options import."
-msgstr "Desfer importació d'opcions."
+msgstr "불러오기한 옵션을 이전값으로 되돌립니다."
 
 #: includes/class.mtekk_adminkit.php:626
 msgid "Importing settings from file failed."
-msgstr "Va fallar la importació dels ajustaments des de l'arxiu."
+msgstr "파일을 통한 설정 불러오기를 실패했습니다."
 
 #: includes/class.mtekk_adminkit.php:645
 msgid "Settings successfully reset to the default values."
-msgstr "Els ajustaments predeterminats de Breadcrumb NavXT es van restaurar amb èxit."
+msgstr "설정이 기본값으로 초기화되었습니다."
 
 #: includes/class.mtekk_adminkit.php:645
 msgid "Undo the options reset."
-msgstr "Desfer reinici d'opcions."
+msgstr "설정 초기화를 이전값으로 되돌립니다."
 
 #: includes/class.mtekk_adminkit.php:662
 msgid "Settings successfully undid the last operation."
-msgstr "Es va desfer amb èxit l'operació anterior."
+msgstr "최근 변경된 설정을 성공적으로 이전으로 되돌렸습니다."
 
 #: includes/class.mtekk_adminkit.php:662
 msgid "Undo the last undo operation."
-msgstr "Desfer l'última operació de \"desfer\""
+msgstr "최근 되돌리기한 것을 다시 되돌립니다."
 
 #: includes/class.mtekk_adminkit.php:697
 msgid "Settings successfully migrated."
-msgstr "Configuració migrats amb èxit."
+msgstr "설정이 성공적으로 업그레이드 되었습니다."
 
 #: includes/class.mtekk_adminkit.php:704
 msgid "Default settings successfully installed."
-msgstr "Els ajustaments predeterminats es van instal·lar amb èxit."
+msgstr "기본설정이 성공적으로 설치되었습니다."
 
 #: includes/class.mtekk_adminkit.php:800
 msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
-msgstr "Importar els ajustaments de Breadcrumb NavXT des d'un arxiu XML, exportar els ajustaments actuals a un arxiu XML o reiniciar els valors predeterminats de Breadcrumb NavXT."
+msgstr "XML파일을 통해 설정을 불러오거나, 내보내거나, 기본값으로 초기화 합니다."
 
 #: includes/class.mtekk_adminkit.php:803
 msgid "Settings File"
-msgstr "Arxiu d'Ajustaments"
+msgstr "설정파일"
 
 #: includes/class.mtekk_adminkit.php:806
 msgid "Select a XML settings file to upload and import settings from."
-msgstr "Seleccionar un arxiu XML per a carregar i importar els ajustaments d'aquest plugin."
+msgstr "업로드하고 불러올 XML 설정 파일 선택"
 
 #: class.bcn_breadcrumb_trail.php:79
 msgid "Page %htitle%"
-msgstr "Pàgina %htitle%"
+msgstr "%htitle% 페이지"
 
 #: class.bcn_breadcrumb_trail.php:103
 msgid "404"
-msgstr "Página no encontrada"
+msgstr "404"
 
 #: class.bcn_breadcrumb_trail.php:108
 msgid "Search results for &#39;%htitle%&#39;"
-msgstr "Resultats de recerca per a &#39;%htitle%&#39;"
+msgstr "&#39;%htitle%&#39; 검색 결과"
 
 #: class.bcn_breadcrumb_trail.php:123
 msgid "Articles by: %htitle%"
-msgstr "Articles per: %htitle%"
+msgstr "Articles by: %htitle%"

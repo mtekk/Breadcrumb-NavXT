@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.9
 Tested up to: 4.2.2
-Stable tag: 5.2.1
+Stable tag: 5.2.2
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -31,21 +31,21 @@ Breadcrumb NavXT distributes with translations for the following languages:
 
 * English - default -
 * Russian by Alexander Samsonov
+* Chinese (China) by Amos Lee
+* Swedish by Anders Täpp, and Patrik Spathon
 * Catalan by Christian Eduardo
 * German by Daniel Lang
-* French (France) by Emmanuel Beziat, Erwan Lescop, and Serge Rauber
-* Czech by jakubmachala
-* Norwegian (Bokmål) by Jan Rosvoldsve
-* Danish by Joachim Jensen
+* Persian by Farjad Mahmoodi
+* Turkish by Hakan Er
+* Danish by Joachim Jensen of Intox Studio
 * Lithuanian by Johannes Rau
 * Spanish (Spain) by Karin Sequen
 * Portuguese (Portugal) by Luís Rodrigues
 * Estonian by Martin Orn
-* Swedish by Patrik Spathon
 * Dutch by Renée Klein
 * Italian by Tamara Balestri
 * Finnish by Ville Pilvio
-* Chinese (China) by Amos Lee
+* Korean by Young Pae
 
 Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
 
@@ -70,6 +70,9 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 5.2.2 =
+* Bug fix: Fixed issue where the current item would use a built in default template rather than the breadcrumb template in the settings.
+* Bug fix: Updated currently distributed translations set and list to match the current set of translations that achieve the 90% completeness threshold for inclusion.
 = 5.2.1 =
 * Bug fix: Added additional checks for empty URLs and templates within `bcn_breadcrumb` to prevent various bugs when empty URLs and/or templates are passed in.
 * Bug fix: Move away from building URLs for search breadcrumbs and instead using `get_search_link()` to fix support for pretty permalinks.

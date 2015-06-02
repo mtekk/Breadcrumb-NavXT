@@ -331,7 +331,7 @@ class bcn_admin extends mtekk_adminKit
 			{
 				
 			}
-			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
+			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
 				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
 			}

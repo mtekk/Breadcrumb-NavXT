@@ -73,6 +73,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 = 5.2.2 =
 * Bug fix: Fixed issue where the current item would use a built in default template rather than the breadcrumb template in the settings.
 * Bug fix: Updated currently distributed translations set and list to match the current set of translations that achieve the 90% completeness threshold for inclusion.
+* Bug fix: Fixed issue where a PHP warning would be displayed when BCN_SETTINGS_USE_NETWORK is defined.
 = 5.2.1 =
 * Bug fix: Added additional checks for empty URLs and templates within `bcn_breadcrumb` to prevent various bugs when empty URLs and/or templates are passed in.
 * Bug fix: Move away from building URLs for search breadcrumbs and instead using `get_search_link()` to fix support for pretty permalinks.

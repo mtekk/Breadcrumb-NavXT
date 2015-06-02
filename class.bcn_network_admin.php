@@ -402,7 +402,7 @@ class bcn_network_admin extends mtekk_adminKit
 			{
 				$this->message['updated fade'][] = __('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt');
 			}
-			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
+			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
 				
 			}

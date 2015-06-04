@@ -237,7 +237,7 @@ class bcn_breadcrumb_trail
 					foreach($bcn_object as $key=>$object)
 					{
 						//We want the first term hiearchy
-						if($object->parent > 0)
+						if($object->parent > 0 and next($bcn_object)->category_parent != $object->term_id)
 						{
 							$bcn_use_term = $key;
 							//We found our first term hiearchy, can exit loop now

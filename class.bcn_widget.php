@@ -66,12 +66,17 @@ class bcn_widget extends WP_Widget
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';
 		}
-		else
+		else if($instance['type'] == 'plain')
 		{
 			//Display the pretext
 			echo $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
+		}
+		else
+		{
+			//If we recieved a type that is not of the built in displays, it must be relegated to an extension plugin
+			do_action('bcn_widget_display_trail', $instance);
 		}
 		//Manditory after widget junk
 		echo $args['after_widget'];

@@ -109,6 +109,7 @@ class bcn_widget extends WP_Widget
 				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
 				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Google (RDFa) Breadcrumbs', 'breadcrumb-navxt'); ?></option>
 				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
+				<?php do_action('bcn_widget_display_types', $instance);?>
 			</select>
 		</p>
 		<p>

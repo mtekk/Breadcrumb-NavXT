@@ -742,9 +742,11 @@ class bcn_breadcrumb_trail
 			//We'll have to check if this ID is valid, e.g. user has specified a posts page
 			if($root_id && $root_id != $frontpage_id)
 			{
+				//TODO: Evaluate if a call to do_post() could replace this cruft, lose the -root type, but that's likely unimportant/not used by anyone anyways
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
 				//If we are at home, then we need to add the current item type
+				//TODO: Figureout when this is hit
 				if(is_home())
 				{
 					$breadcrumb->add_type('current-item');

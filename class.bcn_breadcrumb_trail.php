@@ -625,7 +625,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function is_root_page($post_type)
 	{
-		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root'])));
+		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root'] && !$this->opt['bpost_' . $post_type . '_archive_display'])));
 	}
 	/**
 	 * Determines if a post type has archives enabled or not
@@ -872,7 +872,7 @@ class bcn_breadcrumb_trail
 				$this->do_archive_by_date();
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
-			else if(is_post_type_archive() && !isset($type->taxonomy) && !is_numeric($this->opt['apost_' . $type->name . '_root']))
+			else if(is_post_type_archive() && !isset($type->taxonomy) && (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))
 			{
 				$this->do_archive_by_post_type();
 			}

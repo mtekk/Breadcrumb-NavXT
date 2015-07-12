@@ -745,9 +745,8 @@ class bcn_breadcrumb_trail
 				//TODO: Evaluate if a call to do_post() could replace this cruft, lose the -root type, but that's likely unimportant/not used by anyone anyways
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
-				//If we are at home, then we need to add the current item type
-				//TODO: Figureout when this is hit
-				if(is_home())
+				//If we are at home, or any root page archive then we need to add the current item type
+				if(is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $type_str . '_root'])))
 				{
 					$breadcrumb->add_type('current-item');
 				}
@@ -862,7 +861,8 @@ class bcn_breadcrumb_trail
 			{
 				$this->do_archive_by_date();
 			}
-			else if(is_post_type_archive() && !isset($type->taxonomy))
+			//If we have a post type archive, and it does not have a root page generate the archive
+			else if(is_post_type_archive() && !isset($type->taxonomy) && !is_numeric($this->opt['apost_' . $type->post_type . '_root']))
 			{
 				$this->do_archive_by_post_type();
 			}

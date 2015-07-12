@@ -618,6 +618,16 @@ class bcn_breadcrumb_trail
 		return $type->_builtin;
 	}
 	/**
+	 * Determines if the current location is a for a root page or not
+	 * 
+	 * @param string $post_type the name of the post type
+	 * @return bool
+	 */
+	protected function is_root_page($post_type)
+	{
+		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root'])));
+	}
+	/**
 	 * Determines if a post type has archives enabled or not
 	 * 
 	 * @param string $post_type the name of the post type
@@ -746,12 +756,12 @@ class bcn_breadcrumb_trail
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
 				//If we are at home, or any root page archive then we need to add the current item type
-				if(is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $type_str . '_root'])))
+				if($this->is_root_page($type_str))
 				{
 					$breadcrumb->add_type('current-item');
 				}
 				//If we're not on the current item we need to setup the anchor
-				if(!is_home() || (is_paged() && $this->opt['bpaged_display']) || (is_home() && $this->opt['bcurrent_item_linked']))
+				if(!$this->is_root_page($type_str) || (is_paged() && $this->opt['bpaged_display']) || (is_home() && $this->opt['bcurrent_item_linked']))
 				{
 					$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 					//Figure out the anchor for home page
@@ -862,7 +872,7 @@ class bcn_breadcrumb_trail
 				$this->do_archive_by_date();
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
-			else if(is_post_type_archive() && !isset($type->taxonomy) && !is_numeric($this->opt['apost_' . $type->post_type . '_root']))
+			else if(is_post_type_archive() && !isset($type->taxonomy) && !is_numeric($this->opt['apost_' . $type->name . '_root']))
 			{
 				$this->do_archive_by_post_type();
 			}

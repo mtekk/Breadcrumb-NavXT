@@ -623,9 +623,9 @@ class bcn_breadcrumb_trail
 	 * @param string $post_type the name of the post type
 	 * @return bool
 	 */
-	protected function is_root_page($post_type)
+	protected function treat_as_root_page($post_type)
 	{
-		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root'] && !$this->opt['bpost_' . $post_type . '_archive_display'])));
+		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root']) && !$this->opt['bpost_' . $post_type . '_archive_display']));
 	}
 	/**
 	 * Determines if a post type has archives enabled or not
@@ -741,7 +741,7 @@ class bcn_breadcrumb_trail
 		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
 		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
-		//TODO: this is_home() may need to be $this->is_root_page($type_str)
+		//TODO: this is_home() may need to be $this->treat_as_root_page($type_str)
 		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
 		{
 			//If we entered here with a posts page, we need to set the id
@@ -756,12 +756,12 @@ class bcn_breadcrumb_trail
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
 				//If we are at home, or any root page archive then we need to add the current item type
-				if($this->is_root_page($type_str))
+				if($this->treat_as_root_page($type_str))
 				{
 					$breadcrumb->add_type('current-item');
 				}
 				//If we're not on the current item we need to setup the anchor
-				if(!$this->is_root_page($type_str) || (is_paged() && $this->opt['bpaged_display']) || ($this->is_root_page($type_str) && $this->opt['bcurrent_item_linked']))
+				if(!$this->treat_as_root_page($type_str) || (is_paged() && $this->opt['bpaged_display']) || ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
 				{
 					$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 					//Figure out the anchor for home page

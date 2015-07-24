@@ -417,7 +417,8 @@ class bcn_network_admin extends mtekk_adminKit
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK.', 'breadcrumb-navxt');
+				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt');
+				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
 			}
 		}
 	}

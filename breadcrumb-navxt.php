@@ -263,18 +263,8 @@ class breadcrumb_navxt
 					{
 						$opts['bpost_' . $post_type->name . '_archive_display'] = false;		
 					}
-					//Do type dependent tasks
-					if($post_type->hierarchical)
-					{
-						//Set post_root for hierarchical types
-						$opts['apost_' . $post_type->name . '_root'] = get_option('page_on_front');
-					}
-					//If it is flat, we need a taxonomy selection
-					else
-					{
-						//Set post_root for flat types
-						$opts['apost_' . $post_type->name . '_root'] = get_option('page_for_posts');
-					}
+					//Default to not showing a post_root
+					$opts['apost_' . $post_type->name . '_root'] = 0;
 					//Default to not displaying a taxonomy
 					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
 					//Loop through all of the possible taxonomies

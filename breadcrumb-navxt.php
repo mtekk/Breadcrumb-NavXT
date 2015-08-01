@@ -41,10 +41,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	}
 	return;
 }
-if(!function_exists('mb_strlen'))
-{
-	require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
-}
+require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {

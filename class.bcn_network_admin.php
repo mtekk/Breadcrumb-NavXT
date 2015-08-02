@@ -598,7 +598,8 @@ class bcn_network_admin extends mtekk_adminKit
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'));
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{

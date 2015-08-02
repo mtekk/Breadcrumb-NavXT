@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.2.50
+Version: 5.2.51
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -41,10 +41,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	}
 	return;
 }
-if(!function_exists('mb_strlen'))
-{
-	require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
-}
+require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {
@@ -60,7 +57,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.2.50';
+	const version = '5.2.51';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -335,15 +332,15 @@ class breadcrumb_navxt
 	 */
 	private function get_settings()
 	{
-		//Let's begin by grabbing the current settings for the site (works for both multisite and single installs)
-		$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
+		//Grab the current settings for the current local site from the db
+		$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
 		//If we're in multisite mode, look at the three BCN_SETTINGS globals
-		if(defined('MULTISITE') && MULTISITE)
+		if(is_multisite())
 		{
-			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
+			if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
-				//Grab the current settings for the current local site from the db
-				$this->breadcrumb_trail->opt = wp_parse_args(get_option('bcn_options'), $this->opt);
+				//Grab the current network wide settings
+				$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), $this->opt);
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{

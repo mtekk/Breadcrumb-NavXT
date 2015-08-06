@@ -114,6 +114,10 @@ class bcn_breadcrumb
 		{
 			$this->linked = true;
 		}
+		else
+		{
+			$this->linked = false;
+		}
 	}
 	/**
 	 * Function to set the internal breadcrumb template

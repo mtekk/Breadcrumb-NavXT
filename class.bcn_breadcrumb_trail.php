@@ -312,7 +312,7 @@ class bcn_breadcrumb_trail
 				//This is a bit hackish, but it compiles the term anchor and appends it to the current breadcrumb title
 				$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . str_replace(
 					array('%title%', '%link%', '%htitle%', '%type%'),
-					array($term->name, get_term_link($term, $taxonomy), $term->name, $term->taxonomy),
+					array($term->name, get_term_link($term), $term->name, $term->taxonomy),
 					$this->opt['Htax_' . $term->taxonomy . '_template']));
 				$is_first = false;
 			}
@@ -331,7 +331,7 @@ class bcn_breadcrumb_trail
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term, $taxonomy), $id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($term->parent && $term->parent != $id)
 		{
@@ -451,7 +451,7 @@ class bcn_breadcrumb_trail
 		{
 			$breadcrumb->set_template($this->opt['Htax_' . $term->taxonomy . '_template']);
 			//Figure out the anchor for current category
-			$breadcrumb->set_url(get_term_link($term, $term->taxonomy));
+			$breadcrumb->set_url(get_term_link($term));
 		}
 		//Get parents of current term
 		if($term->parent)

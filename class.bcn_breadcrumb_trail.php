@@ -222,7 +222,7 @@ class bcn_breadcrumb_trail
 		{
 			//Now find which one has a parent, pick the first one that does
 			$bcn_use_term = key($bcn_object);
-			foreach($bcn_object as $key=>$object)
+			foreach($bcn_object as $key => $object)
 			{
 				//We want the first term hiearchy
 				if($object->parent > 0)

@@ -206,14 +206,44 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
-	 * A Breadcrumb Trail Filling Function
+	 * This function selects the term that should be used for a post's hierarchy
 	 * 
-	 * This function fills breadcrumbs for any post taxonomy.
-	 * @param int $id The id of the post to figure out the taxonomy for.
-	 * @param string $type The post type of the post to figure out the taxonomy for.
-	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
+	 * @param int $id The ID of the post to find the term for
+	 * @param string $type The post type of the post to figure out the taxonomy for
+	 * @return WP_Term|bool The term object to use for the post hierarchy or false if no suitable term was found 
 	 * 
 	 * TODO: Add logic for contextual taxonomy selection
+	 */
+	protected function pick_post_term($id, $type)
+	{
+		//Fill a temporary object with the terms
+		$bcn_object = get_the_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+		if(is_array($bcn_object))
+		{
+			//Now find which one has a parent, pick the first one that does
+			$bcn_use_term = key($bcn_object);
+			foreach($bcn_object as $key=>$object)
+			{
+				//We want the first term hiearchy
+				if($object->parent > 0)
+				{
+					$bcn_use_term = $key;
+					//We found our first term hiearchy, can exit loop now
+					break;
+				}
+			}
+			return $bcn_object[$bcn_use_term];
+		}
+		return false;
+	}
+	/**
+	 * A Breadcrumb Trail Filling Function
+	 * 
+	 * This function fills breadcrumbs for any post taxonomy
+	 * @param int $id The id of the post to figure out the taxonomy for
+	 * @param string $type The post type of the post to figure out the taxonomy for
+	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
+	 * 
 	 */
 	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
@@ -228,24 +258,10 @@ class bcn_breadcrumb_trail
 			//Handle all hierarchical taxonomies, including categories
 			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
 			{
-				//Fill a temporary object with the terms
-				$bcn_object = get_the_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
-				if(is_array($bcn_object))
+				if(($term = $this->pick_post_term($id, $type)) !== false)
 				{
-					//Now find which one has a parent, pick the first one that does
-					$bcn_use_term = key($bcn_object);
-					foreach($bcn_object as $key=>$object)
-					{
-						//We want the first term hiearchy
-						if($object->parent > 0)
-						{
-							$bcn_use_term = $key;
-							//We found our first term hiearchy, can exit loop now
-							break;
-						}
-					}
 					//Fill out the term hiearchy
-					$parent = $this->term_parents($bcn_object[$bcn_use_term]->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
 				}
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
@@ -283,7 +299,7 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for the terms of a post
-	 * @param int $id The id of the post to find the terms for.
+	 * @param int $id The id of the post to find the terms for
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
 	 * TODO Need to implement this cleaner

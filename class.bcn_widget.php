@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '5.2.2';
+	const version = '5.2.70';
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false);
 	//Default constructor
 	function __construct()
@@ -61,7 +61,7 @@ class bcn_widget extends WP_Widget
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">' . $instance['pretext'];
+			echo '<div class="breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList">' . $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';

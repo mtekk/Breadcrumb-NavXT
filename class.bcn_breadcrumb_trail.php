@@ -42,22 +42,22 @@ class bcn_breadcrumb_trail
 		$this->opt = array(
 			//Should the mainsite be shown
 			'bmainsite_display' => true,
-			//The breadcrumb template for the main site, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hmainsite_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for the main site, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hmainsite_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for the main site
+			'Hmainsite_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for the main site, used when an anchor is not needed
+			'Hmainsite_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Should the home page be shown
 			'bhome_display' => true,
-			//The breadcrumb template for the home page, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hhome_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for the home page, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hhome_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for the home page
+			'Hhome_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for the home page, used when an anchor is not needed
+			'Hhome_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Should the blog page be shown globally
 			'bblog_display' => true,
-			//The breadcrumb template for the blog page only in static front page mode, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hblog_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for the blog page only in static front page mode, used when an anchor is not needed, this is global, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hblog_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for the blog page only in static front page mode
+			'Hblog_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for the blog page only in static front page mode, used when an anchor is not needed
+			'Hblog_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
 			//the first and not after the last breadcrumb
 			'hseparator' => ' &gt; ',
@@ -65,25 +65,25 @@ class bcn_breadcrumb_trail
 			'blimit_title' => false,
 			//The maximum title length
 			'amax_title_length' => 20,
-			//Current item options, really only applies to static pages and posts unless other current items are linked
+			//Current item options
 			'bcurrent_item_linked' => false,
 			//Static page options
-			//The anchor template for page breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_page_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The anchor template for page breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_page_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The anchor template for page breadcrumbs
+			'Hpost_page_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The anchor template for page breadcrumbs, used when an anchor is not needed
+			'Hpost_page_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Just a link to the page on front property
 			'apost_page_root' => get_option('page_on_front'),
 			//Paged options
-			//The template for paged breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
+			//The template for paged breadcrumb
 			'Hpaged_template' => __('Page %htitle%', 'breadcrumb-navxt'),
 			//Should we try filling out paged information
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
-			//The breadcrumb template for post breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_post_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for post breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_post_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for post breadcrumbs
+			'Hpost_post_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for post breadcrumbs, used when an anchor is not needed
+			'Hpost_post_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Just a link for the page for posts
 			'apost_post_root' => get_option('page_for_posts'),
 			//Should the trail include the taxonomy of the post
@@ -92,46 +92,46 @@ class bcn_breadcrumb_trail
 			'Spost_post_taxonomy_type' => 'category',
 			//Attachment settings
 			//TODO: Need to move attachments to support via normal post handlers
-			//The breadcrumb template for attachment breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_attachment_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hpost_attachment_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for attachment breadcrumbs
+			'Hpost_attachment_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed
+			'Hpost_attachment_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//404 page settings
-			//The template for 404 breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'H404_template' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The template for 404 breadcrumbs
+			'H404_template' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//The text to be shown in the breadcrumb for a 404 page
 			'S404_title' => __('404', 'breadcrumb-navxt'),
 			//Search page options
-			//The breadcrumb template for search breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
+			//The breadcrumb template for search breadcrumbs
 			'Hsearch_template' => __('Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;', 'breadcrumb-navxt'),
-			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary, four keywords are available %link%, %title%, %htitle%, and %type%
+			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary
 			'Hsearch_template_no_anchor' => __('Search results for &#39;%htitle%&#39;', 'breadcrumb-navxt'),
 			//Tag related stuff
-			//The breadcrumb template for tag breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_post_tag_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for tag breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_post_tag_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for tag breadcrumbs
+			'Htax_post_tag_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% tag archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for tag breadcrumbs
+			'Htax_post_tag_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Post format related stuff
-			//The breadcrumb template for post format breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_post_format_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% tag archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for post format breadcrumbs, used when an anchor is not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_post_format_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
+			//The breadcrumb template for post format breadcrumbs
+			'Htax_post_format_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for post format breadcrumbs
+			'Htax_post_format_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
 			//Author page stuff
-			//The anchor template for author breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
+			//The anchor template for author breadcrumbs
 			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
-			//The anchor template for author breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
+			//The anchor template for author breadcrumbs, used when anchors are not needed
 			'Hauthor_template_no_anchor' => __('Articles by: %htitle%', 'breadcrumb-navxt'),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
 			//Category stuff
-			//The breadcrumb template for category breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_category_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% category archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for category breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Htax_category_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>',
-			//The breadcrumb template for date breadcrumbs, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hdate_template' => __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to the %title% archives." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for date breadcrumbs, used when anchors are not needed, four keywords are available %link%, %title%, %htitle%, and %type%
-			'Hdate_template_no_anchor' => '<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>'
+			//The breadcrumb template for category breadcrumbs
+			'Htax_category_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% category archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for category breadcrumbs, used when anchors are not needed
+			'Htax_category_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			//The breadcrumb template for date breadcrumbs
+			'Hdate_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			//The breadcrumb template for date breadcrumbs, used when anchors are not needed
+			'Hdate_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>'
 		);
 	}
 	/**
@@ -960,6 +960,7 @@ class bcn_breadcrumb_trail
 		$this->order($reverse);
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
+		$position = 1;
 		//The main compiling loop
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
@@ -987,7 +988,8 @@ class bcn_breadcrumb_trail
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
 			}
 			//Place in the breadcrumb's assembled elements
-			$trail_str .= $breadcrumb->assemble($linked);
+			$trail_str .= $breadcrumb->assemble($linked, $position);
+			$position++;
 		}
 		//Should we return or echo the assembled trail?
 		if($return)
@@ -1018,6 +1020,7 @@ class bcn_breadcrumb_trail
 		$this->order($reverse);
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
+		$position = 1;
 		//The main compiling loop
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
@@ -1047,7 +1050,8 @@ class bcn_breadcrumb_trail
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
 			}
 			//Assemble the breadrumb and wrap with li's
-			$trail_str .= sprintf("<li%s>%s</li>\n", $li_attribs, $breadcrumb->assemble($linked));
+			$trail_str .= sprintf("<li%s>%s</li>\n", $li_attribs, $breadcrumb->assemble($linked, $position));
+			$position++;
 		}
 		//Should we return or echo the assembled trail?
 		if($return)

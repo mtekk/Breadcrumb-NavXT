@@ -61,11 +61,11 @@ class bcn_breadcrumb
 		{
 			if($url == NULL || $url === '')
 			{
-				$template = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
+				$template = __('<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
 			}
 			else
 			{
-				$template = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%" class="%type%">%htitle%</a></span>', 'breadcrumb-navxt');
+				$template = __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
 			}
 		}
 		//Loose comparison, evaluates to true if URL is '' or NULL
@@ -191,10 +191,12 @@ class bcn_breadcrumb
 	/**
 	 * Assembles the parts of the breadcrumb into a html string
 	 * 
-	 * @param bool $linked (optional) Allow the output to contain anchors?
+	 * @param bool $linked Allow the output to contain anchors?
+	 * @param int $position The position of the breadcrumb in the trail (between 1 and n when there are n breadcrumbs in the trail)
+	 * 
 	 * @return string The compiled breadcrumb string
 	 */
-	public function assemble($linked = true)
+	public function assemble($linked, $position)
 	{
 		//Build our replacements array
 		$replacements = array(
@@ -203,7 +205,8 @@ class bcn_breadcrumb
 			'%htitle%' => $this->title,
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
-			'%fhtitle%' => $this->_title
+			'%fhtitle%' => $this->_title,
+			'%position%' => $position
 			);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements['%type%']))

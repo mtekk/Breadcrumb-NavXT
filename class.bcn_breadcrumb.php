@@ -38,6 +38,7 @@ class bcn_breadcrumb
 	//The type of this breadcrumb
 	public $type;
 	protected $allowed_html = array();
+	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *  
@@ -61,11 +62,11 @@ class bcn_breadcrumb
 		{
 			if($url == NULL || $url === '')
 			{
-				$template = __('<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
+				$template = bcn_breadcrumb::default_template_no_anchor;
 			}
 			else
 			{
-				$template = __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
+				$template = bcn_breadcrumb::get_default_template();
 			}
 		}
 		//Loose comparison, evaluates to true if URL is '' or NULL
@@ -79,6 +80,15 @@ class bcn_breadcrumb
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);
+	}
+	/**
+	 * Function to return the translated default template
+	 * 
+	 * @return string The default breadcrumb template 
+	 */
+	static public function get_default_template()
+	{
+		return __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
 	}
 	/**
 	 * Function to set the protected title member

@@ -260,8 +260,8 @@ class breadcrumb_navxt
 				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
 					//Add the necessary option array members
-					$opts['Hpost_' . $post_type->name . '_template'] = __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
-					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
+					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
 						$opts['bpost_' . $post_type->name . '_archive_display'] = true;

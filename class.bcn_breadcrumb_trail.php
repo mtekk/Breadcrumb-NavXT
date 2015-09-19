@@ -43,21 +43,21 @@ class bcn_breadcrumb_trail
 			//Should the mainsite be shown
 			'bmainsite_display' => true,
 			//The breadcrumb template for the main site
-			'Hmainsite_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hmainsite_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for the main site, used when an anchor is not needed
-			'Hmainsite_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hmainsite_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Should the home page be shown
 			'bhome_display' => true,
 			//The breadcrumb template for the home page
-			'Hhome_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hhome_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for the home page, used when an anchor is not needed
-			'Hhome_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hhome_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Should the blog page be shown globally
 			'bblog_display' => true,
 			//The breadcrumb template for the blog page only in static front page mode
-			'Hblog_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hblog_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for the blog page only in static front page mode, used when an anchor is not needed
-			'Hblog_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hblog_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
 			//the first and not after the last breadcrumb
 			'hseparator' => ' &gt; ',
@@ -69,9 +69,9 @@ class bcn_breadcrumb_trail
 			'bcurrent_item_linked' => false,
 			//Static page options
 			//The anchor template for page breadcrumbs
-			'Hpost_page_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hpost_page_template' => bcn_breadcrumb::get_default_template(),
 			//The anchor template for page breadcrumbs, used when an anchor is not needed
-			'Hpost_page_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hpost_page_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Just a link to the page on front property
 			'apost_page_root' => get_option('page_on_front'),
 			//Paged options
@@ -81,9 +81,9 @@ class bcn_breadcrumb_trail
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
 			//The breadcrumb template for post breadcrumbs
-			'Hpost_post_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hpost_post_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for post breadcrumbs, used when an anchor is not needed
-			'Hpost_post_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hpost_post_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Just a link for the page for posts
 			'apost_post_root' => get_option('page_for_posts'),
 			//Should the trail include the taxonomy of the post
@@ -91,14 +91,13 @@ class bcn_breadcrumb_trail
 			//What taxonomy should be shown leading to the post, tag or category
 			'Spost_post_taxonomy_type' => 'category',
 			//Attachment settings
-			//TODO: Need to move attachments to support via normal post handlers
 			//The breadcrumb template for attachment breadcrumbs
-			'Hpost_attachment_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
+			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed
-			'Hpost_attachment_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Hpost_attachment_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//404 page settings
 			//The template for 404 breadcrumbs
-			'H404_template' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'H404_template' => bcn_breadcrumb::default_template_no_anchor,
 			//The text to be shown in the breadcrumb for a 404 page
 			'S404_title' => __('404', 'breadcrumb-navxt'),
 			//Search page options
@@ -109,13 +108,13 @@ class bcn_breadcrumb_trail
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs
 			'Htax_post_tag_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% tag archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
-			//The breadcrumb template for tag breadcrumbs
-			'Htax_post_tag_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			//The breadcrumb template for tag breadcrumbs, used when an anchor is not necessary
+			'Htax_post_tag_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Post format related stuff
-			//The breadcrumb template for post format breadcrumbs
+			//The breadcrumb template for post format breadcrumbs, used when an anchor is not necessary
 			'Htax_post_format_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for post format breadcrumbs
-			'Htax_post_format_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Htax_post_format_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Author page stuff
 			//The anchor template for author breadcrumbs
 			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
@@ -127,11 +126,11 @@ class bcn_breadcrumb_trail
 			//The breadcrumb template for category breadcrumbs
 			'Htax_category_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% category archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for category breadcrumbs, used when anchors are not needed
-			'Htax_category_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>',
+			'Htax_category_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//The breadcrumb template for date breadcrumbs
 			'Hdate_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for date breadcrumbs, used when anchors are not needed
-			'Hdate_template_no_anchor' => '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>'
+			'Hdate_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor
 		);
 	}
 	/**

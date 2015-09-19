@@ -125,7 +125,8 @@ class breadcrumb_navxt
 						'itemtype' => true,
 						'xmlns:v' => true,
 						'typeof' => true,
-						'property' => true
+						'property' => true,
+						'vocab' => true
 					),
 					'img' => array(
 						'alt' => true,
@@ -144,7 +145,8 @@ class breadcrumb_navxt
 						'itemtype' => true,
 						'xmlns:v' => true,
 						'typeof' => true,
-						'property' => true
+						'property' => true,
+						'vocab' => true
 					),
 					'span' => array(
 						'title' => true,
@@ -163,7 +165,8 @@ class breadcrumb_navxt
 						'itemtype' => true,
 						'xmlns:v' => true,
 						'typeof' => true,
-						'property' => true
+						'property' => true,
+						'vocab' => true
 					),
 					'h1' => array(
 						'title' => true,
@@ -182,7 +185,8 @@ class breadcrumb_navxt
 						'itemtype' => true,
 						'xmlns:v' => true,
 						'typeof' => true,
-						'property' => true
+						'property' => true,
+						'vocab' => true
 					),
 					'h2' => array(
 						'title' => true,
@@ -201,7 +205,13 @@ class breadcrumb_navxt
 						'itemtype' => true,
 						'xmlns:v' => true,
 						'typeof' => true,
-						'property' => true
+						'property' => true,
+						'vocab' => true
+					),
+					'meta' => array(
+						'content' => true,
+						'property' => true,
+						'vocab' => true
 					)
 		);
 		return mtekk_adminKit::array_merge_recursive($tags, $allowed_html);
@@ -250,8 +260,8 @@ class breadcrumb_navxt
 				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
 					//Add the necessary option array members
-					$opts['Hpost_' . $post_type->name . '_template'] = __('<span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" title="Go to %title%." href="%link%">%htitle%</a></span>', 'breadcrumb-navxt');
-					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span typeof="v:Breadcrumb"><span property="v:title">%htitle%</span></span>', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template'] = __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
+					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = __('<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
 						$opts['bpost_' . $post_type->name . '_archive_display'] = true;

@@ -22,7 +22,6 @@
  * @author Tom Klingenberg
  */
 
-
 require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_uninstaller.php');
 
 /**
@@ -41,12 +40,28 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 		parent::__construct();
 	}
 	/**
+	 * Options uninstallation function for legacy
+	 */
+	private function uninstall_legacy()
+	{
+		delete_option($this->unique_prefix . '_options');
+		delete_option($this->unique_prefix . '_options_bk');
+		delete_option($this->unique_prefix . '_version');
+		delete_site_option($this->unique_prefix . '_options');
+		delete_site_option($this->unique_prefix . '_options_bk');
+		delete_site_option($this->unique_prefix . '_version');
+	}
+	/**
 	 * uninstall breadcrumb navxt admin plugin
 	 * 
 	 * @return bool
 	 */
 	private function uninstall_options()
-	{	
+	{
+		if(version_compare(phpversion(), '5.3.0', '<'))
+		{
+			return $this->uninstall_legacy();
+		}
 		//Grab our global breadcrumb_navxt object
 		global $breadcrumb_navxt;
 		//Load dependencies if applicable

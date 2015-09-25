@@ -62,6 +62,9 @@ abstract class mtekk_adminKit_uninstaller
 	{
 		return !((get_option($this->unique_prefix . '_options') !== false)
 				&& (get_option($this->unique_prefix . '_options_bk') !== false)
-				&& ($this->unique_prefix . '_version') !== false);
+				&& (get_option($this->unique_prefix . '_version') !== false)
+				&& (get_site_option($this->unique_prefix . '_options') !== false)
+				&& (get_site_option($this->unique_prefix . '_options_bk') !== false)
+				&& (get_site_option($this->unique_prefix . '_version') !== false));
 	}
 } /// class bcn_uninstaller_abstract

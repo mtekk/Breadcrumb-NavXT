@@ -9,121 +9,14 @@
  * @author Tom Klingenberg
  */
 
-require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
-/**
- * Breadcrumb NavXT abstract plugin uninstaller class
- * 
- * @author Tom Klingenberg
- */
-abstract class bcn_uninstaller_abstract {
-
-	/**
-	 * plugin base
-	 * 
-	 * @var string plugin dirname
-	 */
-	protected $_base = '';
-	
-	/**
-	 * plugin name
-	 *
-	 * @var string plugin basename (the php-file including the .php suffix)
-	 */
-	protected $_plugin = '';
-
-	/**
-	 * uninstalled flag
-	 * 
-	 * @var bool uninstall flag, true if uninstall allready run, false on init
-	 */
-	protected $_uninstalled = false;
-	
-	/**
-	 * uninstall result
-	 * 
-	 * @var bool wether or not uninstall worked
-	 */
-	protected $_uninstallResult = null;
-	
-	/**
-	 * get plugin path
-	 * 
-	 * @return string full path to plugin file
-	 */
-	protected function _getPluginPath()
-	{
-		return sprintf('%s/%s/%s', WP_PLUGIN_DIR, $this->_base, $this->_plugin);		
-	}
-
-	/**
-	 * constructor 
-	 * 
-	 * @param  array $options class options
-	 * 				plugin => 
-	 */
-	public function __construct(array $options = null)
-	{
-		/* plugin setter */				
-		if (isset($options['plugin']))
-		{
-			$this->setPlugin($options['plugin']);
-		}
-		
-		/* init */		
-		$this->_uninstallResult = $this->uninstall();				
-	}
-	
-	/**
-	 * Result Getter
-	 * 
-	 * @return bool wether or not uninstall did run successfull.
-	 */
-	public function getResult()
-	{
-		return $this->_uninstallResult;	
-	}
-	
-	/**
-	 * plugin setter
-	 * 
-	 * @param  string $plugin plugin name as common with wordpress as 'dir/file.php' 
-	 * 				          e.g. 'breadcrumb-navxt/breadcrumb_navxt_admin.php'.
-	 * @return this 
-	 */
-	public function setPlugin($plugin)
-	{
-		/* if plugin contains a base, check and process it. */		
-		if (false !== strpos($plugin, '/'))
-		{
-			// check
-			
-			$compare = $this->_base . '/';
-			
-			if (substr($plugin, 0, strlen($compare)) != $compare)
-			{
-				throw new DomainException(sprintf('Plugin "%s" has the wrong base to fit the one of Uninstaller ("%").', $plugin, $this->_base), 30001);
-			}
-			
-			// process
-			
-			$plugin = substr($plugin, strlen($compare));
-		}
-		
-		/* set local store */
-		
-		$this->_plugin = $plugin;
-		
-		return $this;
-	}
-
-} /// class bcn_uninstaller_abstract
+require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_uninstaller.php');
 
 /**
  * Breadcrumb NavXT uninstaller class
  * 
  * @author Tom Klingenberg
  */
-class bcn_uninstaller extends bcn_uninstaller_abstract {
+class bcn_uninstaller extends mtekk_adminKit_uninstaller {
 
 	/**
 	 * plugin base

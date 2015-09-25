@@ -22,44 +22,19 @@ require_once(dirname(__FILE__) . '/block_direct_access.php');
  * 
  * @author Tom Klingenberg
  */
-abstract class mtekk_adminKit_uninstaller {
-
-	/**
-	 * plugin base
-	 * 
-	 * @var string plugin dirname
-	 */
-	protected $_base = '';
-	
-	/**
-	 * plugin name
-	 *
-	 * @var string plugin basename (the php-file including the .php suffix)
-	 */
-	protected $_plugin = '';
-
-	/**
-	 * uninstalled flag
-	 * 
-	 * @var bool uninstall flag, true if uninstall allready run, false on init
-	 */
-	protected $_uninstalled = false;
-	
-	/**
-	 * uninstall result
-	 * 
-	 * @var bool wether or not uninstall worked
-	 */
-	protected $_uninstallResult = null;
-	
+abstract class mtekk_adminKit_uninstaller
+{
+	protected $unique_prefix = '';
+	protected $plugin_basename = null;
+	protected $_uninstall_result = false;
 	/**
 	 * get plugin path
 	 * 
 	 * @return string full path to plugin file
 	 */
-	protected function _getPluginPath()
+	protected function _get_plugin_path()
 	{
-		return sprintf('%s/%s/%s', WP_PLUGIN_DIR, $this->_base, $this->_plugin);		
+		return sprintf('%s/%s', WP_PLUGIN_DIR, $this->plugin_basename);		
 	}
 
 	/**
@@ -68,16 +43,9 @@ abstract class mtekk_adminKit_uninstaller {
 	 * @param  array $options class options
 	 * 				plugin => 
 	 */
-	public function __construct(array $options = null)
+	public function __construct()
 	{
-		/* plugin setter */				
-		if (isset($options['plugin']))
-		{
-			$this->setPlugin($options['plugin']);
-		}
-		
-		/* init */		
-		$this->_uninstallResult = $this->uninstall();				
+		$this->_uninstall_result = $this->uninstall();				
 	}
 	
 	/**
@@ -85,42 +53,15 @@ abstract class mtekk_adminKit_uninstaller {
 	 * 
 	 * @return bool wether or not uninstall did run successfull.
 	 */
-	public function getResult()
+	public function get_result()
 	{
-		return $this->_uninstallResult;	
+		return $this->_uninstall_result;	
 	}
 	
-	/**
-	 * plugin setter
-	 * 
-	 * @param  string $plugin plugin name as common with wordpress as 'dir/file.php' 
-	 * 				          e.g. 'breadcrumb-navxt/breadcrumb_navxt_admin.php'.
-	 * @return this 
-	 */
-	public function setPlugin($plugin)
+	public function is_installed()
 	{
-		/* if plugin contains a base, check and process it. */		
-		if (false !== strpos($plugin, '/'))
-		{
-			// check
-			
-			$compare = $this->_base . '/';
-			
-			if (substr($plugin, 0, strlen($compare)) != $compare)
-			{
-				throw new DomainException(sprintf('Plugin "%s" has the wrong base to fit the one of Uninstaller ("%").', $plugin, $this->_base), 30001);
-			}
-			
-			// process
-			
-			$plugin = substr($plugin, strlen($compare));
-		}
-		
-		/* set local store */
-		
-		$this->_plugin = $plugin;
-		
-		return $this;
+		return !((get_option($this->unique_prefix . '_options') !== false)
+				&& (get_option($this->unique_prefix . '_options_bk') !== false)
+				&& ($this->unique_prefix . '_version') !== false);
 	}
-
 } /// class bcn_uninstaller_abstract

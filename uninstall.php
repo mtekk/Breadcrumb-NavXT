@@ -23,12 +23,62 @@
  */
 
 
-/*
- * @see bcn_uninstaller
+require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_uninstaller.php');
+
+/**
+ * Breadcrumb NavXT uninstaller class
+ * 
+ * @author Tom Klingenberg
  */
-require_once(dirname(__FILE__) . '/class.bcn_uninstaller.php');
+class bcn_uninstaller extends mtekk_adminKit_uninstaller
+{
+	protected $unique_prefix = 'bcn';
+	protected $plugin_basename = null;
+	
+	public function __construct()
+	{
+		$this->plugin_basename = dirname(__FILE__) . '/breadcrumb-navxt.php';
+		parent::__construct();
+	}
+	/**
+	 * uninstall breadcrumb navxt admin plugin
+	 * 
+	 * @return bool
+	 */
+	private function uninstall_options()
+	{	
+		//Grab our global breadcrumb_navxt object
+		global $breadcrumb_navxt;
+		//Load dependencies if applicable
+		if(!class_exists('breadcrumb_navxt'))
+		{
+			require_once($this->_getPluginPath());
+		}
+		//Initalize $breadcrumb_navxt so we can use it
+		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
+		//Let's make an instance of our object takes care of everything
+		$breadcrumb_navxt = new breadcrumb_navxt($bcn_breadcrumb_trail);
+		//Uninstall
+		return $breadcrumb_navxt->uninstall();
+	}	
+	
+	/**
+	 * uninstall method
+	 * 
+	 * @return bool wether or not uninstall did run successfull.
+	 */
+	public function uninstall()
+	{
+		//Only bother to do things 
+		if($this->is_installed())
+		{
+			return $this->_uninstallAdmin();
+		}	
+	}
+	
+} /// class bcn_uninstaller
 
 /*
  * main
  */
-new bcn_uninstaller( array('plugin' => $plugin) );
+new bcn_uninstaller();

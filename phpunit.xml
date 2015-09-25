@@ -13,7 +13,7 @@
 	</testsuites>
 	<groups>
 		<exclude>
-		<group>uninstall</group>
+			<group>uninstall</group>
 		</exclude>
 	</groups>
 </phpunit>

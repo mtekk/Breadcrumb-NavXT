@@ -1,4 +1,4 @@
-# Breadcrumb NavXT Unit Tests [![Build Status](https://secure.travis-ci.org/mtekk/Breadcrumb-NavXT/Breadcrumb-NavXT.png?branch=master)](https://secure.travis-ci.org/mtekk/Breadcrumb-NavXT) #
+# Breadcrumb NavXT Unit Tests [![Build Status](https://travis-ci.org/mtekk/Breadcrumb-NavXT.svg)](https://travis-ci.org/mtekk/Breadcrumb-NavXT) #
 
 
 This folder contains all the tests for Breadcrumb NavXT.

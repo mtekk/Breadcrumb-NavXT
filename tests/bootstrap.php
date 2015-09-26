@@ -19,8 +19,13 @@ function _manually_load_plugin() {
 	require dirname( dirname( __FILE__ ) ) . '/breadcrumb-navxt.php';
 }
 
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
-
+if ( ! running_wp_plugin_uninstall_tests() ) {
+	tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+}
 require $_tests_dir . '/includes/bootstrap.php';
 
 include_once dirname( __FILE__ ) . '/uninstall/bootstrap.php';
+
+if ( ! running_wp_plugin_uninstall_tests() ) {
+	activate_plugin( 'breadcrumb-navxt/breadcrumb-navxt.php' );
+}

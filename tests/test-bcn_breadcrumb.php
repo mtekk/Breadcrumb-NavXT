@@ -3,6 +3,7 @@
  * This file contains tests for the bcn_breadcrumb class
  *
  * @group bcn_breadcrumb
+ * @group bcn_core
  */
 class BreadcrumbTest extends WP_UnitTestCase {
 	public $breadcrumb;

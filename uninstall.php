@@ -36,7 +36,7 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 	
 	public function __construct()
 	{
-		$this->plugin_basename = dirname(__FILE__) . '/breadcrumb-navxt.php';
+		$this->plugin_basename = plugin_basename('/breadcrumb-navxt.php');
 		parent::__construct();
 	}
 	/**
@@ -67,7 +67,7 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 		//Load dependencies if applicable
 		if(!class_exists('breadcrumb_navxt'))
 		{
-			require_once($this->_getPluginPath());
+			require_once($this->_get_plugin_path());
 		}
 		//Initalize $breadcrumb_navxt so we can use it
 		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
@@ -87,7 +87,7 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 		//Only bother to do things 
 		if($this->is_installed())
 		{
-			return $this->_uninstallAdmin();
+			return $this->uninstall_options();
 		}	
 	}
 	

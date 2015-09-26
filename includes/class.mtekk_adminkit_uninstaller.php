@@ -34,7 +34,7 @@ abstract class mtekk_adminKit_uninstaller
 	 */
 	protected function _get_plugin_path()
 	{
-		return sprintf('%s/%s', WP_PLUGIN_DIR, $this->plugin_basename);		
+		return sprintf('%s/%s', dirname(dirname(__FILE__)), $this->plugin_basename);		
 	}
 
 	/**
@@ -60,7 +60,7 @@ abstract class mtekk_adminKit_uninstaller
 	
 	public function is_installed()
 	{
-		return !((get_option($this->unique_prefix . '_options') !== false)
+		return ((get_option($this->unique_prefix . '_options') !== false)
 				&& (get_option($this->unique_prefix . '_options_bk') !== false)
 				&& (get_option($this->unique_prefix . '_version') !== false)
 				&& (get_site_option($this->unique_prefix . '_options') !== false)

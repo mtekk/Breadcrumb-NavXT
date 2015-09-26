@@ -27,7 +27,7 @@ class bcn_breadcrumb
 	//The breadcrumb's template, used durring assembly
 	protected $template;
 	//The breadcrumb's no anchor template, used durring assembly when there won't be an anchor
-	protected $template_no_anchor = '%title%';
+	protected $template_no_anchor;
 	//Boolean, is this element linked
 	protected $linked = false;
 	//The link the breadcrumb leads to, null if $linked == false
@@ -47,7 +47,7 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function __construct($title = '', $template = '', array $type = array(), $url = NULL, $id = NULL)
+	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = NULL)
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
@@ -57,26 +57,26 @@ class bcn_breadcrumb
 		$this->set_id($id);
 		//Set the title
 		$this->set_title($title);
-		//Assign the breadcrumb template, need strict comparison as we only want to enter if we had a blank URL, not NULL URL
-		if($template == NULL || $url === '')
+		//Set the default anchorless templates value
+		$this->template_no_anchor = bcn_breadcrumb::default_template_no_anchor;
+		//If we didn't get a good template, use a default template
+		if($template == NULL)
 		{
-			if($url == NULL || $url === '')
+			$this->set_template(bcn_breadcrumb::get_default_template());
+		}
+		//If something was passed in template wise, update the appropriate internal template
+		else
+		{
+			//Loose comparison, evaluates to true if URL is '' or NULL
+			if($url == NULL)
 			{
-				$template = bcn_breadcrumb::default_template_no_anchor;
+				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
+				$this->set_template(bcn_breadcrumb::get_default_template());
 			}
 			else
 			{
-				$template = bcn_breadcrumb::get_default_template();
-			}
-		}
-		//Loose comparison, evaluates to true if URL is '' or NULL
-		if($url == NULL)
-		{
-				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
-		}
-		else
-		{
 				$this->set_template($template);
+			}
 		}
 		//Always NULL if unlinked
 		$this->set_url($url);

@@ -662,14 +662,16 @@ class bcn_breadcrumb_trail
 	/**
 	 * Retrieves the query var for 'post_type', sets default to post, and escapes
 	 * 
+	 * @param string $default[optional] The default value to return if nothing was found/set
+	 * 
 	 * @return string The post type string found in the post_type query var
 	 */
-	protected function get_type_string_query_var()
+	protected function get_type_string_query_var($default = 'post')
 	{
-		$type_str = get_query_var('post_type', 'post');
+		$type_str = get_query_var('post_type', $default);
 		if($type_str === '')
 		{
-			$type_str = 'post';
+			$type_str = $default;
 		}
 		return esc_attr($type_str);
 	}
@@ -765,11 +767,10 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We need to do special things for custom post type archives, but not author or date archives
-		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($this->get_type_string_query_var()))
+		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
 		{
 			//We need the type for later, so save it
-			$type_str = $this->get_type_string_query_var();
-			//$wp_taxonomies[$type->taxonomy]->object_type[0];
+			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
 			//This will assign a ID for root page of a custom post's taxonomy archive
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{

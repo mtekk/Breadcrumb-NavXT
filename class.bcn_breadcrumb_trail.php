@@ -217,7 +217,8 @@ class bcn_breadcrumb_trail
 	{
 		//Fill a temporary object with the terms
 		$bcn_object = get_the_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
-		if(is_array($bcn_object))
+		//Make sure we have an non-empty array
+		if(is_array($bcn_object) && $bcn_object)
 		{
 			//Now find which one has a parent, pick the first one that does
 			$bcn_use_term = key($bcn_object);
@@ -252,7 +253,7 @@ class bcn_breadcrumb_trail
 			//Check if we have a date 'taxonomy' request
 			if($this->opt['Spost_' . $type . '_taxonomy_type'] == 'date')
 			{
-				$this->do_archive_by_date();
+				$this->do_archive_by_date($type);
 			}
 			//Handle all hierarchical taxonomies, including categories
 			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
@@ -478,9 +479,10 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for a date archive.
-	 *
+	 * 
+	 * @param string $type The type to restrict the date archives to
 	 */
-	protected function do_archive_by_date()
+	protected function do_archive_by_date($type)
 	{
 		global $wp_query;
 		//First deal with the day breadcrumb
@@ -498,8 +500,14 @@ class bcn_breadcrumb_trail
 			{
 				//We're linking, so set the linked template
 				$breadcrumb->set_template($this->opt['Hdate_template']);
+				$url = get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('d'));
+				//If the type is not a post, add the type to query
+				if($type !== 'post')
+				{
+					$url = add_query_arg(array('post_type' => $type), $url);
+				}
 				//Deal with the anchor
-				$breadcrumb->set_url(get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('d')));
+				$breadcrumb->set_url($url);
 			}
 		}
 		//Now deal with the month breadcrumb
@@ -517,8 +525,14 @@ class bcn_breadcrumb_trail
 			{
 				//We're linking, so set the linked template
 				$breadcrumb->set_template($this->opt['Hdate_template']);
+				$url = get_month_link(get_the_time('Y'), get_the_time('m'));
+				//If the type is not a post, add the type to query
+				if($type !== 'post')
+				{
+					$url = add_query_arg(array('post_type' => $type), $url);
+				}
 				//Deal with the anchor
-				$breadcrumb->set_url(get_month_link(get_the_time('Y'), get_the_time('m')));
+				$breadcrumb->set_url($url);
 			}
 		}
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
@@ -533,8 +547,14 @@ class bcn_breadcrumb_trail
 		{
 			//We're linking, so set the linked template
 			$breadcrumb->set_template($this->opt['Hdate_template']);
+			$url = get_year_link(get_the_time('Y'));
+			//If the type is not a post, add the type to query
+			if($type !== 'post')
+			{
+				$url = add_query_arg(array('post_type' => $type), $url);
+			}
 			//Deal with the anchor
-			$breadcrumb->set_url(get_year_link(get_the_time('Y')));
+			$breadcrumb->set_url($url);
 		}
 	}
 	/**
@@ -884,7 +904,12 @@ class bcn_breadcrumb_trail
 			//For date based archives
 			if(is_date())
 			{
-				$this->do_archive_by_date();
+				$type_str = get_query_var('post_type', 'post');
+				if($type_str === '')
+				{
+					$type_str = 'post';
+				}
+				$this->do_archive_by_date($type_str);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy) && (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))

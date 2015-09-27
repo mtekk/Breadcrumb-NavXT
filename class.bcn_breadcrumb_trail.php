@@ -476,6 +476,23 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
+	 * Adds the post type argument to the URL iff the passed in type is not post
+	 * 
+	 * @param string $url The URL to possibly add the post_type argument to
+	 * @param string $type[optional] The type to possibly add to the URL
+	 * 
+	 * @return string The possibly modified URL
+	 */
+	protected function maybe_add_post_type_arg($url, $type = 'post')
+	{
+		//If the type is not a post, add the type to query
+		if($type !== 'post')
+		{
+			$url = add_query_arg(array('post_type' => $type), $url);
+		}
+		return $url;
+	}
+	/**
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This functions fills a breadcrumb for a date archive.
@@ -501,13 +518,8 @@ class bcn_breadcrumb_trail
 				//We're linking, so set the linked template
 				$breadcrumb->set_template($this->opt['Hdate_template']);
 				$url = get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('d'));
-				//If the type is not a post, add the type to query
-				if($type !== 'post')
-				{
-					$url = add_query_arg(array('post_type' => $type), $url);
-				}
 				//Deal with the anchor
-				$breadcrumb->set_url($url);
+				$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 			}
 		}
 		//Now deal with the month breadcrumb
@@ -526,13 +538,8 @@ class bcn_breadcrumb_trail
 				//We're linking, so set the linked template
 				$breadcrumb->set_template($this->opt['Hdate_template']);
 				$url = get_month_link(get_the_time('Y'), get_the_time('m'));
-				//If the type is not a post, add the type to query
-				if($type !== 'post')
-				{
-					$url = add_query_arg(array('post_type' => $type), $url);
-				}
 				//Deal with the anchor
-				$breadcrumb->set_url($url);
+				$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 			}
 		}
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
@@ -548,13 +555,8 @@ class bcn_breadcrumb_trail
 			//We're linking, so set the linked template
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_year_link(get_the_time('Y'));
-			//If the type is not a post, add the type to query
-			if($type !== 'post')
-			{
-				$url = add_query_arg(array('post_type' => $type), $url);
-			}
 			//Deal with the anchor
-			$breadcrumb->set_url($url);
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 		}
 	}
 	/**
@@ -564,13 +566,15 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_archive_by_post_type()
 	{
+		$type_str = $this->get_type_string_query_var();
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . get_query_var('post_type') . '_template_no_anchor'], array('archive', 'post-' . get_query_var('post_type') . '-archive', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array('archive', 'post-' . $type_str . '-archive', 'current-item')));
 		if($this->opt['bcurrent_item_linked'] || is_paged() && $this->opt['bpaged_display'])
 		{
-			$breadcrumb->set_template($this->opt['Hpost_' . get_query_var('post_type') . '_template']);
+			
+			$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 			//Deal with the anchor
-			$breadcrumb->set_url(get_post_type_archive_link(get_query_var('post_type')));
+			$breadcrumb->set_url(get_post_type_archive_link($type_str));
 		}
 	}
 	/**
@@ -852,11 +856,12 @@ class bcn_breadcrumb_trail
 		//Need to switch between paged and page for archives and singular (posts)
 		if(get_query_var('paged') > 0)
 		{
+			//Can use simple type hinting here to int since we already checked for greater than 0
 			$page_number = (int) get_query_var('paged');
 		}
 		else
 		{
-			$page_number = (int) get_query_var('page');
+			$page_number = absint(get_query_var('page'));
 		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, prefix, and suffix
 		$this->breadcrumbs[] = new bcn_breadcrumb($page_number, $this->opt['Hpaged_template'], array('paged'));

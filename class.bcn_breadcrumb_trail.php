@@ -674,6 +674,20 @@ class bcn_breadcrumb_trail
 		return $type->has_archive;
 	}
 	/**
+	 * Retrieves the query var for 'post_type', sets default to post, and escapes
+	 * 
+	 * @return string The post type string found in the post_type query var
+	 */
+	protected function get_type_string()
+	{
+		$type_str = get_query_var('post_type', 'post');
+		if($type_str === '')
+		{
+			$type_str = 'post';
+		}
+		return esc_attr($type_str);
+	}
+	/**
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * Deals with the post type archive and taxonomy archives
@@ -683,11 +697,16 @@ class bcn_breadcrumb_trail
 	protected function type_archive($type)
 	{
 		global $wp_taxonomies;
+		$type_str = false;
+		if(!isset($type->taxonomy))
+		{
+			$type_str = $this->get_type_string();
+		}
 		//If this is a custom post type with a post type archive, add it
-		if(isset($type->post_type) && !$this->is_builtin($type->post_type) && $this->opt['bpost_' . $type->post_type . '_archive_display'] && $this->has_archive($type->post_type))
+		if($type_str && !$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type->post_type)), $this->opt['Hpost_' . $type->post_type . '_template'], array('post', 'post-' . $type->post_type . '-archive'), get_post_type_archive_link($type->post_type)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type_str)), $this->opt['Hpost_' . $type_str . '_template'], array('post', 'post-' . $type_str . '-archive'), get_post_type_archive_link($type_str)));
 		}
 		//Otherwise, if this is a custom taxonomy with an archive, add it
 		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]) && $this->opt['bpost_' . $wp_taxonomies[$type->taxonomy]->object_type[0] . '_archive_display'] && $this->has_archive($wp_taxonomies[$type->taxonomy]->object_type[0]))
@@ -833,11 +852,11 @@ class bcn_breadcrumb_trail
 		//Need to switch between paged and page for archives and singular (posts)
 		if(get_query_var('paged') > 0)
 		{
-			$page_number = get_query_var('paged');
+			$page_number = (int) get_query_var('paged');
 		}
 		else
 		{
-			$page_number = get_query_var('page');
+			$page_number = (int) get_query_var('page');
 		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, prefix, and suffix
 		$this->breadcrumbs[] = new bcn_breadcrumb($page_number, $this->opt['Hpaged_template'], array('paged'));
@@ -904,12 +923,7 @@ class bcn_breadcrumb_trail
 			//For date based archives
 			if(is_date())
 			{
-				$type_str = get_query_var('post_type', 'post');
-				if($type_str === '')
-				{
-					$type_str = 'post';
-				}
-				$this->do_archive_by_date($type_str);
+				$this->do_archive_by_date($this->get_type_string());
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy) && (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))

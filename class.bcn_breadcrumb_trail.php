@@ -328,7 +328,7 @@ class bcn_breadcrumb_trail
 				//This is a bit hackish, but it compiles the term anchor and appends it to the current breadcrumb title
 				$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . str_replace(
 					array('%title%', '%link%', '%htitle%', '%type%'),
-					array($term->name, get_term_link($term), $term->name, $term->taxonomy),
+					array($term->name, $this->maybe_add_post_type_arg(get_term_link($term), NULL, $term->taxonomy), $term->name, $term->taxonomy),
 					$this->opt['Htax_' . $term->taxonomy . '_template']));
 				$is_first = false;
 			}
@@ -347,7 +347,7 @@ class bcn_breadcrumb_trail
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), get_term_link($term), $id));
+		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), $this->maybe_add_post_type_arg(get_term_link($term), NULL, $taxonomy), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($term->parent && $term->parent != $id)
 		{
@@ -467,7 +467,7 @@ class bcn_breadcrumb_trail
 		{
 			$breadcrumb->set_template($this->opt['Htax_' . $term->taxonomy . '_template']);
 			//Figure out the anchor for current category
-			$breadcrumb->set_url(get_term_link($term));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg(get_term_link($term), NULL, $term->taxonomy));
 		}
 		//Get parents of current term
 		if($term->parent)
@@ -480,11 +480,23 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param string $url The URL to possibly add the post_type argument to
 	 * @param string $type[optional] The type to possibly add to the URL
+	 * @param string $taxonomy[optional] If we're dealing with a taxonomy term, the taxonomy of that term
 	 * 
 	 * @return string The possibly modified URL
 	 */
-	protected function maybe_add_post_type_arg($url, $type = 'post')
+	protected function maybe_add_post_type_arg($url, $type = NULL, $taxonomy = NULL)
 	{
+		global $wp_taxonomies;
+		//Rather than default to post, we should try to find the type
+		if($type == NULL)
+		{
+			$type = $this->get_type_string_query_var();
+		}
+		//Don't add onto the URL if we are on the default post type for the archive in question
+		if($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0])
+		{
+			return $url;
+		}
 		//If the type is not a post, add the type to query
 		if($type !== 'post')
 		{
@@ -754,10 +766,11 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We need to do special things for custom post type archives, but not author or date archives
-		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($wp_taxonomies[$type->taxonomy]->object_type[0]))
+		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($this->get_type_string_query_var()))
 		{
 			//We need the type for later, so save it
-			$type_str = $wp_taxonomies[$type->taxonomy]->object_type[0];
+			$type_str = $this->get_type_string_query_var();
+			//$wp_taxonomies[$type->taxonomy]->object_type[0];
 			//This will assign a ID for root page of a custom post's taxonomy archive
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{

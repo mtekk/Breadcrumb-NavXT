@@ -453,7 +453,6 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * This function fills a breadcrumb for any taxonomy archive, was previously two separate functions
-	 * 
 	 */
 	protected function do_archive_by_term()
 	{
@@ -474,35 +473,6 @@ class bcn_breadcrumb_trail
 		{
 			$this->term_parents($term->parent, $term->taxonomy);
 		}
-	}
-	/**
-	 * Adds the post type argument to the URL iff the passed in type is not post
-	 * 
-	 * @param string $url The URL to possibly add the post_type argument to
-	 * @param string $type[optional] The type to possibly add to the URL
-	 * @param string $taxonomy[optional] If we're dealing with a taxonomy term, the taxonomy of that term
-	 * 
-	 * @return string The possibly modified URL
-	 */
-	protected function maybe_add_post_type_arg($url, $type = NULL, $taxonomy = NULL)
-	{
-		global $wp_taxonomies;
-		//Rather than default to post, we should try to find the type
-		if($type == NULL)
-		{
-			$type = $this->get_type_string_query_var();
-		}
-		//Don't add onto the URL if we are on the default post type for the archive in question
-		if($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0])
-		{
-			return $url;
-		}
-		//If the type is not a post, add the type to query
-		if($type !== 'post')
-		{
-			$url = add_query_arg(array('post_type' => $type), $url);
-		}
-		return $url;
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -702,6 +672,35 @@ class bcn_breadcrumb_trail
 			$type_str = 'post';
 		}
 		return esc_attr($type_str);
+	}
+	/**
+	 * Adds the post type argument to the URL iff the passed in type is not post
+	 * 
+	 * @param string $url The URL to possibly add the post_type argument to
+	 * @param string $type[optional] The type to possibly add to the URL
+	 * @param string $taxonomy[optional] If we're dealing with a taxonomy term, the taxonomy of that term
+	 * 
+	 * @return string The possibly modified URL
+	 */
+	protected function maybe_add_post_type_arg($url, $type = NULL, $taxonomy = NULL)
+	{
+		global $wp_taxonomies;
+		//Rather than default to post, we should try to find the type
+		if($type == NULL)
+		{
+			$type = $this->get_type_string_query_var();
+		}
+		//Don't add onto the URL if we are on the default post type for the archive in question
+		if($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0])
+		{
+			return $url;
+		}
+		//If the type is not a post, add the type to query
+		if($type !== 'post')
+		{
+			$url = add_query_arg(array('post_type' => $type), $url);
+		}
+		return $url;
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function

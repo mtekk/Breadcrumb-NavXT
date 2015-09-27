@@ -678,7 +678,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @return string The post type string found in the post_type query var
 	 */
-	protected function get_type_string()
+	protected function get_type_string_query_var()
 	{
 		$type_str = get_query_var('post_type', 'post');
 		if($type_str === '')
@@ -700,7 +700,7 @@ class bcn_breadcrumb_trail
 		$type_str = false;
 		if(!isset($type->taxonomy))
 		{
-			$type_str = $this->get_type_string();
+			$type_str = $this->get_type_string_query_var();
 		}
 		//If this is a custom post type with a post type archive, add it
 		if($type_str && !$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
@@ -923,7 +923,7 @@ class bcn_breadcrumb_trail
 			//For date based archives
 			if(is_date())
 			{
-				$this->do_archive_by_date($this->get_type_string());
+				$this->do_archive_by_date($this->get_type_string_query_var());
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy) && (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))

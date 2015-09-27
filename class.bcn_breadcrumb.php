@@ -118,7 +118,7 @@ class bcn_breadcrumb
 	 */
 	public function set_url($url)
 	{
-		$this->url = esc_url(apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id));
+		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
 		//If the URL seemed nullish, we are not linked
 		if($this->url == NULL)
 		{
@@ -211,7 +211,7 @@ class bcn_breadcrumb
 		//Build our replacements array
 		$replacements = array(
 			'%title%' => esc_attr(strip_tags($this->title)),
-			'%link%' => $this->url,
+			'%link%' => esc_url($this->url),
 			'%htitle%' => $this->title,
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),

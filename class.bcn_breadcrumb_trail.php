@@ -835,7 +835,9 @@ class bcn_breadcrumb_trail
 					$breadcrumb->add_type('current-item');
 				}
 				//If we're not on the current item we need to setup the anchor
-				if(!$this->treat_as_root_page($type_str) || (is_paged() && $this->opt['bpaged_display']) || ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
+				if(!$this->treat_as_root_page($type_str)
+					|| (is_paged() && $this->opt['bpaged_display'])
+					|| ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
 				{
 					$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 					//Figure out the anchor for home page

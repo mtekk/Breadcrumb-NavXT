@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '5.2.2';
+	const version = '5.2.70';
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false);
 	//Default constructor
 	function __construct()
@@ -61,17 +61,22 @@ class bcn_widget extends WP_Widget
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">' . $instance['pretext'];
+			echo '<div class="breadcrumbs" vocab="http://schema.org/" typeof="BreadcrumbList">' . $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
 			echo '</div>';
 		}
-		else
+		else if($instance['type'] == 'plain')
 		{
 			//Display the pretext
 			echo $instance['pretext'];
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse']);
+		}
+		else
+		{
+			//If we recieved a type that is not of the built in displays, it must be relegated to an extension plugin
+			do_action('bcn_widget_display_trail', $instance);
 		}
 		//Manditory after widget junk
 		echo $args['after_widget'];
@@ -104,6 +109,7 @@ class bcn_widget extends WP_Widget
 				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
 				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Google (RDFa) Breadcrumbs', 'breadcrumb-navxt'); ?></option>
 				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
+				<?php do_action('bcn_widget_display_types', $instance);?>
 			</select>
 		</p>
 		<p>

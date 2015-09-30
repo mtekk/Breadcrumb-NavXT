@@ -1,0 +1,17 @@
+{
+    "name": "jdgrimes/wp-plugin-uninstall-tester",
+    "description": "Utilities for testing WordPress plugin install/uninstall with PHPUnit",
+    "homepage": "https://github.com/JDGrimes/wp-plugin-uninstall-tester",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "J.D. Grimes",
+            "email": "jdg@codesymphony.co",
+            "homepage": "http://codesymphony.co",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0"
+    }
+}

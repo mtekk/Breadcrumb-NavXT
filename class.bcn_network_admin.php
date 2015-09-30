@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	const version = '5.2.2';
+	const version = '5.2.80';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';
@@ -394,9 +394,9 @@ class bcn_network_admin extends mtekk_adminKit
 	/**
 	 * A message function that checks for the BCN_SETTINGS_* define statement
 	 */
-    function multisite_settings_warn()
-    {
-		if(defined('MULTISITE') && MULTISITE)
+	function multisite_settings_warn()
+	{
+		if(is_multisite())
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
@@ -417,10 +417,11 @@ class bcn_network_admin extends mtekk_adminKit
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK.', 'breadcrumb-navxt');
+				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt');
+				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
 			}
 		}
-    }
+	}
 	/**
 	 * A message function that checks for deprecated settings that are set and warns the user
 	 */
@@ -597,7 +598,8 @@ class bcn_network_admin extends mtekk_adminKit
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'));
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{

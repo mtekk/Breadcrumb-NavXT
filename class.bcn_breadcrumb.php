@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '5.2.2';
+	const version = '5.2.81';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly

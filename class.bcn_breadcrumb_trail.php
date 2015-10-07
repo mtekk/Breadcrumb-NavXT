@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.2.71';
+	const version = '5.2.81';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -947,6 +947,7 @@ class bcn_breadcrumb_trail
 			if(is_date())
 			{
 				$this->do_archive_by_date($this->get_type_string_query_var());
+				$this->type_archive($type);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)
@@ -958,8 +959,12 @@ class bcn_breadcrumb_trail
 			else if(is_category() || is_tag() || is_tax())
 			{
 				$this->do_archive_by_term();
+				$this->type_archive($type);
 			}
-			$this->type_archive($type);
+			else
+			{
+				$this->type_archive($type);
+			}
 		}
 		//For 404 pages
 		else if(is_404())

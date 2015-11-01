@@ -27,27 +27,7 @@ Breadcrumb NavXT 5.1.1 and older require PHP5.2
 
 = Translations =
 
-Breadcrumb NavXT distributes with translations for the following languages:
-
-* English - default -
-* Russian by Alexander Samsonov
-* Chinese (China) by Amos Lee
-* Swedish by Anders Täpp, and Patrik Spathon
-* Catalan by Christian Eduardo
-* German by Daniel Lang
-* Persian by Farjad Mahmoodi
-* Turkish by Hakan Er
-* Danish by Joachim Jensen of Intox Studio
-* Lithuanian by Johannes Rau
-* Spanish (Spain) by Karin Sequen
-* Portuguese (Portugal) by Luís Rodrigues
-* Estonian by Martin Orn
-* Dutch by Renée Klein
-* Italian by Tamara Balestri
-* Finnish by Ville Pilvio
-* Korean by Young Pae
-
-Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
+Breadcrumb NavXT now supports WordPress.org language packs. Want to translate Breadcrumb NavXT? Visit [Breadcrumb NavXT's WordPress.org translation project](https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt/).
 
 == Installation ==
 Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.

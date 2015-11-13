@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	const version = '5.2.81';
+	const version = '5.3.0';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';

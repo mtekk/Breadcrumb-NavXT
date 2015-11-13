@@ -1,324 +1,30 @@
-# Translation of Breadcrumb NavXT in Spanish (Spain)
-# This file is distributed under the same license as the Breadcrumb NavXT package.
+# Translation of Development (trunk) in Spanish (Spain)
+# This file is distributed under the same license as the Development (trunk) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-12-31 03:26:58+0000\n"
+"PO-Revision-Date: 2015-09-15 20:24:44+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: Breadcrumb NavXT\n"
-
-#: class.bcn_admin.php:362 class.bcn_network_admin.php:432
-msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
-msgstr "Advertencia: Estás usando un ajuste descontinuado de \"Longitud de Títulos\" (ver Misceláneos &gt; Descontinuados), por favor %1$suse CSS en su lugar%2$s."
-
-#: class.bcn_admin.php:362 class.bcn_admin.php:646
-#: class.bcn_network_admin.php:432 class.bcn_network_admin.php:716
-msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
-msgstr "Ir a la guía sobre cómo recortar la longitud de los títulos con CSS"
-
-#: class.bcn_admin.php:417
-msgid "Blog Breadcrumb "
-msgstr "Migaja del Blog"
-
-#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
-msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
-msgstr "Mostrar la jerarquía (especificada abajo) que lleva a la entrada en la ruta de navegación."
-
-#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
-msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
-msgstr "Mostrar la jerarquía (especificada abajo) que lleva a %s  en la ruta de navegación."
-
-#: class.bcn_admin.php:637 class.bcn_network_admin.php:707
-msgid "Deprecated"
-msgstr "Descontinuado"
-
-#: class.bcn_admin.php:646 class.bcn_network_admin.php:716
-msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
-msgstr "Limita la longitud de los títulos de la ruta (Descontinuado, %suse CSS en su lugar%s)"
-
-#: class.bcn_breadcrumb_trail.php:379
-msgid "$post global is not of type WP_Post"
-msgstr "La global $post no corresponde al tipo de WP_Post"
-
-#: includes/class.mtekk_adminkit.php:507
-msgid "Settings did not change, nothing to save."
-msgstr "Los ajustes no cambiaron, no hay nada que grabar."
-
-#: includes/class.mtekk_adminkit.php:511
-msgid "Settings were not saved."
-msgstr "Los ajustes no fueron grabados."
-
-#: class.bcn_admin.php:483 class.bcn_network_admin.php:553
-msgid "Attachments"
-msgstr "Adjuntos"
-
-#: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
-#: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
-#: class.bcn_breadcrumb_trail.php:72 class.bcn_breadcrumb_trail.php:84
-#: class.bcn_breadcrumb_trail.php:96
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Ir a %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:111 class.bcn_breadcrumb_trail.php:116
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Ir a los archivos de la etiqueta %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:128
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Ir a los archivos de la categoría %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:132
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Ir a los archivos de %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_network_admin.php:403
-msgid "Warning: Individual site settings will override any settings set in this page."
-msgstr "Advertencia: los ajustes individuales del sitio modificarán cualquier ajuste en esta página."
-
-#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
-msgid "Warning: Individual site settings may override any settings set in this page."
-msgstr "Advertencia: los ajustes individuales del sitio pueden modificar los ajustes de esta página."
-
-#: class.bcn_widget.php:105
-msgid "Google (RDFa) Breadcrumbs"
-msgstr "Google (RDFa) Breadcrumbs"
-
-#: breadcrumb-navxt.php:256
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Ir a %title%.\" href=\"%link%\">%htitle%</a></span>"
-
-#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:64
-msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
-
-#: class.bcn_admin.php:336 class.bcn_admin.php:350
-msgid "Warning: Your network settings will override any settings set in this page."
-msgstr "Advertencia: los ajustes de red modificarán cualquier ajuste en esta página."
-
-#: class.bcn_admin.php:340 class.bcn_admin.php:344
-msgid "Warning: Your network settings may override any settings set in this page."
-msgstr "Advertencia: los ajustes de red pueden modificar los ajustes de esta página."
-
-#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
-msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
-msgstr "Advertencia: No se definieron los ajustes BCN_SETTINGS_*, el ajuste predeterminado es BCN_SETTINGS_FAVOR_NETWORK."
-
-#: class.bcn_network_admin.php:449
-msgid "Breadcrumb NavXT Network Settings"
-msgstr "Ajustes de Red de Breadcrumb NavXT"
-
-msgid "Breadcrumb NavXT"
-msgstr "Breadcrumb NavXT"
-
-msgid "http://mtekk.us/code/breadcrumb-navxt/"
-msgstr "http://mtekk.us/code/breadcrumb-navxt/"
-
-msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-msgstr "Agrega un ruta de navegación mostrando al visitante su posición actual. Para detalles de cómo usar este plugin, visite la documentación oficial de <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-
-msgid "John Havlik"
-msgstr "John Havlik | Traducción: Karin Sequén"
-
-msgid "http://mtekk.us/"
-msgstr "http://mtekk.us/"
-
-#: class.bcn_admin.php:472 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
-msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
-msgstr "La jerarquia en la que se muestra la ruta de migas. Tome nota de que la opción de \"Entrada/Página Superior\" puede requerir un plugin adicional para comportarse como se espera, ya que este es un tipo de publicación sin jerarquía."
-
-#: class.bcn_breadcrumb_trail.php:106
-msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
-msgstr "Resultados de búsqueda para &#39;<a title=\"Ir a la primer página de los resultados de búsqueda para %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
-
-#: class.bcn_admin.php:391 class.bcn_network_admin.php:461
-msgid "A collection of settings most likely to be modified are located under this tab."
-msgstr "Un conjunto de ajustes que probablemente serán modificados se encuentra en esta pestaña."
-
-#: class.bcn_admin.php:641 class.bcn_network_admin.php:711
-msgid "Title Length"
-msgstr "Longitud del título"
-
-#: class.bcn_admin.php:426 class.bcn_network_admin.php:496
-msgid "Mainsite Breadcrumb"
-msgstr "Migas (Breadcrumbs) del Sitio Principal"
-
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
-msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
-msgstr "Los ajustes para todos los tipos de entradas (Entradas, Páginas, Personalizadas) se encuentran en esta pestaña."
-
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
-msgid "Post Types"
-msgstr "Tipos de Entradas"
-
-#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
-msgid "Post Hierarchy Display"
-msgstr "Jerarquía para desplegar entradas"
-
-#: class.bcn_admin.php:448 class.bcn_network_admin.php:518
-msgid "Post Hierarchy"
-msgstr "Jerarquía de entradas"
-
-#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
-msgid "%s Hierarchy Display"
-msgstr "%s Jerarquía de Despliegue"
-
-#: class.bcn_admin.php:583 class.bcn_network_admin.php:653
-msgid "Post Formats"
-msgstr "Formatos de Entradas"
-
-#: class.bcn_admin.php:651 class.bcn_network_admin.php:721
-msgid "Max Title Length: "
-msgstr "Longitud Máxima del Título:"
-
-#: class.bcn_admin.php:439 class.bcn_network_admin.php:509
-msgid "Posts"
-msgstr "Entradas"
-
-#: class.bcn_admin.php:456 class.bcn_admin.php:530
-#: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
-msgid "Post Parent"
-msgstr "Entrada o Página superior"
-
-#: class.bcn_admin.php:550 class.bcn_network_admin.php:620
-msgid "The hierarchy which the breadcrumb trail will show."
-msgstr "La jerarquía que mostrará la ruta de migas."
-
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:595
-msgid "%s Hierarchy"
-msgstr "%s Jerarquía"
-
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
-msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
-msgstr "Los ajustes para todas las taxonomías (incluyendo Categorías, Etiquetas y Personalizadas) están en esta pestaña."
-
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
-msgid "Taxonomies"
-msgstr "Taxonomías"
-
-#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
-msgid "Post Format Template"
-msgstr "Plantilla para Formato de la Entrada"
-
-#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
-msgid "The template for post format breadcrumbs."
-msgstr "La plantilla para el formato de la ruta de migas en la entrada"
-
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
-msgid "Post Format Template (Unlinked)"
-msgstr "Plantilla para Formato de la Entrada (sin enlace)"
-
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
-msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "La plantilla para el formato de la ruta de migas en la entrada, utilizado sólo cuando la miga no tiene enlace."
-
-#: class.bcn_admin.php:617 class.bcn_network_admin.php:687
-msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
-msgstr "Los ajustes para autor y archivos, búsquedas, y páginas 404 están en esta pestaña."
-
-#: class.bcn_admin.php:618 class.bcn_network_admin.php:688
-msgid "Author Archives"
-msgstr "Archivos de Autor"
-
-#: class.bcn_breadcrumb_trail.php:121
-msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "Artículos por: <a title=\"Ir a la primer página de entradas por %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: includes/class.mtekk_adminkit.php:304
-msgid "Your settings are for a newer version."
-msgstr "Sus ajustes son para una versión más nueva."
-
-#: class.bcn_widget.php:98
-msgid "Text to show before the trail:"
-msgstr "Texto a mostrar antes de las migas:"
-
-#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
-msgid "Go to the Breadcrumb NavXT translation project."
-msgstr "Ir al proyecto de traducción de Breadcrumb NavXT"
-
-#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
-#: class.bcn_network_admin.php:25
-msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
-msgstr "Su versión de PHP es demasiado antigua, por favor, actualice a la nueva versión. Su versión es %1$s, el plugin Breadcrumb NavXT requiere la versión %2$s "
-
-#: class.bcn_widget.php:32
-msgid "Adds a breadcrumb trail to your sidebar"
-msgstr "Agrega una ruta de navegación en su barra lateral"
-
-#: class.bcn_widget.php:94
-msgid "Title:"
-msgstr "Título:"
-
-#: class.bcn_widget.php:102
-msgid "Output trail as:"
-msgstr "Mostrar ruta como:"
-
-#: class.bcn_widget.php:104
-msgid "List"
-msgstr "Lista"
-
-#: class.bcn_widget.php:106
-msgid "Plain"
-msgstr "Texto plano"
-
-#: class.bcn_widget.php:111
-msgid "Link the breadcrumbs"
-msgstr "Enlace a la Ruta"
-
-#: class.bcn_widget.php:113
-msgid "Reverse the order of the trail"
-msgstr "Invertir el orden de la ruta"
-
-#: class.bcn_widget.php:115
-msgid "Hide the trail on the front page"
-msgstr "Ocultar la ruta de la página principal"
-
-#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
-msgid "Insufficient privileges to proceed."
-msgstr "No tiene privilegios para proceder."
-
-#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
-msgid "Tips for the settings are located below select options."
-msgstr "Encontrará tips para los ajustes debajo de cada opción."
-
-#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
-msgid "Resources"
-msgstr "Recursos"
-
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
-msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
-msgstr "%sTutoriales e Instructivos%s: En el website del autor están disponibles varias guías, tutoriales e instructivos."
-
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
-msgid "Go to the Breadcrumb NavXT tag archive."
-msgstr "Ir al archivo de etiquetas de Breadcrumb NavXT"
-
-#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
-msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
-msgstr "%sDocumentación En Línea%s: Revise la documentación para más información técnica."
-
-#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
-msgid "Go to the Breadcrumb NavXT online documentation"
-msgstr "Ir a la documentación en línea de Breadcrumb NavXT (en inglés)"
-
-#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
-msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
-msgstr "%sReportar Errores%s: Si piensa que ha encontrado un error, por favor incluya su versión de WordPress y los detalles de cómo se reproduce el error."
-
-#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
-msgid "Go to the Breadcrumb NavXT support post for your version."
-msgstr "Ir a la documentación en línea de Breadcrumb NavXT para su versión."
-
-#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
-msgid "Giving Back"
-msgstr "Dar de vuelta"
-
-#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
-msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
-msgstr "%sDonar%s: ¿Le gusta Breadcrumb NavXT y desea colaborar con el desarrollo? Considere comprarle al autor una cerveza."
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Development (trunk)\n"
+
+#: class.bcn_breadcrumb.php:91
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:110
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:115 class.bcn_breadcrumb_trail.php:131
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:127
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
 
 #: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
@@ -328,9 +34,13 @@ msgstr "Ir a la página de Paypal para darle un donativo a Breadcrumb NavXT."
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sTraducir%s: ¿No está disponible en su idioma? Comuníquese con John Havlik para colaborar con la traducción."
 
-#: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
-#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
-#: class.bcn_network_admin.php:462
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
+msgid "Go to the Breadcrumb NavXT translation project."
+msgstr "Ir al proyecto de traducción de Breadcrumb NavXT"
+
+#: class.bcn_admin.php:252 class.bcn_admin.php:390 class.bcn_admin.php:391
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:462
+#: class.bcn_network_admin.php:463
 msgid "General"
 msgstr "General"
 
@@ -377,334 +87,554 @@ msgstr "Exportar"
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: class.bcn_admin.php:379
+#: class.bcn_admin.php:336 class.bcn_network_admin.php:421
+msgid "Warning: Your network settings will override any settings set in this page."
+msgstr "Advertencia: los ajustes de red modificarán cualquier ajuste en esta página."
+
+#: class.bcn_admin.php:340 class.bcn_admin.php:344
+msgid "Warning: Your network settings may override any settings set in this page."
+msgstr "Advertencia: los ajustes de red pueden modificar los ajustes de esta página."
+
+#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
+msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL."
+msgstr ""
+
+#: class.bcn_admin.php:361 class.bcn_network_admin.php:433
+msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
+msgstr "Advertencia: Estás usando un ajuste descontinuado de \"Longitud de Títulos\" (ver Misceláneos &gt; Descontinuados), por favor %1$suse CSS en su lugar%2$s."
+
+#: class.bcn_admin.php:361 class.bcn_admin.php:646
+#: class.bcn_network_admin.php:433 class.bcn_network_admin.php:718
+msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
+msgstr "Ir a la guía sobre cómo recortar la longitud de los títulos con CSS"
+
+#: class.bcn_admin.php:378
 msgid "Breadcrumb NavXT Settings"
 msgstr "Opciones de Configuración de Breadcrumb NavXT"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+#: class.bcn_admin.php:390 class.bcn_network_admin.php:462
+msgid "A collection of settings most likely to be modified are located under this tab."
+msgstr "Un conjunto de ajustes que probablemente serán modificados se encuentra en esta pestaña."
+
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:466
 msgid "Breadcrumb Separator"
 msgstr "Separador de Navegación"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:466
 msgid "Placed in between each breadcrumb."
 msgstr "Colocado en medio de cada opción de navegación."
 
-#: class.bcn_admin.php:408 class.bcn_admin.php:411
-#: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
-msgid "Home Breadcrumb"
-msgstr "Incluir Inicio"
-
-#: class.bcn_admin.php:411 class.bcn_network_admin.php:481
-msgid "Place the home breadcrumb in the trail."
-msgstr "Colocar un enlace a la página de inicio en la ruta de navegación."
-
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
-msgid "Home Template"
-msgstr "Plantilla de la Página de Inicio"
-
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
-msgid "The template for the home breadcrumb."
-msgstr "La plantilla de la ruta de navegación para la página de inicio."
-
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
-msgid "Home Template (Unlinked)"
-msgstr "Plantilla de la Página de Inicio (sin vínculo)"
-
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
-msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegación para la página de inicio, cuando el elemento de inicio no está enlazado."
-
-#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
-#: class.bcn_network_admin.php:490
-msgid "Blog Breadcrumb"
-msgstr "Incluir Inicio (del Blog)"
-
-#: class.bcn_admin.php:420 class.bcn_network_admin.php:490
-msgid "Place the blog breadcrumb in the trail."
-msgstr "Colocar un enlace a la página de inicio en la ruta de navegación."
-
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
-msgid "Blog Template"
-msgstr "Plantilla del Blog"
-
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
-msgid "The template for the blog breadcrumb, used only in static front page environments."
-msgstr "La plantilla de la ruta de navegación para el blog, utilizado sólo cuando la página inicial es una página estática."
-
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
-msgid "Blog Template (Unlinked)"
-msgstr "Plantilla del Blog (sin vínculo)"
-
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
-msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
-msgstr "La plantilla de la ruta de navegación para el blog, utilizado sólo cuando la página inicial es una página estática y el elemento de inicio no está enlazado."
-
-#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
-msgid "Main Site Breadcrumb"
-msgstr "Ruta del Sitio Principal"
-
-#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
-msgid "Place the main site home breadcrumb in the trail in an multisite setup."
-msgstr "Colocar un enlace a la página de inicio del sitio principal en la ruta de navegación de una configuración con múltiples blogs."
-
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
-msgid "Main Site Home Template"
-msgstr "Plantilla de Inicio del Sitio Principal"
-
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
-msgid "The template for the main site home breadcrumb, used only in multisite environments."
-msgstr "La plantilla de enlace para la página de inicio del sitio principal, utilizada sólo en configuraciones con múltiples blogs."
-
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
-msgid "Main Site Home Template (Unlinked)"
-msgstr "Plantilla de Inicio del Sitio Principal (sin vínculo)"
-
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
-msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
-msgstr "La plantilla de enlace para la página de inicio del sitio principal, utilizada sólo en configuraciones con múltiples blogs y el elemento de navegación no está enlazado."
-
-#: class.bcn_admin.php:399 class.bcn_network_admin.php:469
+#: class.bcn_admin.php:398 class.bcn_network_admin.php:470
 msgid "Current Item"
 msgstr "Item Actual"
 
-#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:401 class.bcn_network_admin.php:473
 msgid "Link Current Item"
 msgstr "Incluir Vínculo a Item Actual"
 
-#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:401 class.bcn_network_admin.php:473
 msgid "Yes"
 msgstr "Sí"
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Paged Breadcrumb"
 msgstr "Ruta de Navegación Paginada"
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Incluir la navegación paginada en la ruta de navegación"
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Mostrar que el usuario está en una página distinta a la primera de una entrada/archivo con multiples páginas."
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:475
 msgid "Paged Template"
 msgstr "Plantilla de Entrada Paginada"
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:475
 msgid "The template for paged breadcrumbs."
 msgstr "Plantilla de ruta de navegación de entradas de varias páginas."
 
-#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+#: class.bcn_admin.php:407 class.bcn_admin.php:410
+#: class.bcn_network_admin.php:479 class.bcn_network_admin.php:482
+msgid "Home Breadcrumb"
+msgstr "Incluir Inicio"
+
+#: class.bcn_admin.php:410 class.bcn_network_admin.php:482
+msgid "Place the home breadcrumb in the trail."
+msgstr "Colocar un enlace a la página de inicio en la ruta de navegación."
+
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:483
+msgid "Home Template"
+msgstr "Plantilla de la Página de Inicio"
+
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:483
+msgid "The template for the home breadcrumb."
+msgstr "La plantilla de la ruta de navegación para la página de inicio."
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:484
+msgid "Home Template (Unlinked)"
+msgstr "Plantilla de la Página de Inicio (sin vínculo)"
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:484
+msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
+msgstr "La plantilla de la ruta de navegación para la página de inicio, cuando el elemento de inicio no está enlazado."
+
+#: class.bcn_admin.php:416
+msgid "Blog Breadcrumb "
+msgstr "Migaja del Blog"
+
+#: class.bcn_admin.php:419 class.bcn_network_admin.php:488
+#: class.bcn_network_admin.php:491
+msgid "Blog Breadcrumb"
+msgstr "Incluir Inicio (del Blog)"
+
+#: class.bcn_admin.php:419 class.bcn_network_admin.php:491
+msgid "Place the blog breadcrumb in the trail."
+msgstr "Colocar un enlace a la página de inicio en la ruta de navegación."
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:492
+msgid "Blog Template"
+msgstr "Plantilla del Blog"
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:492
+msgid "The template for the blog breadcrumb, used only in static front page environments."
+msgstr "La plantilla de la ruta de navegación para el blog, utilizado sólo cuando la página inicial es una página estática."
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:493
+msgid "Blog Template (Unlinked)"
+msgstr "Plantilla del Blog (sin vínculo)"
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:493
+msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
+msgstr "La plantilla de la ruta de navegación para el blog, utilizado sólo cuando la página inicial es una página estática y el elemento de inicio no está enlazado."
+
+#: class.bcn_admin.php:425 class.bcn_network_admin.php:497
+msgid "Mainsite Breadcrumb"
+msgstr "Migas (Breadcrumbs) del Sitio Principal"
+
+#: class.bcn_admin.php:428 class.bcn_network_admin.php:500
+msgid "Main Site Breadcrumb"
+msgstr "Ruta del Sitio Principal"
+
+#: class.bcn_admin.php:428 class.bcn_network_admin.php:500
+msgid "Place the main site home breadcrumb in the trail in an multisite setup."
+msgstr "Colocar un enlace a la página de inicio del sitio principal en la ruta de navegación de una configuración con múltiples blogs."
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:501
+msgid "Main Site Home Template"
+msgstr "Plantilla de Inicio del Sitio Principal"
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:501
+msgid "The template for the main site home breadcrumb, used only in multisite environments."
+msgstr "La plantilla de enlace para la página de inicio del sitio principal, utilizada sólo en configuraciones con múltiples blogs."
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:502
+msgid "Main Site Home Template (Unlinked)"
+msgstr "Plantilla de Inicio del Sitio Principal (sin vínculo)"
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:502
+msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
+msgstr "La plantilla de enlace para la página de inicio del sitio principal, utilizada sólo en configuraciones con múltiples blogs y el elemento de navegación no está enlazado."
+
+#: class.bcn_admin.php:437 class.bcn_network_admin.php:509
+msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
+msgstr "Los ajustes para todos los tipos de entradas (Entradas, Páginas, Personalizadas) se encuentran en esta pestaña."
+
+#: class.bcn_admin.php:437 class.bcn_network_admin.php:509
+msgid "Post Types"
+msgstr "Tipos de Entradas"
+
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:510
+msgid "Posts"
+msgstr "Entradas"
+
+#: class.bcn_admin.php:441 class.bcn_network_admin.php:513
 msgid "Post Template"
 msgstr "Plantilla de Entradas"
 
-#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+#: class.bcn_admin.php:441 class.bcn_network_admin.php:513
 msgid "The template for post breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para entradas."
 
-#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:514
 msgid "Post Template (Unlinked)"
 msgstr "Plantilla de la Entrada (sin vínculo)"
 
-#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:514
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para entradas, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:452 class.bcn_admin.php:569
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:515
+msgid "Post Hierarchy Display"
+msgstr "Jerarquía para desplegar entradas"
+
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:515
+msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
+msgstr "Mostrar la jerarquía (especificada abajo) que lleva a la entrada en la ruta de navegación."
+
+#: class.bcn_admin.php:447 class.bcn_network_admin.php:519
+msgid "Post Hierarchy"
+msgstr "Jerarquía de entradas"
+
+#: class.bcn_admin.php:451 class.bcn_admin.php:569
+#: class.bcn_network_admin.php:523 class.bcn_network_admin.php:641
 msgid "Categories"
 msgstr "Categorías"
 
-#: class.bcn_admin.php:453 class.bcn_network_admin.php:523
+#: class.bcn_admin.php:452 class.bcn_admin.php:530
+#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:602
 msgid "Dates"
 msgstr "Fechas"
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:576
-#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:453 class.bcn_admin.php:576
+#: class.bcn_network_admin.php:525 class.bcn_network_admin.php:648
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: class.bcn_admin.php:476 class.bcn_network_admin.php:546
+#: class.bcn_admin.php:455 class.bcn_admin.php:529
+#: class.bcn_network_admin.php:527 class.bcn_network_admin.php:601
+msgid "Post Parent"
+msgstr "Entrada o Página superior"
+
+#: class.bcn_admin.php:471 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:543 class.bcn_network_admin.php:626
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "La jerarquia en la que se muestra la ruta de migas. Tome nota de que la opción de \"Entrada/Página Superior\" puede requerir un plugin adicional para comportarse como se espera, ya que este es un tipo de publicación sin jerarquía."
+
+#: class.bcn_admin.php:475 class.bcn_network_admin.php:547
 msgid "Pages"
 msgstr "Páginas"
 
-#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+#: class.bcn_admin.php:478 class.bcn_network_admin.php:550
 msgid "Page Template"
 msgstr "Plantilla de la Página"
 
-#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+#: class.bcn_admin.php:478 class.bcn_network_admin.php:550
 msgid "The template for page breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para páginas."
 
-#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:551
 msgid "Page Template (Unlinked)"
 msgstr "Plantilla de la Página (sin vínculo)"
 
-#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:551
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para páginas, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:482 class.bcn_network_admin.php:554
+msgid "Attachments"
+msgstr "Adjuntos"
+
+#: class.bcn_admin.php:485 class.bcn_network_admin.php:557
 msgid "Attachment Template"
 msgstr "Plantilla de Archivo Adjunto"
 
-#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:485 class.bcn_network_admin.php:557
 msgid "The template for attachment breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para archivos adjuntos."
 
-#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:558
 msgid "Attachment Template (Unlinked)"
 msgstr "Plantilla del Archivo Adjunto (sin vínculo)"
 
-#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:558
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para archivos adjuntos, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:507 class.bcn_admin.php:607
-#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+#: class.bcn_admin.php:506 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:679
 msgid "%s Template"
 msgstr "Plantilla de %s"
 
-#: class.bcn_admin.php:507 class.bcn_admin.php:607
-#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+#: class.bcn_admin.php:506 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:679
 msgid "The template for %s breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para %s."
 
-#: class.bcn_admin.php:508 class.bcn_admin.php:608
-#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+#: class.bcn_admin.php:507 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:579 class.bcn_network_admin.php:680
 msgid "%s Template (Unlinked)"
 msgstr "Plantilla de %s (sin vínculo)"
 
-#: class.bcn_admin.php:508 class.bcn_admin.php:608
-#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+#: class.bcn_admin.php:507 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:579 class.bcn_network_admin.php:680
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para %s, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:513 class.bcn_network_admin.php:583
+#: class.bcn_admin.php:512 class.bcn_network_admin.php:584
 msgid "%s Root Page"
 msgstr "%s Página Raíz"
 
-#: class.bcn_admin.php:516 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:515 class.bcn_network_admin.php:587
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Seleccione &mdash;"
 
-#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:591
 msgid "%s Archive Display"
 msgstr "Despliegue de Archivos de %s"
 
-#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:591
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Mostrar la ruta de navegación para los archivos de las entradas de tipo "
 
-#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:592
+msgid "%s Hierarchy Display"
+msgstr "%s Jerarquía de Despliegue"
+
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:592
+msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
+msgstr "Mostrar la jerarquía (especificada abajo) que lleva a %s  en la ruta de navegación."
+
+#: class.bcn_admin.php:524 class.bcn_network_admin.php:596
+msgid "%s Hierarchy"
+msgstr "%s Jerarquía"
+
+#: class.bcn_admin.php:550 class.bcn_network_admin.php:622
+msgid "The hierarchy which the breadcrumb trail will show."
+msgstr "La jerarquía que mostrará la ruta de migas."
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:640
+msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
+msgstr "Los ajustes para todas las taxonomías (incluyendo Categorías, Etiquetas y Personalizadas) están en esta pestaña."
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:640
+msgid "Taxonomies"
+msgstr "Taxonomías"
+
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:644
 msgid "Category Template"
 msgstr "Plantilla de Categoría"
 
-#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:644
 msgid "The template for category breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para categorías."
 
-#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:645
 msgid "Category Template (Unlinked)"
 msgstr "Plantilla de la Categoría (sin vínculo)"
 
-#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:645
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para categorías, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:651
 msgid "Tag Template"
 msgstr "Plantilla de la Etiqueta"
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:651
 msgid "The template for tag breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para etiquetas."
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:652
 msgid "Tag Template (Unlinked)"
 msgstr "Plantilla de la Etiqueta (sin vínculo)"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:652
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para etiquetas, cuando el elemento no está enlazado."
 
+#: class.bcn_admin.php:583 class.bcn_network_admin.php:655
+msgid "Post Formats"
+msgstr "Formatos de Entradas"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:658
+msgid "Post Format Template"
+msgstr "Plantilla para Formato de la Entrada"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:658
+msgid "The template for post format breadcrumbs."
+msgstr "La plantilla para el formato de la ruta de migas en la entrada"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:659
+msgid "Post Format Template (Unlinked)"
+msgstr "Plantilla para Formato de la Entrada (sin enlace)"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:659
+msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "La plantilla para el formato de la ruta de migas en la entrada, utilizado sólo cuando la miga no tiene enlace."
+
+#: class.bcn_admin.php:617 class.bcn_network_admin.php:689
+msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
+msgstr "Los ajustes para autor y archivos, búsquedas, y páginas 404 están en esta pestaña."
+
 #: class.bcn_admin.php:617 class.bcn_admin.php:626
-#: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
+#: class.bcn_network_admin.php:689 class.bcn_network_admin.php:698
 msgid "Miscellaneous"
 msgstr "Misceláneos"
 
-#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+#: class.bcn_admin.php:618 class.bcn_network_admin.php:690
+msgid "Author Archives"
+msgstr "Archivos de Autor"
+
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:693
 msgid "Author Template"
 msgstr "Plantilla de Autor"
 
-#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:693
 msgid "The template for author breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para autores."
 
-#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:694
 msgid "Author Template (Unlinked)"
 msgstr "Plantilla del Autor (sin vínculo)"
 
-#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:694
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para autores, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:695
 msgid "Author Display Format"
 msgstr "Formato de Despliegue de Autor"
 
-#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:695
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name utiliza el nombre especificado en \"Mostrar este nombre públicamente\" en el perfil del usuario, la otras opciones corresponden a los campos nombre (first_name), apellido (last_name) y alias (nickname) en el perfil del usuario."
 
-#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:701
 msgid "Date Template"
 msgstr "Plantilla de la Fecha"
 
-#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:701
 msgid "The template for date breadcrumbs."
 msgstr "La plantilla de la ruta de navegación para fechas."
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:702
 msgid "Date Template (Unlinked)"
 msgstr "Plantilla de la Fecha (sin vínculo)"
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:702
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para fechas, cuando el elemento no está enlazado."
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:703
 msgid "Search Template"
 msgstr "Plantilla de la Búsqueda"
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:703
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Plantilla del vínculo a la primera página de resultados de búsqueda en la ruta de navegación, utilizado sólo cuando éstos ocupan más de una página."
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:704
 msgid "Search Template (Unlinked)"
 msgstr "Plantilla de la Búsqueda (sin vínculo)"
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:704
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "La plantilla de la ruta de navegación para la primera página de resultados de búsqueda, utilizado sólo cuando éstos ocupan más de una página y el elemento no está enlazado."
 
-#: class.bcn_admin.php:633 class.bcn_network_admin.php:703
+#: class.bcn_admin.php:633 class.bcn_network_admin.php:705
 msgid "404 Title"
 msgstr "Título Error 404"
 
-#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:706
 msgid "404 Template"
 msgstr "Plantilla de Error 404"
 
-#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:706
 msgid "The template for 404 breadcrumbs."
 msgstr "La plantilla para la ruta de la página de error 404."
 
-#: class.bcn_admin.php:663 class.bcn_network_admin.php:733
+#: class.bcn_admin.php:637 class.bcn_network_admin.php:709
+msgid "Deprecated"
+msgstr "Descontinuado"
+
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:713
+msgid "Title Length"
+msgstr "Longitud del título"
+
+#: class.bcn_admin.php:646 class.bcn_network_admin.php:718
+msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
+msgstr "Limita la longitud de los títulos de la ruta (Descontinuado, %suse CSS en su lugar%s)"
+
+#: class.bcn_admin.php:651 class.bcn_network_admin.php:723
+msgid "Max Title Length: "
+msgstr "Longitud Máxima del Título:"
+
+#: class.bcn_admin.php:663 class.bcn_network_admin.php:735
 msgid "Save Changes"
 msgstr "Grabar Cambios"
+
+#: class.bcn_breadcrumb_trail.php:79
+msgid "Page %htitle%"
+msgstr "Página %htitle%"
+
+#: class.bcn_breadcrumb_trail.php:102
+msgid "404"
+msgstr "Página no encontrada"
+
+#: class.bcn_breadcrumb_trail.php:105
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr "Resultados de búsqueda para &#39;<a title=\"Ir a la primer página de los resultados de búsqueda para %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+
+#: class.bcn_breadcrumb_trail.php:107
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "Resultados de búsqueda para &#39;%htitle%&#39;"
+
+#: class.bcn_breadcrumb_trail.php:120
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "Artículos por: <a title=\"Ir a la primer página de entradas por %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: class.bcn_breadcrumb_trail.php:122
+msgid "Articles by: %htitle%"
+msgstr "Artículos por: %htitle%"
+
+#: class.bcn_breadcrumb_trail.php:393
+msgid "$post global is not of type WP_Post"
+msgstr "La global $post no corresponde al tipo de WP_Post"
+
+#: class.bcn_network_admin.php:403
+msgid "Warning: Individual site settings will override any settings set in this page."
+msgstr "Advertencia: los ajustes individuales del sitio modificarán cualquier ajuste en esta página."
+
+#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
+msgid "Warning: Individual site settings may override any settings set in this page."
+msgstr "Advertencia: los ajustes individuales del sitio pueden modificar los ajustes de esta página."
+
+#: class.bcn_network_admin.php:450
+msgid "Breadcrumb NavXT Network Settings"
+msgstr "Ajustes de Red de Breadcrumb NavXT"
+
+#: class.bcn_widget.php:32
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "Agrega una ruta de navegación en su barra lateral"
+
+#: class.bcn_widget.php:99
+msgid "Title:"
+msgstr "Título:"
+
+#: class.bcn_widget.php:103
+msgid "Text to show before the trail:"
+msgstr "Texto a mostrar antes de las migas:"
+
+#: class.bcn_widget.php:107
+msgid "Output trail as:"
+msgstr "Mostrar ruta como:"
+
+#: class.bcn_widget.php:109
+msgid "List"
+msgstr "Lista"
+
+#: class.bcn_widget.php:110
+msgid "Google (RDFa) Breadcrumbs"
+msgstr "Google (RDFa) Breadcrumbs"
+
+#: class.bcn_widget.php:111
+msgid "Plain"
+msgstr "Texto plano"
+
+#: class.bcn_widget.php:117
+msgid "Link the breadcrumbs"
+msgstr "Enlace a la Ruta"
+
+#: class.bcn_widget.php:119
+msgid "Reverse the order of the trail"
+msgstr "Invertir el orden de la ruta"
+
+#: class.bcn_widget.php:121
+msgid "Hide the trail on the front page"
+msgstr "Ocultar la ruta de la página principal"
 
 #: includes/class.mtekk_adminkit.php:225
 msgid "Settings"
@@ -721,6 +651,10 @@ msgstr "Migrar los ajustes ahora."
 #: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate now."
 msgstr "Migrar ahora."
+
+#: includes/class.mtekk_adminkit.php:304
+msgid "Your settings are for a newer version."
+msgstr "Sus ajustes son para una versión más nueva."
 
 #: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin install is incomplete."
@@ -759,6 +693,14 @@ msgstr "Deshacer modificación de opciones."
 #: includes/class.mtekk_adminkit.php:662
 msgid "Undo"
 msgstr "Deshacer"
+
+#: includes/class.mtekk_adminkit.php:507
+msgid "Settings did not change, nothing to save."
+msgstr "Los ajustes no cambiaron, no hay nada que grabar."
+
+#: includes/class.mtekk_adminkit.php:511
+msgid "Settings were not saved."
+msgstr "Los ajustes no fueron grabados."
 
 #: includes/class.mtekk_adminkit.php:516
 msgid "Some settings were not saved."
@@ -824,18 +766,71 @@ msgstr "Archivo de Ajustes"
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Seleccionar un archivo XML para cargar e importar los ajustes de este plugin."
 
-#: class.bcn_breadcrumb_trail.php:79
-msgid "Page %htitle%"
-msgstr "Página %htitle%"
+#. Plugin Name of the plugin/theme
+msgid "Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT"
 
-#: class.bcn_breadcrumb_trail.php:103
-msgid "404"
-msgstr "Página no encontrada"
+#. Plugin URI of the plugin/theme
+msgid "http://mtekk.us/code/breadcrumb-navxt/"
+msgstr "http://mtekk.us/code/breadcrumb-navxt/"
 
-#: class.bcn_breadcrumb_trail.php:108
-msgid "Search results for &#39;%htitle%&#39;"
-msgstr "Resultados de búsqueda para &#39;%htitle%&#39;"
+#. Description of the plugin/theme
+msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "Agrega un ruta de navegación mostrando al visitante su posición actual. Para detalles de cómo usar este plugin, visite la documentación oficial de <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
 
-#: class.bcn_breadcrumb_trail.php:123
-msgid "Articles by: %htitle%"
-msgstr "Artículos por: %htitle%"
+#. Author of the plugin/theme
+msgid "John Havlik"
+msgstr "John Havlik | Traducción: Karin Sequén"
+
+#. Author URI of the plugin/theme
+msgid "http://mtekk.us/"
+msgstr "http://mtekk.us/"
+
+#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
+#: class.bcn_network_admin.php:25
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
+msgstr "Su versión de PHP es demasiado antigua, por favor, actualice a la nueva versión. Su versión es %1$s, el plugin Breadcrumb NavXT requiere la versión %2$s "
+
+#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
+msgid "Insufficient privileges to proceed."
+msgstr "No tiene privilegios para proceder."
+
+#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
+msgid "Tips for the settings are located below select options."
+msgstr "Encontrará tips para los ajustes debajo de cada opción."
+
+#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
+msgid "Resources"
+msgstr "Recursos"
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
+msgstr "%sTutoriales e Instructivos%s: En el website del autor están disponibles varias guías, tutoriales e instructivos."
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "Go to the Breadcrumb NavXT tag archive."
+msgstr "Ir al archivo de etiquetas de Breadcrumb NavXT"
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
+msgstr "%sDocumentación En Línea%s: Revise la documentación para más información técnica."
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "Go to the Breadcrumb NavXT online documentation"
+msgstr "Ir a la documentación en línea de Breadcrumb NavXT (en inglés)"
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
+msgstr "%sReportar Errores%s: Si piensa que ha encontrado un error, por favor incluya su versión de WordPress y los detalles de cómo se reproduce el error."
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "Go to the Breadcrumb NavXT support post for your version."
+msgstr "Ir a la documentación en línea de Breadcrumb NavXT para su versión."
+
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
+msgid "Giving Back"
+msgstr "Dar de vuelta"
+
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
+msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
+msgstr "%sDonar%s: ¿Le gusta Breadcrumb NavXT y desea colaborar con el desarrollo? Considere comprarle al autor una cerveza."

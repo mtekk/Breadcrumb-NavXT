@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 3.9
+Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 5.2.2
+Stable tag: 5.3.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -17,7 +17,7 @@ Breadcrumb NavXT 5.2 and newer require PHP5.3
 Breadcrumb NavXT 5.1.1 and older require PHP5.2
 
 = Features (non-exhaustive) =
-* RDFa compatible breadcrumb generation.
+* RDFa format Schema.org BreadcrumbList compatible breadcrumb generation.
 * Extensive breadcrumb customization control via a settings page with appropriate default values for most use cases.
 * Network admin settings page for managing breadcrumb settings for all subsites with [configurable global priority](http://mtekk.us/archives/guides/controlling-breadcrumb-navxt-settings-from-the-network-settings-page/ "Go to the article on configuring the network settings priority.").
 * Built in WordPress Widget.
@@ -31,7 +31,7 @@ Breadcrumb NavXT now supports WordPress.org language packs. Want to translate Br
 
 == Installation ==
 Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.
-`<div class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+`<div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
     <?php if(function_exists('bcn_display'))
     {
         bcn_display();
@@ -52,7 +52,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Changelog ==
 
 = 5.3.0 =
-Release date: November 11th, 2015
+Release date: November 12th, 2015
 
 * Behavior change: Breadcrumb NavXT will no longer default to setting the root page for CPTs.
 * Behavior change: Breadcrumb NavXT will no longer inject a breadcrumb for a CPT archive page if a root page is set for that CPT.
@@ -60,6 +60,7 @@ Release date: November 11th, 2015
 * Behavior change: The included widget now supports RDFA style, Schema.org BreadcrumbList format rather than the deprecated Google Breadcrumbs format.
 * Behavior change: Default settings for breadcrumb templates now conform to RDFA style, Schema.org BreadcrumbList format rather than the deprecated Google Breadcrumbs format.
 * New feature: Added `bcn_widget_display_trail` action to enhance the included widget’s extensibility.
+* New feature: Added `bcn_widget_display_types` action to enhance the included widget’s extensibility.
 * New feature: The plugin uninstaller has been re-factored, includes support for uninstalling in PHP5.2.
 * New feature: Unit tests added for all non-deprecated features in bcn_breadcrumb.
 * New feature: Unit tests added for the uninstaller.
@@ -67,7 +68,7 @@ Release date: November 11th, 2015
 * New feature: Date archives restricted by CPT are now supported.
 * New feature: Taxonomy archives restricted by CPT are now supported.
 * Bug fix: Fixed issue where the multibyte supplicant functions were not always being included due to WordPress shipping with its own subset of theses functions.
-
+* Bug fix: Fixed issue where on an archive for a post type the archive breadcrumb would appear twice.
 = 5.2.2 =
 Release date: June 1st, 2015
 
@@ -233,11 +234,8 @@ Release date: December 14th, 2011
 
 == Upgrade Notice ==
 
+= 5.3.0 =
+This version requires PHP5.3 or newer. This version adds in support for post type restricted archives (date and taxonomy).
+
 = 5.2.1 =
 This version requires PHP5.3 or newer. This is a bug fix release with four bug fixes relating to attachments and a few other bug fixes.
-
-= 5.2.0 =
-This version requires PHP5.3 or newer. Some improvements to the settings page were made. Additionally, note that the Max Breadcrumb Length setting has been deprecated in favor of [using CSS styling to perform the length limiting](http://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/ "Go to the article presenting how to shorten the breadcrumb title length using CSS").ion enhances compatibility with bbPress. 
-
-= 5.1.0 =
-This version fixes a ton of bugs, plus adds a new filter and features support for RDFa Breadcrumb by default.

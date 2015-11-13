@@ -1,324 +1,30 @@
-# Translation of Breadcrumb NavXT in Finnish
-# This file is distributed under the same license as the Breadcrumb NavXT package.
+# Translation of Development (trunk) in Finnish
+# This file is distributed under the same license as the Development (trunk) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-01-04 17:38:14+0000\n"
+"PO-Revision-Date: 2015-09-15 20:25:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/0.1\n"
-"Project-Id-Version: Breadcrumb NavXT\n"
-
-#: class.bcn_admin.php:362 class.bcn_network_admin.php:432
-msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
-msgstr "Varoitus: Käytät vanhentunutta asetusta \"Title Length\" (katso Muut &gt; Vanhentuneet), ole hyvä ja %1$suse käytä CSS:ää sen tilalle%2$s."
-
-#: class.bcn_admin.php:362 class.bcn_admin.php:646
-#: class.bcn_network_admin.php:432 class.bcn_network_admin.php:716
-msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
-msgstr "Siirry ohjeistukseen miten lyhennät breadcrumb otsikoiden pituutta CSS:llä"
-
-#: class.bcn_admin.php:417
-msgid "Blog Breadcrumb "
-msgstr "Blogin Breadcrumb"
-
-#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
-msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
-msgstr "Näytä hierarkia (tarkennettu alla) joka johtaa blogin breadcrumb-polkuun."
-
-#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
-msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
-msgstr "Näytä hierarkia (tarkennettu alla) joka johtaa %s:han breadcrumb-polussa."
-
-#: class.bcn_admin.php:637 class.bcn_network_admin.php:707
-msgid "Deprecated"
-msgstr "Vanhentunut"
-
-#: class.bcn_admin.php:646 class.bcn_network_admin.php:716
-msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
-msgstr "Rajoita breadcrumb otsikon pituutta. (Vanhentunut, %suse käytä CSS sen tilalla%s)"
-
-#: class.bcn_breadcrumb_trail.php:379
-msgid "$post global is not of type WP_Post"
-msgstr "$post global ei ole typpiä WP_Post"
-
-#: includes/class.mtekk_adminkit.php:507
-msgid "Settings did not change, nothing to save."
-msgstr "Asetukset eivät ole muuttuneet, ei mitään tallennettavaa."
-
-#: includes/class.mtekk_adminkit.php:511
-msgid "Settings were not saved."
-msgstr "Asetukset eivät tallentuneet."
-
-#: class.bcn_admin.php:483 class.bcn_network_admin.php:553
-msgid "Attachments"
-msgstr "Liitetiedostot"
-
-#: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
-#: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
-#: class.bcn_breadcrumb_trail.php:72 class.bcn_breadcrumb_trail.php:84
-#: class.bcn_breadcrumb_trail.php:96
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Siirry %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:111 class.bcn_breadcrumb_trail.php:116
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Siirry %title% tagi arkistoon.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:128
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Siirry %title% kategoria arkistoon.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_breadcrumb_trail.php:132
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Siirry %title% arkistoon.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
-
-#: class.bcn_network_admin.php:403
-msgid "Warning: Individual site settings will override any settings set in this page."
-msgstr "Varoitus: Verkkosivukohtaiset asetukset kumoavat tämä sivun määritykset."
-
-#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
-msgid "Warning: Individual site settings may override any settings set in this page."
-msgstr "Varoitus: Verkkosivukohtaiset asetukset saattavat kumota tämä sivun määritykset."
-
-#: class.bcn_widget.php:105
-msgid "Google (RDFa) Breadcrumbs"
-msgstr "Google (RDFa) Murupolut"
-
-#: breadcrumb-navxt.php:256
-msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Siirry %title%.\" href=\"%link%\">%htitle%</a></span>"
-
-#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:64
-msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
-msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
-
-#: class.bcn_admin.php:336 class.bcn_admin.php:350
-msgid "Warning: Your network settings will override any settings set in this page."
-msgstr "Varoitus: Verkkoasetuksesi tulevat kumomaan tämän sivun määritykset. "
-
-#: class.bcn_admin.php:340 class.bcn_admin.php:344
-msgid "Warning: Your network settings may override any settings set in this page."
-msgstr "Varoitus: Verkkoasetuksesi voivat kumota tämän sivun määritykset."
-
-#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
-msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
-msgstr "Varoitus: BCN_SETTINGS_* määritystä ei löydy, oletusasetuksena BCN_SETTINGS_FAVOR_NETWORK määritelty."
-
-#: class.bcn_network_admin.php:449
-msgid "Breadcrumb NavXT Network Settings"
-msgstr "Breadcrumb NavXT verkkoasetukset"
-
-msgid "Breadcrumb NavXT"
-msgstr "Breadcrumb NavXT murupolut"
-
-msgid "http://mtekk.us/code/breadcrumb-navxt/"
-msgstr "http://mtekk.us/code/breadcrumb-navxt/"
-
-msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-msgstr "Lisää vierailijan toistaiseksi kulkema polku . Lisätietoja tämän apuohjelman käytöstä löytyy täältä: <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
-
-msgid "John Havlik"
-msgstr "John Havlik"
-
-msgid "http://mtekk.us/"
-msgstr "http://mtekk.us/"
-
-#: class.bcn_admin.php:472 class.bcn_admin.php:554
-#: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
-msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
-msgstr "Hierarkia jonka murupolku näyttää. Huomioi että vaihtoehto \"Artikkelin yläpuolella oleva taso\" saattaa vaatia toisen lisäpalikan asennuksen."
-
-#: class.bcn_breadcrumb_trail.php:106
-msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
-msgstr "Hakutulokset &#39;<a title=\"Siirry hakutulosten ensimmäiselle sivulle %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
-
-#: class.bcn_admin.php:391 class.bcn_network_admin.php:461
-msgid "A collection of settings most likely to be modified are located under this tab."
-msgstr "Yleisemmin muokatut asetukset löytyvät tältä välilehdeltä."
-
-#: class.bcn_admin.php:641 class.bcn_network_admin.php:711
-msgid "Title Length"
-msgstr "Otsikon pituus"
-
-#: class.bcn_admin.php:426 class.bcn_network_admin.php:496
-msgid "Mainsite Breadcrumb"
-msgstr "Pääsivuston murupolku"
-
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
-msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
-msgstr "Tämän välilehden alla löytyy kaikkien sivujen, artikkeleiden ja kustomoitujen artikkelityypien asetukset."
-
-#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
-msgid "Post Types"
-msgstr "Julkaisun tyyppi"
-
-#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
-msgid "Post Hierarchy Display"
-msgstr "Näytä Julkaisun hierarkia"
-
-#: class.bcn_admin.php:448 class.bcn_network_admin.php:518
-msgid "Post Hierarchy"
-msgstr "Julkaisun hierarkia"
-
-#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
-msgid "%s Hierarchy Display"
-msgstr "%s Hieraria näkymä"
-
-#: class.bcn_admin.php:583 class.bcn_network_admin.php:653
-msgid "Post Formats"
-msgstr "Julkaisuformaatit"
-
-#: class.bcn_admin.php:651 class.bcn_network_admin.php:721
-msgid "Max Title Length: "
-msgstr "Suurin sallittu otsikon pituus:"
-
-#: class.bcn_admin.php:439 class.bcn_network_admin.php:509
-msgid "Posts"
-msgstr "Julkaisut"
-
-#: class.bcn_admin.php:456 class.bcn_admin.php:530
-#: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
-msgid "Post Parent"
-msgstr "Julkaisun ylempi taso"
-
-#: class.bcn_admin.php:550 class.bcn_network_admin.php:620
-msgid "The hierarchy which the breadcrumb trail will show."
-msgstr "Hierarkia jota murupolku näyttää."
-
-#: class.bcn_admin.php:525 class.bcn_network_admin.php:595
-msgid "%s Hierarchy"
-msgstr "%s Hierarkia"
-
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
-msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
-msgstr "Asetukset kaikille tietoluokille (mukaan lukien Kategoriat, Tunnisteet, ja räätälöidyt tietoluokat) sijaitsevat tässä välilehdessä."
-
-#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
-msgid "Taxonomies"
-msgstr "Tietoluokat"
-
-#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
-msgid "Post Format Template"
-msgstr "Artikkelin/sivun mallipohja"
-
-#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
-msgid "The template for post format breadcrumbs."
-msgstr "Murupolkujen mallipohja (artikkelit/sivut)"
-
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
-msgid "Post Format Template (Unlinked)"
-msgstr "Artikkelin/sivun mallipohja (ilman linkkiä)"
-
-#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
-msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
-msgstr "Murupolkujen mallipohja (artikkelit/sivut) jota käytetään kun niissä ei ole linkkejä"
-
-#: class.bcn_admin.php:617 class.bcn_network_admin.php:687
-msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
-msgstr "Asetukset kirjoittaja ja päivämäärä kokoelmille, hauille ja 404-sivuille löytyvät tästä välilehdestä."
-
-#: class.bcn_admin.php:618 class.bcn_network_admin.php:688
-msgid "Author Archives"
-msgstr "Kirjoittajan kokoelmat"
-
-#: class.bcn_breadcrumb_trail.php:121
-msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-msgstr "Kirjoittajan artikkelit: <a title=\"Siirry ensimmäiselle sivulle tuloksia jossa kirjoittaja on %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
-
-#: includes/class.mtekk_adminkit.php:304
-msgid "Your settings are for a newer version."
-msgstr "Asetuksesi ovat uudemmalle versiolle."
-
-#: class.bcn_widget.php:98
-msgid "Text to show before the trail:"
-msgstr "Näytä tämä teksti ennen murupolkua:"
-
-#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
-msgid "Go to the Breadcrumb NavXT translation project."
-msgstr "Siirry Breadcrumb NavXT käännösprojektiin."
-
-#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
-#: class.bcn_network_admin.php:25
-msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
-msgstr "PHP versio on liian vanha, päivitä se uudempaan versioon. Nykyversio on %1$s, Breadcrumb NavXT vaatii version %2$s"
-
-#: class.bcn_widget.php:32
-msgid "Adds a breadcrumb trail to your sidebar"
-msgstr "Lisää murupolun sivupalkkiin"
-
-#: class.bcn_widget.php:94
-msgid "Title:"
-msgstr "Otsikko:"
-
-#: class.bcn_widget.php:102
-msgid "Output trail as:"
-msgstr "Näitä murupolku näin:"
-
-#: class.bcn_widget.php:104
-msgid "List"
-msgstr "Lista"
-
-#: class.bcn_widget.php:106
-msgid "Plain"
-msgstr "Riisuttu"
-
-#: class.bcn_widget.php:111
-msgid "Link the breadcrumbs"
-msgstr "Lisää murupolkuun linkit"
-
-#: class.bcn_widget.php:113
-msgid "Reverse the order of the trail"
-msgstr "Näytä polku kääneisessä järjestyksessä"
-
-#: class.bcn_widget.php:115
-msgid "Hide the trail on the front page"
-msgstr "Piilota etusivulta murupolku"
-
-#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
-msgid "Insufficient privileges to proceed."
-msgstr "Oikeudet eivät riitä jatkamaan."
-
-#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
-msgid "Tips for the settings are located below select options."
-msgstr "Jokaisen vaihtoehdon alla näkyy vihjeita sen käytöstä."
-
-#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
-msgid "Resources"
-msgstr "Resurssit"
-
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
-msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
-msgstr "%sOhjeita ja esimerkkejä%s: Ohjelman tekijän kotisivuilta löydät runsaasti oppaita, opetusohjeita sekä miten tehdään kirjoituksia."
-
-#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
-msgid "Go to the Breadcrumb NavXT tag archive."
-msgstr "Siirry Breadcrumb NavXT tägi-arkistoon."
-
-#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
-msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
-msgstr "%sDokumentaatio verkossa%s:Tarkista verkkosivuilta tarkemmat dokumentaatiot."
-
-#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
-msgid "Go to the Breadcrumb NavXT online documentation"
-msgstr "Siirry Breadcrumb NavXT dokumentaatioon verkossa"
-
-#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
-msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
-msgstr "%sVirheraportit%s: Jos uskot löytäneen ohjemasta virheen muista mainita käytössä-olevan WordPress versiosi sekä kuvauksen miten löysit virheen."
-
-#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
-msgid "Go to the Breadcrumb NavXT support post for your version."
-msgstr "Siirry Breadcrumb NavXT tuki-raportointiin käyttämälle versiollesi."
-
-#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
-msgid "Giving Back"
-msgstr "Vasta-lahjoitus"
-
-#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
-msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
-msgstr "%sLahjoita%s: Jos nautit Breadcrumb NavXT:sta ja haluat tukea sen kehitystä, harkitse tarjota kehittelijälle oluen."
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Development (trunk)\n"
+
+#: class.bcn_breadcrumb.php:91
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:110
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:115 class.bcn_breadcrumb_trail.php:131
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
+
+#: class.bcn_breadcrumb_trail.php:127
+msgid "<span property=\"itemListElement\" typeof=\"ListItem\"><a property=\"item\" typeof=\"WebPage\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\"><span property=\"name\">%htitle%</span></a><meta property=\"position\" content=\"%position%\"></span>"
+msgstr ""
 
 #: class.bcn_admin.php:246 class.bcn_network_admin.php:317
 msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
@@ -328,9 +34,13 @@ msgstr "Siirry PayPal:iin lahjoittamaan Breadcrumb NavXT:n kehitystyölle."
 msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
 msgstr "%sOhjelman kääntäminen%s: Jos käyttämäsi kieli ei vielä ole tuettu, ota yhteyttä John Havlik:iin ja tarjoudu kääntämään se."
 
-#: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
-#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
-#: class.bcn_network_admin.php:462
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
+msgid "Go to the Breadcrumb NavXT translation project."
+msgstr "Siirry Breadcrumb NavXT käännösprojektiin."
+
+#: class.bcn_admin.php:252 class.bcn_admin.php:390 class.bcn_admin.php:391
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:462
+#: class.bcn_network_admin.php:463
 msgid "General"
 msgstr "Yleistä"
 
@@ -377,334 +87,554 @@ msgstr "Vienti"
 msgid "Reset"
 msgstr "Resetointi"
 
-#: class.bcn_admin.php:379
+#: class.bcn_admin.php:336 class.bcn_network_admin.php:421
+msgid "Warning: Your network settings will override any settings set in this page."
+msgstr "Varoitus: Verkkoasetuksesi tulevat kumomaan tämän sivun määritykset. "
+
+#: class.bcn_admin.php:340 class.bcn_admin.php:344
+msgid "Warning: Your network settings may override any settings set in this page."
+msgstr "Varoitus: Verkkoasetuksesi voivat kumota tämän sivun määritykset."
+
+#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
+msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL."
+msgstr ""
+
+#: class.bcn_admin.php:361 class.bcn_network_admin.php:433
+msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
+msgstr "Varoitus: Käytät vanhentunutta asetusta \"Title Length\" (katso Muut &gt; Vanhentuneet), ole hyvä ja %1$suse käytä CSS:ää sen tilalle%2$s."
+
+#: class.bcn_admin.php:361 class.bcn_admin.php:646
+#: class.bcn_network_admin.php:433 class.bcn_network_admin.php:718
+msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
+msgstr "Siirry ohjeistukseen miten lyhennät breadcrumb otsikoiden pituutta CSS:llä"
+
+#: class.bcn_admin.php:378
 msgid "Breadcrumb NavXT Settings"
 msgstr "Breadcrumb NavXT asetukset"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+#: class.bcn_admin.php:390 class.bcn_network_admin.php:462
+msgid "A collection of settings most likely to be modified are located under this tab."
+msgstr "Yleisemmin muokatut asetukset löytyvät tältä välilehdeltä."
+
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:466
 msgid "Breadcrumb Separator"
 msgstr "Murupolun välimerkki"
 
-#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+#: class.bcn_admin.php:394 class.bcn_network_admin.php:466
 msgid "Placed in between each breadcrumb."
 msgstr "Sijoitetaan jokaisen murun väliin"
 
-#: class.bcn_admin.php:408 class.bcn_admin.php:411
-#: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
-msgid "Home Breadcrumb"
-msgstr "Koti-murunen"
-
-#: class.bcn_admin.php:411 class.bcn_network_admin.php:481
-msgid "Place the home breadcrumb in the trail."
-msgstr "Näytä koti-murunen murupolussa."
-
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
-msgid "Home Template"
-msgstr "Koti-lomakepohja"
-
-#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
-msgid "The template for the home breadcrumb."
-msgstr "Lomakepohja koti-muruselle."
-
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
-msgid "Home Template (Unlinked)"
-msgstr "Lomakepohja koti-muruselle (ilman linkkiä)"
-
-#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
-msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
-msgstr "Lomakepohja koti-muruselle (murut ilman linkkiä) "
-
-#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
-#: class.bcn_network_admin.php:490
-msgid "Blog Breadcrumb"
-msgstr "Blogin murupolku"
-
-#: class.bcn_admin.php:420 class.bcn_network_admin.php:490
-msgid "Place the blog breadcrumb in the trail."
-msgstr "Lisää blogin murupolku loppuun."
-
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
-msgid "Blog Template"
-msgstr "Blogin lomakepohja"
-
-#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
-msgid "The template for the blog breadcrumb, used only in static front page environments."
-msgstr "Lomakepohja murupolulle (tätä käytetään staattisen etusivun tilanteessa)."
-
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
-msgid "Blog Template (Unlinked)"
-msgstr "Blogin lomakepohja (ilman linkkejä)"
-
-#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
-msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
-msgstr "Lomakepohja murupolulle (tätä käytetään staattisen etusivun tilanteissa jossa murupolku ei ole linkattu)."
-
-#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
-msgid "Main Site Breadcrumb"
-msgstr "Pääsivuston murupolku"
-
-#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
-msgid "Place the main site home breadcrumb in the trail in an multisite setup."
-msgstr "Lisää pääsivuston muru polkuun moni-sivusto ympäristössä."
-
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
-msgid "Main Site Home Template"
-msgstr "Pääsivuston etusivu-lomakepohja"
-
-#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
-msgid "The template for the main site home breadcrumb, used only in multisite environments."
-msgstr "Pääsivuston etusivu-murupolkun lomakepohja (käytettän moni-sivusto ympäristössä)."
-
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
-msgid "Main Site Home Template (Unlinked)"
-msgstr "Pääsivuston etusivu-lomakepohja (ilman linkkejä)"
-
-#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
-msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
-msgstr "Pääsivuston etusivu-lomakepohja (käytetään moni-sivusto ympäristössä jossa murupolut eivät ole linkattu)."
-
-#: class.bcn_admin.php:399 class.bcn_network_admin.php:469
+#: class.bcn_admin.php:398 class.bcn_network_admin.php:470
 msgid "Current Item"
 msgstr "Nykyinen kohde"
 
-#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:401 class.bcn_network_admin.php:473
 msgid "Link Current Item"
 msgstr "Nykyinen kohde (linkattu)"
 
-#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+#: class.bcn_admin.php:401 class.bcn_network_admin.php:473
 msgid "Yes"
 msgstr "Kyllä"
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Paged Breadcrumb"
 msgstr "Sivutettu murupolku"
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Include the paged breadcrumb in the breadcrumb trail."
 msgstr "Näytä myös sivutettu murupolku murupolussa."
 
-#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:474
 msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
 msgstr "Merkkinä siitä että käyttäjä ei ole ensimmäisellä tai sivutetulla artikkelissa/sivussa."
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:475
 msgid "Paged Template"
 msgstr "Sivutettu asiakirjamalli"
 
-#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:475
 msgid "The template for paged breadcrumbs."
 msgstr "Sivutettujen julkaisujen murupolku-asiakirjamalli."
 
-#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+#: class.bcn_admin.php:407 class.bcn_admin.php:410
+#: class.bcn_network_admin.php:479 class.bcn_network_admin.php:482
+msgid "Home Breadcrumb"
+msgstr "Koti-murunen"
+
+#: class.bcn_admin.php:410 class.bcn_network_admin.php:482
+msgid "Place the home breadcrumb in the trail."
+msgstr "Näytä koti-murunen murupolussa."
+
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:483
+msgid "Home Template"
+msgstr "Koti-lomakepohja"
+
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:483
+msgid "The template for the home breadcrumb."
+msgstr "Lomakepohja koti-muruselle."
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:484
+msgid "Home Template (Unlinked)"
+msgstr "Lomakepohja koti-muruselle (ilman linkkiä)"
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:484
+msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
+msgstr "Lomakepohja koti-muruselle (murut ilman linkkiä) "
+
+#: class.bcn_admin.php:416
+msgid "Blog Breadcrumb "
+msgstr "Blogin Breadcrumb"
+
+#: class.bcn_admin.php:419 class.bcn_network_admin.php:488
+#: class.bcn_network_admin.php:491
+msgid "Blog Breadcrumb"
+msgstr "Blogin murupolku"
+
+#: class.bcn_admin.php:419 class.bcn_network_admin.php:491
+msgid "Place the blog breadcrumb in the trail."
+msgstr "Lisää blogin murupolku loppuun."
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:492
+msgid "Blog Template"
+msgstr "Blogin lomakepohja"
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:492
+msgid "The template for the blog breadcrumb, used only in static front page environments."
+msgstr "Lomakepohja murupolulle (tätä käytetään staattisen etusivun tilanteessa)."
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:493
+msgid "Blog Template (Unlinked)"
+msgstr "Blogin lomakepohja (ilman linkkejä)"
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:493
+msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
+msgstr "Lomakepohja murupolulle (tätä käytetään staattisen etusivun tilanteissa jossa murupolku ei ole linkattu)."
+
+#: class.bcn_admin.php:425 class.bcn_network_admin.php:497
+msgid "Mainsite Breadcrumb"
+msgstr "Pääsivuston murupolku"
+
+#: class.bcn_admin.php:428 class.bcn_network_admin.php:500
+msgid "Main Site Breadcrumb"
+msgstr "Pääsivuston murupolku"
+
+#: class.bcn_admin.php:428 class.bcn_network_admin.php:500
+msgid "Place the main site home breadcrumb in the trail in an multisite setup."
+msgstr "Lisää pääsivuston muru polkuun moni-sivusto ympäristössä."
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:501
+msgid "Main Site Home Template"
+msgstr "Pääsivuston etusivu-lomakepohja"
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:501
+msgid "The template for the main site home breadcrumb, used only in multisite environments."
+msgstr "Pääsivuston etusivu-murupolkun lomakepohja (käytettän moni-sivusto ympäristössä)."
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:502
+msgid "Main Site Home Template (Unlinked)"
+msgstr "Pääsivuston etusivu-lomakepohja (ilman linkkejä)"
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:502
+msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
+msgstr "Pääsivuston etusivu-lomakepohja (käytetään moni-sivusto ympäristössä jossa murupolut eivät ole linkattu)."
+
+#: class.bcn_admin.php:437 class.bcn_network_admin.php:509
+msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
+msgstr "Tämän välilehden alla löytyy kaikkien sivujen, artikkeleiden ja kustomoitujen artikkelityypien asetukset."
+
+#: class.bcn_admin.php:437 class.bcn_network_admin.php:509
+msgid "Post Types"
+msgstr "Julkaisun tyyppi"
+
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:510
+msgid "Posts"
+msgstr "Julkaisut"
+
+#: class.bcn_admin.php:441 class.bcn_network_admin.php:513
 msgid "Post Template"
 msgstr "Artikkelin asiakirjamalli"
 
-#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+#: class.bcn_admin.php:441 class.bcn_network_admin.php:513
 msgid "The template for post breadcrumbs."
 msgstr "Artikkelien murupolkujen asiakirjamalli."
 
-#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:514
 msgid "Post Template (Unlinked)"
 msgstr "Artikkelin asiakirjamalli (ilman linkkejä)"
 
-#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:514
 msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Asiakirjamalli artikkelien murupolulle (käytetään vain silloin kun murupolku ei ole linkattu)."
 
-#: class.bcn_admin.php:452 class.bcn_admin.php:569
-#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:515
+msgid "Post Hierarchy Display"
+msgstr "Näytä Julkaisun hierarkia"
+
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:515
+msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
+msgstr "Näytä hierarkia (tarkennettu alla) joka johtaa blogin breadcrumb-polkuun."
+
+#: class.bcn_admin.php:447 class.bcn_network_admin.php:519
+msgid "Post Hierarchy"
+msgstr "Julkaisun hierarkia"
+
+#: class.bcn_admin.php:451 class.bcn_admin.php:569
+#: class.bcn_network_admin.php:523 class.bcn_network_admin.php:641
 msgid "Categories"
 msgstr "Kategoriat"
 
-#: class.bcn_admin.php:453 class.bcn_network_admin.php:523
+#: class.bcn_admin.php:452 class.bcn_admin.php:530
+#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:602
 msgid "Dates"
 msgstr "Päivämäärät"
 
-#: class.bcn_admin.php:454 class.bcn_admin.php:576
-#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
+#: class.bcn_admin.php:453 class.bcn_admin.php:576
+#: class.bcn_network_admin.php:525 class.bcn_network_admin.php:648
 msgid "Tags"
 msgstr "Tägit"
 
-#: class.bcn_admin.php:476 class.bcn_network_admin.php:546
+#: class.bcn_admin.php:455 class.bcn_admin.php:529
+#: class.bcn_network_admin.php:527 class.bcn_network_admin.php:601
+msgid "Post Parent"
+msgstr "Julkaisun ylempi taso"
+
+#: class.bcn_admin.php:471 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:543 class.bcn_network_admin.php:626
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "Hierarkia jonka murupolku näyttää. Huomioi että vaihtoehto \"Artikkelin yläpuolella oleva taso\" saattaa vaatia toisen lisäpalikan asennuksen."
+
+#: class.bcn_admin.php:475 class.bcn_network_admin.php:547
 msgid "Pages"
 msgstr "Sivut"
 
-#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+#: class.bcn_admin.php:478 class.bcn_network_admin.php:550
 msgid "Page Template"
 msgstr "Sivun asiakirjamalli"
 
-#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+#: class.bcn_admin.php:478 class.bcn_network_admin.php:550
 msgid "The template for page breadcrumbs."
 msgstr "Sivun murupolun asiakirjamalli."
 
-#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:551
 msgid "Page Template (Unlinked)"
 msgstr "Sivun asiakirjamalli (ilman linkkiä)"
 
-#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:551
 msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Murupolun lomakepohja, jota käytetään silloin kun murupolku ei käytä linkkejä."
 
-#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:482 class.bcn_network_admin.php:554
+msgid "Attachments"
+msgstr "Liitetiedostot"
+
+#: class.bcn_admin.php:485 class.bcn_network_admin.php:557
 msgid "Attachment Template"
 msgstr "Liitteen lomakepohja"
 
-#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+#: class.bcn_admin.php:485 class.bcn_network_admin.php:557
 msgid "The template for attachment breadcrumbs."
 msgstr "Lomakepohja liitteen murupolulle."
 
-#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:558
 msgid "Attachment Template (Unlinked)"
 msgstr "Liitteen lomakepohja (linkkaamaton)"
 
-#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:558
 msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Liitteen murupolun lomakepohja, jota käytetään silloin kun murupolku ei käytä linkkejä. "
 
-#: class.bcn_admin.php:507 class.bcn_admin.php:607
-#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+#: class.bcn_admin.php:506 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:679
 msgid "%s Template"
 msgstr "%s Lomakepohja"
 
-#: class.bcn_admin.php:507 class.bcn_admin.php:607
-#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+#: class.bcn_admin.php:506 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:679
 msgid "The template for %s breadcrumbs."
 msgstr "Lomakepohja %s murupolulle."
 
-#: class.bcn_admin.php:508 class.bcn_admin.php:608
-#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+#: class.bcn_admin.php:507 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:579 class.bcn_network_admin.php:680
 msgid "%s Template (Unlinked)"
 msgstr "%s Lomakepohja (linkkaamaton)"
 
-#: class.bcn_admin.php:508 class.bcn_admin.php:608
-#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+#: class.bcn_admin.php:507 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:579 class.bcn_network_admin.php:680
 msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Lomakepohja %s murupolulle, jota käytetään vain silloin kun murupolku ei käytä linkkejä. "
 
-#: class.bcn_admin.php:513 class.bcn_network_admin.php:583
+#: class.bcn_admin.php:512 class.bcn_network_admin.php:584
 msgid "%s Root Page"
 msgstr "%s Aloitussivu"
 
-#: class.bcn_admin.php:516 class.bcn_network_admin.php:586
+#: class.bcn_admin.php:515 class.bcn_network_admin.php:587
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Valitse &mdash;"
 
-#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:591
 msgid "%s Archive Display"
 msgstr "%s Arkistonäkymä"
 
-#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+#: class.bcn_admin.php:519 class.bcn_network_admin.php:591
 msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
 msgstr "Näytä murupolku %s artikkelityypin arkistolle murupolussa."
 
-#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:592
+msgid "%s Hierarchy Display"
+msgstr "%s Hieraria näkymä"
+
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:592
+msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
+msgstr "Näytä hierarkia (tarkennettu alla) joka johtaa %s:han breadcrumb-polussa."
+
+#: class.bcn_admin.php:524 class.bcn_network_admin.php:596
+msgid "%s Hierarchy"
+msgstr "%s Hierarkia"
+
+#: class.bcn_admin.php:550 class.bcn_network_admin.php:622
+msgid "The hierarchy which the breadcrumb trail will show."
+msgstr "Hierarkia jota murupolku näyttää."
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:640
+msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
+msgstr "Asetukset kaikille tietoluokille (mukaan lukien Kategoriat, Tunnisteet, ja räätälöidyt tietoluokat) sijaitsevat tässä välilehdessä."
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:640
+msgid "Taxonomies"
+msgstr "Tietoluokat"
+
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:644
 msgid "Category Template"
 msgstr "Kategorialomakepohja"
 
-#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:644
 msgid "The template for category breadcrumbs."
 msgstr "Kategoria murupolun lomakepohja."
 
-#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:645
 msgid "Category Template (Unlinked)"
 msgstr "Kategorialomakepohja (linkkamaton)"
 
-#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:645
 msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Kategoria murupolun lomakepohja, jota käytetään vain silloin kun murupolku on linkkamaton."
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:651
 msgid "Tag Template"
 msgstr "Tägi lomakepohja"
 
-#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:651
 msgid "The template for tag breadcrumbs."
 msgstr "Lomakepohja tägi murupoluille."
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:652
 msgid "Tag Template (Unlinked)"
 msgstr "Tägi lomakepohja (linkkamaton)"
 
-#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:652
 msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Lomakepohja tägi murupolulle, jota käytetään vain silloin kun murupolku on linkkamaton."
 
+#: class.bcn_admin.php:583 class.bcn_network_admin.php:655
+msgid "Post Formats"
+msgstr "Julkaisuformaatit"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:658
+msgid "Post Format Template"
+msgstr "Artikkelin/sivun mallipohja"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:658
+msgid "The template for post format breadcrumbs."
+msgstr "Murupolkujen mallipohja (artikkelit/sivut)"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:659
+msgid "Post Format Template (Unlinked)"
+msgstr "Artikkelin/sivun mallipohja (ilman linkkiä)"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:659
+msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "Murupolkujen mallipohja (artikkelit/sivut) jota käytetään kun niissä ei ole linkkejä"
+
+#: class.bcn_admin.php:617 class.bcn_network_admin.php:689
+msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
+msgstr "Asetukset kirjoittaja ja päivämäärä kokoelmille, hauille ja 404-sivuille löytyvät tästä välilehdestä."
+
 #: class.bcn_admin.php:617 class.bcn_admin.php:626
-#: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
+#: class.bcn_network_admin.php:689 class.bcn_network_admin.php:698
 msgid "Miscellaneous"
 msgstr "Muut"
 
-#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+#: class.bcn_admin.php:618 class.bcn_network_admin.php:690
+msgid "Author Archives"
+msgstr "Kirjoittajan kokoelmat"
+
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:693
 msgid "Author Template"
 msgstr "Kirjoittaja lomakepohja"
 
-#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:693
 msgid "The template for author breadcrumbs."
 msgstr "Lomakepohja kirjoittajan murupoluille."
 
-#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:694
 msgid "Author Template (Unlinked)"
 msgstr "Kirjoittaja lomakepohja (linkkamaton)"
 
-#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:694
 msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Lomakepohja kirjoittaja lomakepohjalle, jota käytetään vain silloin kun murupolku on linkkaamaton."
 
-#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:695
 msgid "Author Display Format"
 msgstr "Kirjoittaja näkymä"
 
-#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:695
 msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
 msgstr "display_name käyttää nimeä määritelty kohdassa \"Display name publicly as\" kohdassa käyttäjäprofiili jota käytetään muussa viestinnässä kohdassa käyttäjäprofiili."
 
-#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:701
 msgid "Date Template"
 msgstr "Päiväys lomakepohja"
 
-#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:701
 msgid "The template for date breadcrumbs."
 msgstr "Päiväys murupolun lomakepohja."
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:702
 msgid "Date Template (Unlinked)"
 msgstr "Päiväys lomakepohja (linkkamaton)"
 
-#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:702
 msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
 msgstr "Lomakepohja päiväys murupolulle, jota käytetään vain silloin kun murupolku on linkkamaton."
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:703
 msgid "Search Template"
 msgstr "Haku lomakepohja"
 
-#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:703
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
 msgstr "Ankkuri lomakepohja haku-murupoluille, jota käytetään vain silloin kun hakutulokset kattavat useamman sivun."
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:704
 msgid "Search Template (Unlinked)"
 msgstr "Haku lomakepohja (linkkamaton)"
 
-#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:704
 msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
 msgstr "Ankkuri lomakepohja haku-murupoluille, jota käytetään vain silloin kun hakutulokset kattavat useamman sivun ja murupolku on linkkamaton."
 
-#: class.bcn_admin.php:633 class.bcn_network_admin.php:703
+#: class.bcn_admin.php:633 class.bcn_network_admin.php:705
 msgid "404 Title"
 msgstr "404 Otsikko"
 
-#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:706
 msgid "404 Template"
 msgstr "404 lomakepohja"
 
-#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:706
 msgid "The template for 404 breadcrumbs."
 msgstr "Lomakepohja 404 murupoluille."
 
-#: class.bcn_admin.php:663 class.bcn_network_admin.php:733
+#: class.bcn_admin.php:637 class.bcn_network_admin.php:709
+msgid "Deprecated"
+msgstr "Vanhentunut"
+
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:713
+msgid "Title Length"
+msgstr "Otsikon pituus"
+
+#: class.bcn_admin.php:646 class.bcn_network_admin.php:718
+msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
+msgstr "Rajoita breadcrumb otsikon pituutta. (Vanhentunut, %suse käytä CSS sen tilalla%s)"
+
+#: class.bcn_admin.php:651 class.bcn_network_admin.php:723
+msgid "Max Title Length: "
+msgstr "Suurin sallittu otsikon pituus:"
+
+#: class.bcn_admin.php:663 class.bcn_network_admin.php:735
 msgid "Save Changes"
 msgstr "Tallenna muutokset"
+
+#: class.bcn_breadcrumb_trail.php:79
+msgid "Page %htitle%"
+msgstr "Sivu %htitle%"
+
+#: class.bcn_breadcrumb_trail.php:102
+msgid "404"
+msgstr "404"
+
+#: class.bcn_breadcrumb_trail.php:105
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr "Hakutulokset &#39;<a title=\"Siirry hakutulosten ensimmäiselle sivulle %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+
+#: class.bcn_breadcrumb_trail.php:107
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "&#39;%htitle%&#39; hakutulokset"
+
+#: class.bcn_breadcrumb_trail.php:120
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "Kirjoittajan artikkelit: <a title=\"Siirry ensimmäiselle sivulle tuloksia jossa kirjoittaja on %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: class.bcn_breadcrumb_trail.php:122
+msgid "Articles by: %htitle%"
+msgstr "Artikkelit kirjoittajalta: %htitle%"
+
+#: class.bcn_breadcrumb_trail.php:393
+msgid "$post global is not of type WP_Post"
+msgstr "$post global ei ole typpiä WP_Post"
+
+#: class.bcn_network_admin.php:403
+msgid "Warning: Individual site settings will override any settings set in this page."
+msgstr "Varoitus: Verkkosivukohtaiset asetukset kumoavat tämä sivun määritykset."
+
+#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
+msgid "Warning: Individual site settings may override any settings set in this page."
+msgstr "Varoitus: Verkkosivukohtaiset asetukset saattavat kumota tämä sivun määritykset."
+
+#: class.bcn_network_admin.php:450
+msgid "Breadcrumb NavXT Network Settings"
+msgstr "Breadcrumb NavXT verkkoasetukset"
+
+#: class.bcn_widget.php:32
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "Lisää murupolun sivupalkkiin"
+
+#: class.bcn_widget.php:99
+msgid "Title:"
+msgstr "Otsikko:"
+
+#: class.bcn_widget.php:103
+msgid "Text to show before the trail:"
+msgstr "Näytä tämä teksti ennen murupolkua:"
+
+#: class.bcn_widget.php:107
+msgid "Output trail as:"
+msgstr "Näitä murupolku näin:"
+
+#: class.bcn_widget.php:109
+msgid "List"
+msgstr "Lista"
+
+#: class.bcn_widget.php:110
+msgid "Google (RDFa) Breadcrumbs"
+msgstr "Google (RDFa) Murupolut"
+
+#: class.bcn_widget.php:111
+msgid "Plain"
+msgstr "Riisuttu"
+
+#: class.bcn_widget.php:117
+msgid "Link the breadcrumbs"
+msgstr "Lisää murupolkuun linkit"
+
+#: class.bcn_widget.php:119
+msgid "Reverse the order of the trail"
+msgstr "Näytä polku kääneisessä järjestyksessä"
+
+#: class.bcn_widget.php:121
+msgid "Hide the trail on the front page"
+msgstr "Piilota etusivulta murupolku"
 
 #: includes/class.mtekk_adminkit.php:225
 msgid "Settings"
@@ -721,6 +651,10 @@ msgstr "Päivitä asetuksesi nyt."
 #: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
 msgid "Migrate now."
 msgstr "Päivitä nyt."
+
+#: includes/class.mtekk_adminkit.php:304
+msgid "Your settings are for a newer version."
+msgstr "Asetuksesi ovat uudemmalle versiolle."
 
 #: includes/class.mtekk_adminkit.php:312
 msgid "Your plugin install is incomplete."
@@ -759,6 +693,14 @@ msgstr "Peruuta asetusten tallennus."
 #: includes/class.mtekk_adminkit.php:662
 msgid "Undo"
 msgstr "Peruuta"
+
+#: includes/class.mtekk_adminkit.php:507
+msgid "Settings did not change, nothing to save."
+msgstr "Asetukset eivät ole muuttuneet, ei mitään tallennettavaa."
+
+#: includes/class.mtekk_adminkit.php:511
+msgid "Settings were not saved."
+msgstr "Asetukset eivät tallentuneet."
 
 #: includes/class.mtekk_adminkit.php:516
 msgid "Some settings were not saved."
@@ -824,18 +766,71 @@ msgstr "Asetus-tiedosto"
 msgid "Select a XML settings file to upload and import settings from."
 msgstr "Valitse XML asetustiedosto ladattavaksi."
 
-#: class.bcn_breadcrumb_trail.php:79
-msgid "Page %htitle%"
-msgstr "Sivu %htitle%"
+#. Plugin Name of the plugin/theme
+msgid "Breadcrumb NavXT"
+msgstr "Breadcrumb NavXT murupolut"
 
-#: class.bcn_breadcrumb_trail.php:103
-msgid "404"
-msgstr "404"
+#. Plugin URI of the plugin/theme
+msgid "http://mtekk.us/code/breadcrumb-navxt/"
+msgstr "http://mtekk.us/code/breadcrumb-navxt/"
 
-#: class.bcn_breadcrumb_trail.php:108
-msgid "Search results for &#39;%htitle%&#39;"
-msgstr "&#39;%htitle%&#39; hakutulokset"
+#. Description of the plugin/theme
+msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "Lisää vierailijan toistaiseksi kulkema polku . Lisätietoja tämän apuohjelman käytöstä löytyy täältä: <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
 
-#: class.bcn_breadcrumb_trail.php:123
-msgid "Articles by: %htitle%"
-msgstr "Artikkelit kirjoittajalta: %htitle%"
+#. Author of the plugin/theme
+msgid "John Havlik"
+msgstr "John Havlik"
+
+#. Author URI of the plugin/theme
+msgid "http://mtekk.us/"
+msgstr "http://mtekk.us/"
+
+#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
+#: class.bcn_network_admin.php:25
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
+msgstr "PHP versio on liian vanha, päivitä se uudempaan versioon. Nykyversio on %1$s, Breadcrumb NavXT vaatii version %2$s"
+
+#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
+msgid "Insufficient privileges to proceed."
+msgstr "Oikeudet eivät riitä jatkamaan."
+
+#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
+msgid "Tips for the settings are located below select options."
+msgstr "Jokaisen vaihtoehdon alla näkyy vihjeita sen käytöstä."
+
+#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
+msgid "Resources"
+msgstr "Resurssit"
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
+msgstr "%sOhjeita ja esimerkkejä%s: Ohjelman tekijän kotisivuilta löydät runsaasti oppaita, opetusohjeita sekä miten tehdään kirjoituksia."
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "Go to the Breadcrumb NavXT tag archive."
+msgstr "Siirry Breadcrumb NavXT tägi-arkistoon."
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
+msgstr "%sDokumentaatio verkossa%s:Tarkista verkkosivuilta tarkemmat dokumentaatiot."
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "Go to the Breadcrumb NavXT online documentation"
+msgstr "Siirry Breadcrumb NavXT dokumentaatioon verkossa"
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
+msgstr "%sVirheraportit%s: Jos uskot löytäneen ohjemasta virheen muista mainita käytössä-olevan WordPress versiosi sekä kuvauksen miten löysit virheen."
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "Go to the Breadcrumb NavXT support post for your version."
+msgstr "Siirry Breadcrumb NavXT tuki-raportointiin käyttämälle versiollesi."
+
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
+msgid "Giving Back"
+msgstr "Vasta-lahjoitus"
+
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
+msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
+msgstr "%sLahjoita%s: Jos nautit Breadcrumb NavXT:sta ja haluat tukea sen kehitystä, harkitse tarjota kehittelijälle oluen."

@@ -69,6 +69,7 @@ Release date: November 12th, 2015
 * New feature: Taxonomy archives restricted by CPT are now supported.
 * Bug fix: Fixed issue where the multibyte supplicant functions were not always being included due to WordPress shipping with its own subset of theses functions.
 * Bug fix: Fixed issue where on an archive for a post type the archive breadcrumb would appear twice.
+
 = 5.2.2 =
 Release date: June 1st, 2015
 

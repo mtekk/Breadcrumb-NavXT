@@ -283,6 +283,8 @@ class bcn_network_admin extends mtekk_adminKit
 		}
 		//Save the passed in opts to the object's option array
 		$this->opt = $opts;
+		//End with resetting up the options
+		breadcrumb_navxt::setup_options($this->opt);
 	}
 	function opts_update_prebk(&$opts)
 	{

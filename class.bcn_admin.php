@@ -201,10 +201,6 @@ class bcn_admin extends mtekk_adminKit
 					}
 				}
 			}
-			//Add custom post types
-			breadcrumb_navxt::find_posttypes($opts);
-			//Add custom taxonomy types
-			breadcrumb_navxt::find_taxonomies($opts);
 			//Set the max title length to 20 if we are not limiting the title and the length was 0
 			if(!$opts['blimit_title'] && $opts['amax_title_length'] == 0)
 			{

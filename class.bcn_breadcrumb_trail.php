@@ -662,7 +662,7 @@ class bcn_breadcrumb_trail
 	/**
 	 * Retrieves the query var for 'post_type', sets default to post, and escapes
 	 * 
-	 * @param string $default[optional] The default value to return if nothing was found/set
+	 * @param string $default[optional] The default value to return if nothing was found/set or if post_type was an array
 	 * 
 	 * @return string The post type string found in the post_type query var
 	 */

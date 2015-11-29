@@ -669,11 +669,20 @@ class bcn_breadcrumb_trail
 	protected function get_type_string_query_var($default = 'post')
 	{
 		$type_str = get_query_var('post_type', $default);
-		if($type_str === '')
+		if($type_str === '' || is_array($type_str))
 		{
 			$type_str = $default;
 		}
 		return esc_attr($type_str);
+	}
+	/**
+	 * Retrieves the query var for 'post_type', and returns whether or not it is an array
+	 * 
+	 * @return bool Whether or not the post_type query var is an array
+	 */
+	protected function is_type_query_var_array()
+	{
+		return is_array(get_query_var('post_type'));
 	}
 	/**
 	 * Adds the post type argument to the URL iff the passed in type is not post
@@ -729,7 +738,8 @@ class bcn_breadcrumb_trail
 		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) 
 			&& !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])) 
 			&& $this->opt['bpost_' . $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]) . '_archive_display'] 
-			&& $this->has_archive($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
+			&& $this->has_archive($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]))
+			&& !$this->is_type_query_var_array())
 		{
 			//We end up using the post type in several places, give it a variable
 			$post_type = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]));

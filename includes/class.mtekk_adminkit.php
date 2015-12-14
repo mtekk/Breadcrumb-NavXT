@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.4';
+	const version = '1.4.50';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -408,12 +408,28 @@ abstract class mtekk_adminKit
 					case 's':
 						$opts[$option] = esc_html($input[$option]);
 						break;
+					//Deal with enumerated types
+					case 'E':
+						$opts[$option] = $this->opts_sanitize_enum($input[$option], $option);
+						break;
 					//By default we have nothing to do, allows for internal settings
 					default:
 						break;
 				}
 			}
 		}
+	}
+	/**
+	 * Simple sanitization function for enumerated types, end users should overload this
+	 * with something more usefull
+	 * 
+	 * @param string $value The input value from the form
+	 * @param string $option The option name
+	 * @return string The sanitized enumerated string
+	 */
+	private function opts_sanitize_enum($value, $option)
+	{
+		return esc_html($value);
 	}
 	/**
 	 * A better version of parse_args, will recrusivly follow arrays

@@ -16,7 +16,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
-//Do a PHP version check, require 5.2 or newer
+//Do a PHP version check, require 5.3 or newer
 if(version_compare(phpversion(), '5.3.0', '<'))
 {
 	//Only purpose of this function is to echo out the PHP version error
@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '5.3.0';
+	const version = '5.3.1';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';

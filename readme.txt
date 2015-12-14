@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 5.3.0
+Stable tag: 5.3.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -50,6 +50,13 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 5.3.1 =
+Release date: December 14th, 2015
+
+* Bug fix: Fixed alignment issue of the main content of the settings page on WordPress 4.4.
+* Bug fix: Fixed error caused by options upgrading not re-establishing new settings.
+* Bug fix: Fixed PHP error caused by `bcn_breadcrumb_trail::get_type_string_query_var()` returning an array when the post_type query variable is an array.
 
 = 5.3.0 =
 Release date: November 12th, 2015

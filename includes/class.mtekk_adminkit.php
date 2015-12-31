@@ -289,19 +289,19 @@ abstract class mtekk_adminKit
 	function version_check($version)
 	{
 		//Do a quick version check
-		if(version_compare($version, $this::version, '<') && is_array($this->opt))
+		if($version && version_compare($version, $this::version, '<') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
-			$this->message['error'][] = __('Your settings are out of date.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			$this->message['error'][] = __('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return false;
 		}
 		//Do a quick version check
-		else if(version_compare($version, $this::version, '>') && is_array($this->opt))
+		else if($version && version_compare($version, $this::version, '>') && is_array($this->opt))
 		{
-			//Throw an error since the DB version is out of date
-			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			//Let the user know that their settings are for a newer version
+			$this->message['error'][] = __('Your settings are for a newer version of this plugin.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return true;
@@ -317,7 +317,7 @@ abstract class mtekk_adminKit
 		else if(!$this->opts_validate($this->opt))
 		{
 			//Throw an error since it appears the options contain invalid data
-			$this->message['error'][] = __('Your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
+			$this->message['error'][] = __('One or more of your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return false;

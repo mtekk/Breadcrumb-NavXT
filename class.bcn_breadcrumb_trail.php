@@ -304,12 +304,11 @@ class bcn_breadcrumb_trail
 	 */
 	protected function post_terms($id, $taxonomy)
 	{
-		//Fills a temporary object with the terms for the post
-		$bcn_terms = get_the_terms($id, $taxonomy);
+		//Apply a filter to the terms for the post referred to by ID
+		$bcn_terms = apply_filters('bcn_post_terms', get_the_terms($id, $taxonomy), $id, $taxonomy);
 		//Only process if we have terms
-		if(is_array($bcn_object))
+		if(is_array($bcn_terms))
 		{
-			$bcn_terms = apply_filters('bcn_post_terms', $bcn_terms);
 			$title = '';	
 			$is_first = true;
 			//Loop through all of the term results

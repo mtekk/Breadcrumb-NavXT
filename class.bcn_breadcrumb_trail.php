@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.3.1';
+	const version = '5.3.50';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -36,8 +36,6 @@ class bcn_breadcrumb_trail
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}
 		$this->trail = &$this->breadcrumbs;
-		//Load the translation domain as the next part needs it		
-		//load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		//Initilize with default option values
 		$this->opt = array(
 			//Should the mainsite be shown
@@ -303,35 +301,34 @@ class bcn_breadcrumb_trail
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
 	 * TODO Need to implement this cleaner
-	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
 	 */
 	protected function post_terms($id, $taxonomy)
 	{
 		//Fills a temporary object with the terms for the post
-		$bcn_object = get_the_terms($id, $taxonomy);
+		$bcn_terms = get_the_terms($id, $taxonomy);
 		//Only process if we have terms
 		if(is_array($bcn_object))
 		{
-			//Add new breadcrumb to the trail
-			$this->breadcrumbs[] = new bcn_breadcrumb();
-			//Figure out where we placed the crumb, make a nice pointer to it
-			$bcn_breadcrumb = &$this->breadcrumbs[count($this->breadcrumbs) - 1];
+			$bcn_terms = apply_filters('bcn_post_terms', $bcn_terms);
+			$title = '';	
 			$is_first = true;
 			//Loop through all of the term results
-			foreach($bcn_object as $term)
+			foreach($bcn_terms as $term)
 			{
 				//Everything but the first term needs a comma separator
 				if($is_first == false)
 				{
-					$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . ', ');
+					$title .= ', ';
 				}
 				//This is a bit hackish, but it compiles the term anchor and appends it to the current breadcrumb title
-				$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . str_replace(
-					array('%title%', '%link%', '%htitle%', '%type%'),
+				$title .= str_replace(
+					array('%title%', '%link%', '%htitle%', '%type%'), 
 					array($term->name, $this->maybe_add_post_type_arg(get_term_link($term), NULL, $term->taxonomy), $term->name, $term->taxonomy),
-					$this->opt['Htax_' . $term->taxonomy . '_template']));
+					$this->opt['Htax_' . $term->taxonomy . '_template']);
 				$is_first = false;
 			}
+			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb($title, NULL, array('taxonomy', $taxonomy)));
 		}
 	}
 	/**

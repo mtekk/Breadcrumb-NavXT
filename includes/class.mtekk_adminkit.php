@@ -102,6 +102,17 @@ abstract class mtekk_adminKit
 	{
 		check_admin_referer($this->unique_prefix . '_' . $mode);
 	}
+	/**
+	 * Makes sure the current user can manage options to proceed
+	 */
+	function security()
+	{
+		//If the user can not manage options we will die on them
+		if(!current_user_can($this->access_level))
+		{
+			wp_die(__('Insufficient privileges to proceed.', $this->identifier));
+		}
+	}
 	function init()
 	{
 		//Admin Options reset hook
@@ -175,6 +186,7 @@ abstract class mtekk_adminKit
 	 */
 	function add_page()
 	{
+		//FIXME: This is wrong, there is no way for static analysis to pick up on what this string is
 		//Add the submenu page to "settings" menu
 		$hookname = add_submenu_page('options-general.php', __($this->full_name, $this->identifier), $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
 		// check capability of user to manage options (access control)

@@ -85,17 +85,6 @@ class bcn_admin extends mtekk_adminKit
 		breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
-	 * Makes sure the current user can manage options to proceed
-	 */
-	function security()
-	{
-		//If the user can not manage options we will die on them
-		if(!current_user_can($this->access_level))
-		{
-			wp_die(__('Insufficient privileges to proceed.', 'breadcrumb-navxt'));
-		}
-	}
-	/**
 	 * Upgrades input options array, sets to $this->opt
 	 * 
 	 * @param array $opts

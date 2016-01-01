@@ -401,7 +401,7 @@ class bcn_admin extends mtekk_adminKit
 						do_action($this->unique_prefix . '_settings_home', $this->opt);
 					?>
 				</table>
-				<h3><?php _e('Blog Breadcrumb ', 'breadcrumb-navxt'); ?></h3>
+				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table adminkit-engroup">
 					<?php
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), (get_option('show_on_front') !== "page"));

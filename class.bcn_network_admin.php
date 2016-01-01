@@ -711,7 +711,7 @@ class bcn_network_admin extends mtekk_adminKit
 										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
 									</label>
 								</li>
-							</ul>							
+							</ul>
 						</td>
 					</tr>
 				</table>

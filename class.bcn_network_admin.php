@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2007-2015  John Havlik  (email : john.havlik@mtekk.us)
+/*  Copyright 2007-2016  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ class bcn_network_admin extends mtekk_adminKit
 	function add_page()
 	{
 		//Add the submenu page to "settings" menu
-		$hookname = add_submenu_page('settings.php', __($this->full_name, $this->identifier), $this->short_name, $this->access_level, $this->identifier, array($this, 'net_admin_page'));
+		$hookname = add_submenu_page('settings.php', $this->full_name, $this->short_name, $this->access_level, $this->identifier, array($this, 'net_admin_page'));
 		// check capability of user to manage options (access control)
 		if(current_user_can($this->access_level))
 		{
@@ -434,7 +434,7 @@ class bcn_network_admin extends mtekk_adminKit
 		//Display our messages
 		$this->messages();
 		?>
-		<div class="wrap"><h2><?php _e('Breadcrumb NavXT Network Settings', 'breadcrumb-navxt'); ?></h2>
+		<div class="wrap"><h2><?php echo $this->full_name; ?></h2>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
 		if(!$this->version_check(get_site_option($this->unique_prefix . '_version')))

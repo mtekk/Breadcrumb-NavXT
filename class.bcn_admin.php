@@ -61,6 +61,7 @@ class bcn_admin extends mtekk_adminKit
 	{
 		$this->breadcrumb_trail =& $breadcrumb_trail;
 		$this->plugin_basename = $basename;
+		$this->full_name = __('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt =& $this->breadcrumb_trail->opt;
 		//We're going to make sure we load the parent's constructor

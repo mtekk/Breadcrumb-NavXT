@@ -60,6 +60,7 @@ class bcn_network_admin extends mtekk_adminKit
 	{
 		$this->breadcrumb_trail = $breadcrumb_trail;
 		$this->plugin_basename = $basename;
+		$this->full_name = __('Breadcrumb NavXT Network Settings', 'breadcrumb-navxt');
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt = $this->breadcrumb_trail->opt;
 		add_action('network_admin_menu', array($this, 'add_page'));

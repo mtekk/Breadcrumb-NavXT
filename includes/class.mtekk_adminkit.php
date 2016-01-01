@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.4.50';
+	const version = '1.5.60';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -186,9 +186,8 @@ abstract class mtekk_adminKit
 	 */
 	function add_page()
 	{
-		//FIXME: This is wrong, there is no way for static analysis to pick up on what this string is
 		//Add the submenu page to "settings" menu
-		$hookname = add_submenu_page('options-general.php', __($this->full_name, $this->identifier), $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
+		$hookname = add_submenu_page('options-general.php', $this->full_name, $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
 		// check capability of user to manage options (access control)
 		if(current_user_can($this->access_level))
 		{

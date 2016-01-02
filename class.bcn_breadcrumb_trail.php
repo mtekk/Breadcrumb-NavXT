@@ -305,7 +305,7 @@ class bcn_breadcrumb_trail
 	protected function post_terms($id, $taxonomy)
 	{
 		//Apply a filter to the terms for the post referred to by ID
-		$bcn_terms = apply_filters('bcn_post_terms', get_the_terms($id, $taxonomy), $id, $taxonomy);
+		$bcn_terms = apply_filters('bcn_post_terms', get_the_terms($id, $taxonomy), $taxonomy, $id);
 		//Only process if we have terms
 		if(is_array($bcn_terms))
 		{

@@ -632,7 +632,15 @@ class bcn_breadcrumb_trail
 	protected function is_builtin($post_type)
 	{
 		$type = get_post_type_object($post_type);
-		return $type->_builtin;
+		//If we get a null, that means either then type wasn't found, or we had 'any' as a type, treat as builtin
+		if($type === null)
+		{
+			return true;
+		}
+		else
+		{
+			return $type->_builtin;
+		}
 	}
 	/**
 	 * Determines if the current location is a for a root page or not

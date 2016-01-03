@@ -484,7 +484,7 @@ class bcn_breadcrumb_trail
 		if(is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('d'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('d', 'day archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
 			//If this is a day archive, add current-item type
 			if(is_day())
 			{
@@ -504,7 +504,7 @@ class bcn_breadcrumb_trail
 		if(is_month() || is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('F'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('F', 'month archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
 			//If this is a month archive, add current-item type
 			if(is_month())
 			{
@@ -521,7 +521,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('Y'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('Y', 'year archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
 		//If this is a year archive, add current-item type
 		if(is_year())
 		{

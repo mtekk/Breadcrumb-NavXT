@@ -51,8 +51,11 @@ if(!class_exists('mtekk_adminKit'))
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');
 //Include the breadcrumb trail class
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb_trail.php');
-//Include the WP 2.8+ widget class
-require_once(dirname(__FILE__) . '/class.bcn_widget.php');
+if(class_exists('WP_Widget'))
+{
+	//Include the WP 2.8+ widget class
+	require_once(dirname(__FILE__) . '/class.bcn_widget.php');
+}
 $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt

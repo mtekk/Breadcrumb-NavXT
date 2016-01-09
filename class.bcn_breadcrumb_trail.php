@@ -705,13 +705,10 @@ class bcn_breadcrumb_trail
 		{
 			$type = $this->get_type_string_query_var();
 		}
-		//Don't add onto the URL if we are on the default post type for the archive in question
-		if($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0])
-		{
-			return $url;
-		}
-		//If the type is not a post, add the type to query
-		if($type !== 'post')
+		//Add a query arg if we are not on the default post type for the archive in question and the post type is not post
+		$add_query_arg = (!($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0]) && $type !== 'post');
+		//Filter the add_query_arg logic, only add the query arg if necessary
+		if(apply_filters('bcn_add_post_type_arg', $add_query_arg, $type, $taxonomy))
 		{
 			$url = add_query_arg(array('post_type' => $type), $url);
 		}

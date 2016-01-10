@@ -256,7 +256,9 @@ class bcn_breadcrumb_trail
 			//Handle all hierarchical taxonomies, including categories
 			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
 			{
-				if(($term = $this->pick_post_term($id, $type)) !== false)
+				//Filter the results of post_pick_term
+				$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
+				if(term !== false)
 				{
 					//Fill out the term hiearchy
 					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);

@@ -2,25 +2,27 @@
 /**
  * This file contains tests for the mtekk_adminKit class
  *
- * @group mtekk_adminKit
+ * @group adminKit
  * @group bcn_core
  */
-class adminKitDUT extends mtekk_adminKit {
-	const version = '1.8.1';
-	protected $full_name = 'A Plugin Settings';
-	protected $short_name = 'A Plugin';
-	protected $access_level = 'manage_options';
-	protected $identifier = 'adminkit';
-	protected $unique_prefix = 'mak';
-	protected $plugin_basename = null;
-	protected $support_url = 'http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-';
-	function __construct()
-	{
-		parent::__construct();
-	}
-	function setOpts($opts)
-	{
-		$this->opt = $opts;
+if(class_exists('mtekk_adminKit')) {
+	class adminKitDUT extends mtekk_adminKit {
+		const version = '1.8.1';
+		protected $full_name = 'A Plugin Settings';
+		protected $short_name = 'A Plugin';
+		protected $access_level = 'manage_options';
+		protected $identifier = 'adminkit';
+		protected $unique_prefix = 'mak';
+		protected $plugin_basename = null;
+		protected $support_url = 'http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-';
+		function __construct()
+		{
+			parent::__construct();
+		}
+		function setOpts($opts)
+		{
+			$this->opt = $opts;
+		}
 	}
 }
 class adminKitTest extends WP_UnitTestCase {

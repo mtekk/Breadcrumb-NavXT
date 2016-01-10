@@ -51,6 +51,20 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->breadcrumb->set_title('Hello');
 		$this->assertSame('Hello', $this->breadcrumb->get_title());
 	}
+	function test_bad_title() {
+		$source = "'penn & teller' & at&t";
+		$resa = "&#039;penn &amp; teller&#039; &amp; at&amp;t";
+		//Set the title
+		$this->breadcrumb->set_title($source);
+		//Ensure the title hasn't changed yet (escape later)
+		$this->assertSame($source, $this->breadcrumb->get_title());
+		//Assemble the breadcrumb
+		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);
+		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
+		//Check that our titles are escaped as expected
+		$this->assertContains('title="Go to ' . $resa . '."', $breadcrumb_string_linked1);
+		$this->assertContains('<span property="name">' . $source . '</span>', $breadcrumb_string_linked1);
+	}
 	function test_set_url() {
 		//Start with an unlinked breadcrumb trail assembly
 		$breadcrumb_unlinked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), NULL, 101);
@@ -82,6 +96,18 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb_unlinked->set_url(NULL);
 		$breadcrumb_string_unlinked3 = $breadcrumb_unlinked->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked3);
+	}
+	function test_bad_url() {	
+		//First test a linked breadcrumb
+		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 81);
+		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
+		//Now change the URL to a bad URL
+		$this->breadcrumb->set_url('feed:javascript:alert(1)');
+		$breadcrumb_string_linked2 = $this->breadcrumb->assemble(true, 1);
+		//Make sure we changed automatically to a linked template, though the link should be empty
+		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
+		//Make sure we do not have the bad URL items in the output
+		$this->assertRegExp('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
 	}
 	function test_set_template() {
 		//Ensure the raw setup is as expected

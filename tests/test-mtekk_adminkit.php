@@ -15,12 +15,10 @@ if(class_exists('mtekk_adminKit')) {
 		protected $unique_prefix = 'mak';
 		protected $plugin_basename = null;
 		protected $support_url = 'http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-';
-		function __construct()
-		{
+		function __construct() {
 			parent::__construct();
 		}
-		function setOpts($opts)
-		{
+		function setOpts($opts) {
 			$this->opt = $opts;
 		}
 	}

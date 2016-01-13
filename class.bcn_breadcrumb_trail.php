@@ -756,6 +756,8 @@ class bcn_breadcrumb_trail
 	 * @param post $type A post object we are using to figureout the type
 	 * @param string $type_str The type string variable, passed by reference
 	 * @param int $root_id The ID for the post type root
+	 * 
+	 * TODO, can probably clean up all the logic here and use the code for the CPT archives for all paths
 	 */
 	protected function find_type($type, &$type_str, &$root_id)
 	{
@@ -775,7 +777,12 @@ class bcn_breadcrumb_trail
 		else if(is_post_type_archive() && !isset($type->taxonomy))
 		{
 			//We need the type for later, so save it
-			$type_str = $type->name;
+			$type_str = get_query_var('post_type');
+			//May be an array, if so, rewind the iterator and grab first item
+			if(is_array($type_str))
+			{
+				$type_str = reset($type_str);
+			}
 			//This will assign a ID for root page of a custom post's taxonomy archive
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{
@@ -956,6 +963,13 @@ class bcn_breadcrumb_trail
 		else if(is_archive())
 		{
 			$type = $wp_query->get_queried_object();
+			//We need the type for later, so save it
+			$type_str = get_query_var('post_type');
+			//May be an array, if so, rewind the iterator and grab first item
+			if(is_array($type_str))
+			{
+				$type_str = reset($type_str);
+			}
 			//For date based archives
 			if(is_date())
 			{
@@ -964,7 +978,7 @@ class bcn_breadcrumb_trail
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)
-				&& (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))
+				&& (!is_numeric($this->opt['apost_' . $type_str . '_root']) || $this->opt['bpost_' . $type_str . '_archive_display']))
 			{
 				$this->do_archive_by_post_type();
 			}

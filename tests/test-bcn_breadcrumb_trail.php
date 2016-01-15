@@ -5,11 +5,6 @@
  * @group bcn_breadcrumb_trail
  * @group bcn_core
  */
- //Only PHP5.3 or newer are valid for these tests
- if(version_compare(phpversion(), '5.3.0', '<'))
- {
- 	return;
- }
  if(class_exists('bcn_breadcrumb_trail'))
  {
  	class bcn_breadcrumb_trail_DUT extends bcn_breadcrumb_trail {
@@ -117,5 +112,42 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$url2 = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array('http://foo.bar/car', 'czar', 'ring'));
 		//Ensure we didn't add a post type arg
 		$this->assertSame('http://foo.bar/car', $url2);
+	}
+	/**
+	 * Tests for the bcn_pick_post_term filter
+	 */
+	function test_bcn_pick_post_term() {
+		//Create our terms and post
+		$tids = $this->factory->category->create_many(10);
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, $tids, 'category');
+		//Call post_hierarchy
+		$this->breadcrumb_trail->call('post_hierarchy', array($pid, 'post'));
+		//Inspect the resulting breadcrumb
+		//Ensure we have 3 breadcrumbs
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		//Should be term 7, 8, 6
+		$this->assertSame(get_term($tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_term($tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term($tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		//Now, let's add a filter that selects a middle id
+		add_filter('bcn_pick_post_term', 
+			function($term, $id, $type) {
+				$terms = get_the_terms($id, 'category');
+				return $terms[3];
+		}, 3, 10);
+		//Reset the breadcrumb trail
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Call post_hierarchy
+		$this->breadcrumb_trail->call('post_hierarchy', array($pid, 'post'));
+		//Inspect the resulting breadcrumb
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Should only be term 3
+		$this->assertSame(get_term($tids[3], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 }

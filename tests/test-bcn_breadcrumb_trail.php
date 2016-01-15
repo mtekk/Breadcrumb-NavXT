@@ -117,6 +117,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	 * Tests for the bcn_pick_post_term filter
 	 */
 	function test_bcn_pick_post_term() {
+		global $tids;
 		//Create our terms and post
 		$tids = $this->factory->category->create_many(10);
 		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
@@ -137,8 +138,16 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Now, let's add a filter that selects a middle id
 		add_filter('bcn_pick_post_term', 
 			function($term, $id, $type) {
+				global $tids;
 				$terms = get_the_terms($id, 'category');
-				return $terms[3];
+				foreach($terms as $sterm)
+				{
+					if($sterm->term_id == $tids[3])
+					{
+						return $sterm;	
+					}
+				}
+				return $term;
 		}, 3, 10);
 		//Reset the breadcrumb trail
 		$this->breadcrumb_trail->breadcrumbs = array();

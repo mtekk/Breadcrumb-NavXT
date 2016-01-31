@@ -10,7 +10,7 @@ License: GPL2
 Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
-/*  Copyright 2007-2015  John Havlik  (email : john.havlik@mtekk.us)
+/*  Copyright 2007-2016  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,13 +51,16 @@ if(!class_exists('mtekk_adminKit'))
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');
 //Include the breadcrumb trail class
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb_trail.php');
-//Include the WP 2.8+ widget class
-require_once(dirname(__FILE__) . '/class.bcn_widget.php');
+if(class_exists('WP_Widget'))
+{
+	//Include the WP 2.8+ widget class
+	require_once(dirname(__FILE__) . '/class.bcn_widget.php');
+}
 $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.3.1';
+	const version = '5.3.80';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';

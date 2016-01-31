@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2009-2015  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2009-2016  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.4';
+	const version = '1.5.60';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -102,6 +102,17 @@ abstract class mtekk_adminKit
 	{
 		check_admin_referer($this->unique_prefix . '_' . $mode);
 	}
+	/**
+	 * Makes sure the current user can manage options to proceed
+	 */
+	function security()
+	{
+		//If the user can not manage options we will die on them
+		if(!current_user_can($this->access_level))
+		{
+			wp_die(__('Insufficient privileges to proceed.', $this->identifier));
+		}
+	}
 	function init()
 	{
 		//Admin Options reset hook
@@ -176,7 +187,7 @@ abstract class mtekk_adminKit
 	function add_page()
 	{
 		//Add the submenu page to "settings" menu
-		$hookname = add_submenu_page('options-general.php', __($this->full_name, $this->identifier), $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
+		$hookname = add_submenu_page('options-general.php', $this->full_name, $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
 		// check capability of user to manage options (access control)
 		if(current_user_can($this->access_level))
 		{
@@ -289,19 +300,19 @@ abstract class mtekk_adminKit
 	function version_check($version)
 	{
 		//Do a quick version check
-		if(version_compare($version, $this::version, '<') && is_array($this->opt))
+		if($version && version_compare($version, $this::version, '<') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
-			$this->message['error'][] = __('Your settings are out of date.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			$this->message['error'][] = __('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return false;
 		}
 		//Do a quick version check
-		else if(version_compare($version, $this::version, '>') && is_array($this->opt))
+		else if($version && version_compare($version, $this::version, '>') && is_array($this->opt))
 		{
-			//Throw an error since the DB version is out of date
-			$this->message['error'][] = __('Your settings are for a newer version.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			//Let the user know that their settings are for a newer version
+			$this->message['error'][] = __('Your settings are for a newer version of this plugin.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return true;
@@ -317,7 +328,7 @@ abstract class mtekk_adminKit
 		else if(!$this->opts_validate($this->opt))
 		{
 			//Throw an error since it appears the options contain invalid data
-			$this->message['error'][] = __('Your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
+			$this->message['error'][] = __('One or more of your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
 			//Output any messages that there may be
 			$this->messages();
 			return false;
@@ -408,12 +419,28 @@ abstract class mtekk_adminKit
 					case 's':
 						$opts[$option] = esc_html($input[$option]);
 						break;
+					//Deal with enumerated types
+					case 'E':
+						$opts[$option] = $this->opts_sanitize_enum($input[$option], $option);
+						break;
 					//By default we have nothing to do, allows for internal settings
 					default:
 						break;
 				}
 			}
 		}
+	}
+	/**
+	 * Simple sanitization function for enumerated types, end users should overload this
+	 * with something more usefull
+	 * 
+	 * @param string $value The input value from the form
+	 * @param string $option The option name
+	 * @return string The sanitized enumerated string
+	 */
+	private function opts_sanitize_enum($value, $option)
+	{
+		return esc_html($value);
 	}
 	/**
 	 * A better version of parse_args, will recrusivly follow arrays

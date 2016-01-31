@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2015  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2016  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.3.1';
+	const version = '5.3.80';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -36,8 +36,6 @@ class bcn_breadcrumb_trail
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}
 		$this->trail = &$this->breadcrumbs;
-		//Load the translation domain as the next part needs it		
-		//load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		//Initilize with default option values
 		$this->opt = array(
 			//Should the mainsite be shown
@@ -258,7 +256,9 @@ class bcn_breadcrumb_trail
 			//Handle all hierarchical taxonomies, including categories
 			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
 			{
-				if(($term = $this->pick_post_term($id, $type)) !== false)
+				//Filter the results of post_pick_term
+				$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
+				if($term !== false)
 				{
 					//Fill out the term hiearchy
 					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
@@ -303,35 +303,33 @@ class bcn_breadcrumb_trail
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
 	 * TODO Need to implement this cleaner
-	 * TODO This still needs to be updated to the new method of adding breadcrumbs to the trail
 	 */
 	protected function post_terms($id, $taxonomy)
 	{
-		//Fills a temporary object with the terms for the post
-		$bcn_object = get_the_terms($id, $taxonomy);
+		//Apply a filter to the terms for the post referred to by ID
+		$bcn_terms = apply_filters('bcn_post_terms', get_the_terms($id, $taxonomy), $taxonomy, $id);
 		//Only process if we have terms
-		if(is_array($bcn_object))
+		if(is_array($bcn_terms))
 		{
-			//Add new breadcrumb to the trail
-			$this->breadcrumbs[] = new bcn_breadcrumb();
-			//Figure out where we placed the crumb, make a nice pointer to it
-			$bcn_breadcrumb = &$this->breadcrumbs[count($this->breadcrumbs) - 1];
+			$title = '';	
 			$is_first = true;
 			//Loop through all of the term results
-			foreach($bcn_object as $term)
+			foreach($bcn_terms as $term)
 			{
 				//Everything but the first term needs a comma separator
 				if($is_first == false)
 				{
-					$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . ', ');
+					$title .= ', ';
 				}
 				//This is a bit hackish, but it compiles the term anchor and appends it to the current breadcrumb title
-				$bcn_breadcrumb->set_title($bcn_breadcrumb->get_title() . str_replace(
-					array('%title%', '%link%', '%htitle%', '%type%'),
+				$title .= str_replace(
+					array('%title%', '%link%', '%htitle%', '%type%'), 
 					array($term->name, $this->maybe_add_post_type_arg(get_term_link($term), NULL, $term->taxonomy), $term->name, $term->taxonomy),
-					$this->opt['Htax_' . $term->taxonomy . '_template']));
+					$this->opt['Htax_' . $term->taxonomy . '_template']);
 				$is_first = false;
 			}
+			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb($title, NULL, array('taxonomy', $taxonomy)));
 		}
 	}
 	/**
@@ -488,7 +486,7 @@ class bcn_breadcrumb_trail
 		if(is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('d'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('d', 'day archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
 			//If this is a day archive, add current-item type
 			if(is_day())
 			{
@@ -508,7 +506,7 @@ class bcn_breadcrumb_trail
 		if(is_month() || is_day() || is_single())
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('F'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('F', 'month archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
 			//If this is a month archive, add current-item type
 			if(is_month())
 			{
@@ -525,7 +523,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time('Y'), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('Y', 'year archive breadcrumb date format', 'breadcrumb-navxt')), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
 		//If this is a year archive, add current-item type
 		if(is_year())
 		{
@@ -636,7 +634,15 @@ class bcn_breadcrumb_trail
 	protected function is_builtin($post_type)
 	{
 		$type = get_post_type_object($post_type);
-		return $type->_builtin;
+		//If we get a null, that means either then type wasn't found, or we had 'any' as a type, treat as builtin
+		if($type === null)
+		{
+			return true;
+		}
+		else
+		{
+			return $type->_builtin;
+		}
 	}
 	/**
 	 * Determines if the current location is a for a root page or not
@@ -701,13 +707,10 @@ class bcn_breadcrumb_trail
 		{
 			$type = $this->get_type_string_query_var();
 		}
-		//Don't add onto the URL if we are on the default post type for the archive in question
-		if($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0])
-		{
-			return $url;
-		}
-		//If the type is not a post, add the type to query
-		if($type !== 'post')
+		//Add a query arg if we are not on the default post type for the archive in question and the post type is not post
+		$add_query_arg = (!($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0]) && $type !== 'post');
+		//Filter the add_query_arg logic, only add the query arg if necessary
+		if(apply_filters('bcn_add_post_type_arg', $add_query_arg, $type, $taxonomy))
 		{
 			$url = add_query_arg(array('post_type' => $type), $url);
 		}
@@ -753,6 +756,8 @@ class bcn_breadcrumb_trail
 	 * @param post $type A post object we are using to figureout the type
 	 * @param string $type_str The type string variable, passed by reference
 	 * @param int $root_id The ID for the post type root
+	 * 
+	 * TODO, can probably clean up all the logic here and use the code for the CPT archives for all paths
 	 */
 	protected function find_type($type, &$type_str, &$root_id)
 	{
@@ -772,7 +777,12 @@ class bcn_breadcrumb_trail
 		else if(is_post_type_archive() && !isset($type->taxonomy))
 		{
 			//We need the type for later, so save it
-			$type_str = $type->name;
+			$type_str = get_query_var('post_type');
+			//May be an array, if so, rewind the iterator and grab first item
+			if(is_array($type_str))
+			{
+				$type_str = reset($type_str);
+			}
 			//This will assign a ID for root page of a custom post's taxonomy archive
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{
@@ -953,6 +963,13 @@ class bcn_breadcrumb_trail
 		else if(is_archive())
 		{
 			$type = $wp_query->get_queried_object();
+			//We need the type for later, so save it
+			$type_str = get_query_var('post_type');
+			//May be an array, if so, rewind the iterator and grab first item
+			if(is_array($type_str))
+			{
+				$type_str = reset($type_str);
+			}
 			//For date based archives
 			if(is_date())
 			{
@@ -961,7 +978,7 @@ class bcn_breadcrumb_trail
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)
-				&& (!is_numeric($this->opt['apost_' . $type->name . '_root']) || $this->opt['bpost_' . $type->name . '_archive_display']))
+				&& (!is_numeric($this->opt['apost_' . $type_str . '_root']) || $this->opt['bpost_' . $type_str . '_archive_display']))
 			{
 				$this->do_archive_by_post_type();
 			}

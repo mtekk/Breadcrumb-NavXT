@@ -227,12 +227,12 @@ class bcn_admin extends mtekk_adminKit
 		{
 			$general_tab = '<p>' . __('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
 				'</p><h5>' . __('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
-				sprintf(__("%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="http://mtekk.us/archives/tag/breadcrumb-navxt">', '</a>') . '</li><li>' .
-				sprintf(__('%sOnline Documentation%s: Check out the documentation for more indepth technical information.', 'breadcrumb-navxt'), '<a title="' . __('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">', '</a>') . '</li><li>' .
-				sprintf(__('%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="http://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-' . $this::version . '/#respond">', '</a>') . '</li></ul>' . 
+				sprintf(__("%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">', '</a>') . '</li><li>' .
+				sprintf(__('%sOnline Documentation%s: Check out the documentation for more indepth technical information.', 'breadcrumb-navxt'), '<a title="' . __('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="https://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">', '</a>') . '</li><li>' .
+				sprintf(__('%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-' . $this::version . '/#respond">', '</a>') . '</li></ul>' . 
 				'<h5>' . __('Giving Back', 'breadcrumb-navxt') . '</h5><ul><li>' .
 				sprintf(__('%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer.', 'breadcrumb-navxt'),'<a title="' . __('Go to PayPal to give a donation to Breadcrumb NavXT.', 'breadcrumb-navxt') . '" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">', '</a>') . '</li><li>' .
-				sprintf(__('%sTranslate%s: Is your language not available? Contact John Havlik to get translating.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="http://translate.mtekk.us/projects/breadcrumb-navxt">', '</a>') . '</li></ul>';
+				sprintf(__('%sTranslate%s: Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">', '</a>') . '</li></ul>';
 			
 			$screen->add_help_tab(
 				array(
@@ -241,13 +241,13 @@ class bcn_admin extends mtekk_adminKit
 				'content' => $general_tab
 				));
 			$quickstart_tab = '<p>' . __('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
-				'</p><h5>' . __('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs"&gt;' . "
+				'</p><h5>' . __('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/"&gt;' . "
 	&lt;?php if(function_exists('bcn_display'))
 	{
 		bcn_display();
 	}?&gt;
 &lt;/div&gt;</code></pre>" .
-				'<h5>' . __('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs"&gt;'."
+				'<h5>' . __('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/"&gt;'."
 	&lt;?php if(function_exists('bcn_display_list'))
 	{
 		bcn_display_list();

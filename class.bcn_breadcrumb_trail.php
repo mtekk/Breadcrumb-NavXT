@@ -74,7 +74,7 @@ class bcn_breadcrumb_trail
 			'apost_page_root' => get_option('page_on_front'),
 			//Paged options
 			//The template for paged breadcrumb
-			'Hpaged_template' => __('Page %htitle%', 'breadcrumb-navxt'),
+			'Hpaged_template' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Page %htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//Should we try filling out paged information
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
@@ -100,9 +100,9 @@ class bcn_breadcrumb_trail
 			'S404_title' => __('404', 'breadcrumb-navxt'),
 			//Search page options
 			//The breadcrumb template for search breadcrumbs
-			'Hsearch_template' => __('Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;', 'breadcrumb-navxt'),
+			'Hsearch_template' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Search results for &#39;<a property="item" typeof="WebPage" title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary
-			'Hsearch_template_no_anchor' => __('Search results for &#39;%htitle%&#39;', 'breadcrumb-navxt'),
+			'Hsearch_template_no_anchor' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Search results for &#39;%htitle%&#39;</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs
 			'Htax_post_tag_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% tag archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
@@ -115,9 +115,9 @@ class bcn_breadcrumb_trail
 			'Htax_post_format_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Author page stuff
 			//The anchor template for author breadcrumbs
-			'Hauthor_template' => __('Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
+			'Hauthor_template' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>', 'breadcrumb-navxt'),
 			//The anchor template for author breadcrumbs, used when anchors are not needed
-			'Hauthor_template_no_anchor' => __('Articles by: %htitle%', 'breadcrumb-navxt'),
+			'Hauthor_template_no_anchor' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Articles by: %htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
 			//Category stuff

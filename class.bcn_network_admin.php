@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_network_admin extends mtekk_adminKit
 {
-	const version = '5.3.80';
+	const version = '5.4.0';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_network_options';
@@ -258,6 +258,34 @@ class bcn_network_admin extends mtekk_adminKit
 						//Clean up old settings
 						unset($opts['H' . $taxonomy->name . '_template']);
 						unset($opts['H' . $taxonomy->name . '_template_no_anchor']);
+					}
+				}
+			}
+			//Upgrading to 5.4.0
+			if(version_compare($version, '5.4.0', '<'))
+			{
+				//Migrate users to schema.org breadcrumbs for author and search if still on the defaults for posts
+				if($opts['Hpost_post_template'] === bcn_breadcrumb::get_default_template() && $opts['Hpost_post_template_no_anchor'] === bcn_breadcrumb::default_template_no_anchor)
+				{
+					if($opts['Hpaged_template'] === 'Page %htitle%')
+					{
+						$opts['Hpaged_template'] = $this->opt['Hpaged_template'];
+					}
+					if($opts['Hsearch_template'] === 'Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;' || $opts['Hsearch_template'] === 'Search results for &#039;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#039;')
+					{
+						$opts['Hsearch_template'] = $this->opt['Hsearch_template'];
+					}
+					if($opts['Hsearch_template_no_anchor'] === 'Search results for &#39;%htitle%&#39;' || $opts['Hsearch_template_no_anchor'] === 'Search results for &#039;%htitle%&#039;')
+					{
+						$opts['Hsearch_template_no_anchor'] = $this->opt['Hsearch_template_no_anchor'];
+					}
+					if($opts['Hauthor_template'] === 'Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>')
+					{
+						$opts['Hauthor_template'] = $this->opt['Hauthor_template'];
+					}
+					if($opts['Hauthor_template_no_anchor'] === 'Articles by: %htitle%')
+					{
+						$opts['Hauthor_template_no_anchor'] = $this->opt['Hauthor_template_no_anchor'];
 					}
 				}
 			}

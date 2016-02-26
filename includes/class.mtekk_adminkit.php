@@ -299,6 +299,12 @@ abstract class mtekk_adminKit
 	 */
 	function version_check($version)
 	{
+		//If we didn't get a version, setup
+		if($version === false)
+		{
+			//Add the version, no need to autoload the db version
+			$this->add_option($this->unique_prefix . '_version', $this::version, '', 'no');
+		}
 		//Do a quick version check
 		if($version && version_compare($version, $this::version, '<') && is_array($this->opt))
 		{

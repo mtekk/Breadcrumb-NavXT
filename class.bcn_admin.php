@@ -388,6 +388,7 @@ class bcn_admin extends mtekk_adminKit
 		$this->deprecated_settings_warn();
 		//Do a check for multisite settings mode
 		$this->multisite_settings_warn();
+		do_action($this->unique_prefix . '_settings_pre_messages', $this->opt);
 		//Display our messages
 		$this->messages();
 		?>

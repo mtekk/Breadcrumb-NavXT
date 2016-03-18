@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 4.0
-Tested up to: 4.4
-Stable tag: 5.3.1
+Requires at least: 4.3
+Tested up to: 4.5
+Stable tag: 5.4.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -50,6 +50,20 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 5.4.0 =
+* Release date: March 15th, 2016
+* Behavior change: Migrated to new adminKit version, some functions previously in the admin classes are now handled upstream.
+* New feature: Added `bcn_post_terms` filter to `bcn_breadcrumb_trail::post_terms()` to control the terms included in a non-hierarchical term breadcrumb for a post.
+* New feature: Added `bcn_add_post_type_arg` filter to `bcn_breadcrumb_trail::maybe_add_post_type_arg()` to control when the post_type argument is added to URLs for archives.
+* New feature: Added `bcn_pick_post_term` filter to `bcn_breadcrumb_trail::post_hierarchy()` to allow overriding Breadcrumb NavXT’s default term selection behavior.
+* Bug fix: Fixed issue with untranslatable title on the settings page.
+* Bug fix: Cleanup of several trivial differences between `bcn_admin` and `bcn_network_admin`.
+* Bug fix: Fixed improper display of “Your settings are out of date. Migrate now.” message on fresh installs.
+* Bug fix: Clarified verbiage in regards to the paged breadcrumb.
+* Bug fix: Added translation wrappers for date format strings in `bcn_breadcrumb_trail::do_archive_by_date()`.
+* Bug fix: Fixed issue where `bcn_breadcrumb_trail::is_builtin()` would cause PHP warnings when the passed in post type was not an actual post type.
+* Bug fix: Fixed issue that would cause a PHP error if `WP_Widget` is unavailable.
 
 = 5.3.1 =
 Release date: December 14th, 2015

@@ -564,7 +564,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_front_page()
 	{
-		global $post, $current_site;
+		global $current_site;
 		//Get the site name
 		$site_name = get_option('blogname');
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
@@ -592,7 +592,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_home()
 	{
-		global $post, $current_site;
+		global $current_site;
 		//On everything else we need to link, but no current item (pre/suf)fixes
 		if($this->opt['bhome_display'])
 		{

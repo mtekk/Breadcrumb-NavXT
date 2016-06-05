@@ -386,7 +386,7 @@ class bcn_breadcrumb_trail
 	protected function do_post($post)
 	{
 		//If we did not get a WP_Post object, warn developer and return early
-		if(!is_object($post) || get_class($post) !== 'WP_Post')
+		if(!($post instanceof WP_Post))
 		{
 			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$post global is not of type WP_Post', 'breadcrumb-navxt'), '5.1.1');
 			return;

@@ -144,8 +144,8 @@ class bcn_breadcrumb_trail
 	/**
 	 * Adds a breadcrumb to the breadcrumb trail
 	 * 
-	 * @return pointer to the just added Breadcrumb
 	 * @param bcn_breadcrumb $object Breadcrumb to add to the trail
+	 * @return pointer to the just added Breadcrumb
 	 */
 	public function &add(bcn_breadcrumb $object)
 	{
@@ -208,8 +208,6 @@ class bcn_breadcrumb_trail
 	 * @param int $id The ID of the post to find the term for
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @return WP_Term|bool The term object to use for the post hierarchy or false if no suitable term was found 
-	 * 
-	 * TODO: Add logic for contextual taxonomy selection
 	 */
 	protected function pick_post_term($id, $type)
 	{
@@ -242,6 +240,7 @@ class bcn_breadcrumb_trail
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
 	 * 
+	 * TODO: Add logic for contextual taxonomy selection
 	 */
 	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
@@ -253,19 +252,8 @@ class bcn_breadcrumb_trail
 			{
 				$this->do_archive_by_date($type);
 			}
-			//Handle all hierarchical taxonomies, including categories
-			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
-			{
-				//Filter the results of post_pick_term
-				$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
-				if($term !== false)
-				{
-					//Fill out the term hiearchy
-					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
-				}
-			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if(is_post_type_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
+			else if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_POST_PARENT')
 			{
 				if($parent == NULL)
 				{
@@ -279,6 +267,17 @@ class bcn_breadcrumb_trail
 				if($parent && $id != $parent && $bcn_frontpage != $parent)
 				{
 					$parent = $this->post_parents($parent, $bcn_frontpage);
+				}
+			}
+			//Handle all hierarchical taxonomies, including categories
+			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
+			{
+				//Filter the results of post_pick_term
+				$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
+				if($term !== false)
+				{
+					//Fill out the term hiearchy
+					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
 				}
 			}
 			//Handle the rest of the taxonomies, including tags

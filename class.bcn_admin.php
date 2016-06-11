@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '5.4.0';
+	const version = '5.4.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -93,7 +93,7 @@ class bcn_admin extends mtekk_adminKit
 	 */
 	function opts_upgrade($opts, $version)
 	{
-		global $wp_post_types;
+		global $wp_post_types, $wp_taxonomies;
 		//If our version is not the same as in the db, time to update
 		if(version_compare($version, $this::version, '<'))
 		{
@@ -176,7 +176,6 @@ class bcn_admin extends mtekk_adminKit
 			//Upgrading to 5.1.0
 			if(version_compare($version, '5.1.0', '<'))
 			{
-				global $wp_taxonomies;
 				foreach($wp_taxonomies as $taxonomy)
 				{
 					//If we have the old options style for it, update
@@ -216,6 +215,33 @@ class bcn_admin extends mtekk_adminKit
 					if($opts['Hauthor_template_no_anchor'] === 'Articles by: %htitle%')
 					{
 						$opts['Hauthor_template_no_anchor'] = $this->opt['Hauthor_template_no_anchor'];
+					}
+				}
+			}
+			//Upgrading to 5.5.0
+			if(version_compare($version, '5.5.0', '<'))
+			{
+				//Translate the old 'page' taxonomy type to BCN_POST_PARENT
+				if($this->opt['Spost_post_taxonomy_type'] === 'page')
+				{
+					$this->opt['Spost_post_taxonomy_type'] = 'BCN_POST_PARENT';
+				}
+				//Loop through all of the post types in the array
+				foreach($wp_post_types as $post_type)
+				{
+					//Check for non-public CPTs
+					if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name))
+					{
+						continue;
+					}
+					//We only want custom post types
+					if(!$post_type->_builtin)
+					{
+						//Translate the old 'page' taxonomy type to BCN_POST_PARENT
+						if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'page')
+						{
+							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
+						}
 					}
 				}
 			}
@@ -469,7 +495,7 @@ class bcn_admin extends mtekk_adminKit
 								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'), false, 'adminkit-enset');
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_post_taxonomy_type', 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -543,7 +569,7 @@ class bcn_admin extends mtekk_adminKit
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'page', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)

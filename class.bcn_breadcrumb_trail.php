@@ -426,7 +426,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_attachment()
 	{
-		global $post;
+		$post = get_post();
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post', 'post-attachment', 'current-item'), NULL, $post->ID));
 		if($this->opt['bcurrent_item_linked'])
@@ -814,10 +814,12 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_root()
 	{
-		global $post, $wp_query, $current_site;
+		global $wp_query, $current_site;
 		//If this is an attachment then we need to change the queried object to the parent post
 		if(is_attachment())
 		{
+			//Could use the $post global, but we can't really trust it
+			$post = get_post();
 			$type = get_post($post->post_parent);
 			//If the parent of the attachment is a page, exit early (works around bug where is_single() returns true for an attachment to a page)
 			if($type->post_type == 'page')

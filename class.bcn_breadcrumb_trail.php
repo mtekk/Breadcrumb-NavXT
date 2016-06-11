@@ -948,7 +948,7 @@ class bcn_breadcrumb_trail
 			//For all other post types
 			else
 			{
-				$this->do_post($GLOBALS['post']);
+				$this->do_post(get_post());
 			}
 		}
 		//For searches

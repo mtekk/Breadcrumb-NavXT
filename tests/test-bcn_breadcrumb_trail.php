@@ -159,4 +159,25 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Should only be term 3
 		$this->assertSame(get_term($tids[3], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
+	/**
+	 * Tests for the pick_post_term_deep function
+	 */
+	function test_pick_post_term_deep() {
+		global $tids;
+		//Create our terms and post
+		$tids = $this->factory->category->create_many(10);
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
+		//Setup a second hierarchy
+		wp_update_term($tids[2], 'category', array('parent' => $tids[1]));
+		wp_update_term($tids[3], 'category', array('parent' => $tids[2]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, $tids, 'category');
+		//Call post_hierarchy, should have gotten the first hierarchy
+		$this->assertSame(get_term($tids[3], 'category')->name, $this->breadcrumb_trail->call('pick_post_term', array($pid, 'post'))->name);
+	}
 }

@@ -213,6 +213,7 @@ class bcn_breadcrumb_trail
 	{
 		//Fill a temporary object with the terms
 		$bcn_object = get_the_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+		$potential_parent = 0;
 		//Make sure we have an non-empty array
 		if(is_array($bcn_object) && $bcn_object)
 		{
@@ -220,12 +221,11 @@ class bcn_breadcrumb_trail
 			$bcn_use_term = key($bcn_object);
 			foreach($bcn_object as $key => $object)
 			{
-				//We want the first term hiearchy
-				if($object->parent > 0)
+				//We want the first term hiearchy, can't use the next($bcn_object) trick since order is unknown
+				if(($object->parent > 0  && $potential_parent === 0) || $object->parent === $potential_parent)
 				{
 					$bcn_use_term = $key;
-					//We found our first term hiearchy, can exit loop now
-					break;
+					$potential_parent = $object->id;
 				}
 			}
 			return $bcn_object[$bcn_use_term];

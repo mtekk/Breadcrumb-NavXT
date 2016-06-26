@@ -217,15 +217,15 @@ class bcn_breadcrumb_trail
 		//Make sure we have an non-empty array
 		if(is_array($bcn_object) && $bcn_object)
 		{
-			//Now find which one has a parent, pick the first one that does
+			//Now try to find the deepest term of those that we know of
 			$bcn_use_term = key($bcn_object);
 			foreach($bcn_object as $key => $object)
 			{
-				//We want the first term hiearchy, can't use the next($bcn_object) trick since order is unknown
-				if(($object->parent > 0  && $potential_parent === 0) || $object->parent === $potential_parent)
+				//Can't use the next($bcn_object) trick since order is unknown
+				if($object->parent > 0  && ($potential_parent === 0 || $object->parent === $potential_parent))
 				{
 					$bcn_use_term = $key;
-					$potential_parent = $object->id;
+					$potential_parent = $object->term_id;
 				}
 			}
 			return $bcn_object[$bcn_use_term];

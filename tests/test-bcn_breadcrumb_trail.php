@@ -160,9 +160,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(get_term($tids[3], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	/**
-	 * Tests for the pick_post_term_deep function
+	 * Tests for the pick_post_term function
 	 */
-	function test_pick_post_term_deep() {
+	function test_pick_post_term() {
 		global $tids;
 		//Create our terms and post
 		$tids = $this->factory->category->create_many(10);

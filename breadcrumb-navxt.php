@@ -277,6 +277,8 @@ class breadcrumb_navxt
 					$opts['apost_' . $post_type->name . '_root'] = 0;
 					//Default to not displaying a taxonomy
 					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
+					//Default to not letting the refering page influence the referer
+					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 					//Loop through all of the possible taxonomies
 					foreach($wp_taxonomies as $taxonomy)
 					{

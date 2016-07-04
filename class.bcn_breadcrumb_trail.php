@@ -86,6 +86,8 @@ class bcn_breadcrumb_trail
 			'apost_post_root' => get_option('page_for_posts'),
 			//Should the trail include the taxonomy of the post
 			'bpost_post_taxonomy_display' => true,
+			//Should the trail reflect the referer taxonomy or not
+			'bpost_post_taxonomy_referer' => false,
 			//What taxonomy should be shown leading to the post, tag or category
 			'Spost_post_taxonomy_type' => 'category',
 			//Attachment settings
@@ -203,6 +205,60 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
+	 * Determines the taxonomy name represented by the specified query var
+	 * 
+	 * @param string $query_var The query var to attempt to find the corresponding taxonomy
+	 * @return string|bool Either the name of the taxonomy corresponding to the query_var or false if no taxonomy exists for the specified query_var
+	 */
+	protected function query_var_to_taxonomy($query_var)
+	{
+		global $wp_taxonomies;
+		foreach($wp_taxonomies as $taxonomy)
+		{
+			if($taxonomy->query_var === $query_var)
+			{
+				return $taxonomy->name;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Determines the referer taxonomy
+	 * 
+	 * @return string|bool Either the name of the taxonomy to use or false if a referer taxonomy wasn't found
+	 */
+	protected function determine_taxonomy()
+	{
+		global $wp, $wp_taxonomies;
+		//Backup the server request variable
+		$bk_req = $_SERVER['REQUEST_URI'];
+		//Now set the request URL to the referrer URL
+		//Could just chain the [1] selection, but that's not PHP5.3 compatible
+		$url_split = explode(home_url(), wp_get_referer());
+		if(isset($url_split[1]))
+		{
+			$_SERVER['REQUEST_URI'] = $url_split[1];
+		}
+		else
+		{
+			return false;
+		}
+		//Create our own new instance of WP, and have it parse our faux request
+		$bcn_wp = new WP();
+		//Copy over the current global wp object's query_vars since CPTs and taxonomies are added directly to the global $wp
+		$bcn_wp->public_query_vars = $wp->public_query_vars;
+		$bcn_wp->parse_request();
+		$_SERVER['REQUEST_URI'] = $bk_req;
+		if(is_array($bcn_wp->query_vars))
+		{
+			foreach($bcn_wp->query_vars as $query_var => $value)
+			{
+				return $this->query_var_to_taxonomy($query_var);
+			}
+		}
+		return false;
+	}
+	/**
 	 * This function selects the term that should be used for a post's hierarchy
 	 * 
 	 * @param int $id The ID of the post to find the term for
@@ -239,8 +295,6 @@ class bcn_breadcrumb_trail
 	 * @param int $id The id of the post to figure out the taxonomy for
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
-	 * 
-	 * TODO: Add logic for contextual taxonomy selection
 	 */
 	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
@@ -269,21 +323,29 @@ class bcn_breadcrumb_trail
 					$parent = $this->post_parents($parent, $bcn_frontpage);
 				}
 			}
-			//Handle all hierarchical taxonomies, including categories
-			else if(is_taxonomy_hierarchical($this->opt['Spost_' . $type . '_taxonomy_type']))
-			{
-				//Filter the results of post_pick_term
-				$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
-				if($term !== false)
-				{
-					//Fill out the term hiearchy
-					$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
-				}
-			}
-			//Handle the rest of the taxonomies, including tags
 			else
 			{
-				$this->post_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+				$taxonomy = $this->opt['Spost_' . $type . '_taxonomy_type'];
+				if($this->opt['bpost_' . $type . '_taxonomy_referrer'] && $referrer_taxonomy = $this->determine_taxonomy())
+				{
+					$taxonomy = $referrer_taxonomy;
+				}
+				//Handle all hierarchical taxonomies, including categories
+				if(is_taxonomy_hierarchical($taxonomy))
+				{
+					//Filter the results of post_pick_term
+					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
+					if($term !== false)
+					{
+						//Fill out the term hiearchy
+						$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+					}
+				}
+				//Handle the rest of the taxonomies, including tags
+				else
+				{
+					$this->post_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+				}
 			}
 		}
 		//If we never got a good parent for the type_archive, make it now
@@ -912,7 +974,7 @@ class bcn_breadcrumb_trail
 	 */
 	public function fill()
 	{
-		global $wpdb, $wp_query;
+		global $wpdb, $wp_query, $wp;
 		//Check to see if the trail is already populated
 		if(count($this->breadcrumbs) > 0)
 		{

@@ -226,6 +226,10 @@ class bcn_admin extends mtekk_adminKit
 				{
 					$this->opt['Spost_post_taxonomy_type'] = 'BCN_POST_PARENT';
 				}
+				if(!isset($this->opt['Spost_post_taxonomy_referer']))
+				{
+					$this->opt['bpost_post_taxonomy_referer'] = false;
+				}
 				//Loop through all of the post types in the array
 				foreach($wp_post_types as $post_type)
 				{
@@ -241,6 +245,10 @@ class bcn_admin extends mtekk_adminKit
 						if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'page')
 						{
 							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
+						}
+						else if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
+						{
+							$this->opt['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 						}
 					}
 				}
@@ -484,6 +492,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_text(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', 'large-text', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
 						$this->input_text(__('Post Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_post_template_no_anchor', 'large-text', false, __('The template for post breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						$this->input_check(__('Post Hierarchy Display', 'breadcrumb-navxt'), 'bpost_post_taxonomy_display', __('Show the hierarchy (specified below) leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->input_check(__('Post Hierarchy Referer Influence', 'breadcrumb-navxt'), 'bpost_post_taxonomy_referer', __('Allow the refereing page to influence the taxonomy selected for the hierarchy.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -561,6 +570,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
 						$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_display', sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->input_check(sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_post_' . $post_type->name . '_referer', __('Allow the refereing page to influence the taxonomy selected for the hierarchy.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
 					?>
 					<tr valign="top">
 						<th scope="row">

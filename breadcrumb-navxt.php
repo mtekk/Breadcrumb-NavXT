@@ -259,6 +259,11 @@ class breadcrumb_navxt
 			//We only want custom post types
 			if(!$post_type->_builtin)
 			{
+				if(!isset($opts['bpost_' . $post_type->name . '_taxonomy_referer']))
+				{
+					//Default to not letting the refering page influence the referer
+					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
+				}
 				//If the post type does not have settings in the options array yet, we need to load some defaults
 				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
@@ -277,8 +282,6 @@ class breadcrumb_navxt
 					$opts['apost_' . $post_type->name . '_root'] = 0;
 					//Default to not displaying a taxonomy
 					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
-					//Default to not letting the refering page influence the referer
-					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 					//Loop through all of the possible taxonomies
 					foreach($wp_taxonomies as $taxonomy)
 					{

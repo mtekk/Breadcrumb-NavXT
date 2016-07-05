@@ -326,7 +326,7 @@ class bcn_breadcrumb_trail
 			else
 			{
 				$taxonomy = $this->opt['Spost_' . $type . '_taxonomy_type'];
-				if($this->opt['bpost_' . $type . '_taxonomy_referrer'] && $referrer_taxonomy = $this->determine_taxonomy())
+				if($this->opt['bpost_' . $type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{
 					$taxonomy = $referrer_taxonomy;
 				}

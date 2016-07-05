@@ -246,7 +246,7 @@ class bcn_admin extends mtekk_adminKit
 						{
 							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
 						}
-						else if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
+						if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
 						{
 							$this->opt['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 						}

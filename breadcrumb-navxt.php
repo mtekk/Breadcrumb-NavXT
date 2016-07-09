@@ -129,7 +129,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'img' => array(
 						'alt' => true,
@@ -137,6 +139,8 @@ class breadcrumb_navxt
 						'height' => true,
 						'width' => true,
 						'src' => true,
+						'srcset' => true,
+						'sizes' => true,
 						'id' => true,
 						'class' => true,
 						'aria-hidden' => true,
@@ -149,7 +153,8 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'lang' => true
 					),
 					'span' => array(
 						'title' => true,
@@ -169,7 +174,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'h1' => array(
 						'title' => true,
@@ -189,7 +196,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'h2' => array(
 						'title' => true,
@@ -209,7 +218,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'meta' => array(
 						'content' => true,

@@ -338,13 +338,13 @@ class bcn_breadcrumb_trail
 					if($term !== false)
 					{
 						//Fill out the term hiearchy
-						$parent = $this->term_parents($term->term_id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+						$parent = $this->term_parents($term->term_id, $taxonomy);
 					}
 				}
 				//Handle the rest of the taxonomies, including tags
 				else
 				{
-					$this->post_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+					$this->post_terms($id, $taxonomy);
 				}
 			}
 		}

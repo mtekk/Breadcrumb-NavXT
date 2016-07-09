@@ -864,6 +864,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			$type_str = 'post';
+			$root_id = get_option('page_for_posts');
 		}
 	}
 	/**
@@ -897,15 +898,9 @@ class bcn_breadcrumb_trail
 		$type_str = '';
 		//Find our type string and root_id
 		$this->find_type($type, $type_str, $root_id);
-		//We only need the "blog" portion on members of the blog, and only if we're in a static frontpage environment
-		//TODO: this is_home() may need to be $this->treat_as_root_page($type_str)
-		if($root_id > 1 || $this->opt['bblog_display'] && get_option('show_on_front') == 'page' && (is_home() || is_single() || is_tax() || is_category() || is_tag() || is_date()))
+		//Continue only if we have a valid root_id
+		if($root_id > 1)
 		{
-			//If we entered here with a posts page, we need to set the id
-			if($root_id < 0)
-			{
-				$root_id = get_option('page_for_posts');
-			}
 			$frontpage_id = get_option('page_on_front');
 			//We'll have to check if this ID is valid, e.g. user has specified a posts page
 			if($root_id && $root_id != $frontpage_id)

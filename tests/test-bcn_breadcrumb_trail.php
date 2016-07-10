@@ -180,7 +180,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Call post_hierarchy, should have gotten the deepest in the first returned hierarchy
 		//However, we do not know the order of term return, so just check for any valid response (any deepest child)
 		$this->assertThat(
-			$this->breadcrumb_trail->call('pick_post_term', array($pid, 'post'))->name,
+			$this->breadcrumb_trail->call('pick_post_term', array($pid, 'post', 'category'))->name,
 			$this->logicalOr(
 				$this->equalTo(get_term($tids[3], 'category')->name),
 				$this->equalTo(get_term($tids[5], 'category')->name),
@@ -199,6 +199,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
 	}
 	function test_determine_taxonomy() {
-		
+
 	}
 }

@@ -188,4 +188,17 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 	}
+	function test_query_var_to_taxonomy() {
+		//Setup some taxonomies
+		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
+		//Check matching of an existant taxonomy
+		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
+		//Check return false of non-existant taxonomy
+		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
+	}
+	function test_determine_taxonomy() {
+		
+	}
 }

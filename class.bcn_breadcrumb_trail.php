@@ -263,12 +263,13 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param int $id The ID of the post to find the term for
 	 * @param string $type The post type of the post to figure out the taxonomy for
+	 * @param string $taxonomy The taxonomy to use
 	 * @return WP_Term|bool The term object to use for the post hierarchy or false if no suitable term was found 
 	 */
-	protected function pick_post_term($id, $type)
+	protected function pick_post_term($id, $type, $taxonomy)
 	{
 		//Fill a temporary object with the terms
-		$bcn_object = get_the_terms($id, $this->opt['Spost_' . $type . '_taxonomy_type']);
+		$bcn_object = get_the_terms($id, $taxonomy);
 		$potential_parent = 0;
 		//Make sure we have an non-empty array
 		if(is_array($bcn_object) && $bcn_object)
@@ -334,7 +335,7 @@ class bcn_breadcrumb_trail
 				if(is_taxonomy_hierarchical($taxonomy))
 				{
 					//Filter the results of post_pick_term
-					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type), $id, $type);
+					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type, $taxonomy), $id, $type, $taxonomy);
 					if($term !== false)
 					{
 						//Fill out the term hiearchy

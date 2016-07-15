@@ -229,7 +229,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function determine_taxonomy()
 	{
-		global $wp, $wp_taxonomies;
+		global $wp;
 		//Backup the server request variable
 		$bk_req = $_SERVER['REQUEST_URI'];
 		//Now set the request URL to the referrer URL
@@ -253,7 +253,10 @@ class bcn_breadcrumb_trail
 		{
 			foreach($bcn_wp->query_vars as $query_var => $value)
 			{
-				return $this->query_var_to_taxonomy($query_var);
+				if($taxonomy = $this->query_var_to_taxonomy($query_var))
+				{
+					return $taxonomy;
+				}
 			}
 		}
 		return false;
@@ -272,7 +275,7 @@ class bcn_breadcrumb_trail
 		$bcn_object = get_the_terms($id, $taxonomy);
 		$potential_parent = 0;
 		//Make sure we have an non-empty array
-		if(is_array($bcn_object) && $bcn_object)
+		if(is_array($bcn_object))
 		{
 			//Now try to find the deepest term of those that we know of
 			$bcn_use_term = key($bcn_object);
@@ -327,9 +330,15 @@ class bcn_breadcrumb_trail
 			else
 			{
 				$taxonomy = $this->opt['Spost_' . $type . '_taxonomy_type'];
+				//Possibly let the referer influence the taxonomy used
 				if($this->opt['bpost_' . $type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{
-					$taxonomy = $referrer_taxonomy;
+					//See if there were any terms, if so, we can use the referrer influenced taxonomy
+					$terms = get_the_terms($id, $referrer_taxonomy);
+					if(is_array($terms))
+					{
+						$taxonomy = $referrer_taxonomy;
+					}
 				}
 				//Handle all hierarchical taxonomies, including categories
 				if(is_taxonomy_hierarchical($taxonomy))

@@ -306,7 +306,7 @@ class bcn_breadcrumb_trail
 		if($this->opt['bpost_' . $type . '_taxonomy_display'])
 		{
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Spost_' . $type . '_taxonomy_type'] == 'date')
+			if($this->opt['Spost_' . $type . '_taxonomy_type'] == 'BCN_DATE')
 			{
 				$this->do_archive_by_date($type);
 			}

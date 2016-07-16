@@ -312,7 +312,7 @@ class breadcrumb_navxt
 					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
 					if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 					{
-						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'date';
+						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
 					}
 				}
 			}

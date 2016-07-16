@@ -316,6 +316,11 @@ class bcn_network_admin extends mtekk_adminKit
 						{
 							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
 						}
+						//Translate the old 'date' taxonomy type to BCN_DATE
+						if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'date')
+						{
+							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
+						}
 						if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
 						{
 							$this->opt['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
@@ -573,7 +578,7 @@ class bcn_network_admin extends mtekk_adminKit
 						<td>
 							<?php
 								$this->input_radio('Spost_post_taxonomy_type', 'category', __('Categories'), false, 'adminkit-enset');
-								$this->input_radio('Spost_post_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_post_taxonomy_type', 'BCN_DATE', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								$this->input_radio('Spost_post_taxonomy_type', 'post_tag', __('Tags'), false, 'adminkit-enset');
 								//We use the value 'page' but really, this will follow the parent post hierarchy
 								$this->input_radio('Spost_post_taxonomy_type', 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
@@ -652,7 +657,7 @@ class bcn_network_admin extends mtekk_adminKit
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
 								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
-								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'date', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->input_radio('Spost_' . $post_type->name . '_taxonomy_type', 'BCN_DATE', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{

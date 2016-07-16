@@ -12,7 +12,7 @@
 			parent::__construct();
 		}
 		//Super evil caller function to get around our private and protected methods in the parent class
-		function call($function, $args) {
+		function call($function, $args = array()) {
 			return call_user_func_array(array($this, $function), $args);
 		}
  	}
@@ -199,6 +199,41 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
 	}
 	function test_determine_taxonomy() {
-
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create the custom taxonomy
+		register_taxonomy('wptests_tax2', 'post', array(
+			'hierarchical' => true,
+			'rewrite' => array(
+				'slug' => 'foo',
+				'hierarchical true'
+				)));
+		//Create some terms
+		$tids = $this->factory->category->create_many(10);
+		$ttid1 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm1'));
+		$ttid2 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm2',
+			'parent' => $ttid1));
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, array($tids[5]), 'category');
+		wp_set_object_terms($pid, $ttid2, 'wptests_tax2');
+		flush_rewrite_rules();
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		//Check no referer
+		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
+		//Let the custom taxonomy be our referer
+		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
+		//Check matching of an existant taxonomy
+		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
 	}
 }

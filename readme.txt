@@ -52,7 +52,8 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Changelog ==
 
 = 5.4.0 =
-* Release date: March 15th, 2016
+Release date: March 15th, 2016
+
 * Behavior change: Migrated to new adminKit version, some functions previously in the admin classes are now handled upstream.
 * New feature: Added `bcn_post_terms` filter to `bcn_breadcrumb_trail::post_terms()` to control the terms included in a non-hierarchical term breadcrumb for a post.
 * New feature: Added `bcn_add_post_type_arg` filter to `bcn_breadcrumb_trail::maybe_add_post_type_arg()` to control when the post_type argument is added to URLs for archives.
@@ -256,8 +257,8 @@ Release date: December 14th, 2011
 
 == Upgrade Notice ==
 
+= 5.4.0 =
+This version requires PHP5.3 or newer. This version introduces three new filters: `bcn_post_terms`, `bcn_add_post_type_arg`, and `bcn_pick_post_term`.
+
 = 5.3.0 =
 This version requires PHP5.3 or newer. This version adds in support for post type restricted archives (date and taxonomy).
-
-= 5.2.1 =
-This version requires PHP5.3 or newer. This is a bug fix release with four bug fixes relating to attachments and a few other bug fixes.

@@ -1,7 +1,7 @@
 jQuery(function()
 {
-	jQuery(".adminkit-engroup input:checkbox").each(mtekk_admin_enable_group);
-	jQuery("input:checkbox.adminkit-enset").each(mtekk_admin_enable_set);
+	jQuery(".adminkit-engroup input:checkbox.adminkit-enset-ctrl").each(mtekk_admin_enable_group);
+	jQuery("input:checkbox.adminkit-enset-ctrl").each(mtekk_admin_enable_set);
 });
 function mtekk_admin_enable_group(){
 	var setting = this;
@@ -33,5 +33,5 @@ function mtekk_admin_enable_set(){
 		}
 	});
 }
-jQuery(".adminkit-engroup input:checkbox").change(mtekk_admin_enable_group);
+jQuery(".adminkit-engroup input:checkbox.adminkit-enset-ctrl").change(mtekk_admin_enable_group);
 jQuery("input:checkbox.adminkit-enset-ctrl").change(mtekk_admin_enable_set);

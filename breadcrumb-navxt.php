@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.4.0
+Version: 5.4.60
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.4.0';
+	const version = '5.4.60';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -129,7 +129,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'img' => array(
 						'alt' => true,
@@ -137,6 +139,8 @@ class breadcrumb_navxt
 						'height' => true,
 						'width' => true,
 						'src' => true,
+						'srcset' => true,
+						'sizes' => true,
 						'id' => true,
 						'class' => true,
 						'aria-hidden' => true,
@@ -149,7 +153,8 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'lang' => true
 					),
 					'span' => array(
 						'title' => true,
@@ -169,7 +174,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'h1' => array(
 						'title' => true,
@@ -189,7 +196,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'h2' => array(
 						'title' => true,
@@ -209,7 +218,9 @@ class breadcrumb_navxt
 						'xmlns:v' => true,
 						'typeof' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'translate' => true,
+						'lang' => true
 					),
 					'meta' => array(
 						'content' => true,
@@ -259,6 +270,11 @@ class breadcrumb_navxt
 			//We only want custom post types
 			if(!$post_type->_builtin)
 			{
+				if(!isset($opts['bpost_' . $post_type->name . '_taxonomy_referer']))
+				{
+					//Default to not letting the refering page influence the referer
+					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
+				}
 				//If the post type does not have settings in the options array yet, we need to load some defaults
 				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 				{
@@ -296,7 +312,7 @@ class breadcrumb_navxt
 					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
 					if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 					{
-						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'date';
+						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
 					}
 				}
 			}

@@ -251,13 +251,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
 		$this->set_permalink_structure('/%category%/%postname%/');
-		//Create the custom taxonomy
-		register_taxonomy('wptests_tax2', 'post', array(
-			'hierarchical' => true,
-			'rewrite' => array(
-				'slug' => 'foo',
-				'hierarchical true'
-				)));
 		//Create some terms
 		$tids = $this->factory->category->create_many(10);
 		//Create a test post
@@ -281,5 +274,71 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(get_the_title($paid['5']), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertEquals($paid['6'], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
 		$this->assertSame(get_the_title($paid['6']), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	function test_do_root_cpt()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10);
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0], 'post_type' => 'page'));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
+		flush_rewrite_rules();
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = $paid[1];
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 2 breadcrumbs
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertEquals($paid['2'], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_the_title($paid['2']), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($paid['1'], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($paid['1']), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	/**
+	 * Test for when the CPT root setting is a non-integer see #148
+	 */
+	function test_do_root_cpt_null_root()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10);
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0], 'post_type' => 'page'));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
+		flush_rewrite_rules();
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = NULL;
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 0 breadcrumbs (no root)
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 }

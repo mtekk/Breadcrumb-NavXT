@@ -881,12 +881,10 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function 
 	 *
 	 * Handles only the root page stuff for post types, including the "page for posts"
-	 * 
-	 * TODO: this still needs to be cleaned up
 	 */
 	protected function do_root()
 	{
-		global $wp_query, $current_site;
+		global $wp_query;
 		//If this is an attachment then we need to change the queried object to the parent post
 		if(is_attachment())
 		{

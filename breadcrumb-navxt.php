@@ -390,8 +390,9 @@ class breadcrumb_navxt
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse Whether to reverse the output or not.
+	 * @param bool $force Whether or not to force the fill function to run.
 	 */
-	public function display($return = false, $linked = true, $reverse = false)
+	public function display($return = false, $linked = true, $reverse = false, $force = false)
 	{
 		$this->get_settings();
 		//Generate the breadcrumb trail
@@ -405,8 +406,9 @@ class breadcrumb_navxt
 	 * @param  bool $return Whether to return or echo the trail.
 	 * @param  bool $linked Whether to allow hyperlinks in the trail or not.
 	 * @param  bool	$reverse Whether to reverse the output or not.
+	 * @param bool $force Whether or not to force the fill function to run.
 	 */
-	public function display_list($return = false, $linked = true, $reverse = false)
+	public function display_list($return = false, $linked = true, $reverse = false, $force = false)
 	{
 		$this->get_settings();
 		//Generate the breadcrumb trail
@@ -430,13 +432,14 @@ function bcn_init()
  * @param bool $return Whether to return or echo the trail. (optional)
  * @param bool $linked Whether to allow hyperlinks in the trail or not. (optional)
  * @param bool $reverse Whether to reverse the output or not. (optional)
+ * @param bool $force Whether or not to force the fill function to run. (optional)
  */
-function bcn_display($return = false, $linked = true, $reverse = false)
+function bcn_display($return = false, $linked = true, $reverse = false, $force = false)
 {
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)
 	{
-		return $breadcrumb_navxt->display($return, $linked, $reverse);
+		return $breadcrumb_navxt->display($return, $linked, $reverse, $force);
 	}
 }
 /**
@@ -445,12 +448,13 @@ function bcn_display($return = false, $linked = true, $reverse = false)
  * @param bool $return Whether to return or echo the trail. (optional)
  * @param bool $linked Whether to allow hyperlinks in the trail or not. (optional)
  * @param bool $reverse Whether to reverse the output or not. (optional)
+ * @param bool $force Whether or not to force the fill function to run. (optional)
  */
-function bcn_display_list($return = false, $linked = true, $reverse = false)
+function bcn_display_list($return = false, $linked = true, $reverse = false, $force = false)
 {
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)
 	{
-		return $breadcrumb_navxt->display_list($return, $linked, $reverse);
+		return $breadcrumb_navxt->display_list($return, $linked, $reverse, $force);
 	}
 }

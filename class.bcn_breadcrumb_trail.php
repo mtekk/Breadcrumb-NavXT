@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.4.0';
+	const version = '5.5.0';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -305,13 +305,15 @@ class bcn_breadcrumb_trail
 		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
 		if($this->opt['bpost_' . $type . '_taxonomy_display'])
 		{
+			//TODO: Remove deprecated type selection
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Spost_' . $type . '_taxonomy_type'] == 'BCN_DATE')
+			if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_DATE' || $this->opt['Spost_' . $type . '_taxonomy_type'] === 'date')
 			{
 				$this->do_archive_by_date($type);
 			}
+			//TODO: Remove deprecated type selection
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_POST_PARENT')
+			else if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_POST_PARENT' || $this->opt['Spost_' . $type . '_taxonomy_type'] === 'page')
 			{
 				if($parent == NULL)
 				{

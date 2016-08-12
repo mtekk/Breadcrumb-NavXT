@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.4
 Tested up to: 4.6
-Stable tag: 5.4.0
+Stable tag: 5.5.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -23,7 +23,9 @@ Breadcrumb NavXT 5.1.1 and older require PHP5.2
 * Built in WordPress Widget.
 * Extensible via OOP and provided [actions](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/2/#action_reference "Go to the Breadcrumb NavXT Documentation's action reference.") and [filters](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/2/#filter_reference "Go to the Breadcrumb NavXT Documentation's filter reference.").
 * WPML compatible (enhanced compatibility with WPML extensions plugin).
-* bbPress compatible (enhanced compatibility with bbPress extension plugin).
+* Polylang compatible (enhanced compatibility with Polylang extensions plugin).
+* bbPress compatible (enhanced compatibility with bbPress extensions plugin).
+* BuddyPress compatible (enhanced compatibility with BuddyPress extensions plugin).
 
 = Translations =
 
@@ -50,6 +52,19 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 5.5.0 =
+Release date: August 12th, 2016
+
+* Behavior change: Internal mechanics to handle post parents as the hierarchy for a post (of any post type) has changed to use 'BCN_POST_PARENT' rather than 'page' for the taxonomy_type.
+* Behavior change: Internal mechanics to handle dates as the hierarchy for a post (of any post type) has changed to use 'BCN_DATE' rather than 'date' for the taxonomy_type.
+* Behavior change: Taxonomy term hierarchy selection logic in `bcn_breadcrumb_trail::pick_post_term()` has changed to picking the deepest known child of the first hierarchy found in the list of terms returned by `get_the_terms()` rather than the first term with a child.
+* New feature: Added support for referer influenced taxonomy selection for a post's (any post type) breadcrumb trail.
+* New feature: Added `translate` and `lang` as valid attributes for tags within breadcrumb templates.
+* New feature: Added `srcset` and `sizes` as valid attributes for `img` tags within breadcrumb templates.
+* New feature: Added `itemprop` as a valid attribute for the `meta` tags within breadcrumb templates.
+* Bug fix: Fixed various issues caused by other plugins/themes modifying the `$post` global.
+* Bug fix: Fixed issue where WPML Extensions would cause a CPT without a set root page to use the Post post type's root page.
 
 = 5.4.0 =
 Release date: March 15th, 2016
@@ -172,90 +187,10 @@ Release date: November 20th, 2013
 * New feature: Added `xmlns:v` and `property` to the valid tag attributes.
 * Bug fix: The current_item breadcrumb for search results should result in a valid HTTPS link when appropriate.
 
-= 4.4.0 =
-Release date: June 21st, 2013
-
-* New feature: Added `bcn_breadcrumb_url` filter.
-* New feature: Add resource ID to the `bcn_breadcrumb_title` filter.
-* New feature: Added `bcn_breadcrumb_template` filter.
-* New feature: Added `bcn_allowed_html` filter.
-* New feature: Added `bcn_template_tags` filter.
-* Bug fix: Fixed issue where invalid characters could end up in URLs due to other plugins.
-* Bug fix: Revise the allowed HTML for breadcrumbs in the trail.
-
-= 4.3.0 =
-Release date: February 13th, 2013
-
-* Behaviour change: Home and Mainsite titles were removed.
-* Behaviour change: All HTML capable strings are now passed through wp_kses.
-* New feature: Added bcn_breadcrumb_url filter.
-* New feature: %title% and %htitle% now are replaced with the the "Site Title" for the home breadcrumb and the "Network Name" for mainsite breadcrumbs.
-* New feature: Support for the proposed Theme Hook Alliance tha_breadcrumb_navigation filter.
-* New feature: Added %ftitle% and %fhtitle% tags that are not affected by bcn_breadcrumb::trim().
-* Bug fix: Minor tweaks to the tabs in the admin page to better support the new version of jQuery UI tabs (in WordPress 3.5+).
-* Bug fix: Fixed issue where initial settings were not being translated due to the text domain not loading.
-* Bug fix: Added verbiage to clarify what the "Post Parent" selection for "Post Hierarchy" does. 
-
-= 4.2.0, 2012-9-28 =
-Release date: September 28th, 2012
-
-* Behaviour change: Date archives are only available for the 'post' post type.
-* New feature: All Custom Post Types can now either use a post parent, or taxonomy based hierarchy.
-* New feature: Post Format archives are now supported.
-* New feature: Reorganized settings page with more responsive elements.
-* Bug fix: Widget will now display properly when told to include the paged breadcrumb on the main posts archive.
-* Bug fix: Using flat taxonomies as the post hierarchy no longer causes extraneous breadcrumb templates to be applied.
-* Bug fix: Mainsite link now works on posts and pages in multisite environments.
-* Bug fix: `bcn_breadcrumb::title_trim()` no longer cuts HTML encoded characters.
-* Bug fix: `bcn_breadcrumb::title_trim()` no longer trims the title when the title length is equal to the max length.
-
-= 4.1.0 =
-Release date: June 6th, 2012
-
-* Behavior change: Made the behavior of posts using flat taxonomies match the behavior of using a hierarchical taxonomy when the post is not assigned a taxonomy term.
-* New feature: Custom Post Types that are hierarchical can now fall back to a taxonomy if they don't have a parent.
-* New feature: Pretext option for the included Widget, allows 'You are here:' type messages in the widget.
-* Bug fix: Textdomain was changed to the correct one in the widget.
-* Bug fix: Textdomain was changed from 'breadcrumb_navxt' to 'breadcrumb-navxt' for improved compatibility with the new GlotPress translation flow.
-* Bug fix: Fixed cause of PHP warnings on empty term archive pages.
-* Bug fix: Fixed cause of PHP warnings on term archives restricted to a specified post type.
-* Bug fix: Fixed cause of PHP warnings and improper behavior on author archives if showing the page number in the breadcrumb trail.
-
-= 4.0.2, 2012-2-17 =
-Release date: February 17th, 2012
-
-* New feature: Estonian translation added props to Martin Orn.
-* New feature: Azerbaijani translation added props to Zaur Bayramov.
-* Bug fix: Replaced deprecated RDFa and Microformat breadcrumbs with Schema.org breadcrumbs support in the included sidebar widget.
-* Bug fix: Mainsite breadcrumbs are linked once again.
-* Bug fix: Safe default settings for CPTs and taxonomies should work now.
-* Bug fix: Updated translations should work, previously the old ones loaded.
-
-= 4.0.1 =
-Release date: January 3rd, 2012
-
-* New feature: Norwegian translations added props to Jan Rosvoldsve.
-* Bug fix: Fixed line 591 and line 646 errors in multisite installs.
-* Bug fix: Attachments will now obey the root page setting for their parent, regardless of the parent's post type.
-
-= 4.0.0 =
-Release date: December 14th, 2011
-
-* Behavior change: Prefix, suffix, and anchor settings have been replaced with templates for all breadcrumb types.
-* Behavior change: `bcn_display_nested` function was removed from the main plugin. Will appear in a supplementary plugin.
-* Behavior change: Import/Export/Reset tab moved under the admin bar Help menu.
-* Behavior change: Paged breadcrumbs are enabled in the default settings, among other subtle changes.
-* New feature: More useful Help menu, utilizing the new WordPress 3.3 Help menu.
-* New feature: True URLs are now generated for current items when link current item is enabled.
-* New feature: The display of the custom post type archive breadcrumb for custom post types may now be disabled.
-* New feature: Added in fallback functions for PHP's multibyte character string functions for environments that do not have multibyte character support.
-* Bug fix: Custom post type archives now respect the root page setting.
-* Bug fix: Custom post types without WordPress post archives enabled will no longer cause a double root page breadcrumb to be generated.
-* Bug fix: Tabs on the settings page are now rounded for all "modern" browsers, including Firefox, Chrome, and IE9.
-* Bug fix: Tabs on the settings page are now remembered between setting saves (including multiple saves from within the same tab).
-* Bug fix: Fixed another cause of the "The following settings were not saved" error message.
-
 == Upgrade Notice ==
+
+= 5.5.0 =
+This version requires PHP5.3 or newer. This version introduces contextually aware taxonomy selection for post hierarchies.
 
 = 5.4.0 =
 This version requires PHP5.3 or newer. This version introduces three new filters: `bcn_post_terms`, `bcn_add_post_type_arg`, and `bcn_pick_post_term`.

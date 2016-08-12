@@ -225,7 +225,8 @@ class breadcrumb_navxt
 					'meta' => array(
 						'content' => true,
 						'property' => true,
-						'vocab' => true
+						'vocab' => true,
+						'itemprop' => true
 					)
 		);
 		return mtekk_adminKit::array_merge_recursive($tags, $allowed_html);

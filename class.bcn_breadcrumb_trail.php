@@ -345,7 +345,8 @@ class bcn_breadcrumb_trail
 				{
 					//Filter the results of post_pick_term
 					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type, $taxonomy), $id, $type, $taxonomy);
-					if($term !== false)
+					//Only do something if we found a term
+					if($term instanceof WP_Term)
 					{
 						//Fill out the term hiearchy
 						$parent = $this->term_parents($term->term_id, $taxonomy);

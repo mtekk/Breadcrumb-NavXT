@@ -239,13 +239,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10);
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
 		//Set page '3' as the home page
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts
@@ -275,16 +275,37 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertEquals($paid['6'], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
 		$this->assertSame(get_the_title($paid['6']), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
+	function test_do_root_page()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[9]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//"Go to" our post
+		$this->go_to(get_permalink($paid[1]));
+		$type = $GLOBALS['wp_query']->get_queried_object();
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
 	function test_do_root_cpt()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10);
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
 		//Set page '3' as the home page
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts
@@ -315,13 +336,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root_cpt_null_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10);
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5], 'post_type' => 'page'));
-		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0], 'post_type' => 'page'));
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
 		//Set page '3' as the home page
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts

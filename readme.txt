@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.4
 Tested up to: 4.6
-Stable tag: 5.5.0
+Stable tag: 5.5.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -52,6 +52,11 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 5.5.1 =
+Release date: August 13th, 2016
+
+* Bug fix: Fixed issue in `bcn_breadcrumb_trail::find_type()` that identified pages as posts, causing the erroneous inclusion of the post root in the breadcrumb trail for pages. 
 
 = 5.5.0 =
 Release date: August 12th, 2016

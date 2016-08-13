@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.5.0';
+	const version = '5.5.1';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -873,6 +873,11 @@ class bcn_breadcrumb_trail
 			{
 				$root_id = $this->opt['apost_' . $type_str . '_root'];
 			}
+		}
+		else if(is_singular() && $type instanceof WP_Post && $type->post_type == 'page')
+		{
+			$type_str = 'page';
+			$root_id = get_option('page_on_front');
 		}
 		else
 		{

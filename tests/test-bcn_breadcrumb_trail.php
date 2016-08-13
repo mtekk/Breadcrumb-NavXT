@@ -268,12 +268,12 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 3 breadcrumbs
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
-		$this->assertEquals($paid['0'], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
-		$this->assertSame(get_the_title($paid['0']), $this->breadcrumb_trail->breadcrumbs[2]->get_title());
-		$this->assertEquals($paid['5'], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
-		$this->assertSame(get_the_title($paid['5']), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertEquals($paid['6'], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
-		$this->assertSame(get_the_title($paid['6']), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertEquals($paid[0], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
+		$this->assertSame(get_the_title($paid[0]), $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertEquals($paid[5], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_the_title($paid[5]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($paid[6], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	function test_do_root_page()
 	{
@@ -295,6 +295,36 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_root');
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
+	function test_do_root_blog_home()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[9]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//"Go to" our post
+		$this->go_to(get_home_url());
+		$type = $GLOBALS['wp_query']->get_queried_object();
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 4 breadcrumbs
+		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertEquals($paid[3], $this->breadcrumb_trail->breadcrumbs[3]->get_id());
+		$this->assertSame(get_the_title($paid[3]), $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertEquals($paid[0], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
+		$this->assertSame(get_the_title($paid[0]), $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertEquals($paid[5], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_the_title($paid[5]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($paid[6], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	function test_do_root_cpt()
 	{
@@ -325,10 +355,10 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 2 breadcrumbs
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
-		$this->assertEquals($paid['2'], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
-		$this->assertSame(get_the_title($paid['2']), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertEquals($paid['1'], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
-		$this->assertSame(get_the_title($paid['1']), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertEquals($paid[2], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_the_title($paid[2]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($paid[1], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($paid[1]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	/**
 	 * Test for when the CPT root setting is a non-integer see #148

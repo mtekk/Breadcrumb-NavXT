@@ -234,7 +234,7 @@ class bcn_breadcrumb_trail
 		$bk_req = $_SERVER['REQUEST_URI'];
 		//Now set the request URL to the referrer URL
 		//Could just chain the [1] selection, but that's not PHP5.3 compatible
-		$url_split = explode(home_url(), wp_get_referer());
+		$url_split = explode(home_url(), esc_url(wp_get_referer()));
 		if(isset($url_split[1]))
 		{
 			$_SERVER['REQUEST_URI'] = $url_split[1];

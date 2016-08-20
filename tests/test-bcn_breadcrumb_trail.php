@@ -291,7 +291,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_permalink($paid[1]));
-		$type = $GLOBALS['wp_query']->get_queried_object();
 		$this->breadcrumb_trail->call('do_root');
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
@@ -312,7 +311,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_home_url());
-		$type = $GLOBALS['wp_query']->get_queried_object();
 		$this->breadcrumb_trail->call('do_root');
 		//Ensure we have 4 breadcrumbs
 		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
@@ -325,6 +323,40 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(get_the_title($paid[5]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertEquals($paid[6], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
 		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	function test_do_root_no_blog()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create some terms
+		$tids = $this->factory->category->create_many(10);
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, array($tids[5]), 'category');
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		//We don't want the blog breadcrumb
+		$this->breadcrumb_trail->opt['bblog_display'] = false;
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 	function test_do_root_cpt()
 	{

@@ -395,6 +395,11 @@ class breadcrumb_navxt
 	public function display($return = false, $linked = true, $reverse = false, $force = false)
 	{
 		$this->get_settings();
+		//If we're being forced to fill the trail, clear it before calling fill
+		if($force)
+		{
+			$this->breadcrumb_trail->breadcrumbs = array();
+		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
 		return $this->breadcrumb_trail->display($return, $linked, $reverse);
@@ -402,15 +407,19 @@ class breadcrumb_navxt
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags
 	 * 
-	 * @since  3.2.0
-	 * @param  bool $return Whether to return or echo the trail.
-	 * @param  bool $linked Whether to allow hyperlinks in the trail or not.
-	 * @param  bool	$reverse Whether to reverse the output or not.
+	 * @param bool $return Whether to return or echo the trail.
+	 * @param bool $linked Whether to allow hyperlinks in the trail or not.
+	 * @param bool	$reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false, $force = false)
 	{
 		$this->get_settings();
+		//If we're being forced to fill the trail, clear it before calling fill
+		if($force)
+		{
+			$this->breadcrumb_trail->breadcrumbs = array();
+		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
 		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);

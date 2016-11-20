@@ -5,10 +5,10 @@
  * @group bcn_breadcrumb_trail
  * @group bcn_core
  */
- if(class_exists('bcn_breadcrumb_trail'))
- {
- 	class bcn_breadcrumb_trail_DUT extends bcn_breadcrumb_trail {
- 		function __construct() {
+if(class_exists('bcn_breadcrumb_trail'))
+{
+	class bcn_breadcrumb_trail_DUT extends bcn_breadcrumb_trail {
+		function __construct() {
 			parent::__construct();
 		}
 		//Super evil caller function to get around our private and protected methods in the parent class
@@ -16,7 +16,7 @@
 			return call_user_func_array(array($this, $function), $args);
 		}
  	}
- }
+}
 class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public $breadcrumb_trail;
 	function setUp() {

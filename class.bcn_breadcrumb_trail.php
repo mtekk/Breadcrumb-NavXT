@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.5.0';
+	const version = '5.5.2';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -234,7 +234,7 @@ class bcn_breadcrumb_trail
 		$bk_req = $_SERVER['REQUEST_URI'];
 		//Now set the request URL to the referrer URL
 		//Could just chain the [1] selection, but that's not PHP5.3 compatible
-		$url_split = explode(home_url(), wp_get_referer());
+		$url_split = explode(home_url(), esc_url(wp_get_referer()));
 		if(isset($url_split[1]))
 		{
 			$_SERVER['REQUEST_URI'] = $url_split[1];
@@ -874,7 +874,12 @@ class bcn_breadcrumb_trail
 				$root_id = $this->opt['apost_' . $type_str . '_root'];
 			}
 		}
-		else
+		else if(is_singular() && $type instanceof WP_Post && $type->post_type == 'page')
+		{
+			$type_str = 'page';
+			$root_id = get_option('page_on_front');
+		}
+		else if($this->opt['bblog_display'] || is_home())
 		{
 			$type_str = 'post';
 			$root_id = get_option('page_for_posts');

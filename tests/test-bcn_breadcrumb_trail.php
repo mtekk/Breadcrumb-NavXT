@@ -474,7 +474,21 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_is_builtin()
 	{
-		register_post_type('bcn_testa', 
+		//Try some built in types
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('post')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('page')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachement')));
+		//And now our CPT
+		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('czar')));
+		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('bureaucrat')));
+	}
+	function test_treat_as_root_page()
+	{
+		//TODO
+	}
+	function test_has_archive()
+	{
+		register_post_type('bcn_testb', 
 			array('public' => true,
 			'rewrite' => array('slug' => 'bcn_testa',
 			'publicly_queryable' => true,
@@ -482,15 +496,37 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			'query_var' => 'bcn_testa',
 			'show_ui' => true,
 			'show_in_menu' => true,
-			'has_archive' => true,
+			'has_archive' => false,
 			'can_export' => true,
 			'show_in_nav_menus' => true)));
 		flush_rewrite_rules();
-		//Try some built in types
-		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('post')));
-		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('page')));
-		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachement')));
-		//And now our CPT
-		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('bcn_testa')));
+		//Try a type that has an archive
+		$this->assertTrue($this->breadcrumb_trail->call('has_archive', array('czar')));
+		$this->assertTrue($this->breadcrumb_trail->call('has_archive', array('bureaucrat')));
+		//Try some types that do not have archives
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('post')));
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('page')));
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('bcn_testb')));
+	}
+	function test_get_type_string_query_var()
+	{
+		//Test with just one post type
+		$this->go_to(add_query_arg(array('post_type' => 'czar'), get_search_link('test')));
+		$this->assertSame('czar', $this->breadcrumb_trail->call('get_type_string_query_var'));
+		//Test on multiple post types
+		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_search_link('test')));
+		$this->assertSame('czars', $this->breadcrumb_trail->call('get_type_string_query_var', array('czars')));
+		//Test default
+		$this->go_to(add_query_arg(array('post_type' => ''), get_search_link('test')));
+		$this->assertSame('post', $this->breadcrumb_trail->call('get_type_string_query_var'));
+	}
+	function test_is_type_query_var_array()
+	{
+		//Test with just one post type
+		$this->go_to(add_query_arg(array('post_type' => 'czar'), get_search_link('test')));
+		$this->assertFalse($this->breadcrumb_trail->call('is_type_query_var_array'));
+		//Test on multiple post types
+		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_search_link('test')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_type_query_var_array'));
 	}
 }

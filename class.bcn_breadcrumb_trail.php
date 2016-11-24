@@ -879,7 +879,7 @@ class bcn_breadcrumb_trail
 			$type_str = 'page';
 			$root_id = get_option('page_on_front');
 		}
-		else if($this->opt['bblog_display'] || is_home())
+		else if(($this->opt['bblog_display'] || is_home()) && !is_search())
 		{
 			$type_str = 'post';
 			$root_id = get_option('page_for_posts');

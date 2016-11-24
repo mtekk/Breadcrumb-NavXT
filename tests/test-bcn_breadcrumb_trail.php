@@ -424,4 +424,52 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 0 breadcrumbs (no root)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
+	function test_do_root_search()
+	{
+		register_post_type('bcn_testa', 
+			array('public' => true,
+			'rewrite' => array('slug' => 'bcn_testa',
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'query_var' => 'bcn_testa',
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'has_archive' => true,
+			'can_export' => true,
+			'show_in_nav_menus' => true)));
+		flush_rewrite_rules();
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = $paid[2];
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		
+		//"Go to" our search, non-post type restricted
+		$this->go_to(get_search_link('test'));
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		
+		//Again with the search CPT restricted
+	/*	$this->breadcrumb_trail->breadcrumbs = array();
+		$this->go_to(add_query_arg('post_type', 'bcn_testa', get_search_link('test')));
+		var_dump(is_post_type_archive());
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 1 breadcrumbs from the do_root portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);*/
+	}
 }

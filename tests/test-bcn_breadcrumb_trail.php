@@ -472,4 +472,25 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 1 breadcrumbs from the do_root portion
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);*/
 	}
+	function test_is_builtin()
+	{
+		register_post_type('bcn_testa', 
+			array('public' => true,
+			'rewrite' => array('slug' => 'bcn_testa',
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'query_var' => 'bcn_testa',
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'has_archive' => true,
+			'can_export' => true,
+			'show_in_nav_menus' => true)));
+		flush_rewrite_rules();
+		//Try some built in types
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('post')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('page')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachement')));
+		//And now our CPT
+		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('bcn_testa')));
+	}
 }

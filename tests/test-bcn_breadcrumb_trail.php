@@ -62,6 +62,71 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 	}
+	function test_add()
+	{
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$post = get_post($pid);
+		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call the add function
+		$breadcrumb_ret = $this->breadcrumb_trail->call('add', array($breadcrumb));
+		//Make sure we have one breadcrumb on the trail
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Ensure the add function returned the added breadcrumb
+		$this->assertSame($breadcrumb, $breadcrumb_ret);
+		//Ensure the breadcrumb on the trail is what we expect
+		$this->assertSame($breadcrumb, $this->breadcrumb_trail->breadcrumbs[0]);
+	}
+	function test_query_var_to_taxonomy() {
+		//Setup some taxonomies
+		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
+		//Check matching of an existant taxonomy
+		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
+		//Check return false of non-existant taxonomy
+		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
+	}
+	function test_determine_taxonomy() {
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create the custom taxonomy
+		register_taxonomy('wptests_tax2', 'post', array(
+			'hierarchical' => true,
+			'rewrite' => array(
+				'slug' => 'foo',
+				'hierarchical true'
+				)));
+		//Create some terms
+		$tids = $this->factory->category->create_many(10);
+		$ttid1 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm1'));
+		$ttid2 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm2',
+			'parent' => $ttid1));
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, array($tids[5]), 'category');
+		wp_set_object_terms($pid, $ttid2, 'wptests_tax2');
+		flush_rewrite_rules();
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		//Check no referer
+		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
+		//Let the custom taxonomy be our referer
+		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
+		//Check matching of an existant taxonomy
+		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
+	}
 	/**
 	 * Tests for the bcn_post_terms filter
 	 */
@@ -187,54 +252,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				$this->equalTo(get_term($tids[9], 'category')->name)
 			)
 		);
-	}
-	function test_query_var_to_taxonomy() {
-		//Setup some taxonomies
-		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
-		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
-		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
-		//Check matching of an existant taxonomy
-		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
-		//Check return false of non-existant taxonomy
-		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
-	}
-	function test_determine_taxonomy() {
-		$this->set_permalink_structure('/%category%/%postname%/');
-		//Create the custom taxonomy
-		register_taxonomy('wptests_tax2', 'post', array(
-			'hierarchical' => true,
-			'rewrite' => array(
-				'slug' => 'foo',
-				'hierarchical true'
-				)));
-		//Create some terms
-		$tids = $this->factory->category->create_many(10);
-		$ttid1 = $this->factory()->term->create(array(
-			'taxonomy' => 'wptests_tax2',
-			'slug' => 'ctxterm1'));
-		$ttid2 = $this->factory()->term->create(array(
-			'taxonomy' => 'wptests_tax2',
-			'slug' => 'ctxterm2',
-			'parent' => $ttid1));
-		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
-		//Make some of the terms be in a hierarchy
-		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
-		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
-		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
-		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
-		//Assign the terms to the post
-		wp_set_object_terms($pid, array($tids[5]), 'category');
-		wp_set_object_terms($pid, $ttid2, 'wptests_tax2');
-		flush_rewrite_rules();
-		//"Go to" our post
-		$this->go_to(get_permalink($pid));
-		//Check no referer
-		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
-		//Let the custom taxonomy be our referer
-		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
-		//Check matching of an existant taxonomy
-		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
 	}
 	function test_do_root()
 	{
@@ -529,4 +546,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_search_link('test')));
 		$this->assertTrue($this->breadcrumb_trail->call('is_type_query_var_array'));
 	}
+	function test_maybe_add_post_type_arg()
+	{
+		//TODO
+	}
+	function test_order()
+	{
+		//TODO
+	}
+	
 }

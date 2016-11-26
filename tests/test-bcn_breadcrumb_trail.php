@@ -41,19 +41,19 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 		register_taxonomy('ring', 'czar', array(
-			'lable' => 'Rings',
+			'label' => 'Rings',
 			'public' => true,
 			'hierarchical' => false,
 			)
 		);
-		register_taxonomy('party', 'czar', array(
-			'lable' => 'Parties',
+		register_taxonomy('party', array('czar', 'post'), array(
+			'label' => 'Parties',
 			'public' => true,
 			'hierarchical' => true,
 			)
 		);
 		register_taxonomy('job_title', 'bureaucrat', array(
-			'lable' => 'Job Title',
+			'label' => 'Job Title',
 			'public' => true,
 			'hierarchical' => true,
 			)
@@ -548,7 +548,46 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_maybe_add_post_type_arg()
 	{
-		//TODO
+		$tida = $this->factory->term->create(array('name' => 'Test Category', 'taxonomy' => 'category'));
+		$tidb = $this->factory->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
+		$pida = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		//Assign the terms to the post
+		wp_set_object_terms($pida, array($tida), 'category');
+		wp_set_object_terms($pida, array($tidb), 'party');
+		$pidb = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		//Assign the terms to the czar
+		wp_set_object_terms($pida, array($tida), 'category');
+		wp_set_object_terms($pida, array($tidb), 'party');
+		//We shouldn't do anything for a regular post (and not on a taxonomy archive were post isn't primary type)
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url));
+		$this->assertSame($url, $url_ret);
+		//Reaffirm when passing in the post post type
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'post'));
+		$this->assertSame($url, $url_ret);
+		//Again, but when not normally a post's archive
+		$url = get_term_link($tidb);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'post'));
+		$this->assertSame($url, $url_ret); //Currently, we never add post (as documented for the function), need to determine if that is correct
+		//Try without passing anything in
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url));
+		$this->assertSame($url, $url_ret);
+		//Try with passing in type
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'czar'));
+		$this->assertSame(add_query_arg(array('post_type' => 'czar'), $url), $url_ret);
+		//Try with passing in type and taxonomy
+		$url = get_term_link($tidb);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'czar', 'party'));
+		$this->assertSame($url, $url_ret);
 	}
 	function test_order()
 	{

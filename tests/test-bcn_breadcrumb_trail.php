@@ -552,7 +552,14 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_order()
 	{
-		//TODO
+		//Going to cheat here and not fill with bcn_breadcrumb objects to make this easier to implement
+		$this->breadcrumb_trail->breadcrumbs = array('car', 'gar', 'zar');
+		//Order non-reversed (last breadcrumb added needs to be output first)
+		$this->breadcrumb_trail->call('order', array(false));
+		$this->assertSame('zar', reset($this->breadcrumb_trail->breadcrumbs));
+		//Order reversed (last breadcrumb added needs to be output last)
+		$this->breadcrumb_trail->call('order', array(true));
+		$this->assertSame('car', reset($this->breadcrumb_trail->breadcrumbs));
 	}
 	
 }

@@ -501,7 +501,52 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_treat_as_root_page()
 	{
-		//TODO
+		//TODO complete all cases
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		$pidc = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$pidb = $this->factory->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Set page '0' as the root for czars
+		$this->breadcrumb_trail->opt['apost_czar_root'] = $paid[0];
+		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = false;
+		//Set page '5' as the root for bureaucrats
+		$this->breadcrumb_trail->opt['apost_bureaucrat_root'] = $paid[5];
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		//End of setup, now to tests
+		//Set of tests with the normal post post type
+		//Test on the home page (page for posts)
+		$this->go_to(get_home_url());
+		$this->assertTrue($this->breadcrumb_trail->call('treat_as_root_page', array('post')));
+		//Test on the frontpage
+		$this->go_to(get_permalink($paid[3]));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('post')));
+		//Onto a CPT
+		//Test on the archive of a CPT
+		$this->go_to(get_permalink($paid[0]));
+		//Set the is_post_type_archive() flag, technically, we should do this differently
+		$this->go_to(get_post_type_archive_link('czar'));
+		$this->assertTrue($this->breadcrumb_trail->call('treat_as_root_page', array('czar')));
+		//Test on the instance of a CPT
+		$this->go_to(get_permalink($pidc));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('czar')));
+		//Onto another CPT
+		//Test on the archive of a CPT
+		$this->go_to(get_permalink($paid[5]));
+		//Set the is_post_type_archive() flag, technically, we should do this differently
+		$this->go_to(get_post_type_archive_link('bureaucrat'));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('bureaucrat')));
+		//Test on the instance of a CPT
+		$this->go_to(get_permalink($pidb));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('bureaucrat')));
 	}
 	function test_has_archive()
 	{

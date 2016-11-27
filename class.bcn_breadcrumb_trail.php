@@ -726,7 +726,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function treat_as_root_page($post_type)
 	{
-		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root']) && !$this->opt['bpost_' . $post_type . '_archive_display']));
+		return (is_home() || (is_post_type_archive() && !$this->opt['bpost_' . $post_type . '_archive_display']));
 	}
 	/**
 	 * Determines if a post type has archives enabled or not

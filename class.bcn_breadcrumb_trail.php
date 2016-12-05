@@ -1129,8 +1129,10 @@ class bcn_breadcrumb_trail
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
 		$position = 1;
+        	// Filter the items in the trail
+        	$breadcrumbs = apply_filters( 'bcn_breadcrumb_items', $this->breadcrumbs, 'display' );
 		//The main compiling loop
-		foreach($this->breadcrumbs as $key => $breadcrumb)
+		foreach($breadcrumbs as $key => $breadcrumb)
 		{
 			//We do different things for the separator based on the breadcrumb order
 			if($reverse)
@@ -1178,8 +1180,8 @@ class bcn_breadcrumb_trail
 	 * @return string String version of the breadcrumb trail.
 	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
-	 * @param bool $reverse[optional] Whether to reverse the output or not. 
-	 * 
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
+	 *
 	 * TODO: Can probably write this one in a smarter way now
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false)
@@ -1189,8 +1191,10 @@ class bcn_breadcrumb_trail
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
 		$position = 1;
+        	// Filter the items in the trail
+        	$breadcrumbs = apply_filters( 'bcn_breadcrumb_items', $this->breadcrumbs, 'display_list' );
 		//The main compiling loop
-		foreach($this->breadcrumbs as $key => $breadcrumb)
+		foreach($breadcrumbs as $key => $breadcrumb)
 		{
 			$li_class = '';
 			//On the first run we need to add in a class for the home breadcrumb

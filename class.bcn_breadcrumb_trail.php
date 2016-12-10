@@ -319,6 +319,7 @@ class bcn_breadcrumb_trail
 				{
 					//We have to grab the post to find its parent, can't use $post for this one
 					$parent = get_post($id);
+					//TODO should we check that we have a WP_Post object here?
 					$parent = $parent->post_parent;
 				}
 				//Grab the frontpage, we'll need it shortly
@@ -726,7 +727,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function treat_as_root_page($post_type)
 	{
-		return (is_home() || (is_post_type_archive() && is_numeric($this->opt['apost_' . $post_type . '_root']) && !$this->opt['bpost_' . $post_type . '_archive_display']));
+		return (is_home() || (is_post_type_archive() && !$this->opt['bpost_' . $post_type . '_archive_display']));
 	}
 	/**
 	 * Determines if a post type has archives enabled or not
@@ -736,7 +737,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function has_archive($post_type)
 	{
-		$type = get_post_type_object($post_type);
+		$type = get_post_type_object($post_type); //TODO need a check on this for WP_Error?
 		return $type->has_archive;
 	}
 	/**
@@ -801,7 +802,7 @@ class bcn_breadcrumb_trail
 	{
 		global $wp_taxonomies;
 		$type_str = false;
-		if(!isset($type->taxonomy))
+		if(!isset($type->taxonomy)) //TODO could probably check the class type here
 		{
 			$type_str = $this->get_type_string_query_var();
 		}
@@ -879,7 +880,7 @@ class bcn_breadcrumb_trail
 			$type_str = 'page';
 			$root_id = get_option('page_on_front');
 		}
-		else if($this->opt['bblog_display'] || is_home())
+		else if(($this->opt['bblog_display'] || is_home()) && !is_search())
 		{
 			$type_str = 'post';
 			$root_id = get_option('page_for_posts');
@@ -898,7 +899,7 @@ class bcn_breadcrumb_trail
 		{
 			//Could use the $post global, but we can't really trust it
 			$post = get_post();
-			$type = get_post($post->post_parent);
+			$type = get_post($post->post_parent); //TODO check for WP_Error?
 			//If the parent of the attachment is a page, exit early (works around bug where is_single() returns true for an attachment to a page)
 			if($type->post_type == 'page')
 			{

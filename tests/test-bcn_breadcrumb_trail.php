@@ -5,10 +5,10 @@
  * @group bcn_breadcrumb_trail
  * @group bcn_core
  */
- if(class_exists('bcn_breadcrumb_trail'))
- {
- 	class bcn_breadcrumb_trail_DUT extends bcn_breadcrumb_trail {
- 		function __construct() {
+if(class_exists('bcn_breadcrumb_trail'))
+{
+	class bcn_breadcrumb_trail_DUT extends bcn_breadcrumb_trail {
+		function __construct() {
 			parent::__construct();
 		}
 		//Super evil caller function to get around our private and protected methods in the parent class
@@ -16,7 +16,7 @@
 			return call_user_func_array(array($this, $function), $args);
 		}
  	}
- }
+}
 class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public $breadcrumb_trail;
 	function setUp() {
@@ -41,19 +41,19 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 		register_taxonomy('ring', 'czar', array(
-			'lable' => 'Rings',
+			'label' => 'Rings',
 			'public' => true,
 			'hierarchical' => false,
 			)
 		);
-		register_taxonomy('party', 'czar', array(
-			'lable' => 'Parties',
+		register_taxonomy('party', array('czar', 'post'), array(
+			'label' => 'Parties',
 			'public' => true,
 			'hierarchical' => true,
 			)
 		);
 		register_taxonomy('job_title', 'bureaucrat', array(
-			'lable' => 'Job Title',
+			'label' => 'Job Title',
 			'public' => true,
 			'hierarchical' => true,
 			)
@@ -61,6 +61,71 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	public function tearDown() {
 		parent::tearDown();
+	}
+	function test_add()
+	{
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$post = get_post($pid);
+		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call the add function
+		$breadcrumb_ret = $this->breadcrumb_trail->call('add', array($breadcrumb));
+		//Make sure we have one breadcrumb on the trail
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Ensure the add function returned the added breadcrumb
+		$this->assertSame($breadcrumb, $breadcrumb_ret);
+		//Ensure the breadcrumb on the trail is what we expect
+		$this->assertSame($breadcrumb, $this->breadcrumb_trail->breadcrumbs[0]);
+	}
+	function test_query_var_to_taxonomy() {
+		//Setup some taxonomies
+		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
+		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
+		//Check matching of an existant taxonomy
+		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
+		//Check return false of non-existant taxonomy
+		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
+	}
+	function test_determine_taxonomy() {
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create the custom taxonomy
+		register_taxonomy('wptests_tax2', 'post', array(
+			'hierarchical' => true,
+			'rewrite' => array(
+				'slug' => 'foo',
+				'hierarchical true'
+				)));
+		//Create some terms
+		$tids = $this->factory->category->create_many(10);
+		$ttid1 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm1'));
+		$ttid2 = $this->factory()->term->create(array(
+			'taxonomy' => 'wptests_tax2',
+			'slug' => 'ctxterm2',
+			'parent' => $ttid1));
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		//Make some of the terms be in a hierarchy
+		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
+		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
+		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
+		//Assign the terms to the post
+		wp_set_object_terms($pid, array($tids[5]), 'category');
+		wp_set_object_terms($pid, $ttid2, 'wptests_tax2');
+		flush_rewrite_rules();
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		//Check no referer
+		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
+		//Let the custom taxonomy be our referer
+		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
+		//Check matching of an existant taxonomy
+		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
 	}
 	/**
 	 * Tests for the bcn_post_terms filter
@@ -187,54 +252,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				$this->equalTo(get_term($tids[9], 'category')->name)
 			)
 		);
-	}
-	function test_query_var_to_taxonomy() {
-		//Setup some taxonomies
-		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
-		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
-		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
-		//Check matching of an existant taxonomy
-		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
-		//Check return false of non-existant taxonomy
-		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
-	}
-	function test_determine_taxonomy() {
-		$this->set_permalink_structure('/%category%/%postname%/');
-		//Create the custom taxonomy
-		register_taxonomy('wptests_tax2', 'post', array(
-			'hierarchical' => true,
-			'rewrite' => array(
-				'slug' => 'foo',
-				'hierarchical true'
-				)));
-		//Create some terms
-		$tids = $this->factory->category->create_many(10);
-		$ttid1 = $this->factory()->term->create(array(
-			'taxonomy' => 'wptests_tax2',
-			'slug' => 'ctxterm1'));
-		$ttid2 = $this->factory()->term->create(array(
-			'taxonomy' => 'wptests_tax2',
-			'slug' => 'ctxterm2',
-			'parent' => $ttid1));
-		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
-		//Make some of the terms be in a hierarchy
-		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
-		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
-		wp_update_term($tids[9], 'category', array('parent' => $tids[8]));
-		wp_update_term($tids[5], 'category', array('parent' => $tids[7]));
-		//Assign the terms to the post
-		wp_set_object_terms($pid, array($tids[5]), 'category');
-		wp_set_object_terms($pid, $ttid2, 'wptests_tax2');
-		flush_rewrite_rules();
-		//"Go to" our post
-		$this->go_to(get_permalink($pid));
-		//Check no referer
-		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
-		//Let the custom taxonomy be our referer
-		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
-		//Check matching of an existant taxonomy
-		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
 	}
 	function test_do_root()
 	{
@@ -424,4 +441,209 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 0 breadcrumbs (no root)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
+	function test_do_root_search()
+	{
+		register_post_type('bcn_testa', 
+			array('public' => true,
+			'rewrite' => array('slug' => 'bcn_testa',
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'query_var' => 'bcn_testa',
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'has_archive' => true,
+			'can_export' => true,
+			'show_in_nav_menus' => true)));
+		flush_rewrite_rules();
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = $paid[2];
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		
+		//"Go to" our search, non-post type restricted
+		$this->go_to(get_search_link('test'));
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		
+		//Again with the search CPT restricted
+	/*	$this->breadcrumb_trail->breadcrumbs = array();
+		$this->go_to(add_query_arg('post_type', 'bcn_testa', get_search_link('test')));
+		var_dump(is_post_type_archive());
+		$this->breadcrumb_trail->call('do_root');
+		//Ensure we have 1 breadcrumbs from the do_root portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);*/
+	}
+	function test_is_builtin()
+	{
+		//Try some built in types
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('post')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('page')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachement')));
+		//And now our CPT
+		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('czar')));
+		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('bureaucrat')));
+	}
+	function test_treat_as_root_page()
+	{
+		//TODO complete all cases
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		$pidc = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$pidb = $this->factory->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Set page '0' as the root for czars
+		$this->breadcrumb_trail->opt['apost_czar_root'] = $paid[0];
+		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = false;
+		//Set page '5' as the root for bureaucrats
+		$this->breadcrumb_trail->opt['apost_bureaucrat_root'] = $paid[5];
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		//End of setup, now to tests
+		//Set of tests with the normal post post type
+		//Test on the home page (page for posts)
+		$this->go_to(get_home_url());
+		$this->assertTrue($this->breadcrumb_trail->call('treat_as_root_page', array('post')));
+		//Test on the frontpage
+		$this->go_to(get_permalink($paid[3]));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('post')));
+		//Onto a CPT
+		//Test on the archive of a CPT
+		$this->go_to(get_permalink($paid[0]));
+		//Set the is_post_type_archive() flag, technically, we should do this differently
+		$this->go_to(get_post_type_archive_link('czar'));
+		$this->assertTrue($this->breadcrumb_trail->call('treat_as_root_page', array('czar')));
+		//Test on the instance of a CPT
+		$this->go_to(get_permalink($pidc));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('czar')));
+		//Onto another CPT
+		//Test on the archive of a CPT
+		$this->go_to(get_permalink($paid[5]));
+		//Set the is_post_type_archive() flag, technically, we should do this differently
+		$this->go_to(get_post_type_archive_link('bureaucrat'));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('bureaucrat')));
+		//Test on the instance of a CPT
+		$this->go_to(get_permalink($pidb));
+		$this->assertFalse($this->breadcrumb_trail->call('treat_as_root_page', array('bureaucrat')));
+	}
+	function test_has_archive()
+	{
+		register_post_type('bcn_testb', 
+			array('public' => true,
+			'rewrite' => array('slug' => 'bcn_testa',
+			'publicly_queryable' => true,
+			'exclude_from_search' => false,
+			'query_var' => 'bcn_testa',
+			'show_ui' => true,
+			'show_in_menu' => true,
+			'has_archive' => false,
+			'can_export' => true,
+			'show_in_nav_menus' => true)));
+		flush_rewrite_rules();
+		//Try a type that has an archive
+		$this->assertTrue($this->breadcrumb_trail->call('has_archive', array('czar')));
+		$this->assertTrue($this->breadcrumb_trail->call('has_archive', array('bureaucrat')));
+		//Try some types that do not have archives
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('post')));
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('page')));
+		$this->assertFalse($this->breadcrumb_trail->call('has_archive', array('bcn_testb')));
+	}
+	function test_get_type_string_query_var()
+	{
+		//Test with just one post type
+		$this->go_to(add_query_arg(array('post_type' => 'czar'), get_search_link('test')));
+		$this->assertSame('czar', $this->breadcrumb_trail->call('get_type_string_query_var'));
+		//Test on multiple post types
+		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_search_link('test')));
+		$this->assertSame('czars', $this->breadcrumb_trail->call('get_type_string_query_var', array('czars')));
+		//Test default
+		$this->go_to(add_query_arg(array('post_type' => ''), get_search_link('test')));
+		$this->assertSame('post', $this->breadcrumb_trail->call('get_type_string_query_var'));
+	}
+	function test_is_type_query_var_array()
+	{
+		//Test with just one post type
+		$this->go_to(add_query_arg(array('post_type' => 'czar'), get_search_link('test')));
+		$this->assertFalse($this->breadcrumb_trail->call('is_type_query_var_array'));
+		//Test on multiple post types
+		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_search_link('test')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_type_query_var_array'));
+	}
+	function test_maybe_add_post_type_arg()
+	{
+		$tida = $this->factory->term->create(array('name' => 'Test Category', 'taxonomy' => 'category'));
+		$tidb = $this->factory->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
+		$pida = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		//Assign the terms to the post
+		wp_set_object_terms($pida, array($tida), 'category');
+		wp_set_object_terms($pida, array($tidb), 'party');
+		$pidb = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		//Assign the terms to the czar
+		wp_set_object_terms($pida, array($tida), 'category');
+		wp_set_object_terms($pida, array($tidb), 'party');
+		//We shouldn't do anything for a regular post (and not on a taxonomy archive were post isn't primary type)
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url));
+		$this->assertSame($url, $url_ret);
+		//Reaffirm when passing in the post post type
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'post'));
+		$this->assertSame($url, $url_ret);
+		//Again, but when not normally a post's archive
+		$url = get_term_link($tidb);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'post'));
+		$this->assertSame($url, $url_ret); //Currently, we never add post (as documented for the function), need to determine if that is correct
+		//Try without passing anything in
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url));
+		$this->assertSame($url, $url_ret);
+		//Try with passing in type
+		$url = get_term_link($tida);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'czar'));
+		$this->assertSame(add_query_arg(array('post_type' => 'czar'), $url), $url_ret);
+		//Try with passing in type and taxonomy
+		$url = get_term_link($tidb);
+		$this->go_to($url);
+		$url_ret = $this->breadcrumb_trail->call('maybe_add_post_type_arg', array($url, 'czar', 'party'));
+		$this->assertSame($url, $url_ret);
+	}
+	function test_order()
+	{
+		//Going to cheat here and not fill with bcn_breadcrumb objects to make this easier to implement
+		$this->breadcrumb_trail->breadcrumbs = array('car', 'gar', 'zar');
+		//Order non-reversed (last breadcrumb added needs to be output first)
+		$this->breadcrumb_trail->call('order', array(false));
+		$this->assertSame('zar', reset($this->breadcrumb_trail->breadcrumbs));
+		//Order reversed (last breadcrumb added needs to be output last)
+		$this->breadcrumb_trail->call('order', array(true));
+		$this->assertSame('car', reset($this->breadcrumb_trail->breadcrumbs));
+	}
+	
 }

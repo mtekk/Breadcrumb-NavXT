@@ -379,13 +379,13 @@ class bcn_network_admin extends mtekk_adminKit
 				'content' => $general_tab
 				));
 			$quickstart_tab = '<p>' . __('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
-				'</p><h5>' . __('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/"&gt;' . "
+				'</p><h5>' . __('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;' . "
 	&lt;?php if(function_exists('bcn_display'))
 	{
 		bcn_display();
 	}?&gt;
 &lt;/div&gt;</code></pre>" .
-				'<h5>' . __('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/"&gt;'."
+				'<h5>' . __('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;'."
 	&lt;?php if(function_exists('bcn_display_list'))
 	{
 		bcn_display_list();

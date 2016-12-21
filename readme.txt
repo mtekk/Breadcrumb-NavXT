@@ -3,7 +3,7 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.4
-Tested up to: 4.6
+Tested up to: 4.7
 Stable tag: 5.5.2
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -33,7 +33,7 @@ Breadcrumb NavXT now supports WordPress.org language packs. Want to translate Br
 
 == Installation ==
 Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.
-`<div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+`<div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
     <?php if(function_exists('bcn_display'))
     {
         bcn_display();

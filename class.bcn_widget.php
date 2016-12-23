@@ -19,8 +19,8 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '5.5.90';
-	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false);
+	const version = '5.6.0';
+	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false, 'force' => false);
 	//Default constructor
 	function __construct()
 	{
@@ -56,14 +56,14 @@ class bcn_widget extends WP_Widget
 		{
 			//Display the list output breadcrumb
 			echo $instance['pretext'] . '<ol class="breadcrumb_trail breadcrumbs">';
-			bcn_display_list(false, $instance['linked'], $instance['reverse']);
+			bcn_display_list(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</ol>';
 		}
 		else if($instance['type'] == 'microdata')
 		{
 			echo '<div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">' . $instance['pretext'];
 			//Display the regular output breadcrumb
-			bcn_display(false, $instance['linked'], $instance['reverse']);
+			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</div>';
 		}
 		else if($instance['type'] == 'plain')
@@ -71,7 +71,7 @@ class bcn_widget extends WP_Widget
 			//Display the pretext
 			echo $instance['pretext'];
 			//Display the regular output breadcrumb
-			bcn_display(false, $instance['linked'], $instance['reverse']);
+			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
 		}
 		else
 		{
@@ -90,6 +90,7 @@ class bcn_widget extends WP_Widget
 		$old_instance['linked'] = isset($new_instance['linked']);
 		$old_instance['reverse'] = isset($new_instance['reverse']);
 		$old_instance['front'] = isset($new_instance['front']);
+		$old_instance['force'] = isset($new_instance['force']);
 		return $old_instance;
 	}
 	function form($instance)
@@ -119,6 +120,8 @@ class bcn_widget extends WP_Widget
 			<label for="<?php echo $this->get_field_id('reverse'); ?>"> <?php _e('Reverse the order of the trail', 'breadcrumb-navxt'); ?></label><br />
 			<input class="checkbox" type="checkbox" name="<?php echo $this->get_field_name('front'); ?>" id="<?php echo $this->get_field_id('front'); ?>" value="true" <?php checked(true, $instance['front']);?> />
 			<label for="<?php echo $this->get_field_id('front'); ?>"> <?php _e('Hide the trail on the front page', 'breadcrumb-navxt'); ?></label><br />
+			<input class="checkbox" type="checkbox" name="<?php echo $this->get_field_name('force'); ?>" id="<?php echo $this->get_field_id('force'); ?>" value="true" <?php checked(true, $instance['force']);?> />
+			<label for="<?php echo $this->get_field_id('force'); ?>"> <?php _e('Ignore breadcrumb cache', 'breadcrumb-navxt'); ?></label><br />
 		</p>
 		<?php
 	}

@@ -1,0 +1,845 @@
+# This file is distributed under the same license as the Breadcrumb NavXT package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-03-15 23:58+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.7.4\n"
+"Project-Id-Version: Breadcrumb NavXT\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Zeng pppdog <tainanshop@gmail.com>\n"
+"Language-Team: Zeng pppdog <tainanshop@gmail.com>\n"
+"Language: zh_TW\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: class.bcn_admin.php:362 class.bcn_network_admin.php:432
+msgid "Warning: Your are using a deprecated setting \"Title Length\" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s."
+msgstr "警告：你正在使用一個已啟用的設置\"標題長度\"（參見其他&gt;已啟用），%1$suse，CSS instead%2$s 實現。"
+
+#: class.bcn_admin.php:362 class.bcn_admin.php:646
+#: class.bcn_network_admin.php:432 class.bcn_network_admin.php:716
+msgid "Go to the guide on trimming breadcrumb title lengths with CSS"
+msgstr "進入用CSS修正標題長度的指南"
+
+#: class.bcn_admin.php:417
+msgid "Blog Breadcrumb "
+msgstr "博客導航"
+
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
+msgid "Show the hierarchy (specified below) leading to a post in the breadcrumb trail."
+msgstr "顯示文章的層次結構（在下面定義）"
+
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
+msgid "Show the hierarchy (specified below) leading to a %s in the breadcrumb trail."
+msgstr "顯示 %s的層次結構（在下面定義）"
+
+#: class.bcn_admin.php:637 class.bcn_network_admin.php:707
+msgid "Deprecated"
+msgstr "已啟用"
+
+#: class.bcn_admin.php:646 class.bcn_network_admin.php:716
+msgid "Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)"
+msgstr "限制麵包屑導航的標題長度 (已啟用，%suse，CSS instead%s 實現)"
+
+#: class.bcn_breadcrumb_trail.php:379
+msgid "$post global is not of type WP_Post"
+msgstr "全域 $post 變數不是WP_Post"
+
+#: includes/class.mtekk_adminkit.php:507
+msgid "Settings did not change, nothing to save."
+msgstr "設置沒有改變，不需要保存。"
+
+#: includes/class.mtekk_adminkit.php:511
+msgid "Settings were not saved."
+msgstr "設置未保存"
+
+#: class.bcn_admin.php:483 class.bcn_network_admin.php:553
+msgid "Attachments"
+msgstr "附件"
+
+#: class.bcn_breadcrumb.php:68 class.bcn_breadcrumb_trail.php:46
+#: class.bcn_breadcrumb_trail.php:52 class.bcn_breadcrumb_trail.php:58
+#: class.bcn_breadcrumb_trail.php:72 class.bcn_breadcrumb_trail.php:84
+#: class.bcn_breadcrumb_trail.php:96
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"轉到 %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:111 class.bcn_breadcrumb_trail.php:116
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% tag archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"轉到 %title% 標籤存檔.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:128
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% category archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"轉到 %title% 分類存檔\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_breadcrumb_trail.php:132
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to the %title% archives.\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"轉到 %title% 存檔\" href=\"%link%\" class=\"%type%\">%htitle%</a></span>"
+
+#: class.bcn_network_admin.php:403
+msgid "Warning: Individual site settings will override any settings set in this page."
+msgstr "警告：個別網站的設置將覆蓋這個頁面中的一些設置。"
+
+#: class.bcn_network_admin.php:411 class.bcn_network_admin.php:415
+msgid "Warning: Individual site settings may override any settings set in this page."
+msgstr "警告：個別網站的設置將覆蓋這個頁面中的一些設置。"
+
+#: class.bcn_widget.php:105
+msgid "Google (RDFa) Breadcrumbs"
+msgstr "Google (RDFa) 麵包屑"
+
+#: breadcrumb-navxt.php:256
+msgid "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"Go to %title%.\" href=\"%link%\">%htitle%</a></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><a rel=\"v:url\" property=\"v:title\" title=\"轉到 %title%.\" href=\"%link%\">%htitle%</a></span>"
+
+#: breadcrumb-navxt.php:257 class.bcn_breadcrumb.php:64
+msgid "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+msgstr "<span typeof=\"v:Breadcrumb\"><span property=\"v:title\">%htitle%</span></span>"
+
+#: class.bcn_admin.php:336 class.bcn_admin.php:350
+msgid "Warning: Your network settings will override any settings set in this page."
+msgstr "警告：個別網站的設置將覆蓋這個頁面中的一些設置。"
+
+#: class.bcn_admin.php:340 class.bcn_admin.php:344
+msgid "Warning: Your network settings may override any settings set in this page."
+msgstr "警告：個別網站的設置將覆蓋這個頁面中的一些設置。"
+
+#: class.bcn_admin.php:349 class.bcn_network_admin.php:420
+msgid "Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_FAVOR_NETWORK."
+msgstr "警告：沒有找到 BCN_SETTINGS_* 聲明, 使用BCN_SETTINGS_FAVOR_NETWORK的預設值."
+
+#: class.bcn_network_admin.php:449
+msgid "Breadcrumb NavXT Network Settings"
+msgstr "麵包屑網路設置"
+
+msgid "Breadcrumb NavXT"
+msgstr "麵包屑導航"
+
+msgid "http://mtekk.us/code/breadcrumb-navxt/"
+msgstr "http://mtekk.us/code/breadcrumb-navxt/"
+
+msgid "Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>."
+msgstr "添加一個麵包屑導航以顯示使用者當前訪問路徑，關於外掛程式的詳情資訊，請訪問<a href=\"http://mtekk.us/code/breadcrumb-navxt/\">Breadcrumb NavXT</a>。"
+
+msgid "John Havlik"
+msgstr "John Havlik"
+
+msgid "http://mtekk.us/"
+msgstr "http://mtekk.us/"
+
+#: class.bcn_admin.php:472 class.bcn_admin.php:554
+#: class.bcn_network_admin.php:542 class.bcn_network_admin.php:624
+msgid "The hierarchy which the breadcrumb trail will show. Note that the \"Post Parent\" option may require an additional plugin to behave as expected since this is a non-hierarchical post type."
+msgstr "麵包屑導航顯示的層次。需要注意的是\"父級文章\" 選項，可能需要額外的外掛程式才能像預期的那樣顯示，因為文章是一個沒有分層的文章類型。"
+
+#: class.bcn_breadcrumb_trail.php:106
+msgid "Search results for &#39;<a title=\"Go to the first page of search results for %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+msgstr "搜索&#39;%htitle%&#39;的結果<a title=\"轉到%title%結果的首頁\" href=\"%link%\" class=\"%type%\">%htitle%</a>&#39;"
+
+#: class.bcn_admin.php:391 class.bcn_network_admin.php:461
+msgid "A collection of settings most likely to be modified are located under this tab."
+msgstr "最有可能設置的選項都集合這個選項卡下面。"
+
+#: class.bcn_admin.php:641 class.bcn_network_admin.php:711
+msgid "Title Length"
+msgstr "標題長度"
+
+#: class.bcn_admin.php:426 class.bcn_network_admin.php:496
+msgid "Mainsite Breadcrumb"
+msgstr "主站麵包屑"
+
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
+msgid "The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab."
+msgstr "所有文章類型的設置（文章，頁面和自訂文章類型）都在這裡設置。"
+
+#: class.bcn_admin.php:438 class.bcn_network_admin.php:508
+msgid "Post Types"
+msgstr "文章類型"
+
+#: class.bcn_admin.php:444 class.bcn_network_admin.php:514
+msgid "Post Hierarchy Display"
+msgstr "顯示文章層次"
+
+#: class.bcn_admin.php:448 class.bcn_network_admin.php:518
+msgid "Post Hierarchy"
+msgstr "文章層次"
+
+#: class.bcn_admin.php:521 class.bcn_network_admin.php:591
+msgid "%s Hierarchy Display"
+msgstr "%s分層顯示"
+
+#: class.bcn_admin.php:583 class.bcn_network_admin.php:653
+msgid "Post Formats"
+msgstr "文章格式"
+
+#: class.bcn_admin.php:651 class.bcn_network_admin.php:721
+msgid "Max Title Length: "
+msgstr "最大標題長度："
+
+#: class.bcn_admin.php:439 class.bcn_network_admin.php:509
+msgid "Posts"
+msgstr "文章"
+
+#: class.bcn_admin.php:456 class.bcn_admin.php:530
+#: class.bcn_network_admin.php:526 class.bcn_network_admin.php:600
+msgid "Post Parent"
+msgstr "文章所屬分類"
+
+#: class.bcn_admin.php:550 class.bcn_network_admin.php:620
+msgid "The hierarchy which the breadcrumb trail will show."
+msgstr "麵包屑顯示的層次"
+
+#: class.bcn_admin.php:525 class.bcn_network_admin.php:595
+msgid "%s Hierarchy"
+msgstr "%s分級"
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
+msgid "The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab."
+msgstr "所有分類法（包括分類，標籤，和自訂分類法）的設置都在這個選項卡下面。"
+
+#: class.bcn_admin.php:568 class.bcn_network_admin.php:638
+msgid "Taxonomies"
+msgstr "分類法"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
+msgid "Post Format Template"
+msgstr "文章格式模版"
+
+#: class.bcn_admin.php:586 class.bcn_network_admin.php:656
+msgid "The template for post format breadcrumbs."
+msgstr "文章格式麵包屑模版"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
+msgid "Post Format Template (Unlinked)"
+msgstr "文章格式模版（沒有連結）"
+
+#: class.bcn_admin.php:587 class.bcn_network_admin.php:657
+msgid "The template for post_format breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "文章格式麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:617 class.bcn_network_admin.php:687
+msgid "The settings for author and date archives, searches, and 404 pages are located under this tab."
+msgstr "作者和日期存檔，搜索結果，404頁面的設置在這個選項卡下面。"
+
+#: class.bcn_admin.php:618 class.bcn_network_admin.php:688
+msgid "Author Archives"
+msgstr "作者存檔"
+
+#: class.bcn_breadcrumb_trail.php:121
+msgid "Articles by: <a title=\"Go to the first page of posts by %title%.\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+msgstr "存檔類型：<a title=\"轉到%title%文章存檔首頁\" href=\"%link%\" class=\"%type%\">%htitle%</a>"
+
+#: includes/class.mtekk_adminkit.php:304
+msgid "Your settings are for a newer version."
+msgstr "你的設置是新版本的"
+
+#: class.bcn_widget.php:98
+msgid "Text to show before the trail:"
+msgstr "導航前面的文本："
+
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
+msgid "Go to the Breadcrumb NavXT translation project."
+msgstr "轉到麵包屑NavXT翻譯專案。"
+
+#: breadcrumb-navxt.php:35 class.bcn_admin.php:25
+#: class.bcn_network_admin.php:25
+msgid "Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s"
+msgstr "你的PHP版本太舊了，請升級，您的版本為：%1$s，麵包屑導航需要的版本為%2$s"
+
+#: class.bcn_widget.php:32
+msgid "Adds a breadcrumb trail to your sidebar"
+msgstr "添加一個麵包屑導航到側邊欄"
+
+#: class.bcn_widget.php:94
+msgid "Title:"
+msgstr "標題："
+
+#: class.bcn_widget.php:102
+msgid "Output trail as:"
+msgstr "像這樣輸出麵包屑："
+
+#: class.bcn_widget.php:104
+msgid "List"
+msgstr "列表"
+
+#: class.bcn_widget.php:106
+msgid "Plain"
+msgstr "純文字"
+
+#: class.bcn_widget.php:111
+msgid "Link the breadcrumbs"
+msgstr "連結到麵包屑"
+
+#: class.bcn_widget.php:113
+msgid "Reverse the order of the trail"
+msgstr "反轉麵包屑導航的順序"
+
+#: class.bcn_widget.php:115
+msgid "Hide the trail on the front page"
+msgstr "在首頁隱藏麵包屑"
+
+#: class.bcn_admin.php:95 class.bcn_network_admin.php:165
+msgid "Insufficient privileges to proceed."
+msgstr "足夠的許可權來執行"
+
+#: class.bcn_admin.php:240 class.bcn_network_admin.php:311
+msgid "Tips for the settings are located below select options."
+msgstr "設置小提示在選項下麵"
+
+#: class.bcn_admin.php:241 class.bcn_network_admin.php:312
+msgid "Resources"
+msgstr "資源"
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website."
+msgstr "%s嚮導和指南%s：你可以在作者網站上找到幾個指南，嚮導，和使用方法。"
+
+#: class.bcn_admin.php:242 class.bcn_network_admin.php:313
+msgid "Go to the Breadcrumb NavXT tag archive."
+msgstr "轉到麵包屑導航標籤存檔"
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "%sOnline Documentation%s: Check out the documentation for more indepth technical information."
+msgstr "%s線上手冊%s：查看文章以獲取更深入的技術資訊。"
+
+#: class.bcn_admin.php:243 class.bcn_network_admin.php:314
+msgid "Go to the Breadcrumb NavXT online documentation"
+msgstr "轉到Breadcrumb NavXT線上文檔"
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug."
+msgstr "%s報告bugs%s：如果你認為你發現了一個bug，請在報告bug時包括你使用的WordPress版本和如何重現的bug的詳細描述。"
+
+#: class.bcn_admin.php:244 class.bcn_network_admin.php:315
+msgid "Go to the Breadcrumb NavXT support post for your version."
+msgstr "轉到你所用版本的Breadcrumb NavXT支持文章。"
+
+#: class.bcn_admin.php:245 class.bcn_network_admin.php:316
+msgid "Giving Back"
+msgstr "回饋"
+
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
+msgid "%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer."
+msgstr "%sDonate%s:喜歡Breadcrumb NavXT，並且想幫助開發？考慮請作者喝杯啤酒吧。"
+
+#: class.bcn_admin.php:246 class.bcn_network_admin.php:317
+msgid "Go to PayPal to give a donation to Breadcrumb NavXT."
+msgstr "轉到PayPal捐助Breadcrumb NavXT。"
+
+#: class.bcn_admin.php:247 class.bcn_network_admin.php:318
+msgid "%sTranslate%s: Is your language not available? Contact John Havlik to get translating."
+msgstr "%sTranslate%s：沒有你使用的語言？聯繫John Havlik獲取翻譯。"
+
+#: class.bcn_admin.php:252 class.bcn_admin.php:391 class.bcn_admin.php:392
+#: class.bcn_network_admin.php:323 class.bcn_network_admin.php:461
+#: class.bcn_network_admin.php:462
+msgid "General"
+msgstr "通用"
+
+#: class.bcn_admin.php:255 class.bcn_network_admin.php:326
+msgid "For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme."
+msgstr "要使此頁面上的設置生效，你必須包含下面的代碼到你的主題中，或使用Breadcrumb NavXT小工具。"
+
+#: class.bcn_admin.php:256 class.bcn_network_admin.php:327
+msgid "Breadcrumb trail with separators"
+msgstr "帶分隔符號的麵包屑導航"
+
+#: class.bcn_admin.php:262 class.bcn_network_admin.php:333
+msgid "Breadcrumb trail in list form"
+msgstr "列表形式的麵包屑導航"
+
+#: class.bcn_admin.php:271 class.bcn_network_admin.php:342
+msgid "Quick Start"
+msgstr "快速開始"
+
+#: class.bcn_admin.php:274 class.bcn_network_admin.php:345
+msgid "Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail."
+msgstr "使用上述快速啟動部分的代碼，下面的CSS可以作為麵包屑導航樣式的基礎代碼。"
+
+#: class.bcn_admin.php:286 class.bcn_network_admin.php:357
+msgid "Styling"
+msgstr "樣式"
+
+#: class.bcn_admin.php:292 class.bcn_network_admin.php:363
+msgid "Import/Export/Reset"
+msgstr "導入/匯出/重置"
+
+#: class.bcn_admin.php:316 class.bcn_network_admin.php:387
+#: includes/class.mtekk_adminkit.php:808
+msgid "Import"
+msgstr "導入"
+
+#: class.bcn_admin.php:317 class.bcn_network_admin.php:388
+#: includes/class.mtekk_adminkit.php:809
+msgid "Export"
+msgstr "匯出"
+
+#: class.bcn_admin.php:318 class.bcn_network_admin.php:389
+#: includes/class.mtekk_adminkit.php:810
+msgid "Reset"
+msgstr "重置"
+
+#: class.bcn_admin.php:379
+msgid "Breadcrumb NavXT Settings"
+msgstr "麵包屑導航設置"
+
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+msgid "Breadcrumb Separator"
+msgstr "麵包屑分隔符號"
+
+#: class.bcn_admin.php:395 class.bcn_network_admin.php:465
+msgid "Placed in between each breadcrumb."
+msgstr "兩個麵包屑之間的分隔符號"
+
+#: class.bcn_admin.php:408 class.bcn_admin.php:411
+#: class.bcn_network_admin.php:478 class.bcn_network_admin.php:481
+msgid "Home Breadcrumb"
+msgstr "首頁麵包屑"
+
+#: class.bcn_admin.php:411 class.bcn_network_admin.php:481
+msgid "Place the home breadcrumb in the trail."
+msgstr "把首頁放到導航裡"
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
+msgid "Home Template"
+msgstr "首頁模版"
+
+#: class.bcn_admin.php:412 class.bcn_network_admin.php:482
+msgid "The template for the home breadcrumb."
+msgstr "首頁麵包屑的模版"
+
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
+msgid "Home Template (Unlinked)"
+msgstr "首頁模版（沒有連結）"
+
+#: class.bcn_admin.php:413 class.bcn_network_admin.php:483
+msgid "The template for the home breadcrumb, used when the breadcrumb is not linked."
+msgstr "首頁麵包屑模版，當麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:487
+#: class.bcn_network_admin.php:490
+msgid "Blog Breadcrumb"
+msgstr "博客麵包屑"
+
+#: class.bcn_admin.php:420 class.bcn_network_admin.php:490
+msgid "Place the blog breadcrumb in the trail."
+msgstr "把博客麵包屑放到導航裡。"
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
+msgid "Blog Template"
+msgstr "博客模版"
+
+#: class.bcn_admin.php:421 class.bcn_network_admin.php:491
+msgid "The template for the blog breadcrumb, used only in static front page environments."
+msgstr "博客麵包屑模版，只在網站設置靜態頁面為首頁時使用。"
+
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
+msgid "Blog Template (Unlinked)"
+msgstr "博客模版（沒有連結）"
+
+#: class.bcn_admin.php:422 class.bcn_network_admin.php:492
+msgid "The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked."
+msgstr "博客麵包屑模版，只在網站設置靜態頁面為首頁，且麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
+msgid "Main Site Breadcrumb"
+msgstr "主站麵包屑"
+
+#: class.bcn_admin.php:429 class.bcn_network_admin.php:499
+msgid "Place the main site home breadcrumb in the trail in an multisite setup."
+msgstr "在多網站環境下，把主站首頁麵包屑放到導航裡。"
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
+msgid "Main Site Home Template"
+msgstr "主站首頁模版"
+
+#: class.bcn_admin.php:430 class.bcn_network_admin.php:500
+msgid "The template for the main site home breadcrumb, used only in multisite environments."
+msgstr "主站首頁麵包屑導航，只在多網站環境下使用。"
+
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
+msgid "Main Site Home Template (Unlinked)"
+msgstr "主站首頁模版"
+
+#: class.bcn_admin.php:431 class.bcn_network_admin.php:501
+msgid "The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked."
+msgstr "主站首頁麵包屑，只在多網站環境，且麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:399 class.bcn_network_admin.php:469
+msgid "Current Item"
+msgstr "當前頁"
+
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+msgid "Link Current Item"
+msgstr "顯示當前頁面的連結"
+
+#: class.bcn_admin.php:402 class.bcn_network_admin.php:472
+msgid "Yes"
+msgstr "是"
+
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+msgid "Paged Breadcrumb"
+msgstr "分頁麵包屑"
+
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+msgid "Include the paged breadcrumb in the breadcrumb trail."
+msgstr "包含分頁麵包屑在導航中"
+
+#: class.bcn_admin.php:403 class.bcn_network_admin.php:473
+msgid "Indicates that the user is on a page other than the first on paginated posts/pages."
+msgstr "指明使用者在在分頁文章或頁面的某個分頁而不是首頁上"
+
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+msgid "Paged Template"
+msgstr "分頁模版"
+
+#: class.bcn_admin.php:404 class.bcn_network_admin.php:474
+msgid "The template for paged breadcrumbs."
+msgstr "分頁麵包屑的模版"
+
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+msgid "Post Template"
+msgstr "文章模版"
+
+#: class.bcn_admin.php:442 class.bcn_network_admin.php:512
+msgid "The template for post breadcrumbs."
+msgstr "文章麵包屑模版"
+
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+msgid "Post Template (Unlinked)"
+msgstr "文章模版（沒有連結）"
+
+#: class.bcn_admin.php:443 class.bcn_network_admin.php:513
+msgid "The template for post breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "文章麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:452 class.bcn_admin.php:569
+#: class.bcn_network_admin.php:522 class.bcn_network_admin.php:639
+msgid "Categories"
+msgstr "分類"
+
+#: class.bcn_admin.php:453 class.bcn_network_admin.php:523
+msgid "Dates"
+msgstr "日期"
+
+#: class.bcn_admin.php:454 class.bcn_admin.php:576
+#: class.bcn_network_admin.php:524 class.bcn_network_admin.php:646
+msgid "Tags"
+msgstr "標籤"
+
+#: class.bcn_admin.php:476 class.bcn_network_admin.php:546
+msgid "Pages"
+msgstr "頁面"
+
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+msgid "Page Template"
+msgstr "頁面模版"
+
+#: class.bcn_admin.php:479 class.bcn_network_admin.php:549
+msgid "The template for page breadcrumbs."
+msgstr "頁面麵包屑模版"
+
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+msgid "Page Template (Unlinked)"
+msgstr "頁面模版（沒有連結）"
+
+#: class.bcn_admin.php:480 class.bcn_network_admin.php:550
+msgid "The template for page breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "頁面麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+msgid "Attachment Template"
+msgstr "附件模版"
+
+#: class.bcn_admin.php:486 class.bcn_network_admin.php:556
+msgid "The template for attachment breadcrumbs."
+msgstr "附件麵包屑模版"
+
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+msgid "Attachment Template (Unlinked)"
+msgstr "附件模版（沒有連結）"
+
+#: class.bcn_admin.php:487 class.bcn_network_admin.php:557
+msgid "The template for attachment breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "附件麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+msgid "%s Template"
+msgstr "%s模版"
+
+#: class.bcn_admin.php:507 class.bcn_admin.php:607
+#: class.bcn_network_admin.php:577 class.bcn_network_admin.php:677
+msgid "The template for %s breadcrumbs."
+msgstr "%s麵包屑模版"
+
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+msgid "%s Template (Unlinked)"
+msgstr "%s模版（未連接）"
+
+#: class.bcn_admin.php:508 class.bcn_admin.php:608
+#: class.bcn_network_admin.php:578 class.bcn_network_admin.php:678
+msgid "The template for %s breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "%s麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:513 class.bcn_network_admin.php:583
+msgid "%s Root Page"
+msgstr "%s根頁面"
+
+#: class.bcn_admin.php:516 class.bcn_network_admin.php:586
+msgid "&mdash; Select &mdash;"
+msgstr "&mdash;選擇&mdash;"
+
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+msgid "%s Archive Display"
+msgstr "%s存檔顯示"
+
+#: class.bcn_admin.php:520 class.bcn_network_admin.php:590
+msgid "Show the breadcrumb for the %s post type archives in the breadcrumb trail."
+msgstr "在麵包屑導航中顯示%s文章類型存檔的麵包屑"
+
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+msgid "Category Template"
+msgstr "分類模版"
+
+#: class.bcn_admin.php:572 class.bcn_network_admin.php:642
+msgid "The template for category breadcrumbs."
+msgstr "分類麵包屑模版"
+
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+msgid "Category Template (Unlinked)"
+msgstr "分類模版（沒有連結）"
+
+#: class.bcn_admin.php:573 class.bcn_network_admin.php:643
+msgid "The template for category breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "分類麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+msgid "Tag Template"
+msgstr "標籤模版"
+
+#: class.bcn_admin.php:579 class.bcn_network_admin.php:649
+msgid "The template for tag breadcrumbs."
+msgstr "標籤麵包屑模版"
+
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+msgid "Tag Template (Unlinked)"
+msgstr "標籤模版（沒有連結）"
+
+#: class.bcn_admin.php:580 class.bcn_network_admin.php:650
+msgid "The template for tag breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "標籤麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:617 class.bcn_admin.php:626
+#: class.bcn_network_admin.php:687 class.bcn_network_admin.php:696
+msgid "Miscellaneous"
+msgstr "雜項"
+
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+msgid "Author Template"
+msgstr "作者模版"
+
+#: class.bcn_admin.php:621 class.bcn_network_admin.php:691
+msgid "The template for author breadcrumbs."
+msgstr "作者麵包屑模版"
+
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+msgid "Author Template (Unlinked)"
+msgstr "作者模版（沒有連結）"
+
+#: class.bcn_admin.php:622 class.bcn_network_admin.php:692
+msgid "The template for author breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "作者麵包屑模版，只在麵包屑沒有連結時使用。"
+
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+msgid "Author Display Format"
+msgstr "作者顯示格式"
+
+#: class.bcn_admin.php:623 class.bcn_network_admin.php:693
+msgid "display_name uses the name specified in \"Display name publicly as\" under the user profile the others correspond to options in the user profile."
+msgstr "顯示名使用使用者資料下\"公開顯示為\"選項下對應的名稱。"
+
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+msgid "Date Template"
+msgstr "日期模版"
+
+#: class.bcn_admin.php:629 class.bcn_network_admin.php:699
+msgid "The template for date breadcrumbs."
+msgstr "日期麵包屑模版"
+
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+msgid "Date Template (Unlinked)"
+msgstr "日期麵包屑（沒有連結）"
+
+#: class.bcn_admin.php:630 class.bcn_network_admin.php:700
+msgid "The template for date breadcrumbs, used only when the breadcrumb is not linked."
+msgstr "日期麵包屑模版，只在麵包屑沒有連結時使用"
+
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+msgid "Search Template"
+msgstr "搜索模版"
+
+#: class.bcn_admin.php:631 class.bcn_network_admin.php:701
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages."
+msgstr "搜索結果首頁模版，只在搜索結果分為多頁時使用。"
+
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+msgid "Search Template (Unlinked)"
+msgstr "搜索模版（沒有連結）"
+
+#: class.bcn_admin.php:632 class.bcn_network_admin.php:702
+msgid "The anchor template for search breadcrumbs, used only when the search results span several pages and the breadcrumb is not linked."
+msgstr "搜索結果首頁模版，只在搜索結果分為多頁，且麵包屑沒有連接時使用。"
+
+#: class.bcn_admin.php:633 class.bcn_network_admin.php:703
+msgid "404 Title"
+msgstr "404標題"
+
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+msgid "404 Template"
+msgstr "404模版"
+
+#: class.bcn_admin.php:634 class.bcn_network_admin.php:704
+msgid "The template for 404 breadcrumbs."
+msgstr "404頁面的麵包屑。"
+
+#: class.bcn_admin.php:663 class.bcn_network_admin.php:733
+msgid "Save Changes"
+msgstr "保存修改"
+
+#: includes/class.mtekk_adminkit.php:225
+msgid "Settings"
+msgstr "設置"
+
+#: includes/class.mtekk_adminkit.php:295
+msgid "Your settings are out of date."
+msgstr "你的設置已過期。"
+
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
+msgid "Migrate the settings now."
+msgstr "現在遷移設置。"
+
+#: includes/class.mtekk_adminkit.php:295 includes/class.mtekk_adminkit.php:304
+msgid "Migrate now."
+msgstr "現在遷移。"
+
+#: includes/class.mtekk_adminkit.php:312
+msgid "Your plugin install is incomplete."
+msgstr "外掛程式安裝未完成"
+
+#: includes/class.mtekk_adminkit.php:312
+msgid "Load default settings now."
+msgstr "現在載入默認設置。"
+
+#: includes/class.mtekk_adminkit.php:312
+msgid "Complete now."
+msgstr "現在完成"
+
+#: includes/class.mtekk_adminkit.php:320
+msgid "Your plugin settings are invalid."
+msgstr "你的設置有錯誤"
+
+#: includes/class.mtekk_adminkit.php:320
+msgid "Attempt to fix settings now."
+msgstr "嘗試修復設置。"
+
+#: includes/class.mtekk_adminkit.php:320
+msgid "Fix now."
+msgstr "現在修復。"
+
+#: includes/class.mtekk_adminkit.php:503
+msgid "Settings successfully saved."
+msgstr "設置保存成功"
+
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
+msgid "Undo the options save."
+msgstr "撤銷保存操作"
+
+#: includes/class.mtekk_adminkit.php:503 includes/class.mtekk_adminkit.php:516
+#: includes/class.mtekk_adminkit.php:621 includes/class.mtekk_adminkit.php:645
+#: includes/class.mtekk_adminkit.php:662
+msgid "Undo"
+msgstr "撤銷"
+
+#: includes/class.mtekk_adminkit.php:516
+msgid "Some settings were not saved."
+msgstr "一些設置沒有保存"
+
+#: includes/class.mtekk_adminkit.php:517
+msgid "The following settings were not saved:"
+msgstr "下面的設置沒有保存："
+
+#: includes/class.mtekk_adminkit.php:522
+msgid "Please include this message in your %sbug report%s."
+msgstr "請包含這個消息到你的%sbug report%s。"
+
+#: includes/class.mtekk_adminkit.php:522
+msgid "Go to the %s support post for your version."
+msgstr "轉到你所用版本%s的支持文章"
+
+#: includes/class.mtekk_adminkit.php:621
+msgid "Settings successfully imported from the uploaded file."
+msgstr "設置成功從上傳的檔中導入"
+
+#: includes/class.mtekk_adminkit.php:621
+msgid "Undo the options import."
+msgstr "撤銷導入操作"
+
+#: includes/class.mtekk_adminkit.php:626
+msgid "Importing settings from file failed."
+msgstr "從檔中導入設置失敗。"
+
+#: includes/class.mtekk_adminkit.php:645
+msgid "Settings successfully reset to the default values."
+msgstr "設置成功恢復到預設值。"
+
+#: includes/class.mtekk_adminkit.php:645
+msgid "Undo the options reset."
+msgstr "撤銷選項重置操作"
+
+#: includes/class.mtekk_adminkit.php:662
+msgid "Settings successfully undid the last operation."
+msgstr "設置成功從上一個操作中恢復。"
+
+#: includes/class.mtekk_adminkit.php:662
+msgid "Undo the last undo operation."
+msgstr "撤銷最後一個撤銷操作"
+
+#: includes/class.mtekk_adminkit.php:697
+msgid "Settings successfully migrated."
+msgstr "設置遷移成功"
+
+#: includes/class.mtekk_adminkit.php:704
+msgid "Default settings successfully installed."
+msgstr "默認設置已安裝"
+
+#: includes/class.mtekk_adminkit.php:800
+msgid "Import settings from a XML file, export the current settings to a XML file, or reset to the default settings."
+msgstr "從XML檔中導入設置，匯出當前設置到XML檔，或者重置到默認設置。"
+
+#: includes/class.mtekk_adminkit.php:803
+msgid "Settings File"
+msgstr "設置檔"
+
+#: includes/class.mtekk_adminkit.php:806
+msgid "Select a XML settings file to upload and import settings from."
+msgstr "選擇需要上傳和導入的XML檔"
+
+#: class.bcn_breadcrumb_trail.php:79
+msgid "Page %htitle%"
+msgstr "頁面%htitle%"
+
+#: class.bcn_breadcrumb_trail.php:103
+msgid "404"
+msgstr "404"
+
+#: class.bcn_breadcrumb_trail.php:108
+msgid "Search results for &#39;%htitle%&#39;"
+msgstr "搜索&#39;%htitle%&#39;的結果"
+
+#: class.bcn_breadcrumb_trail.php:123
+msgid "Articles by: %htitle%"
+msgstr "存檔類型：%htitle%"

@@ -752,7 +752,16 @@ class bcn_breadcrumb_trail
 		$type_str = get_query_var('post_type', $default);
 		if($type_str === '' || is_array($type_str))
 		{
-			$type_str = $default;
+			//If we didn't get a type, or it was an array, try the the first post
+			$post = get_post();
+			if($post instanceof WP_Post)
+			{
+				$type_str = $post->post_type;
+			}
+			else
+			{
+				$type_str = $default;
+			}
 		}
 		return esc_attr($type_str);
 	}

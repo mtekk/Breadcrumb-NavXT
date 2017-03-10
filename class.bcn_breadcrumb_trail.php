@@ -874,7 +874,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We need to do special things for custom post type archives, but not author or date archives
-		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
+		else if(is_archive() && !is_author() && !is_date() && isset($type->taxonomy) && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
 		{
 			//We need the type for later, so save it
 			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);

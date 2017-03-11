@@ -3,14 +3,14 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.6.0
+Version: 5.6.50
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
 Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
-/*  Copyright 2007-2016  John Havlik  (email : john.havlik@mtekk.us)
+/*  Copyright 2007-2017  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.6.0';
+	const version = '5.6.50';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -94,7 +94,7 @@ class breadcrumb_navxt
 			$this->admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename);
 		}
 		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
-		else if(is_admin())
+		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object

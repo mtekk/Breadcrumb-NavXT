@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '5.6.0';
+	const version = '5.6.60';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -36,7 +36,7 @@ class bcn_breadcrumb
 	protected $id = NULL;
 	private $_title = NULL;
 	//The type of this breadcrumb
-	public $type;
+	protected $type;
 	protected $allowed_html = array();
 	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>';
 	/**
@@ -167,6 +167,15 @@ class bcn_breadcrumb
 		$this->type[] = $type;
 	}
 	/**
+	 * Return the type array
+	 * 
+	 * @return array The type array
+	 */
+	public function get_types()
+	{
+		return $this->type;
+	}
+	/**
 	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
 	 * 
 	 * @param int $max_length of the title.
@@ -236,5 +245,22 @@ class bcn_breadcrumb
 			//Return the assembled breadcrumb string
 			return str_replace(array_keys($replacements), $replacements, $this->template_no_anchor);
 		}
+	}
+	/**
+	 * Assembles the parts of the breadcrumb into a JSON-LD ready object-array
+	 * 
+	 * @param int $position The position of the breadcrumb in the trail (between 1 and n when there are n breadcrumbs in the trail)
+	 * 
+	 * @return array(object) The prepared array object ready to pass into json_encode
+	 */
+	public function assemble_json_ld($position)
+	{
+		return (object)array(
+			'@type' => 'ListItem',
+			'position' => $position,
+			'item' => (object)array(
+				'@id' => esc_url($this->url),
+				'name' => esc_attr($this->title))
+		);
 	}
 }

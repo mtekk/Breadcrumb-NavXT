@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.6.50
+Version: 5.6.60
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -409,7 +409,7 @@ class breadcrumb_navxt
 	 * 
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.
-	 * @param bool	$reverse Whether to reverse the output or not.
+	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false, $force = false)
@@ -423,6 +423,25 @@ class breadcrumb_navxt
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
 		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);
+	}
+	/**
+	 * Outputs the breadcrumb trail in Schema.org BreadcrumbList compatible JSON-LD
+	 * 
+	 * @param bool $return Whether to return or echo the trail.
+	 * @param bool $reverse Whether to reverse the output or not.
+	 * @param bool $force Whether or not to force the fill function to run.
+	 */
+	public function display_json_ld($return = false, $reverse = false, $force = false)
+	{
+		$this->get_settings();
+		//If we're being forced to fill the trail, clear it before calling fill
+		if($force)
+		{
+			$this->breadcrumb_trail->breadcrumbs = array();
+		}
+		//Generate the breadcrumb trail
+		$this->breadcrumb_trail->fill();
+		return $this->breadcrumb_trail->display_json_ld($return, $reverse);
 	}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
@@ -465,5 +484,20 @@ function bcn_display_list($return = false, $linked = true, $reverse = false, $fo
 	if($breadcrumb_navxt !== null)
 	{
 		return $breadcrumb_navxt->display_list($return, $linked, $reverse, $force);
+	}
+}
+/**
+ * Outputs the breadcrumb trail in Schema.org BreadcrumbList compatible JSON-LD
+ * 
+ * @param bool $return Whether to return or echo the trail. (optional)
+ * @param bool $reverse Whether to reverse the output or not. (optional)
+ * @param bool $force Whether or not to force the fill function to run. (optional)
+ */
+function display_json_ld($return = false, $reverse = false, $force = false)
+{
+	global $breadcrumb_navxt;
+	if($breadcrumb_navxt !== null)
+	{
+		return $breadcrumb_navxt->display_json_ld($return, $linked, $reverse, $force);
 	}
 }

@@ -493,7 +493,7 @@ function bcn_display_list($return = false, $linked = true, $reverse = false, $fo
  * @param bool $reverse Whether to reverse the output or not. (optional)
  * @param bool $force Whether or not to force the fill function to run. (optional)
  */
-function display_json_ld($return = false, $reverse = false, $force = false)
+function bcn_display_json_ld($return = false, $reverse = false, $force = false)
 {
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)

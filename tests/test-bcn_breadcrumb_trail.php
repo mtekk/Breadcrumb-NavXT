@@ -645,5 +645,24 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('order', array(true));
 		$this->assertSame('car', reset($this->breadcrumb_trail->breadcrumbs));
 	}
-	
+	function test_json_ld_loop()
+	{
+		//Clear any breadcrumbs that may be lingering
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Setup our two breadcrumbs and add them to the breadcrumbs array
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$this->breadcrumb_trail->call('add', array($breadcrumba));
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$this->breadcrumb_trail->call('add', array($breadcrumbb));
+		//Now test the JSON-LD loop prepairer
+		$breadcrumbs = $this->breadcrumb_trail->call('json_ld_loop', array());
+		//Now check our work
+		$this->assertJsonStringEqualsJsonString(
+			'[{"@type":"ListItem","position":1,"item":{"@id":null,"name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
+			json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
+	}
+	function test_display_json_ld()
+	{
+		
+	}
 }

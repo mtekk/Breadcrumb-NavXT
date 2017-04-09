@@ -3,7 +3,7 @@
 	A small library that adds in fallbacks for some of the PHP multibyte string
 	functions. Mainly inteneded to be used with Breadcrumb NavXT
 
-	Copyright 2009-2016  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2009-2017  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

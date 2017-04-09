@@ -143,4 +143,10 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertContains('current-item', $breadcrumb_string_linked2);
 		$this->assertContains('somethingelse', $breadcrumb_string_linked2);
 	}
+	function test_get_type() {
+		$this->assertSame(array('page', 'current-item'), $this->breadcrumb->get_types());
+	}
+	function test_assemble_json_ld() {
+		$this->assertJsonStringEqualsJsonString('{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"test"}}', json_encode($this->breadcrumb->assemble_json_ld(1)));
+	}
 }

@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.6.0';
+	const version = '5.6.60';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -752,7 +752,16 @@ class bcn_breadcrumb_trail
 		$type_str = get_query_var('post_type', $default);
 		if($type_str === '' || is_array($type_str))
 		{
-			$type_str = $default;
+			//If we didn't get a type, or it was an array, try the the first post
+			$post = get_post();
+			if($post instanceof WP_Post)
+			{
+				$type_str = $post->post_type;
+			}
+			else
+			{
+				$type_str = $default;
+			}
 		}
 		return esc_attr($type_str);
 	}
@@ -865,7 +874,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We need to do special things for custom post type archives, but not author or date archives
-		else if(is_archive() && !is_author() && !is_date() && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
+		else if(is_archive() && !is_author() && !is_date() && isset($type->taxonomy) && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
 		{
 			//We need the type for later, so save it
 			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
@@ -1211,7 +1220,7 @@ class bcn_breadcrumb_trail
 				$li_class .= ' class="current_item"';
 			}
 			//Filter li_attributes adding attributes to the li element
-			$li_attribs = apply_filters('bcn_li_attributes', $li_class, $breadcrumb->type, $breadcrumb->get_id());
+			$li_attribs = apply_filters('bcn_li_attributes', $li_class, $breadcrumb->get_types(), $breadcrumb->get_id());
 			//Trim titles, if requested
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
@@ -1233,5 +1242,52 @@ class bcn_breadcrumb_trail
 			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
 			echo $credits . $trail_str;
 		}
+	}
+	/**
+	 * This functions outputs or returns the breadcrumb trail in Schema.org BreadcrumbList compliant JSON-LD
+	 *
+	 * @return void Void if option to print out breadcrumb trail was chosen.
+	 * @return string String version of the breadcrumb trail.
+	 * @param bool $return Whether to return data or to echo it.
+	 * @param bool $reverse[optional] Whether to reverse the output or not. 
+	 * 
+	 */
+	public function display_json_ld($return = false, $reverse = false)
+	{
+		//Set trail order based on reverse flag
+		$this->order($reverse);
+		$trail_str =  json_encode(
+			(object)array(
+				'@context' => 'http://schema.org',
+				'@type' => 'BreadcrumbList',
+				'itemListElement' => $this->json_ld_loop())
+			, JSON_UNESCAPED_SLASHES
+		);
+		//Should we return or echo the assembled trail?
+		if($return)
+		{
+			return $trail_str;
+		}
+		else
+		{
+			echo $trail_str;
+		}
+	}
+	/**
+	 * This function assembles all of the breadcrumbs into an object ready for json_encode
+	 *
+	 * @return array The array of breadcrumbs prepared for JSON-LD
+	 */
+	protected function json_ld_loop()
+	{		
+		$postion = 1;
+		$breadcrumbs = array();
+		//Loop around our breadcrumbs, call the JSON-LD assembler
+		foreach($this->breadcrumbs as $breadcrumb)
+		{
+			$breadcrumbs[] = $breadcrumb->assemble_json_ld($postion);
+			$postion++;
+		}
+		return $breadcrumbs;
 	}
 }

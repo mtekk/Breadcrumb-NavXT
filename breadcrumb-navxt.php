@@ -498,6 +498,6 @@ function bcn_display_json_ld($return = false, $reverse = false, $force = false)
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)
 	{
-		return $breadcrumb_navxt->display_json_ld($return, $linked, $reverse, $force);
+		return $breadcrumb_navxt->display_json_ld($return, $reverse, $force);
 	}
 }

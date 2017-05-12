@@ -42,6 +42,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	return;
 }
 require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
+require_once(dirname(__FILE__) . '/includes/multilingual_helper.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {

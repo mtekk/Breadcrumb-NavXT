@@ -855,6 +855,8 @@ class bcn_breadcrumb_trail
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{
 				$root_id = $this->opt['apost_' . $type_str . '_root'];
+				// translate root id
+				$root_id = bcn_translate_page_id($root_id);
 			}
 		}
 		//For CPT archives
@@ -871,6 +873,8 @@ class bcn_breadcrumb_trail
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{
 				$root_id = $this->opt['apost_' . $type_str . '_root'];
+				// translate root id
+				$root_id = bcn_translate_page_id($root_id);
 			}
 		}
 		//We need to do special things for custom post type archives, but not author or date archives
@@ -882,6 +886,8 @@ class bcn_breadcrumb_trail
 			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
 			{
 				$root_id = $this->opt['apost_' . $type_str . '_root'];
+				// translate root id
+				$root_id = bcn_translate_page_id($root_id);
 			}
 		}
 		else if(is_singular() && $type instanceof WP_Post && $type->post_type == 'page')

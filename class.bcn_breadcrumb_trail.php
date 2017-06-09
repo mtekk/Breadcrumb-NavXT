@@ -1154,7 +1154,7 @@ class bcn_breadcrumb_trail
 			else
 			{
 				//Only show the separator when necessary
-				if($key < count($this->breadcrumbs) - 1)
+				if($position > 1)
 				{
 					$trail_str .= $this->opt['hseparator'];
 				}

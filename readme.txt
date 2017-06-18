@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.5
-Tested up to: 4.7
-Stable tag: 5.7.0
+Tested up to: 4.8
+Stable tag: 5.7.1
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -52,6 +52,12 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 5.7.1 =
+Release date: June 30th, 2017
+
+* Bug fix: Fixed erroneous use of `$linked` that caused a PHP warning in `bcn_display_json_ld()`.
+* Bug fix: Fixed issue where removing a breadcrumb from the trail could cause one or more breadcrumb separators to inappropriately disappear.
 
 = 5.7.0 =
 Release date: April 21st, 2017

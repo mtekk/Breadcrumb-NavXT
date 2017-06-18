@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '5.7.0';
+	const version = '5.7.1';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -1154,7 +1154,7 @@ class bcn_breadcrumb_trail
 			else
 			{
 				//Only show the separator when necessary
-				if($key < count($this->breadcrumbs) - 1)
+				if($position > 1)
 				{
 					$trail_str .= $this->opt['hseparator'];
 				}

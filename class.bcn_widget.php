@@ -85,7 +85,7 @@ class bcn_widget extends WP_Widget
 	{
 		//Filter out anything that could be invalid
 		$old_instance['title'] = strip_tags($new_instance['title']);
-		$old_instance['pretext'] = strip_tags($new_instance['pretext']);
+		$old_instance['pretext'] = strip_tags($new_instance['pretext'], '<img>');
 		$old_instance['type'] = strip_tags($new_instance['type']);
 		$old_instance['linked'] = isset($new_instance['linked']);
 		$old_instance['reverse'] = isset($new_instance['reverse']);

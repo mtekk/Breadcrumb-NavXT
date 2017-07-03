@@ -42,7 +42,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '5.7.1';
+	const version = '5.9.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -100,8 +100,8 @@ class bcn_admin extends mtekk_adminKit
 			//Upgrading to 3.8.1
 			if(version_compare($version, '3.8.1', '<'))
 			{
-				$opts['post_page_root'] = get_option('page_on_front');
-				$opts['post_post_root'] = get_option('page_for_posts');
+				$opts['post_page_root'] = $this->get_option('page_on_front');
+				$opts['post_post_root'] = $this->get_option('page_for_posts');
 			}
 			//Upgrading to 4.0
 			if(version_compare($version, '4.0.0', '<'))
@@ -416,6 +416,14 @@ class bcn_admin extends mtekk_adminKit
 			$this->message['updated fade'][] = sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
 		}
 	}
+	function maybe_disable_blog_options()
+	{
+		return (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1);
+	}
+	function maybe_disable_mainsite_options()
+	{
+		return !is_multisite();
+	}
 	/**
 	 * The administrative page for Breadcrumb NavXT
 	 */
@@ -434,7 +442,7 @@ class bcn_admin extends mtekk_adminKit
 		<div class="wrap"><h2><?php echo $this->full_name; ?></h2>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
-		if(!$this->version_check(get_option($this->unique_prefix . '_version')))
+		if(!$this->version_check($this->get_option($this->unique_prefix . '_version')))
 		{
 			return;
 		}
@@ -472,18 +480,18 @@ class bcn_admin extends mtekk_adminKit
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table adminkit-engroup">
 					<?php
-						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1));
-						$this->textbox(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '6', (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
-						$this->textbox(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '4', (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options());
+						$this->textbox(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '6', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
+						$this->textbox(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '4', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_blog', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table adminkit-engroup">
 					<?php
-						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), !is_multisite());
-						$this->textbox(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', '6', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
-						$this->textbox(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', '4', !is_multisite(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options());
+						$this->textbox(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
+						$this->textbox(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_mainsite', $this->opt);
 					?>
 				</table>

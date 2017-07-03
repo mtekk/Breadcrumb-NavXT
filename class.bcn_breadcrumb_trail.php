@@ -404,7 +404,7 @@ class bcn_breadcrumb_trail
 				$is_first = false;
 			}
 			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($title, NULL, array('taxonomy', $taxonomy)));
+			$breadcrumb = $this->add(new bcn_breadcrumb($title, '%htitle%', array('taxonomy', $taxonomy)));
 		}
 	}
 	/**

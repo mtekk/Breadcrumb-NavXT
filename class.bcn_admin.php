@@ -460,38 +460,38 @@ class bcn_admin extends mtekk_adminKit
 					?>
 				</table>
 				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table">
+				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes', 'breadcrumb-navxt'));
-						$this->input_check(_x('Paged Breadcrumb', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'bpaged_display', __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt'));
-						$this->input_text(_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'Hpaged_template', 'large-text', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
+						$this->input_check(_x('Paged Breadcrumb', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'bpaged_display', __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt'), 'adminkit-enset-ctrl adminkit-enset');
+						$this->input_text(_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'Hpaged_template', 'large-text adminkit-enset', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_current_item', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table adminkit-engroup">
+				<table class="form-table adminkit-enset-top">
 					<?php 
-						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'));
-						$this->textbox(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'));
-						$this->textbox(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->textbox(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->textbox(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_home', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table adminkit-engroup">
+				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options());
-						$this->textbox(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '6', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'));
-						$this->textbox(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '4', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->textbox(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '6', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->textbox(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '4', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_blog', $this->opt);
 					?>
 				</table>
 				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
-				<table class="form-table adminkit-engroup">
+				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options());
-						$this->textbox(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'));
-						$this->textbox(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options(), '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->textbox(__('Main Site Home Template', 'breadcrumb-navxt'), 'Hmainsite_template', '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->textbox(__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hmainsite_template_no_anchor', '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_mainsite', $this->opt);
 					?>
 				</table>

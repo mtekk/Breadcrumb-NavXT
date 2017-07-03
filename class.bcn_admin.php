@@ -570,7 +570,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->textbox(sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template', '6', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc));
 						$this->textbox(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template_no_anchor', '4', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));
-						$optid = $this->get_valid_id('apost_' . $post_type->name . '_root');
+						$optid = adminKit::get_valid_id('apost_' . $post_type->name . '_root');
 					?>
 					<tr valign="top">
 						<th scope="row">

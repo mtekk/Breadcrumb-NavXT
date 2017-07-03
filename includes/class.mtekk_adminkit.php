@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/block_direct_access.php');
 abstract class mtekk_adminKit
 {
-	const version = '1.5.60';
+	const version = '1.9.61';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -813,7 +813,7 @@ abstract class mtekk_adminKit
 	 * @param object $option
 	 * @return 
 	 */
-	function get_valid_id($option)
+	static public function get_valid_id($option)
 	{
 		if(is_numeric($option[0]))
 		{
@@ -852,7 +852,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_hidden($option)
 	{
-		$optid = $this->get_valid_id($option);?>
+		$optid = adminKit::get_valid_id($option);?>
 		<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>"/>
 	<?php
 	}
@@ -868,7 +868,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -899,7 +899,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = adminKit::get_valid_id($option);
 		$extras = '';
 		if($min !== '')
 		{
@@ -939,7 +939,7 @@ abstract class mtekk_adminKit
 	 */
 	function textbox($label, $option, $height = '3', $disable = false, $description = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -966,7 +966,7 @@ abstract class mtekk_adminKit
 	 */
 	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -995,7 +995,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
 	{
-		$optid = $this->get_valid_id($option);?>
+		$optid = adminKit::get_valid_id($option);?>
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
@@ -1047,7 +1047,7 @@ abstract class mtekk_adminKit
 		{
 			$titles = $values;
 		}
-		$optid = $this->get_valid_id($option);?>
+		$optid = adminKit::get_valid_id($option);?>
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>

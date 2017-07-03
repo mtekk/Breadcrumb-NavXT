@@ -937,7 +937,7 @@ abstract class mtekk_adminKit
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	function textbox($label, $option, $height = '3', $disable = false, $description = '')
+	function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
 		$optid = mtekk_adminKit::get_valid_id($option);
 		if($disable)
@@ -949,7 +949,7 @@ abstract class mtekk_adminKit
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
 			</th>
 			<td>
-				<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="large-text code disabled"';}else{echo 'class="large-text code"';}?> id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
+				<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="large-text code disabled ';}else{echo 'class="large-text code ';} echo $class;?>" id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
 					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>

@@ -416,10 +416,20 @@ class bcn_admin extends mtekk_adminKit
 			$this->message['updated fade'][] = sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
 		}
 	}
+	/**
+	 * Function checks the current site to see if the blog options should be disabled
+	 * 
+	 * @return boool Whether or not the blog options should be disabled
+	 */
 	function maybe_disable_blog_options()
 	{
 		return (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1);
 	}
+	/**
+	 * Function checks the current site to see if the mainsite options should be disabled
+	 * 
+	 * @return bool Whether or not the mainsite options should be disabled
+	 */
 	function maybe_disable_mainsite_options()
 	{
 		return !is_multisite();

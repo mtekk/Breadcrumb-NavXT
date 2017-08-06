@@ -186,10 +186,20 @@ class bcn_network_admin extends bcn_admin
 	{
 		parent::deprecated_settings_warn();
 	}
+	/**
+	 * Function checks the current site to see if the blog options should be disabled
+	 * 
+	 * @return boool Whether or not the blog options should be disabled
+	 */
 	function maybe_disable_blog_options()
 	{
 		return false;
 	}
+	/**
+	 * Function checks the current site to see if the mainsite options should be disabled
+	 * 
+	 * @return bool Whether or not the mainsite options should be disabled
+	 */
 	function maybe_disable_mainsite_options()
 	{
 		return false;

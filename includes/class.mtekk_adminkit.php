@@ -20,7 +20,7 @@ require_once(dirname(__FILE__) . '/block_direct_access.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit_message'))
 {
-	require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_message.php');
+	require_once(dirname(__FILE__) . '/class.mtekk_adminkit_message.php');
 }
 abstract class mtekk_adminKit
 {

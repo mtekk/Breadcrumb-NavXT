@@ -33,10 +33,13 @@ abstract class mtekk_adminKit
 	protected $unique_prefix;
 	protected $opt = array();
 	protected $messages;
+	protected $message;
 	protected $support_url;
 	protected $allowed_html;
 	function __construct()
 	{
+		$this->message = array();
+		$this->messages = array();
 		//Admin Init Hook
 		add_action('admin_init', array($this, 'init'));
 		//WordPress Admin interface hook
@@ -772,8 +775,14 @@ abstract class mtekk_adminKit
 	 */
 	function messages()
 	{
+		foreach($this->messages as $message)
+		{
+			$message->render();
+		}
+		//Old deprecated messages
 		if(count($this->message))
 		{
+			_deprecated_function( __FUNCTION__, '6.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
 			//Loop through our message classes
 			foreach($this->message as $key => $class)
 			{
@@ -783,8 +792,9 @@ abstract class mtekk_adminKit
 					printf('<div class="%s"><p>%s</p></div>', $key, $message);	
 				}
 			}
+			$this->message = array();
 		}
-		$this->message = array();
+		$this->messages = array();
 	}
 	/**
 	 * Function prototype to prevent errors

@@ -388,20 +388,20 @@ class bcn_admin extends mtekk_adminKit
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
-				$this->message['updated fade'][] = __('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->message['updated fade'][] = __('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->message['updated fade'][] = __('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->message['updated fade'][] = __('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'updated');
 			}
 		}
 	}
@@ -413,7 +413,7 @@ class bcn_admin extends mtekk_adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->opt['blimit_title']) && $this->opt['blimit_title'])
 		{
-			$this->message['updated fade'][] = sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
+			$this->messages[] = new mtekk_adminKit_message(sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'), 'updated');
 		}
 	}
 	/**

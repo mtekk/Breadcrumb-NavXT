@@ -16,21 +16,6 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
-//Do a PHP version check, require 5.3 or newer
-if(version_compare(phpversion(), '5.3.0', '<'))
-{
-	//Only purpose of this function is to echo out the PHP version error
-	function bcn_phpold()
-	{
-		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.3.0');
-	}
-	//If we are in the admin, let's print a warning then return
-	if(is_admin())
-	{
-		add_action('admin_notices', 'bcn_phpold');
-	}
-	return;
-}
 //Include admin base class
 if(!class_exists('bcn_admin'))
 {
@@ -42,7 +27,7 @@ if(!class_exists('bcn_admin'))
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '5.9.50';
+	const version = '5.9.55';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**
@@ -157,7 +142,7 @@ class bcn_network_admin extends bcn_admin
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
@@ -165,17 +150,17 @@ class bcn_network_admin extends bcn_admin
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isitemayoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nsmayoveride');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'updated');
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'updated');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nosetting');
+				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 		}
 	}

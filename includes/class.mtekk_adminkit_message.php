@@ -35,15 +35,22 @@ class mtekk_adminKit_message
 	 */
 	public function __construct($contents, $type = 'info', $dismissible = false, $uid = '')
 	{
+		//If the message is dismissable, the UID better not be null/empty
+		if($dismissible === true && $uid == NULL)
+		{
+			//Let the user know they're doing it wrong
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$uid must not be NULL if message is dismissible', 'mtekk_adminKit'), '1.0.0');
+			//Treat the message as non-dismissible
+			$dismissible = false;
+		}
 		$this->contents = $contents;
 		$this->type = $type;
 		$this->dismissible = $dismissible;
-		$this->unique_prefix = $unique_prefix;
 		$this->uid = $uid;
 	}
 	public function is_dismissed()
 	{
-		get_transient($this->uid);
+		$this->dismissed = get_transient($this->uid);
 	}
 	/**
 	 * Dismisses the message, preventing it from being rendered
@@ -53,6 +60,8 @@ class mtekk_adminKit_message
 		if($this->dismissible)
 		{
 			$this->dismissed = true;
+			//If the message was dismissed, update the transient for 30 days
+			set_transient($this->uid, $this->dismissed, 2592000);
 		}
 	}
 	/**
@@ -63,13 +72,11 @@ class mtekk_adminKit_message
 		//Don't render dismissed messages
 		if($this->dismissed)
 		{
-			//If the message was dismissed, update the transient for 30 days
-			set_transient($this->uid, true, 2592000);
 			return;
 		}
 		if($this->dismissible)
 		{
-			
+			printf('<div id="%s" class="notice notice-%s is-dismissible"><p>%s</p></div>', $this->uid, $this->type, $this->contents);
 		}
 		else
 		{

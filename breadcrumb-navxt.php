@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.9.20
+Version: 5.9.55
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -32,7 +32,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	//Only purpose of this function is to echo out the PHP version error
 	function bcn_phpold()
 	{
-		printf('<div class="error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.3.0');
+		printf('<div class="notice notice-error"><p>' . __('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '5.3.0');
 	}
 	//If we are in the admin, let's print a warning then return
 	if(is_admin())
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.9.50';
+	const version = '5.9.55';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';

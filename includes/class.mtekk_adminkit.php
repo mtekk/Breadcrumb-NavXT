@@ -318,7 +318,7 @@ abstract class mtekk_adminKit
 		{
 			//Throw an error since the DB version is out of date
 			$this->messages[] = new mtekk_adminKit_message(__('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier)
-				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier)), 'error');
+				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
 			return false;
@@ -328,7 +328,7 @@ abstract class mtekk_adminKit
 		{
 			//Let the user know that their settings are for a newer version
 			$this->messages[] = new mtekk_adminKit_message(__('Your settings are for a newer version of this plugin.', $this->identifier)
-				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier)), 'error');
+				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
 			return true;
@@ -546,11 +546,11 @@ abstract class mtekk_adminKit
 		{
 			//Let the user know everything went ok
 			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully saved.', $this->identifier)
-				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'updated');
+				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
 		else if(!$updated && count(array_diff_key($opt_prev, $this->opt)) == 0)
 		{
-			$this->messages[] = new mtekk_adminKit_message(__('Settings did not change, nothing to save.', $this->identifier), 'updated');
+			$this->messages[] = new mtekk_adminKit_message(__('Settings did not change, nothing to save.', $this->identifier), 'info');
 		}
 		else if(!$updated)
 		{
@@ -560,13 +560,13 @@ abstract class mtekk_adminKit
 		{
 			//Let the user know the following were not saved
 			$this->messages[] = new mtekk_adminKit_message(__('Some settings were not saved.', $this->identifier)
-				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'updated');
+				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'warning');
 			$temp = __('The following settings were not saved:', $this->identifier);
 			foreach(array_diff_key($input, $this->opt) as $setting => $value)
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>'), 'updated');
+			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>'), 'info');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -666,7 +666,7 @@ abstract class mtekk_adminKit
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Everything was successful, let the user know
 			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully imported from the uploaded file.', $this->identifier)
-				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'updated');
+				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
 		else
 		{
@@ -691,7 +691,7 @@ abstract class mtekk_adminKit
 		$this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Reset successful, let the user know
 		$this->messages[] = new mtekk_adminKit_message( __('Settings successfully reset to the default values.', $this->identifier)
-			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'updated');
+			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
@@ -709,7 +709,7 @@ abstract class mtekk_adminKit
 		$this->update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
 		$this->messages[] = new mtekk_adminKit_message(__('Settings successfully undid the last operation.', $this->identifier)
-			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'updated');
+			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
@@ -744,14 +744,14 @@ abstract class mtekk_adminKit
 			//Store the options
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Send the success message
-			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully migrated.', $this->identifier), 'updated');
+			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully migrated.', $this->identifier), 'success');
 		}
 		else
 		{
 			//Run the install script
 			$this->install();
 			//Send the success message
-			$this->messages[] = new mtekk_adminKit_message(__('Default settings successfully installed.', $this->identifier), 'updated');
+			$this->messages[] = new mtekk_adminKit_message(__('Default settings successfully installed.', $this->identifier), 'success');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}

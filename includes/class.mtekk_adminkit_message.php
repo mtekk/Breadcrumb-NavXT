@@ -21,31 +21,59 @@ class mtekk_adminKit_message
 {
 	const version = '1.0.0';
 	protected $type = '';
-	protected $message_string = '';
+	protected $contents = '';
 	protected $dismissed = false;
+	protected $dismissible = false;
+	protected $uid;
 	/**
 	 * Default constructor function
 	 * 
-	 * @param string $message_string The string to display in the message
-	 * @param string $type The message type
+	 * @param string $contents The string to display in the message
+	 * @param string $type The message type, 'error', 'warning', 'success', or 'info'
+	 * @param bool $dismissible Whether or not the message is dismissable
+	 * @param string $uid The message unique ID, only necessary if the message is dismissable
 	 */
-	public function __construct($message_string, $type = 'updated')
+	public function __construct($contents, $type = 'info', $dismissible = false, $uid = '')
 	{
-		$this->message_string = $message_string;
+		$this->contents = $contents;
 		$this->type = $type;
+		$this->dismissible = $dismissible;
+		$this->unique_prefix = $unique_prefix;
+		$this->uid = $uid;
 	}
+	public function is_dismissed()
+	{
+		get_transient($this->uid);
+	}
+	/**
+	 * Dismisses the message, preventing it from being rendered
+	 */
 	public function dismiss()
 	{
-		$this->dismissed = true;
+		if($this->dismissible)
+		{
+			$this->dismissed = true;
+		}
 	}
 	/**
 	 * Function that prints out the message if not already dismissed
 	 */
 	public function render()
 	{
-		if(!$this->dismissed)
+		//Don't render dismissed messages
+		if($this->dismissed)
 		{
-			printf('<div class="%s fade"><p>%s</p></div>', $this->type, $this->message_string);
+			//If the message was dismissed, update the transient for 30 days
+			set_transient($this->uid, true, 2592000);
+			return;
+		}
+		if($this->dismissible)
+		{
+			
+		}
+		else
+		{
+			printf('<div class="notice notice-%s"><p>%s</p></div>', $this->type, $this->contents);
 		}
 	}
 }

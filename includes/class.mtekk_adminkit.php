@@ -175,6 +175,8 @@ abstract class mtekk_adminKit
 		{
 			$suffix = '.min';
 		}
+		//Register JS for more permanently dismissing messages
+		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for enable/disable settings groups
 		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for tabs

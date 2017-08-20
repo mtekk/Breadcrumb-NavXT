@@ -47,18 +47,26 @@ class mtekk_adminKit_message
 		$this->type = $type;
 		$this->dismissible = $dismissible;
 		$this->uid = $uid;
+		if($this->dismissible)
+		{
+			$this->dismissed = $this->was_dismissed();
+		}
 	}
-	public function is_dismissed()
+	/**
+	 * Attempts to retrieve the dismissal transient for this message
+	 */
+	public function was_dismissed()
 	{
 		$this->dismissed = get_transient($this->uid);
 	}
 	/**
 	 * Dismisses the message, preventing it from being rendered
 	 */
-	public function dismiss()
+	public function maybe_dismiss()
 	{
-		if($this->dismissible)
+		if($this->dismissible && isset($_POST[$this->uid]))
 		{
+			check_ajax_referer($this->uid . '_dismiss');
 			$this->dismissed = true;
 			//If the message was dismissed, update the transient for 30 days
 			set_transient($this->uid, $this->dismissed, 2592000);
@@ -76,11 +84,12 @@ class mtekk_adminKit_message
 		}
 		if($this->dismissible)
 		{
-			printf('<div id="%s" class="notice notice-%s is-dismissible"><p>%s</p></div>', $this->uid, $this->type, $this->contents);
+			wp_enqueue_script('mtekk_adminkit_messages');
+			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', $this->type, $this->contents, $this->uid, wp_create_nonce($this->uid . '_dismiss'));
 		}
 		else
 		{
-			printf('<div class="notice notice-%s"><p>%s</p></div>', $this->type, $this->contents);
+			printf('<div class="notice notice-%1$s"><p>%2$s</p></div>', $this->type, $this->contents);
 		}
 	}
 }

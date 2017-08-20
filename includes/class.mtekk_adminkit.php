@@ -189,6 +189,7 @@ abstract class mtekk_adminKit
 		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		//Run the opts fix filter
 		$this->opts_fix($this->opt);
+		add_action('wp_ajax_mtekk_admin_message_dismiss', array($this, 'dismiss_message'));
 	}
 	/**
 	 * Adds the adminpage the menu and the nice little settings link
@@ -418,7 +419,6 @@ abstract class mtekk_adminKit
 						break;
 					//Handle the HTML options
 					case 'h':
-						//May be better to use wp_kses here
 						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						break;
 					//Handle the HTML options that must not be null
@@ -771,6 +771,16 @@ abstract class mtekk_adminKit
 		{
 			
 		}
+	}
+	function dismiss_message()
+	{
+		//Grab the submitted UID
+		$uid = esc_attr($_POST['uid']);
+		//Create a dummy message, with the discovered UID
+		$message = new mtekk_adminKit_message('', '', true, $uid);
+		//Dismiss the message
+		$message->dismiss();
+		wp_die();
 	}
 	/**
 	 * Prints to screen all of the messages stored in the message member variable

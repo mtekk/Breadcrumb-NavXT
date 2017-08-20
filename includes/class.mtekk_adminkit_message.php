@@ -54,22 +54,25 @@ class mtekk_adminKit_message
 	}
 	/**
 	 * Attempts to retrieve the dismissal transient for this message
+	 * 
+	 * @return bool Whether or not the message has been dismissed
 	 */
 	public function was_dismissed()
 	{
 		$this->dismissed = get_transient($this->uid);
+		return $this->dismissed ;
 	}
 	/**
 	 * Dismisses the message, preventing it from being rendered
 	 */
-	public function maybe_dismiss()
+	public function dismiss()
 	{
-		if($this->dismissible && isset($_POST[$this->uid]))
+		if($this->dismissible && isset($_POST['uid']) && esc_attr($_POST['uid']) === $this->uid)
 		{
-			check_ajax_referer($this->uid . '_dismiss');
+			check_ajax_referer($this->uid . '_dismiss', 'nonce');
 			$this->dismissed = true;
 			//If the message was dismissed, update the transient for 30 days
-			set_transient($this->uid, $this->dismissed, 2592000);
+			$result = set_transient($this->uid, $this->dismissed, 2592000);
 		}
 	}
 	/**
@@ -77,13 +80,13 @@ class mtekk_adminKit_message
 	 */
 	public function render()
 	{
-		//Don't render dismissed messages
-		if($this->dismissed)
-		{
-			return;
-		}
 		if($this->dismissible)
 		{
+			//Don't render dismissed messages
+			if($this->was_dismissed())
+			{
+				return;
+			}
 			wp_enqueue_script('mtekk_adminkit_messages');
 			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', $this->type, $this->contents, $this->uid, wp_create_nonce($this->uid . '_dismiss'));
 		}

@@ -16,8 +16,8 @@ php:
 env:
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=1
-    - WP_VERSION=4.4.4 WP_MULTISITE=0
-    - WP_VERSION=4.4.4 WP_MULTISITE=1
+    - WP_VERSION=4.4.10 WP_MULTISITE=0
+    - WP_VERSION=4.4.10 WP_MULTISITE=1
 matrix:
     include:
        - php: 5.3

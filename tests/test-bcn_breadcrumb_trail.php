@@ -156,9 +156,14 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have only one breadcrumb
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Now disect this breadcrumb
-		$title_exploded = explode(', ', $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$title_exploded = explode(', ', $this->breadcrumb_trail->breadcrumbs[0]->assemble(true, 3));
 		//Ensure we have only 5 sub breadcrumbs
 		$this->assertCount(5, $title_exploded);
+		//Ensure we do not have double wrapped items
+		foreach($title_exploded as $title_under_test)
+		{
+			$this->assertRegExp('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*"><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
+		}
 	}
 	/**
 	 * Tests for the bcn_add_post_type_arg filter

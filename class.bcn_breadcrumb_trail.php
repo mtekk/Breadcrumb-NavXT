@@ -66,6 +66,10 @@ class bcn_breadcrumb_trail
 			//Current item options
 			'bcurrent_item_linked' => false,
 			//Static page options
+			//Should the trail include the hierarchy of the page
+			'bpost_page_hierarchy_display' => true,
+			//What hierarchy should be shown leading to the page
+			'Spost_page_hierarchy_type' => 'BCN_POST_PARENT',
 			//The anchor template for page breadcrumbs
 			'Hpost_page_template' => bcn_breadcrumb::get_default_template(),
 			//The anchor template for page breadcrumbs, used when an anchor is not needed
@@ -91,6 +95,10 @@ class bcn_breadcrumb_trail
 			//What hierarchy should be shown leading to the post, tag or category
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
+			//Should the trail include the hierarchy of the attachment
+			'bpost_attachment_hierarchy_display' => true,
+			//What hierarchy should be shown leading to the attachment, tag or category
+			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed
@@ -305,15 +313,13 @@ class bcn_breadcrumb_trail
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
 		if($this->opt['bpost_' . $type . '_hierarchy_display'])
 		{
-			//TODO: Remove deprecated type selection
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE' || $this->opt['Spost_' . $type . '_hierarchy_type'] === 'date')
+			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
 			{
 				$this->do_archive_by_date($type);
 			}
-			//TODO: Remove deprecated type selection
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT' || $this->opt['Spost_' . $type . '_hierarchy_type'] === 'page')
+			else if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT')
 			{
 				if($parent == NULL)
 				{
@@ -476,7 +482,7 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink($post));
 		}
-		//If we have page, force it to go through the parent tree
+		//If we have a page, force it to go through the parent tree
 		if($post->post_type === 'page')
 		{
 			//Done with the current item, now on to the parents
@@ -485,6 +491,20 @@ class bcn_breadcrumb_trail
 			if($post->post_parent && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 			{
 				$this->post_parents($post->post_parent, $frontpage);
+			}
+		}
+		//If we have an attachment, run through the post again
+		else if($post->post_type === 'attachment')
+		{
+			//Done with the current item, now on to the parents
+			$frontpage = get_option('page_on_front');
+			//Make sure the id is valid, and that we won't end up spinning in a loop
+			if($post->post_parent >= 0 && $post->post_parent != false && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
+			{
+				//Get the parent's information
+				$parent = get_post($post->post_parent);
+				//Take care of the parent's breadcrumb
+				$this->do_post($parent);
 			}
 		}
 		//Otherwise we need the follow the hiearchy tree
@@ -501,26 +521,8 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_attachment()
 	{
-		$post = get_post();
-		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title(), $this->opt['Hpost_attachment_template_no_anchor'], array('post', 'post-attachment', 'current-item'), NULL, $post->ID));
-		if($this->opt['bcurrent_item_linked'])
-		{
-			//Change the template over to the normal, linked one
-			$breadcrumb->set_template($this->opt['Hpost_attachment_template']);
-			//Add the link
-			$breadcrumb->set_url(get_permalink());
-		}
-		//Done with the current item, now on to the parents
-		$frontpage = get_option('page_on_front');
-		//Make sure the id is valid, and that we won't end up spinning in a loop
-		if($post->post_parent >= 0 && $post->post_parent != false && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
-		{
-			//Get the parent's information
-			$parent = get_post($post->post_parent);
-			//Take care of the parent's breadcrumb
-			$this->do_post($parent);
-		}
+		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::do_post');
+		$this->do_post(get_post());
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -1022,16 +1024,7 @@ class bcn_breadcrumb_trail
 		//For posts
 		else if(is_singular())
 		{
-			//For attachments
-			if(is_attachment())
-			{
-				$this->do_attachment();
-			}
-			//For all other post types
-			else
-			{
-				$this->do_post(get_post());
-			}
+			$this->do_post(get_post());
 		}
 		//For searches
 		else if(is_search())

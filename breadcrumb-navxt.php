@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 5.9.55
+Version: 5.9.56
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -60,7 +60,7 @@ $breadcrumb_navxt = NULL;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '5.9.55';
+	const version = '5.9.56';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -277,7 +277,7 @@ class breadcrumb_navxt
 					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 				}
 				//If the post type does not have settings in the options array yet, we need to load some defaults
-				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
+				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
 				{
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
@@ -293,7 +293,7 @@ class breadcrumb_navxt
 					//Default to not showing a post_root
 					$opts['apost_' . $post_type->name . '_root'] = 0;
 					//Default to not displaying a taxonomy
-					$opts['bpost_' . $post_type->name . '_taxonomy_display'] = false;
+					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = false;
 					//Loop through all of the possible taxonomies
 					foreach($wp_taxonomies as $taxonomy)
 					{
@@ -305,15 +305,15 @@ class breadcrumb_navxt
 						//Activate the first taxonomy valid for this post type and exit the loop
 						if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 						{
-							$opts['bpost_' . $post_type->name . '_taxonomy_display'] = true;
-							$opts['Spost_' . $post_type->name . '_taxonomy_type'] = $taxonomy->name;
+							$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
+							$opts['Spost_' . $post_type->name . '_hierarchy_type'] = $taxonomy->name;
 							break;
 						}
 					}
 					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
-					if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
+					if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
 					{
-						$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
+						$opts['Spost_' . $post_type->name . '_hierarchy_type'] = 'BCN_DATE';
 					}
 				}
 			}

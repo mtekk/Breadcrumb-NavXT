@@ -84,12 +84,12 @@ class bcn_breadcrumb_trail
 			'Hpost_post_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Just a link for the page for posts
 			'apost_post_root' => get_option('page_for_posts'),
-			//Should the trail include the taxonomy of the post
-			'bpost_post_taxonomy_display' => true,
+			//Should the trail include the hierarchy of the post
+			'bpost_post_hierarchy_display' => true,
 			//Should the trail reflect the referer taxonomy or not
 			'bpost_post_taxonomy_referer' => false,
-			//What taxonomy should be shown leading to the post, tag or category
-			'Spost_post_taxonomy_type' => 'category',
+			//What hierarchy should be shown leading to the post, tag or category
+			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
@@ -302,18 +302,18 @@ class bcn_breadcrumb_trail
 	 */
 	protected function post_hierarchy($id, $type, $parent = NULL)
 	{
-		//Check to see if breadcrumbs for the taxonomy of the post needs to be generated
-		if($this->opt['bpost_' . $type . '_taxonomy_display'])
+		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
+		if($this->opt['bpost_' . $type . '_hierarchy_display'])
 		{
 			//TODO: Remove deprecated type selection
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_DATE' || $this->opt['Spost_' . $type . '_taxonomy_type'] === 'date')
+			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE' || $this->opt['Spost_' . $type . '_hierarchy_type'] === 'date')
 			{
 				$this->do_archive_by_date($type);
 			}
 			//TODO: Remove deprecated type selection
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Spost_' . $type . '_taxonomy_type'] === 'BCN_POST_PARENT' || $this->opt['Spost_' . $type . '_taxonomy_type'] === 'page')
+			else if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT' || $this->opt['Spost_' . $type . '_hierarchy_type'] === 'page')
 			{
 				if($parent == NULL)
 				{
@@ -332,7 +332,7 @@ class bcn_breadcrumb_trail
 			}
 			else
 			{
-				$taxonomy = $this->opt['Spost_' . $type . '_taxonomy_type'];
+				$taxonomy = $this->opt['Spost_' . $type . '_hierarchy_type'];
 				//Possibly let the referer influence the taxonomy used
 				if($this->opt['bpost_' . $type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{

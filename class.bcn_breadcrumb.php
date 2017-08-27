@@ -192,7 +192,7 @@ class bcn_breadcrumb
 		{
 			//Trim the title
 			$this->title = mb_substr($this->title, 0, $max_length - 1);
-			//Make sure we can split a, but we want to limmit to cutting at max an additional 25%
+			//Make sure we can split, but we want to limmit to cutting at max an additional 25%
 			if(mb_strpos($this->title, ' ', .75 * $max_length) > 0)
 			{
 				//Don't split mid word
@@ -205,7 +205,7 @@ class bcn_breadcrumb
 			$this->title = rtrim($this->title) . html_entity_decode('&hellip;', ENT_COMPAT, 'UTF-8');
 		}
 		//Return to the encoded version of all HTML entities (keep standards complance)
-		$this->title = htmlentities($this->title, ENT_COMPAT, 'UTF-8');
+		$this->title = force_balance_tags(htmlentities($this->title, ENT_COMPAT, 'UTF-8'));
 	}
 	/**
 	 * Assembles the parts of the breadcrumb into a html string

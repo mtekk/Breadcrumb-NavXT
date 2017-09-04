@@ -96,9 +96,9 @@ class bcn_breadcrumb_trail
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
 			//Should the trail include the hierarchy of the attachment
-			'bpost_attachment_hierarchy_display' => true,
+//			'bpost_attachment_hierarchy_display' => true,
 			//What hierarchy should be shown leading to the attachment, tag or category
-			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
+//			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed
@@ -329,11 +329,11 @@ class bcn_breadcrumb_trail
 					$parent = $parent->post_parent;
 				}
 				//Grab the frontpage, we'll need it shortly
-				$bcn_frontpage = get_option('page_on_front');
+				$frontpage = get_option('page_on_front');
 				//If there is a parent page let's find it
-				if($parent && $id != $parent && $bcn_frontpage != $parent)
+				if($parent && $id != $parent && $frontpage != $parent)
 				{
-					$parent = $this->post_parents($parent, $bcn_frontpage);
+					$parent = $this->post_parents($parent, $frontpage);
 				}
 			}
 			else
@@ -482,19 +482,8 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink($post));
 		}
-		//If we have a page, force it to go through the parent tree
-		if($post->post_type === 'page')
-		{
-			//Done with the current item, now on to the parents
-			$frontpage = get_option('page_on_front');
-			//If there is a parent page let's find it
-			if($post->post_parent && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
-			{
-				$this->post_parents($post->post_parent, $frontpage);
-			}
-		}
 		//If we have an attachment, run through the post again
-		else if($post->post_type === 'attachment')
+		if($post->post_type === 'attachment')
 		{
 			//Done with the current item, now on to the parents
 			$frontpage = get_option('page_on_front');

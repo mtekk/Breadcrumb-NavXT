@@ -79,6 +79,54 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure the breadcrumb on the trail is what we expect
 		$this->assertSame($breadcrumb, $this->breadcrumb_trail->breadcrumbs[0]);
 	}
+	function test_do_post() {
+		//Test a single post
+		$popid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$post = get_post($popid);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs to start
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		//Test a page
+		$papid = $this->factory->post->create(array('post_title' => 'Test Parent', 'post_type' => 'page'));
+		$papid = $this->factory->post->create(array('post_title' => 'Test Child', 'post_type' => 'page', 'post_parent' => $papid));
+		$post = get_post($papid);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs to start
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		//Test an attachment
+		$attpida = $this->factory->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
+		$attpidb = $this->factory->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post = get_post($attpida);
+		//Call do_post on the post attachement
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($attpidb);
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post on the post attachement
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Attahementb' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+	}
 	function test_query_var_to_taxonomy() {
 		//Setup some taxonomies
 		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));

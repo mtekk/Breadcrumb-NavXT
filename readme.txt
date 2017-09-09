@@ -5,6 +5,7 @@ Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.5
 Tested up to: 4.8
 Stable tag: 5.7.1
+Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 

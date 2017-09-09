@@ -490,8 +490,8 @@ class bcn_breadcrumb_trail
 		{
 			$breadcrumb->add_type('current-item');
 		}
-		//If the current item is to be linked, or this is a paged post, add in links
-		if($force_link || $this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
+		//Under a couple of circumstances we will want to link this breadcrumb
+		if($force_link || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
 		{
 			//Change the template over to the normal, linked one
 			$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
@@ -669,8 +669,8 @@ class bcn_breadcrumb_trail
 		{
 			$breadcrumb->add_type('current-item');
 		}
-		//If we're paged, let's link to the first page
-		if($force_link || $this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
+		//Under a couple of circumstances we will want to link this breadcrumb
+		if($force_link || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
 		{
 			$breadcrumb->set_template($this->opt['Hhome_template']);
 			//Figure out the anchor for home page

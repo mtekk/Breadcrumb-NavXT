@@ -391,8 +391,12 @@ class breadcrumb_navxt
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
+	 * @param string $template The template to use for the string output.
+	 * 
+	 * @return void Void if Option to print out breadcrumb trail was chosen.
+	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($return = false, $linked = true, $reverse = false, $force = false)
+	public function display($return = false, $linked = true, $reverse = false, $force = false, $template = '%1$s%2$s')
 	{
 		$this->get_settings();
 		//If we're being forced to fill the trail, clear it before calling fill
@@ -407,22 +411,20 @@ class breadcrumb_navxt
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags
 	 * 
+	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 * 
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
+	 * 
+	 * @return void Void if Option to print out breadcrumb trail was chosen.
+	 * @return string String-Data of breadcrumb trail.
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false, $force = false)
 	{
-		$this->get_settings();
-		//If we're being forced to fill the trail, clear it before calling fill
-		if($force)
-		{
-			$this->breadcrumb_trail->breadcrumbs = array();
-		}
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display_list($return, $linked, $reverse);
+		_deprecated_function( __FUNCTION__, '6.0', 'breadcrumb_navxt::display');
+		return $this->display($return, $linked, $reverse, $force, "<li%3\$s>%1\$s</li>\n");
 	}
 	/**
 	 * Outputs the breadcrumb trail in Schema.org BreadcrumbList compatible JSON-LD
@@ -430,6 +432,9 @@ class breadcrumb_navxt
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
+	 * 
+	 * @return void Void if Option to print out breadcrumb trail was chosen.
+	 * @return string String-Data of breadcrumb trail.
 	 */
 	public function display_json_ld($return = false, $reverse = false, $force = false)
 	{
@@ -461,6 +466,9 @@ function bcn_init()
  * @param bool $linked Whether to allow hyperlinks in the trail or not. (optional)
  * @param bool $reverse Whether to reverse the output or not. (optional)
  * @param bool $force Whether or not to force the fill function to run. (optional)
+ * 
+ * @return void Void if Option to print out breadcrumb trail was chosen.
+ * @return string String-Data of breadcrumb trail.
  */
 function bcn_display($return = false, $linked = true, $reverse = false, $force = false)
 {
@@ -477,13 +485,16 @@ function bcn_display($return = false, $linked = true, $reverse = false, $force =
  * @param bool $linked Whether to allow hyperlinks in the trail or not. (optional)
  * @param bool $reverse Whether to reverse the output or not. (optional)
  * @param bool $force Whether or not to force the fill function to run. (optional)
+ * 
+ * @return void Void if Option to print out breadcrumb trail was chosen.
+ * @return string String-Data of breadcrumb trail.
  */
 function bcn_display_list($return = false, $linked = true, $reverse = false, $force = false)
 {
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)
 	{
-		return $breadcrumb_navxt->display_list($return, $linked, $reverse, $force);
+		return $breadcrumb_navxt->display($return, $linked, $reverse, $force, "<li%3\$s>%1\$s</li>\n");
 	}
 }
 /**
@@ -492,6 +503,9 @@ function bcn_display_list($return = false, $linked = true, $reverse = false, $fo
  * @param bool $return Whether to return or echo the trail. (optional)
  * @param bool $reverse Whether to reverse the output or not. (optional)
  * @param bool $force Whether or not to force the fill function to run. (optional)
+ * 
+ * @return void Void if Option to print out breadcrumb trail was chosen.
+ * @return string String-Data of breadcrumb trail.
  */
 function bcn_display_json_ld($return = false, $reverse = false, $force = false)
 {

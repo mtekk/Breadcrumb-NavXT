@@ -143,6 +143,8 @@ class bcn_breadcrumb_trail
 	}
 	/**
 	 * This returns the internal version
+	 * 
+	 * @deprecated 5.2.0 No longer needed, superceeded bcn_breadcrumb_trail::version
 	 *
 	 * @return string internal version of the Breadcrumb trail
 	 */
@@ -522,6 +524,8 @@ class bcn_breadcrumb_trail
 	/**
 	 * A Breadcrumb Trail Filling Function
 	 * 
+	 * @deprecated 6.0.0 No longer needed, superceeded by do_post
+	 * 
 	 * This functions fills a breadcrumb for an attachment page.
 	 */
 	protected function do_attachment()
@@ -648,7 +652,6 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for the front page
 	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
@@ -1122,51 +1125,20 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in string form.
 	 *
-	 * @return void Void if Option to print out breadcrumb trail was chosen.
-	 * @return string String-Data of breadcrumb trail.
 	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.
+	 * @param string $template The template to use for the string output.
 	 * 
-	 * TODO: Fold display and display_list together, two functions are very simmilar 
+	 * @return void Void if Option to print out breadcrumb trail was chosen.
+	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($return = false, $linked = true, $reverse = false)
+	public function display($return = false, $linked = true, $reverse = false, $template = '%1$s%2$s')
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
-		//Initilize the string which will hold the assembled trail
-		$trail_str = '';
-		$position = 1;
 		//The main compiling loop
-		foreach($this->breadcrumbs as $key => $breadcrumb)
-		{
-			//We do different things for the separator based on the breadcrumb order
-			if($reverse)
-			{
-				//Add in the separator only if we are the 2nd or greater element
-				if($key > 0)
-				{
-					$trail_str .= $this->opt['hseparator'];
-				}
-			}
-			else
-			{
-				//Only show the separator when necessary
-				if($position > 1)
-				{
-					$trail_str .= $this->opt['hseparator'];
-				}
-			}
-			//Trim titles, if needed
-			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
-			{
-				//Trim the breadcrumb's title
-				$breadcrumb->title_trim($this->opt['amax_title_length']);
-			}
-			//Place in the breadcrumb's assembled elements
-			$trail_str .= $breadcrumb->assemble($linked, $position);
-			$position++;
-		}
+		$trail_str = $this->display_loop($linked, $reverse, $template);
 		//Should we return or echo the assembled trail?
 		if($return)
 		{
@@ -1182,43 +1154,72 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in list form.
 	 *
-	 * @return void Void if option to print out breadcrumb trail was chosen.
-	 * @return string String version of the breadcrumb trail.
+	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 * 
 	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
-	 * @param bool $reverse[optional] Whether to reverse the output or not. 
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * 
-	 * TODO: Can probably write this one in a smarter way now
+	 * @return void Void if option to print out breadcrumb trail was chosen.
+	 * @return string String version of the breadcrumb trail.
 	 */
 	public function display_list($return = false, $linked = true, $reverse = false)
 	{
-		//Set trail order based on reverse flag
-		$this->order($reverse);
+		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::display');
+		return $this->display($return, $linked, $reverse, "<li%3\$s>%1\$s</li>\n");
+	}
+	/**
+	 * This function assembles the breadcrumbs in the breadcrumb trail in accordance with the passed in template
+	 * 
+	 * @param bool $linked  Whether to allow hyperlinks in the trail or not.
+	 * @param bool $reverse Whether to reverse the output or not.
+	 * @param string $template The template to use for the string output.
+	 * 
+	 * @return string String-Data of breadcrumb trail.
+	 */
+	protected function display_loop($linked, $reverse, $template)
+	{
+		$position = 1;
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
-		$position = 1;
-		//The main compiling loop
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
-			$li_class = '';
+			$class = '';
 			//On the first run we need to add in a class for the home breadcrumb
 			if($trail_str === '')
 			{
-				$li_class .= ' class="home';
+				$class .= ' class="home';
 				if($key === 0)
 				{
-					$li_class .= ' current_item';
+					$class .= ' current_item';
 				}
-				$li_class .= '"';
+				$class .= '"';
 			}
 			//If we are on the current item there are some things that must be done
 			else if($key === 0)
 			{
 				//Add in a class for current_item
-				$li_class .= ' class="current_item"';
+				$class .= ' class="current_item"';
+			}
+			$separator = '';
+			//Deal with determining if a separator is applicable
+			if($reverse)
+			{
+				if($position > 1)
+				{
+					$separator = $this->opt['hseparator'];
+				}
+			}
+			else
+			{
+				if($key > 0)
+				{
+					$separator = $this->opt['hseparator'];
+				}
 			}
 			//Filter li_attributes adding attributes to the li element
-			$li_attribs = apply_filters('bcn_li_attributes', $li_class, $breadcrumb->get_types(), $breadcrumb->get_id());
+			$attribs = apply_filters_deprecated('bcn_li_attributes', array($class, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
+			$attribs = apply_filters('bcn_display_attributes', $class, $breadcrumb->get_types(), $breadcrumb->get_id());
 			//Trim titles, if requested
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{
@@ -1226,29 +1227,19 @@ class bcn_breadcrumb_trail
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
 			}
 			//Assemble the breadrumb and wrap with li's
-			$trail_str .= sprintf("<li%s>%s</li>\n", $li_attribs, $breadcrumb->assemble($linked, $position));
+			$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position), $separator, $attribs);
 			$position++;
 		}
-		//Should we return or echo the assembled trail?
-		if($return)
-		{
-			return $trail_str;
-		}
-		else
-		{
-			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
-			echo $credits . $trail_str;
-		}
+		return $trail_str;
 	}
 	/**
 	 * This functions outputs or returns the breadcrumb trail in Schema.org BreadcrumbList compliant JSON-LD
 	 *
+	 * @param bool $return Whether to return data or to echo it.
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
+	 * 
 	 * @return void Void if option to print out breadcrumb trail was chosen.
 	 * @return string String version of the breadcrumb trail.
-	 * @param bool $return Whether to return data or to echo it.
-	 * @param bool $reverse[optional] Whether to reverse the output or not. 
-	 * 
 	 */
 	public function display_json_ld($return = false, $reverse = false)
 	{

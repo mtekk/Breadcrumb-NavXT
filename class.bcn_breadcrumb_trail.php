@@ -474,6 +474,7 @@ class bcn_breadcrumb_trail
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
+	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
 	protected function do_post($post, $force_link = false, $is_paged = false, $is_current_item = true)
 	{
@@ -650,6 +651,7 @@ class bcn_breadcrumb_trail
 	 * TODO: Remove dependancies to current state (state should be passed in)
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
+	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
 	protected function do_home($force_link = false, $is_paged = false, $is_current_item = true)
 	{
@@ -683,33 +685,6 @@ class bcn_breadcrumb_trail
 			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('main-home'), get_home_url($current_site->blog_id)));
 		}
 	}
-	/**
-	 * A Breadcrumb Trail Filling Function
-	 * 
-	 * This functions fills a breadcrumb for the home page
-	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
-	 */
-/*	protected function do_home()
-	{
-		global $current_site;
-		//On everything else we need to link, but no current item (pre/suf)fixes
-		if($this->opt['bhome_display'])
-		{
-			//Get the site name
-			$site_name = get_option('blogname');
-			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template'], array('home'), get_home_url()));
-			//If we have a multi site and are not on the main site we need to add a breadcrumb for the main site
-			if($this->opt['bmainsite_display'] && !is_main_site())
-			{
-				//Get the site name
-				$site_name = get_site_option('site_name');
-				//Place the main site breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-				$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('main-home'), get_home_url($current_site->blog_id)));
-			}
-		}
-	}*/
 	/**
 	 * A modified version of WordPress' function of the same name
 	 * 

@@ -475,7 +475,7 @@ class bcn_breadcrumb_trail
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 */
-	protected function do_post($post, $force_link = false, $is_paged = false)
+	protected function do_post($post, $force_link = false, $is_paged = false, $is_current_item = true)
 	{
 		//If we did not get a WP_Post object, warn developer and return early
 		if(!($post instanceof WP_Post))
@@ -484,7 +484,11 @@ class bcn_breadcrumb_trail
 			return;
 		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID));
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type), NULL, $post->ID));
+		if($is_current_item)
+		{
+			$breadcrumb->add_type('current-item');
+		}
 		//If the current item is to be linked, or this is a paged post, add in links
 		if($force_link || $this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
 		{
@@ -504,7 +508,7 @@ class bcn_breadcrumb_trail
 				//Get the parent's information
 				$parent = get_post($post->post_parent);
 				//Take care of the parent's breadcrumb
-				$this->do_post($parent, true);
+				$this->do_post($parent, true, false, false);
 			}
 		}
 		//Otherwise we need the follow the hiearchy tree
@@ -647,7 +651,7 @@ class bcn_breadcrumb_trail
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 */
-	protected function do_home($force_link = false, $is_paged = false)
+	protected function do_home($force_link = false, $is_paged = false, $is_current_item = true)
 	{
 		global $current_site;
 		//Exit early if we're not displaying the home breadcrumb
@@ -658,7 +662,11 @@ class bcn_breadcrumb_trail
 		//Get the site name
 		$site_name = get_option('blogname');
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template_no_anchor'], array('home', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hhome_template_no_anchor'], array('home')));
+		if($is_current_item)
+		{
+			$breadcrumb->add_type('current-item');
+		}
 		//If we're paged, let's link to the first page
 		if($force_link || $this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
 		{
@@ -682,7 +690,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
-	protected function do_home()
+/*	protected function do_home()
 	{
 		global $current_site;
 		//On everything else we need to link, but no current item (pre/suf)fixes
@@ -701,7 +709,7 @@ class bcn_breadcrumb_trail
 				$breadcrumb = $this->add(new bcn_breadcrumb($site_name, $this->opt['Hmainsite_template'], array('main-home'), get_home_url($current_site->blog_id)));
 			}
 		}
-	}
+	}*/
 	/**
 	 * A modified version of WordPress' function of the same name
 	 * 
@@ -1040,7 +1048,7 @@ class bcn_breadcrumb_trail
 			//Must have two seperate branches so that we don't evaluate it as a page
 			if($this->opt['bhome_display'])
 			{
-				$this->do_front_page(is_paged());
+				$this->do_home(false, is_paged());
 			}
 		}
 		//For posts
@@ -1112,7 +1120,7 @@ class bcn_breadcrumb_trail
 		if(!is_front_page())
 		{
 			$this->do_root();
-			$this->do_home();
+			$this->do_home(true, false, false);
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_after_fill', $this);

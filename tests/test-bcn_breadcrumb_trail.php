@@ -90,7 +90,10 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+		
 		//Test a page
 		$papid = $this->factory->post->create(array('post_title' => 'Test Parent', 'post_type' => 'page'));
 		$papid = $this->factory->post->create(array('post_title' => 'Test Child', 'post_type' => 'page', 'post_parent' => $papid));
@@ -102,7 +105,10 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-page', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+			
 		//Test an attachment
 		$attpida = $this->factory->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
 		$attpidb = $this->factory->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
@@ -114,8 +120,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
 		$this->breadcrumb_trail->breadcrumbs = array();
 		$post = get_post($attpidb);
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -124,8 +133,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementb' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
 	}
 	function test_query_var_to_taxonomy() {
 		//Setup some taxonomies

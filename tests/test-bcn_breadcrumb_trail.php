@@ -108,7 +108,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('post', 'post-page', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
-			
+
 		//Test an attachment
 		$attpida = $this->factory->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
 		$attpidb = $this->factory->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
@@ -346,7 +346,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_set_object_terms($pid, array($tids[5]), 'category');
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 3 breadcrumbs
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
@@ -373,7 +373,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_permalink($paid[1]));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
@@ -393,7 +393,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_home_url());
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 4 breadcrumbs
 		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
@@ -436,7 +436,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->go_to(get_permalink($pid));
 		//We don't want the blog breadcrumb
 		$this->breadcrumb_trail->opt['bblog_display'] = false;
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
@@ -465,7 +465,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 2 breadcrumbs
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
@@ -502,7 +502,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs (no root)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
@@ -542,7 +542,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		
 		//"Go to" our search, non-post type restricted
 		$this->go_to(get_search_link('test'));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		

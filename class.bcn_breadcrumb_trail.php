@@ -906,28 +906,11 @@ class bcn_breadcrumb_trail
 	 *
 	 * Handles only the root page stuff for post types, including the "page for posts"
 	 * 
+	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
 	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
-	protected function do_root()
+	protected function do_root($type)
 	{
-		global $wp_query;
-		//If this is an attachment then we need to change the queried object to the parent post
-		if(is_attachment())
-		{
-			//Could use the $post global, but we can't really trust it
-			$post = get_post();
-			$type = get_post($post->post_parent); //TODO check for WP_Error?
-			//If the parent of the attachment is a page, exit early (works around bug where is_single() returns true for an attachment to a page)
-			if($type->post_type == 'page')
-			{
-				return;
-			}
-		}
-		else
-		{
-			//Simmilar to using $post, but for things $post doesn't cover
-			$type = $wp_query->get_queried_object();
-		}
 		$root_id = -1;
 		$type_str = '';
 		//Find our type string and root_id
@@ -1014,6 +997,7 @@ class bcn_breadcrumb_trail
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_before_fill', $this);
+		$type = $wp_query->get_queried_object();
 		//Do specific opperations for the various page types
 		//Check if this isn't the first of a multi paged item
 		if($this->opt['bpaged_display'] && (is_paged() || is_singular() && get_query_var('page') > 1))
@@ -1033,6 +1017,13 @@ class bcn_breadcrumb_trail
 		else if(is_singular())
 		{
 			$this->do_post(get_post(), false, (get_query_var('page') > 1));
+			//If this is an attachment then we need to change the queried object to the parent post
+			if(is_attachment())
+			{
+				//Could use the $post global, but we can't really trust it
+				$post = get_post();
+				$type = get_post($post->post_parent); //TODO check for WP_Error?
+			}
 		}
 		//For searches
 		else if(is_search())
@@ -1047,7 +1038,6 @@ class bcn_breadcrumb_trail
 		//For archives
 		else if(is_archive())
 		{
-			$type = $wp_query->get_queried_object();
 			//We need the type for later, so save it
 			$type_str = get_query_var('post_type');
 			//May be an array, if so, rewind the iterator and grab first item
@@ -1085,8 +1075,6 @@ class bcn_breadcrumb_trail
 		}
 		else
 		{
-			//If we are here, there may have been problems detecting the type
-			$type = $wp_query->get_queried_object();
 			//If it looks, walks, and quacks like a taxonomy, treat is as one
 			if(isset($type->taxonomy))
 			{
@@ -1097,7 +1085,7 @@ class bcn_breadcrumb_trail
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())
 		{
-			$this->do_root();
+			$this->do_root($type);
 			$this->do_home(true, false, false);
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple

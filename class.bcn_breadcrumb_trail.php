@@ -907,9 +907,9 @@ class bcn_breadcrumb_trail
 	 * Handles only the root page stuff for post types, including the "page for posts"
 	 * 
 	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
-	 * TODO: Remove dependancies to current state (state should be passed in)
+	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 */
-	protected function do_root($type)
+	protected function do_root($type, $is_paged = false)
 	{
 		$root_id = -1;
 		$type_str = '';
@@ -930,9 +930,7 @@ class bcn_breadcrumb_trail
 					$breadcrumb->add_type('current-item');
 				}
 				//If we're not on the current item we need to setup the anchor
-				if(!$this->treat_as_root_page($type_str)
-					|| (is_paged() && $this->opt['bpaged_display'])
-					|| ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
+				if(!$this->treat_as_root_page($type_str) || ($is_paged && $this->opt['bpaged_display']) || ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
 				{
 					$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 					//Figure out the anchor for home page
@@ -1085,7 +1083,7 @@ class bcn_breadcrumb_trail
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())
 		{
-			$this->do_root($type);
+			$this->do_root($type, is_paged());
 			$this->do_home(true, false, false);
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple

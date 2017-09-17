@@ -157,6 +157,7 @@ class bcn_breadcrumb_trail
 	 * Adds a breadcrumb to the breadcrumb trail
 	 * 
 	 * @param bcn_breadcrumb $object Breadcrumb to add to the trail
+	 * 
 	 * @return pointer to the just added Breadcrumb
 	 */
 	public function &add(bcn_breadcrumb $object)
@@ -191,31 +192,24 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for an author page
 	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
+	 * @param string $author_data The author to generate the breadcrumb for
+	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 */
-	protected function do_author()
+	protected function do_author($author_data, $is_paged = false)
 	{
-		if(get_query_var('author_name'))
-		{
-			$authordata = get_user_by('slug', get_query_var('author_name'));
-		}
-		else
-		{
-			$authordata = get_userdata(get_query_var('author'));
-		}
 		//Setup array of valid author_name values
 		$valid_author_name = array('display_name', 'nickname', 'first_name', 'last_name');
 		//Make sure user picks only safe values
 		if(in_array($this->opt['Sauthor_name'], $valid_author_name))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_author_meta($this->opt['Sauthor_name'], $authordata->ID), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $authordata->ID));
+			$breadcrumb = $this->add(new bcn_breadcrumb(get_the_author_meta($this->opt['Sauthor_name'], $author_data->ID), $this->opt['Hauthor_template_no_anchor'], array('author', 'current-item'), NULL, $author_data->ID));
 			//If we're paged, or allowing the current item to be linked, let's link to the first page
-			if($this->opt['bcurrent_item_linked'] || (is_paged() && $this->opt['bpaged_display']))
+			if($this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
 			{
 				//Set the template to our one containing an anchor
 				$breadcrumb->set_template($this->opt['Hauthor_template']);
-				$breadcrumb->set_url(get_author_posts_url($authordata->ID));
+				$breadcrumb->set_url(get_author_posts_url($author_data->ID));
 			}
 		}
 	}
@@ -223,6 +217,7 @@ class bcn_breadcrumb_trail
 	 * Determines the taxonomy name represented by the specified query var
 	 * 
 	 * @param string $query_var The query var to attempt to find the corresponding taxonomy
+	 * 
 	 * @return string|bool Either the name of the taxonomy corresponding to the query_var or false if no taxonomy exists for the specified query_var
 	 */
 	protected function query_var_to_taxonomy($query_var)
@@ -282,6 +277,7 @@ class bcn_breadcrumb_trail
 	 * @param int $id The ID of the post to find the term for
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param string $taxonomy The taxonomy to use
+	 * 
 	 * @return WP_Term|bool The term object to use for the post hierarchy or false if no suitable term was found 
 	 */
 	protected function pick_post_term($id, $type, $taxonomy)
@@ -429,6 +425,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param int $id The id of the term
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
+	 * 
 	 * @return WP_Term The term we stopped at
 	 */
 	protected function term_parents($id, $taxonomy)
@@ -452,6 +449,7 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param int $id The id of the parent page
 	 * @param int $frontpage The id of the front page
+	 * 
 	 * @return WP_Post The parent we stopped at
 	 */
 	protected function post_parents($id, $frontpage)
@@ -634,6 +632,8 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
+	 * 
+	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
 	protected function do_archive_by_post_type($type_str, $is_paged = false)
 	{
@@ -692,6 +692,7 @@ class bcn_breadcrumb_trail
 	 * A modified version of WordPress' function of the same name
 	 * 
 	 * @param object $object the post or taxonomy object used to attempt to find the title
+	 * 
 	 * @return string the title
 	 */
 	protected function post_type_archive_title($object)
@@ -707,6 +708,7 @@ class bcn_breadcrumb_trail
 	 * Determines if a post type is a built in type or not
 	 * 
 	 * @param string $post_type the name of the post type
+	 * 
 	 * @return bool
 	 */
 	protected function is_builtin($post_type)
@@ -738,6 +740,7 @@ class bcn_breadcrumb_trail
 	 * Determines if a post type has archives enabled or not
 	 * 
 	 * @param string $post_type the name of the post type
+	 * 
 	 * @return bool
 	 */
 	protected function has_archive($post_type)
@@ -811,6 +814,8 @@ class bcn_breadcrumb_trail
 	 * Deals with the post type archive and taxonomy archives
 	 * 
 	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
+	 * 
+	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
 	protected function type_archive($type)
 	{
@@ -842,7 +847,7 @@ class bcn_breadcrumb_trail
 	/**
 	 * This function populates our type_str and root_id variables
 	 * 
-	 * @param post $type A post object we are using to figureout the type
+	 * @param WP_Post|WP_Taxonomy $type A post object we are using to figureout the type
 	 * @param string $type_str The type string variable, passed by reference
 	 * @param int $root_id The ID for the post type root
 	 * 
@@ -1031,7 +1036,7 @@ class bcn_breadcrumb_trail
 		//For author pages
 		else if(is_author())
 		{
-			$this->do_author();
+			$this->do_author($type, is_paged());
 		}
 		//For archives
 		else if(is_archive())

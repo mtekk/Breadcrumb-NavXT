@@ -62,8 +62,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 	}
-	function test_add()
-	{
+	function test_add() {
 		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
 		$post = get_post($pid);
 		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
@@ -78,6 +77,21 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame($breadcrumb, $breadcrumb_ret);
 		//Ensure the breadcrumb on the trail is what we expect
 		$this->assertSame($breadcrumb, $this->breadcrumb_trail->breadcrumbs[0]);
+	}
+	function test_do_author() {
+		//Some setup
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'Cool Editor'));
+		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Now go to the author archives
+		$this->go_to(get_author_posts_url($author_id));
+		$this->breadcrumb_trail->call('do_author', array(get_queried_object()));
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 	}
 	function test_do_post() {
 		//Test a single post

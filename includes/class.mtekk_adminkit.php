@@ -411,7 +411,7 @@ abstract class mtekk_adminKit
 						break;
 					//Handle the absolute integer options
 					case 'a':
-						$opts[$option] = absint($input[$option]);
+						$opts[$option] = (int) abs($input[$option]);
 						break;
 					//Handle the floating point options
 					case 'f':

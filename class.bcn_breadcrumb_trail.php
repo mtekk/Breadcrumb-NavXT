@@ -975,11 +975,11 @@ class bcn_breadcrumb_trail
 		if(get_query_var('paged') > 0)
 		{
 			//Can use simple type hinting here to int since we already checked for greater than 0
-			$page_number = (int) get_query_var('paged');
+			$page_number = (int) abs(get_query_var('paged'));
 		}
 		else
 		{
-			$page_number = absint(get_query_var('page'));
+			$page_number = (int) abs(get_query_var('page'));
 		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, prefix, and suffix
 		$this->breadcrumbs[] = new bcn_breadcrumb($page_number, $this->opt['Hpaged_template'], array('paged'));

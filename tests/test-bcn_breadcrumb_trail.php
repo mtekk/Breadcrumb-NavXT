@@ -83,15 +83,24 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'Cool Editor'));
 		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->breadcrumbs = array();
-		//Ensure we have 0 breadcrumbs from the do_root portion
+		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		//Now go to the author archives
 		$this->go_to(get_author_posts_url($author_id));
 		$this->breadcrumb_trail->call('do_author', array(get_queried_object()));
-		//Ensure we have 0 breadcrumbs from the do_root portion
+		//Ensure we have 1 breadcrumb from the do_author portion
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+	}
+	function test_do_paged() {
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('do_paged', array(42));
+		//Ensure we have 1 breadcrumbs from the do_paged portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('42' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('paged') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 	}
 	function test_do_post() {
 		//Test a single post

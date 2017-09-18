@@ -95,10 +95,6 @@ class bcn_breadcrumb_trail
 			//What hierarchy should be shown leading to the post, tag or category
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
-			//Should the trail include the hierarchy of the attachment
-//			'bpost_attachment_hierarchy_display' => true,
-			//What hierarchy should be shown leading to the attachment, tag or category
-//			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed
@@ -967,22 +963,12 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This functions fills a breadcrumb for paged pages
 	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
+	 * @param int $page_number The page number to create a breadcrumb for
 	 */
-	protected function do_paged()
+	protected function do_paged($page_number)
 	{
-		//Need to switch between paged and page for archives and singular (posts)
-		if(get_query_var('paged') > 0)
-		{
-			//Can use simple type hinting here to int since we already checked for greater than 0
-			$page_number = (int) abs(get_query_var('paged'));
-		}
-		else
-		{
-			$page_number = (int) abs(get_query_var('page'));
-		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, prefix, and suffix
-		$this->breadcrumbs[] = new bcn_breadcrumb($page_number, $this->opt['Hpaged_template'], array('paged'));
+		$this->breadcrumbs[] = new bcn_breadcrumb((string) $page_number, $this->opt['Hpaged_template'], array('paged'));
 	}
 	/**
 	 * Breadcrumb Trail Filling Function
@@ -1005,7 +991,17 @@ class bcn_breadcrumb_trail
 		//Check if this isn't the first of a multi paged item
 		if($this->opt['bpaged_display'] && (is_paged() || is_singular() && get_query_var('page') > 1))
 		{
-			$this->do_paged();
+			//Need to switch between paged and page for archives and singular (posts)
+			if(get_query_var('paged') > 0)
+			{
+				//Can use simple type hinting here to int since we already checked for greater than 0
+				$page_number = (int) abs(get_query_var('paged'));
+			}
+			else
+			{
+				$page_number = (int) abs(get_query_var('page'));
+			}
+			$this->do_paged($page_number);
 		}
 		//For the front page, as it may also validate as a page, do it first
 		if(is_front_page())

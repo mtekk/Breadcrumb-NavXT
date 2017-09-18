@@ -570,6 +570,8 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->textbox(__('Page Template', 'breadcrumb-navxt'), 'Hpost_page_template', '6', false, __('The template for page breadcrumbs.', 'breadcrumb-navxt'));
 						$this->textbox(__('Page Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_page_template_no_anchor', '4', false, __('The template for page breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
+						$this->input_hidden('bpost_page_hierarchy_display');
+						$this->input_hidden('Spost_page_hierarchy_type');
 					?>
 				</table>
 				<h3><?php _e('Attachments', 'breadcrumb-navxt'); ?></h3>

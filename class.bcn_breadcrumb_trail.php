@@ -1023,6 +1023,7 @@ class bcn_breadcrumb_trail
 				$post = get_post();
 				$type = get_post($post->post_parent); //TODO check for WP_Error?
 			}
+			$this->do_root($type, is_paged());
 		}
 		//For searches
 		else if(is_search())
@@ -1033,6 +1034,7 @@ class bcn_breadcrumb_trail
 		else if(is_author())
 		{
 			$this->do_author($type, is_paged());
+			$this->do_root($type, is_paged());
 		}
 		//For archives
 		else if(is_archive())
@@ -1066,6 +1068,7 @@ class bcn_breadcrumb_trail
 			{
 				$this->type_archive($type);
 			}
+			$this->do_root($type, is_paged());
 		}
 		//For 404 pages
 		else if(is_404())
@@ -1080,11 +1083,11 @@ class bcn_breadcrumb_trail
 				$this->do_archive_by_term($type, is_paged());
 				$this->type_archive($type);
 			}
+			$this->do_root($type, is_paged());
 		}
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())
 		{
-			$this->do_root($type, is_paged());
 			$this->do_home(true, false, false);
 		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple

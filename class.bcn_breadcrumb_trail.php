@@ -628,13 +628,14 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
-	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
 	protected function do_archive_by_post_type($type_str, $is_paged = false)
 	{
+		//Manually grabbing the post type object insted of post_type_archive_title('', false) to remove get_query_var() dependancy
+		$post_type_obj = get_post_type_object($type_str);
+		$title = apply_filters('post_type_archive_title', $post_type_obj->labels->name, $type_str);
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(post_type_archive_title('', false), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array('archive', 'post-' . $type_str . '-archive', 'current-item')));
+		$breadcrumb = $this->add(new bcn_breadcrumb($title, $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array('archive', 'post-' . $type_str . '-archive', 'current-item')));
 		if($this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
 		{
 			
@@ -999,13 +1000,16 @@ class bcn_breadcrumb_trail
 			{
 				$this->do_archive_by_term($type, is_paged());
 				$this->type_archive($type);
+				$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0]);
 			}
 			else
 			{
 				$this->type_archive($type);
 			}
-			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
-			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			if(!is_date())
+			{
+				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			}
 		}
 		//For 404 pages
 		else if(is_404())

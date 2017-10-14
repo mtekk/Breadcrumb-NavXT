@@ -847,10 +847,10 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param string $type_str The type string variable
 	 * @param int $root_id The ID for the post type root
-	 * 
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
+	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_root($type_str, $root_id, $is_paged = false)
+	protected function do_root($type_str, $root_id, $is_paged = false, $is_current_item = true)
 	{
 		//Continue only if we have a valid root_id
 		if(is_numeric($root_id))
@@ -862,12 +862,12 @@ class bcn_breadcrumb_trail
 				//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, we get a pointer to it in return
 				$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($root_id), $this->opt['Hpost_' . $type_str . '_template_no_anchor'], array($type_str . '-root', 'post', 'post-' . $type_str), NULL, $root_id));
 				//If we are at home, or any root page archive then we need to add the current item type
-				if($this->treat_as_root_page($type_str))
+				if($is_current_item)
 				{
 					$breadcrumb->add_type('current-item');
 				}
 				//If we're not on the current item we need to setup the anchor
-				if(!$this->treat_as_root_page($type_str) || ($is_paged && $this->opt['bpaged_display']) || ($this->treat_as_root_page($type_str) && $this->opt['bcurrent_item_linked']))
+				if(!$is_current_item || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
 				{
 					$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
 					//Figure out the anchor for home page
@@ -959,7 +959,7 @@ class bcn_breadcrumb_trail
 				$post = get_post();
 				$type = get_post($post->post_parent); //TODO check for WP_Error?
 			}
-			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged());
+			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
 		}
 		//For searches
 		else if(is_search())
@@ -970,7 +970,7 @@ class bcn_breadcrumb_trail
 		else if(is_author())
 		{
 			$this->do_author($type, is_paged());
-			$this->do_root('post', get_option('page_for_posts'), is_paged());
+			$this->do_root('post', get_option('page_for_posts'), is_paged(), false);
 		}
 		//For archives
 		else if(is_archive())
@@ -1005,7 +1005,7 @@ class bcn_breadcrumb_trail
 				$this->type_archive($type);
 			}
 			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
-			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged());
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 		}
 		//For 404 pages
 		else if(is_404())
@@ -1025,7 +1025,7 @@ class bcn_breadcrumb_trail
 			{
 				$type_str = 'post';
 			}
-			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged());
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 		}
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())

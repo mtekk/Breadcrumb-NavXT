@@ -61,6 +61,12 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		update_option('page_on_front', $this->home);
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $this->blog);
+		add_filter('default_option_bcn_options', 
+			function($default, $opts, $option_name) {
+				$opts = array();
+				$opts['apost_post_root'] = get_option('page_for_posts');
+				return $opts;
+		}, 3, 10);
 	}
 	public function tearDown() {
 		parent::tearDown();

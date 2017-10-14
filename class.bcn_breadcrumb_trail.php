@@ -841,83 +841,19 @@ class bcn_breadcrumb_trail
 		}
 	}
 	/**
-	 * This function populates our type_str and root_id variables
-	 * 
-	 * @param WP_Post|WP_Taxonomy $type A post object we are using to figureout the type
-	 * @param string $type_str The type string variable, passed by reference
-	 * @param int $root_id The ID for the post type root
-	 * 
-	 * TODO, can probably clean up all the logic here and use the code for the CPT archives for all paths
-	 * TODO: Remove dependancies to current state (state should be passed in)
-	 */
-	protected function find_type($type, &$type_str, &$root_id)
-	{
-		global $wp_taxonomies;
-		//We need to do special things for custom post types
-		if(is_singular() && !$this->is_builtin($type->post_type))
-		{
-			//We need the type for later, so save it
-			$type_str = $type->post_type;
-			//This will assign a ID for root page of a custom post
-			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
-			{
-				$root_id = $this->opt['apost_' . $type_str . '_root'];
-			}
-		}
-		//For CPT archives
-		else if(is_post_type_archive() && !isset($type->taxonomy))
-		{
-			//We need the type for later, so save it
-			$type_str = get_query_var('post_type');
-			//May be an array, if so, rewind the iterator and grab first item
-			if(is_array($type_str))
-			{
-				$type_str = reset($type_str);
-			}
-			//This will assign a ID for root page of a custom post's taxonomy archive
-			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
-			{
-				$root_id = $this->opt['apost_' . $type_str . '_root'];
-			}
-		}
-		//We need to do special things for custom post type archives, but not author or date archives
-		else if(is_archive() && !is_author() && !is_date() && isset($type->taxonomy) && !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])))
-		{
-			//We need the type for later, so save it
-			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
-			//This will assign a ID for root page of a custom post's taxonomy archive
-			if(is_numeric($this->opt['apost_' . $type_str . '_root']))
-			{
-				$root_id = $this->opt['apost_' . $type_str . '_root'];
-			}
-		}
-		else if(is_singular() && $type instanceof WP_Post && $type->post_type == 'page')
-		{
-			$type_str = 'page';
-			$root_id = get_option('page_on_front');
-		}
-		else if(($this->opt['bblog_display'] || is_home()) && !is_search())
-		{
-			$type_str = 'post';
-			$root_id = get_option('page_for_posts');
-		}
-	}
-	/**
 	 * A Breadcrumb Trail Filling Function 
 	 *
 	 * Handles only the root page stuff for post types, including the "page for posts"
 	 * 
-	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
+	 * @param string $type_str The type string variable
+	 * @param int $root_id The ID for the post type root
+	 * 
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 */
-	protected function do_root($type, $is_paged = false)
+	protected function do_root($type_str, $root_id, $is_paged = false)
 	{
-		$root_id = -1;
-		$type_str = '';
-		//Find our type string and root_id
-		$this->find_type($type, $type_str, $root_id);
 		//Continue only if we have a valid root_id
-		if($root_id > 1)
+		if(is_numeric($root_id))
 		{
 			$frontpage_id = get_option('page_on_front');
 			//We'll have to check if this ID is valid, e.g. user has specified a posts page
@@ -1023,7 +959,7 @@ class bcn_breadcrumb_trail
 				$post = get_post();
 				$type = get_post($post->post_parent); //TODO check for WP_Error?
 			}
-			$this->do_root($type, is_paged());
+			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged());
 		}
 		//For searches
 		else if(is_search())
@@ -1034,7 +970,7 @@ class bcn_breadcrumb_trail
 		else if(is_author())
 		{
 			$this->do_author($type, is_paged());
-			$this->do_root($type, is_paged());
+			$this->do_root('post', get_option('page_for_posts'), is_paged());
 		}
 		//For archives
 		else if(is_archive())
@@ -1068,7 +1004,8 @@ class bcn_breadcrumb_trail
 			{
 				$this->type_archive($type);
 			}
-			$this->do_root($type, is_paged());
+			$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged());
 		}
 		//For 404 pages
 		else if(is_404())
@@ -1082,8 +1019,13 @@ class bcn_breadcrumb_trail
 			{
 				$this->do_archive_by_term($type, is_paged());
 				$this->type_archive($type);
+				$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
 			}
-			$this->do_root($type, is_paged());
+			else if($this->opt['bblog_display'])
+			{
+				$type_str = 'post';
+			}
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged());
 		}
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())

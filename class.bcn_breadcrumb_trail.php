@@ -317,9 +317,9 @@ class bcn_breadcrumb_trail
 			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
 			{
 				$post = get_post($id);
-				$this->do_day($post, false, false);
-				$this->do_month($post, false, false);
-				$this->do_year($post, false, false);
+				$this->do_day($post, $type, false, false);
+				$this->do_month($post, $type, false, false);
+				$this->do_year($post, $type, false, false);
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
 			else if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT')
@@ -561,10 +561,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for day date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
+	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_day($post, $is_paged = false, $is_current_item = true)
+	protected function do_day($post, $type_str, $is_paged = false, $is_current_item = true)
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('d', 'day archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
@@ -580,7 +581,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('d'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $post->post_type));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
 		}
 	}
 	/**
@@ -589,10 +590,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for month date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
+	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_month($post, $is_paged = false, $is_current_item = true)
+	protected function do_month($post, $type_str, $is_paged = false, $is_current_item = true)
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('F', 'month archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
@@ -608,7 +610,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_month_link(get_the_time('Y'), get_the_time('m'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $post->post_type));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
 		}
 	}
 	/**
@@ -617,10 +619,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for year date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
+	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_year($post, $is_paged = false, $is_current_item = true)
+	protected function do_year($post, $type_str, $is_paged = false, $is_current_item = true)
 	{
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('Y', 'year archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
@@ -636,7 +639,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_year_link(get_the_time('Y'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $post->post_type));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
 		}
 	}
 	/**
@@ -654,14 +657,14 @@ class bcn_breadcrumb_trail
 		//First deal with the day breadcrumb
 		if(is_day() || is_single())
 		{
-			$this->do_day(get_post(), is_paged(), is_day());
+			$this->do_day(get_post(), $type, is_paged(), is_day());
 		}
 		//Now deal with the month breadcrumb
 		if(is_month() || is_day() || is_single())
 		{
-			$this->do_month(get_post(), is_paged(), is_month());
+			$this->do_month(get_post(), $type, is_paged(), is_month());
 		}
-		$this->do_year(get_post(), is_paged(), is_year());
+		$this->do_year(get_post(), $type, is_paged(), is_year());
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -1031,14 +1034,15 @@ class bcn_breadcrumb_trail
 				//First deal with the day breadcrumb
 				if(is_day())
 				{
-					$this->do_day(get_post(), is_paged(), true);
+					$this->do_day(get_post(), $this->get_type_string_query_var(), is_paged(), true);
 				}
 				//Now deal with the month breadcrumb
 				if(is_month() || is_day())
 				{
-					$this->do_month(get_post(), is_paged(), is_month());
+					$this->do_month(get_post(), $this->get_type_string_query_var(), is_paged(), is_month());
 				}
-				$this->do_year(get_post(), is_paged(), is_year());
+				$this->do_year(get_post(), $this->get_type_string_query_var(), is_paged(), is_year());
+				$type_str = $this->get_type_string_query_var();
 				$this->type_archive($type);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
@@ -1058,7 +1062,7 @@ class bcn_breadcrumb_trail
 			{
 				$this->type_archive($type);
 			}
-			if(!is_date())
+			if($type_str !== 'post')
 			{
 				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 			}

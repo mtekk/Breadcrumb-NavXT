@@ -561,11 +561,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for day date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
-	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
+	 * @param string $type The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_day($post, $type_str, $is_paged = false, $is_current_item = true)
+	protected function do_day($post, $type, $is_paged = false, $is_current_item = true)
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('d', 'day archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-day')));
@@ -581,7 +581,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_day_link(get_the_time('Y'), get_the_time('m'), get_the_time('d'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 		}
 	}
 	/**
@@ -590,11 +590,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for month date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
-	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
+	 * @param string $type The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_month($post, $type_str, $is_paged = false, $is_current_item = true)
+	protected function do_month($post, $type, $is_paged = false, $is_current_item = true)
 	{
 		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('F', 'month archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-month')));
@@ -610,7 +610,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_month_link(get_the_time('Y'), get_the_time('m'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 		}
 	}
 	/**
@@ -619,11 +619,11 @@ class bcn_breadcrumb_trail
 	 * This functions fills a breadcrumb for year date archives
 	 * 
 	 * @param WP_Post $post Instance of WP_Post object to create a breadcrumb for
-	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
+	 * @param string $type The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
 	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
 	 */
-	protected function do_year($post, $type_str, $is_paged = false, $is_current_item = true)
+	protected function do_year($post, $type, $is_paged = false, $is_current_item = true)
 	{
 		//Place the year breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_time(_x('Y', 'year archive breadcrumb date format', 'breadcrumb-navxt'), $post), $this->opt['Hdate_template_no_anchor'], array('archive', 'date-year')));
@@ -639,7 +639,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_template($this->opt['Hdate_template']);
 			$url = get_year_link(get_the_time('Y'));
 			//Deal with the anchor
-			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type_str));
+			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 		}
 	}
 	/**

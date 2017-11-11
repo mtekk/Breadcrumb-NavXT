@@ -80,7 +80,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_do_author() {
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'Cool Editor'));
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
 		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs

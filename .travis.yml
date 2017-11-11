@@ -11,7 +11,6 @@ php:
     - 5.4
     - 5.5
     - 5.6
-    - 7.1
 env:
     - WP_VERSION=latest WP_MULTISITE=0
     - WP_VERSION=latest WP_MULTISITE=1
@@ -30,6 +29,10 @@ matrix:
        - php: 7.0
          env: WP_VERSION=latest WP_MULTISITE=0 PHPUNIT_FLAGS="--coverage-clover coverage.xml"
        - php: 7.0
+         env: WP_VERSION=latest WP_MULTISITE=1
+       - php: 7.1
+         env: WP_VERSION=latest WP_MULTISITE=0
+       - php: 7.1
          env: WP_VERSION=latest WP_MULTISITE=1
 before_script:
   - composer require --dev phpunit/phpunit:\<6.0

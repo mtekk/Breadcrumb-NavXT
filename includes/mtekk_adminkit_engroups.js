@@ -5,7 +5,7 @@ jQuery(function()
 });
 function mtekk_admin_enable_group(){
 	var setting = this;
-	jQuery(this).parents(".adminkit-engroup").find("input").each(function(){
+	jQuery(this).parents(".adminkit-engroup").find("input, textarea").each(function(){
 		if(this != setting){
 			if(jQuery(setting).prop("checked")){
 				jQuery(this).prop("disabled", false);
@@ -20,7 +20,7 @@ function mtekk_admin_enable_group(){
 }
 function mtekk_admin_enable_set(){
 	var setting = this;
-	jQuery(this).parents(".adminkit-enset-top").find("input.adminkit-enset").each(function(){
+	jQuery(this).parents(".adminkit-enset-top").find("input.adminkit-enset, textarea.adminkit-enset").each(function(){
 		if(this != setting){
 			if(jQuery(setting).prop("checked")){
 				jQuery(this).prop("disabled", false);

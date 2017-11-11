@@ -3,7 +3,6 @@
 	<name>Breadcrumb NavXT</name>
 	<comment></comment>
 	<projects>
-		<project>WordPress Trunk</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

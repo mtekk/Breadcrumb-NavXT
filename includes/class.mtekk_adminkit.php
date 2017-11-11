@@ -17,9 +17,14 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 require_once(dirname(__FILE__) . '/block_direct_access.php');
+//Include admin base class
+if(!class_exists('mtekk_adminKit_message'))
+{
+	require_once(dirname(__FILE__) . '/class.mtekk_adminkit_message.php');
+}
 abstract class mtekk_adminKit
 {
-	const version = '1.5.60';
+	const version = '1.9.81';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -27,11 +32,14 @@ abstract class mtekk_adminKit
 	protected $identifier;
 	protected $unique_prefix;
 	protected $opt = array();
+	protected $messages;
 	protected $message;
 	protected $support_url;
 	protected $allowed_html;
 	function __construct()
 	{
+		$this->message = array();
+		$this->messages = array();
 		//Admin Init Hook
 		add_action('admin_init', array($this, 'init'));
 		//WordPress Admin interface hook
@@ -167,6 +175,8 @@ abstract class mtekk_adminKit
 		{
 			$suffix = '.min';
 		}
+		//Register JS for more permanently dismissing messages
+		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for enable/disable settings groups
 		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for tabs
@@ -179,6 +189,7 @@ abstract class mtekk_adminKit
 		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		//Run the opts fix filter
 		$this->opts_fix($this->opt);
+		add_action('wp_ajax_mtekk_admin_message_dismiss', array($this, 'dismiss_message'));
 	}
 	/**
 	 * Adds the adminpage the menu and the nice little settings link
@@ -309,7 +320,8 @@ abstract class mtekk_adminKit
 		if($version && version_compare($version, $this::version, '<') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
-			$this->message['error'][] = __('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier)
+				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
 			return false;
@@ -318,7 +330,8 @@ abstract class mtekk_adminKit
 		else if($version && version_compare($version, $this::version, '>') && is_array($this->opt))
 		{
 			//Let the user know that their settings are for a newer version
-			$this->message['error'][] = __('Your settings are for a newer version of this plugin.', $this->identifier) . $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Your settings are for a newer version of this plugin.', $this->identifier)
+				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
 			return true;
@@ -326,7 +339,8 @@ abstract class mtekk_adminKit
 		else if(!is_array($this->opt))
 		{
 			//Throw an error since it appears the options were never registered
-			$this->message['error'][] = __('Your plugin install is incomplete.', $this->identifier) . $this->admin_anchor('upgrade', __('Load default settings now.', $this->identifier), __('Complete now.', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Your plugin install is incomplete.', $this->identifier)
+				. $this->admin_anchor('upgrade', __('Load default settings now.', $this->identifier), __('Complete now.', $this->identifier)), 'error');
 			//Output any messages that there may be
 			$this->messages();
 			return false;
@@ -334,7 +348,8 @@ abstract class mtekk_adminKit
 		else if(!$this->opts_validate($this->opt))
 		{
 			//Throw an error since it appears the options contain invalid data
-			$this->message['error'][] = __('One or more of your plugin settings are invalid.', $this->identifier) . $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('One or more of your plugin settings are invalid.', $this->identifier)
+				. $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier)), 'error');
 			//Output any messages that there may be
 			$this->messages();
 			return false;
@@ -396,7 +411,7 @@ abstract class mtekk_adminKit
 						break;
 					//Handle the absolute integer options
 					case 'a':
-						$opts[$option] = absint($input[$option]);
+						$opts[$option] = (int) abs($input[$option]);
 						break;
 					//Handle the floating point options
 					case 'f':
@@ -404,7 +419,6 @@ abstract class mtekk_adminKit
 						break;
 					//Handle the HTML options
 					case 'h':
-						//May be better to use wp_kses here
 						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
 						break;
 					//Handle the HTML options that must not be null
@@ -533,26 +547,28 @@ abstract class mtekk_adminKit
 		if($updated && count(array_diff_key($input, $this->opt)) == 0)
 		{
 			//Let the user know everything went ok
-			$this->message['updated fade'][] = __('Settings successfully saved.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully saved.', $this->identifier)
+				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
 		else if(!$updated && count(array_diff_key($opt_prev, $this->opt)) == 0)
 		{
-			$this->message['updated fade'][] = __('Settings did not change, nothing to save.', $this->identifier);
+			$this->messages[] = new mtekk_adminKit_message(__('Settings did not change, nothing to save.', $this->identifier), 'info');
 		}
 		else if(!$updated)
 		{
-			$this->message['error fade'][] = __('Settings were not saved.', $this->identifier);
+			$this->messages[] = new mtekk_adminKit_message(__('Settings were not saved.', $this->identifier), 'error');
 		}
 		else
 		{
 			//Let the user know the following were not saved
-			$this->message['updated fade'][] = __('Some settings were not saved.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Some settings were not saved.', $this->identifier)
+				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'warning');
 			$temp = __('The following settings were not saved:', $this->identifier);
 			foreach(array_diff_key($input, $this->opt) as $setting => $value)
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->message['updated fade'][] = $temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier),'<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>');
+			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>'), 'info');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -651,12 +667,13 @@ abstract class mtekk_adminKit
 			//Commit the loaded options to the database
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Everything was successful, let the user know
-			$this->message['updated fade'][] = __('Settings successfully imported from the uploaded file.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier));
+			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully imported from the uploaded file.', $this->identifier)
+				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
 		else
 		{
 			//Throw an error since we could not load the file for various reasons
-			$this->message['error'][] = __('Importing settings from file failed.', $this->identifier);
+			$this->messages[] = new mtekk_adminKit_message(__('Importing settings from file failed.', $this->identifier), 'error');
 		}
 		//Reset to the default error handler after we're done
 		restore_error_handler();
@@ -675,7 +692,8 @@ abstract class mtekk_adminKit
 		//Load in the hard coded default option values
 		$this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Reset successful, let the user know
-		$this->message['updated fade'][] = __('Settings successfully reset to the default values.', $this->identifier) . $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier));
+		$this->messages[] = new mtekk_adminKit_message( __('Settings successfully reset to the default values.', $this->identifier)
+			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
@@ -692,7 +710,8 @@ abstract class mtekk_adminKit
 		//Set the backup options to the undone options
 		$this->update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
-		$this->message['updated fade'][] = __('Settings successfully undid the last operation.', $this->identifier) . $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier));
+		$this->messages[] = new mtekk_adminKit_message(__('Settings successfully undid the last operation.', $this->identifier)
+			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
@@ -727,14 +746,14 @@ abstract class mtekk_adminKit
 			//Store the options
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Send the success message
-			$this->message['updated fade'][] = __('Settings successfully migrated.', $this->identifier);
+			$this->messages[] = new mtekk_adminKit_message(__('Settings successfully migrated.', $this->identifier), 'success');
 		}
 		else
 		{
 			//Run the install script
 			$this->install();
 			//Send the success message
-			$this->message['updated fade'][] = __('Default settings successfully installed.', $this->identifier);
+			$this->messages[] = new mtekk_adminKit_message(__('Default settings successfully installed.', $this->identifier), 'success');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -753,13 +772,29 @@ abstract class mtekk_adminKit
 			
 		}
 	}
+	function dismiss_message()
+	{
+		//Grab the submitted UID
+		$uid = esc_attr($_POST['uid']);
+		//Create a dummy message, with the discovered UID
+		$message = new mtekk_adminKit_message('', '', true, $uid);
+		//Dismiss the message
+		$message->dismiss();
+		wp_die();
+	}
 	/**
 	 * Prints to screen all of the messages stored in the message member variable
 	 */
 	function messages()
 	{
+		foreach($this->messages as $message)
+		{
+			$message->render();
+		}
+		//Old deprecated messages
 		if(count($this->message))
 		{
+			_deprecated_function( __FUNCTION__, '6.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
 			//Loop through our message classes
 			foreach($this->message as $key => $class)
 			{
@@ -769,8 +804,9 @@ abstract class mtekk_adminKit
 					printf('<div class="%s"><p>%s</p></div>', $key, $message);	
 				}
 			}
+			$this->message = array();
 		}
-		$this->message = array();
+		$this->messages = array();
 	}
 	/**
 	 * Function prototype to prevent errors
@@ -813,7 +849,7 @@ abstract class mtekk_adminKit
 	 * @param object $option
 	 * @return 
 	 */
-	function get_valid_id($option)
+	static public function get_valid_id($option)
 	{
 		if(is_numeric($option[0]))
 		{
@@ -852,7 +888,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_hidden($option)
 	{
-		$optid = $this->get_valid_id($option);?>
+		$optid = mtekk_adminKit::get_valid_id($option);?>
 		<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" id="<?php echo $optid;?>" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>"/>
 	<?php
 	}
@@ -868,7 +904,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = mtekk_adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -899,7 +935,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = mtekk_adminKit::get_valid_id($option);
 		$extras = '';
 		if($min !== '')
 		{
@@ -937,9 +973,9 @@ abstract class mtekk_adminKit
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	function textbox($label, $option, $height = '3', $disable = false, $description = '')
+	function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = mtekk_adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -949,7 +985,7 @@ abstract class mtekk_adminKit
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
 			</th>
 			<td>
-				<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="large-text code disabled"';}else{echo 'class="large-text code"';}?> id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
+				<textarea rows="<?php echo $height;?>" <?php if($disable){echo 'disabled="disabled" class="large-text code disabled ';}else{echo 'class="large-text code ';} echo $class;?>" id="<?php echo $optid;?>" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]"><?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?></textarea><br />
 					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -966,7 +1002,7 @@ abstract class mtekk_adminKit
 	 */
 	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
-		$optid = $this->get_valid_id($option);
+		$optid = mtekk_adminKit::get_valid_id($option);
 		if($disable)
 		{?>
 			<input type="hidden" name="<?php echo $this->unique_prefix . '_options[' . $option;?>]" value="<?php echo htmlentities($this->opt[$option], ENT_COMPAT, 'UTF-8');?>" />
@@ -995,7 +1031,7 @@ abstract class mtekk_adminKit
 	 */
 	function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
 	{
-		$optid = $this->get_valid_id($option);?>
+		$optid = mtekk_adminKit::get_valid_id($option);?>
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>
@@ -1047,7 +1083,7 @@ abstract class mtekk_adminKit
 		{
 			$titles = $values;
 		}
-		$optid = $this->get_valid_id($option);?>
+		$optid = mtekk_adminKit::get_valid_id($option);?>
 		<tr valign="top">
 			<th scope="row">
 				<label for="<?php echo $optid;?>"><?php echo $label;?></label>

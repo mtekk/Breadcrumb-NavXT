@@ -62,8 +62,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 	}
-	function test_add()
-	{
+	function test_add() {
 		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
 		$post = get_post($pid);
 		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
@@ -78,6 +77,90 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame($breadcrumb, $breadcrumb_ret);
 		//Ensure the breadcrumb on the trail is what we expect
 		$this->assertSame($breadcrumb, $this->breadcrumb_trail->breadcrumbs[0]);
+	}
+	function test_do_author() {
+		//Some setup
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Now go to the author archives
+		$this->go_to(get_author_posts_url($author_id));
+		$this->breadcrumb_trail->call('do_author', array(get_queried_object()));
+		//Ensure we have 1 breadcrumb from the do_author portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+	}
+	function test_do_paged() {
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('do_paged', array(42));
+		//Ensure we have 1 breadcrumbs from the do_paged portion
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('42' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('paged') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+	}
+	function test_do_post() {
+		//Test a single post
+		$popid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$post = get_post($popid);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs to start
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+		
+		//Test a page
+		$papid = $this->factory->post->create(array('post_title' => 'Test Parent', 'post_type' => 'page'));
+		$papid = $this->factory->post->create(array('post_title' => 'Test Child', 'post_type' => 'page', 'post_parent' => $papid));
+		$post = get_post($papid);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs to start
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-page', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+
+		//Test an attachment
+		$attpida = $this->factory->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
+		$attpidb = $this->factory->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post = get_post($attpida);
+		//Call do_post on the post attachement
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($attpidb);
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Call do_post on the post attachement
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame('Test Attahementb' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame('Test Child' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
 	}
 	function test_query_var_to_taxonomy() {
 		//Setup some taxonomies
@@ -156,9 +239,14 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have only one breadcrumb
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Now disect this breadcrumb
-		$title_exploded = explode(', ', $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$title_exploded = explode(', ', $this->breadcrumb_trail->breadcrumbs[0]->assemble(true, 3));
 		//Ensure we have only 5 sub breadcrumbs
 		$this->assertCount(5, $title_exploded);
+		//Ensure we do not have double wrapped items
+		foreach($title_exploded as $title_under_test)
+		{
+			$this->assertRegExp('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*"><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
+		}
 	}
 	/**
 	 * Tests for the bcn_add_post_type_arg filter
@@ -267,6 +355,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
+		//Breadcrumb NavXT normally grabs this on instantiation, but we're late in setting the option
+		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
 		$this->set_permalink_structure('/%category%/%postname%/');
 		//Create some terms
 		$tids = $this->factory->category->create_many(10);
@@ -281,7 +371,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_set_object_terms($pid, array($tids[5]), 'category');
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array('post',  $this->breadcrumb_trail->opt['apost_post_root']));
 		//Ensure we have 3 breadcrumbs
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
@@ -308,10 +398,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_permalink($paid[1]));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array('page',  $this->breadcrumb_trail->opt['apost_page_root']));
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
+/*	
+	These tests no longer valid for new do_root function, may make more sense as a fill() test set
+
 	function test_do_root_blog_home()
 	{
 		//Create some pages
@@ -328,7 +421,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_home_url());
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array('post',  $this->breadcrumb_trail->opt['apost_post_root']));
 		//Ensure we have 4 breadcrumbs
 		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
@@ -371,74 +464,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->go_to(get_permalink($pid));
 		//We don't want the blog breadcrumb
 		$this->breadcrumb_trail->opt['bblog_display'] = false;
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs
-		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
-	}
-	function test_do_root_cpt()
-	{
-		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
-		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
-		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
-		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
-		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
-		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
-		//Set page '3' as the home page
-		update_option('page_on_front', $paid[3]);
-		//Set page '6' as the root for posts
-		update_option('page_for_posts', $paid[6]);
-		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
-		flush_rewrite_rules();
-		//Have to setup some CPT specific settings
-		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = $paid[1];
-		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
-		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
-		$this->set_permalink_structure('/%category%/%postname%/');
-		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
-		//"Go to" our post
-		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
-		//Ensure we have 2 breadcrumbs
-		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
-		//Check to ensure we got the breadcrumbs we wanted
-		$this->assertEquals($paid[2], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
-		$this->assertSame(get_the_title($paid[2]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertEquals($paid[1], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
-		$this->assertSame(get_the_title($paid[1]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-	}
-	/**
-	 * Test for when the CPT root setting is a non-integer see #148
-	 */
-	function test_do_root_cpt_null_root()
-	{
-		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
-		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
-		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
-		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
-		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
-		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
-		//Set page '3' as the home page
-		update_option('page_on_front', $paid[3]);
-		//Set page '6' as the root for posts
-		update_option('page_for_posts', $paid[6]);
-		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
-		flush_rewrite_rules();
-		//Have to setup some CPT specific settings
-		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = NULL;
-		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
-		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
-		$this->set_permalink_structure('/%category%/%postname%/');
-		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
-		//"Go to" our post
-		$this->go_to(get_permalink($pid));
-		$this->breadcrumb_trail->call('do_root');
-		//Ensure we have 0 breadcrumbs (no root)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 	function test_do_root_search()
@@ -477,17 +504,76 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		
 		//"Go to" our search, non-post type restricted
 		$this->go_to(get_search_link('test'));
-		$this->breadcrumb_trail->call('do_root');
+		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
-		
-		//Again with the search CPT restricted
-	/*	$this->breadcrumb_trail->breadcrumbs = array();
-		$this->go_to(add_query_arg('post_type', 'bcn_testa', get_search_link('test')));
-		var_dump(is_post_type_archive());
-		$this->breadcrumb_trail->call('do_root');
-		//Ensure we have 1 breadcrumbs from the do_root portion
-		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);*/
+	}
+*/
+	function test_do_root_cpt()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
+		flush_rewrite_rules();
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = $paid[1];
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		$this->breadcrumb_trail->call('do_root', array('bcn_testa',  $this->breadcrumb_trail->opt['apost_bcn_testa_root']));
+		//Ensure we have 2 breadcrumbs
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertEquals($paid[2], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_the_title($paid[2]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($paid[1], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($paid[1]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	/**
+	 * Test for when the CPT root setting is a non-integer see #148
+	 */
+	function test_do_root_cpt_null_root()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '3' as the home page
+		update_option('page_on_front', $paid[3]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		register_post_type('bcn_testa', array('public' => true, 'rewrite' => array('slug' => 'bcn_testa')));
+		flush_rewrite_rules();
+		//Have to setup some CPT specific settings
+		$this->breadcrumb_trail->opt['apost_bcn_testa_root'] = NULL;
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$this->set_permalink_structure('/%category%/%postname%/');
+		//Create a test post
+		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		//"Go to" our post
+		$this->go_to(get_permalink($pid));
+		$this->breadcrumb_trail->call('do_root', array('bcn_testa',  $this->breadcrumb_trail->opt['apost_bcn_testa_root']));
+		//Ensure we have 0 breadcrumbs (no root)
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 	function test_is_builtin()
 	{

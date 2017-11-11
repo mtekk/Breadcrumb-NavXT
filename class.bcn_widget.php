@@ -19,11 +19,14 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '5.7.1';
+	const version = '5.9.90';
+	protected $allowed_html = array();
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false, 'force' => false);
 	//Default constructor
 	function __construct()
 	{
+		//Filter allowed_html array to allow others to add acceptable tags
+		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
 		//@see https://core.trac.wordpress.org/ticket/10527
 		if(!is_textdomain_loaded('breadcrumb-navxt'))
 		{
@@ -85,7 +88,7 @@ class bcn_widget extends WP_Widget
 	{
 		//Filter out anything that could be invalid
 		$old_instance['title'] = strip_tags($new_instance['title']);
-		$old_instance['pretext'] = strip_tags($new_instance['pretext']);
+		$old_instance['pretext'] = wp_kses($new_instance['pretext'], $this->allowed_html);
 		$old_instance['type'] = strip_tags($new_instance['type']);
 		$old_instance['linked'] = isset($new_instance['linked']);
 		$old_instance['reverse'] = isset($new_instance['reverse']);

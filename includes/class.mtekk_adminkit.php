@@ -24,7 +24,7 @@ if(!class_exists('mtekk_adminKit_message'))
 }
 abstract class mtekk_adminKit
 {
-	const version = '1.9.81';
+	const version = '2.0.0';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -794,7 +794,7 @@ abstract class mtekk_adminKit
 		//Old deprecated messages
 		if(count($this->message))
 		{
-			_deprecated_function( __FUNCTION__, '6.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
+			_deprecated_function( __FUNCTION__, '2.0.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
 			//Loop through our message classes
 			foreach($this->message as $key => $class)
 			{

@@ -377,7 +377,7 @@ class bcn_breadcrumb_trail
 			$parent = get_post($id);
 		}
 		//Finish off with trying to find the type archive
-		$this->type_archive($parent);
+		$this->type_archive($parent, $type);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -856,14 +856,14 @@ class bcn_breadcrumb_trail
 	 * Deals with the post type archive and taxonomy archives
 	 * 
 	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
+	 * @param string $type_str The type string for the archive
 	 * 
 	 * TODO: Remove dependancies to current state (state should be passed in)
 	 */
-	protected function type_archive($type)
+	protected function type_archive($type, $type_str = false)
 	{
 		global $wp_taxonomies;
-		$type_str = false;
-		if(!isset($type->taxonomy)) //TODO could probably check the class type here
+		if(!isset($type->taxonomy) && $type_str === false) //TODO could probably check the class type here
 		{
 			$type_str = $this->get_type_string_query_var();
 		}
@@ -1043,7 +1043,7 @@ class bcn_breadcrumb_trail
 				}
 				$this->do_year(get_post(), $this->get_type_string_query_var(), is_paged(), is_year());
 				$type_str = $this->get_type_string_query_var();
-				$this->type_archive($type);
+				$this->type_archive($type, $type_str);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)

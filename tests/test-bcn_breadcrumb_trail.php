@@ -769,4 +769,25 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":null,"name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
 			$breadcrumb_string);
 	}
+	function test_display()
+	{
+		//Clear any breadcrumbs that may be lingering
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Add some breadcrumbs to the trail
+		//Setup our three breadcrumbs and add them to the breadcrumbs array
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$this->breadcrumb_trail->call('add', array($breadcrumba));
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$this->breadcrumb_trail->call('add', array($breadcrumbb));
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102);
+		$this->breadcrumb_trail->call('add', array($breadcrumbc));
+		//Check the resulting trail
+		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(true, false));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Test</span><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="3"></span>', $breadcrumb_string);
+		//Now remove a breadcrumb
+		unset($this->breadcrumb_trail->breadcrumbs[1]);
+		//Check that we still have separators where we expect them
+		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(true, false));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="2"></span>', $breadcrumb_string2);
+	}
 }

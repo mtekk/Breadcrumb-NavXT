@@ -550,7 +550,7 @@ class bcn_admin extends mtekk_adminKit
 								foreach($wp_taxonomies as $taxonomy)
 								{
 									//Check for non-public taxonomies
-									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, 'post'))
 									{
 										continue;
 									}
@@ -628,7 +628,7 @@ class bcn_admin extends mtekk_adminKit
 								foreach($wp_taxonomies as $taxonomy)
 								{
 									//Check for non-public taxonomies
-									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
 									{
 										continue;
 									}
@@ -688,7 +688,7 @@ class bcn_admin extends mtekk_adminKit
 			foreach($wp_taxonomies as $taxonomy)
 			{
 				//Check for non-public taxonomies
-				if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name))
+				if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, NULL))
 				{
 					continue;
 				}

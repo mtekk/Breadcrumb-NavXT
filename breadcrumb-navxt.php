@@ -310,11 +310,14 @@ class breadcrumb_navxt
 							break;
 						}
 					}
-					//If there are no valid taxonomies for this type, we default to not displaying taxonomies for this post type
+					//If there are no valid taxonomies for this type, setup our defaults
 					if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
 					{
 						$opts['Spost_' . $post_type->name . '_hierarchy_type'] = 'BCN_DATE';
 					}
+					//Run through some filters, allowing extensions to directly influence the default hierarchy selection/display
+					$opts['Spost_' . $post_type->name . '_hierarchy_type'] = apply_filters('bcn_default_hierarchy_type', $opts['Spost_' . $post_type->name . '_hierarchy_type'], $post_type->name);
+					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = apply_filters('bcn_default_hierarchy_display', $opts['bpost_' . $post_type->name . '_hierarchy_display'], $post_type->name, $opts['Spost_' . $post_type->name . '_hierarchy_type']);
 				}
 			}
 		}

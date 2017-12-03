@@ -41,7 +41,7 @@ class bcn_breadcrumb
 	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
-	 *  
+	 *
 	 * @param string $title (optional) The title of the breadcrumb
 	 * @param string $template (optional) The html template for the breadcrumb
 	 * @param string $type (optional) The breadcrumb type
@@ -83,7 +83,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Function to return the translated default template
-	 * 
+	 *
 	 * @return string The default breadcrumb template 
 	 */
 	static public function get_default_template()
@@ -92,7 +92,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Function to set the protected title member
-	 * 
+	 *
 	 * @param string $title The title of the breadcrumb
 	 */
 	public function set_title($title)
@@ -103,7 +103,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Function to get the protected title member
-	 * 
+	 *
 	 * @return $this->title
 	 */
 	public function get_title()
@@ -113,7 +113,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Function to set the internal URL variable
-	 * 
+	 *
 	 * @param string $url the url to link to
 	 */
 	public function set_url($url)
@@ -131,7 +131,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Function to set the internal breadcrumb template
-	 * 
+	 *
 	 * @param string $template the template to use durring assebly
 	 */
 	public function set_template($template)
@@ -159,7 +159,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Append a type entry to the type array
-	 * 
+	 *
 	 * @param string $type the type to append
 	 */
 	public function add_type($type)
@@ -168,7 +168,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Return the type array
-	 * 
+	 *
 	 * @return array The type array
 	 */
 	public function get_types()
@@ -177,7 +177,7 @@ class bcn_breadcrumb
 	}
 	/**
 	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
-	 * 
+	 *
 	 * @param int $max_length of the title.
 	 * @deprecated since 5.2.0
 	 */
@@ -209,10 +209,10 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Assembles the parts of the breadcrumb into a html string
-	 * 
+	 *
 	 * @param bool $linked Allow the output to contain anchors?
 	 * @param int $position The position of the breadcrumb in the trail (between 1 and n when there are n breadcrumbs in the trail)
-	 * 
+	 *
 	 * @return string The compiled breadcrumb string
 	 */
 	public function assemble($linked, $position)
@@ -248,9 +248,9 @@ class bcn_breadcrumb
 	}
 	/**
 	 * Assembles the parts of the breadcrumb into a JSON-LD ready object-array
-	 * 
+	 *
 	 * @param int $position The position of the breadcrumb in the trail (between 1 and n when there are n breadcrumbs in the trail)
-	 * 
+	 *
 	 * @return array(object) The prepared array object ready to pass into json_encode
 	 */
 	public function assemble_json_ld($position)

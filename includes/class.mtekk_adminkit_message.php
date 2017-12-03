@@ -88,11 +88,11 @@ class mtekk_adminKit_message
 				return;
 			}
 			wp_enqueue_script('mtekk_adminkit_messages');
-			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', $this->type, $this->contents, $this->uid, wp_create_nonce($this->uid . '_dismiss'));
+			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', esc_attr($this->type), $this->contents, esc_attr($this->uid), wp_create_nonce($this->uid . '_dismiss'));
 		}
 		else
 		{
-			printf('<div class="notice notice-%1$s"><p>%2$s</p></div>', $this->type, $this->contents);
+			printf('<div class="notice notice-%1$s"><p>%2$s</p></div>', esc_attr($this->type), $this->contents);
 		}
 	}
 }

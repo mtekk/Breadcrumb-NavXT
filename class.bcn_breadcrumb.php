@@ -33,8 +33,8 @@ class bcn_breadcrumb
 	//The link the breadcrumb leads to, null if $linked == false
 	protected $url;
 	//The corresponding resource ID
-	protected $id = NULL;
-	private $_title = NULL;
+	protected $id = null;
+	private $_title = null;
 	//The type of this breadcrumb
 	protected $type;
 	protected $allowed_html = array();
@@ -47,7 +47,7 @@ class bcn_breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
 	 */
-	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = NULL)
+	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = null)
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
@@ -60,15 +60,15 @@ class bcn_breadcrumb
 		//Set the default anchorless templates value
 		$this->template_no_anchor = bcn_breadcrumb::default_template_no_anchor;
 		//If we didn't get a good template, use a default template
-		if($template == NULL)
+		if($template == null)
 		{
 			$this->set_template(bcn_breadcrumb::get_default_template());
 		}
 		//If something was passed in template wise, update the appropriate internal template
 		else
 		{
-			//Loose comparison, evaluates to true if URL is '' or NULL
-			if($url == NULL)
+			//Loose comparison, evaluates to true if URL is '' or null
+			if($url == null)
 			{
 				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 				$this->set_template(bcn_breadcrumb::get_default_template());
@@ -78,7 +78,7 @@ class bcn_breadcrumb
 				$this->set_template($template);
 			}
 		}
-		//Always NULL if unlinked
+		//Always null if unlinked
 		$this->set_url($url);
 	}
 	/**
@@ -120,7 +120,7 @@ class bcn_breadcrumb
 	{
 		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
 		//If the URL seemed nullish, we are not linked
-		if($this->url == NULL)
+		if($this->url == null)
 		{
 			$this->linked = false;
 		}

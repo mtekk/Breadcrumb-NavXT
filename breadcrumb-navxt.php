@@ -57,7 +57,7 @@ if(class_exists('WP_Widget'))
 	//Include the WP 2.8+ widget class
 	require_once(dirname(__FILE__) . '/class.bcn_widget.php');
 }
-$breadcrumb_navxt = NULL;
+$breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {

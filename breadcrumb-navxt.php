@@ -10,7 +10,8 @@ License: GPL2
 Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
-/*  Copyright 2007-2017  John Havlik  (email : john.havlik@mtekk.us)
+/*
+	Copyright 2007-2017  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

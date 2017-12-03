@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
 	A small library that adds in fallbacks for some of the PHP multibyte string
 	functions. Mainly inteneded to be used with Breadcrumb NavXT
 

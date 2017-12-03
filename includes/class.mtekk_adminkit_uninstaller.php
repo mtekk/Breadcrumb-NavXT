@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
 	Copyright 2015-2017  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify

@@ -86,7 +86,7 @@ class breadcrumb_navxt
 		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
 		add_action('init', array($this, 'init'));
 		//Register the WordPress 2.8 Widget
-		add_action('widgets_init', create_function('', 'return register_widget("'. $this->unique_prefix . '_widget");'));
+		add_action('widgets_init', array($this, 'register_widget'));
 		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)
 		if(defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN)
 		{
@@ -107,6 +107,10 @@ class breadcrumb_navxt
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
+	}
+	public function register_widget()
+	{
+		return register_widget($this->unique_prefix . '_widget');
 	}
 	public function allowed_html($tags)
 	{

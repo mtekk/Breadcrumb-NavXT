@@ -5,14 +5,27 @@
  * @group adminKit
  * @group bcn_core
  */
+if(class_exists('mtekk_adminKit_message'))
+{
+	class mtekk_adminKit_message_DUT extends mtekk_adminKit_message {
+		//Super evil caller function to get around our private and protected methods in the parent class
+		function call($function, $args = array()) {
+			return call_user_func_array(array($this, $function), $args);
+		}
+		//Super evil getter function to get around our private and protected methods in the parent class
+		function get($var) {
+			return $this->$var;
+		}
+ 	}
+}
 class adminKitMessageTest extends WP_UnitTestCase {
 	public $messages = array();
 	function setUp() {
 		parent::setUp();
-		$this->messages[] = new mtekk_adminKit_message('test dismissible msg', 'warning', true, 'test_msga');
-		$this->messages[] = new mtekk_adminKit_message('test msg', 'warning', false, 'test_msgb');
-		$this->messages[] = new mtekk_adminKit_message('another test dismissible msg', 'warning', true, 'test_msgc');
-		$this->messages[] = new mtekk_adminKit_message('test msg', 'info');
+		$this->messages[] = new mtekk_adminKit_message_DUT('test dismissible msg', 'warning', true, 'test_msga');
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg', 'warning', false, 'test_msgb');
+		$this->messages[] = new mtekk_adminKit_message_DUT('another test dismissible msg', 'warning', true, 'test_msgc');
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg', 'info');
 	}
 	public function tearDown() {
 		parent::tearDown();
@@ -45,5 +58,20 @@ class adminKitMessageTest extends WP_UnitTestCase {
 		$this->expectOutputString('<div class="notice notice-warning"><p>test msg</p></div>');
 		$this->messages[0]->render();
 		$this->messages[1]->render();
+	}
+	function test_construction_dismissible() {
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 2', 'info');
+		$this->assertFalse(end($this->messages)->get('dismissible'));
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 3', 'info', true, 'uida');
+		$this->assertTrue(end($this->messages)->get('dismissible'));
+		//Now try our invalid uids
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 4', 'info', true, '');
+		$this->assertFalse(end($this->messages)->get('dismissible'));
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 5', 'info', true, ' ');
+		$this->assertFalse(end($this->messages)->get('dismissible'));
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 6', 'info', true, null);
+		$this->assertFalse(end($this->messages)->get('dismissible'));
+		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 7', 'info', true);
+		$this->assertFalse(end($this->messages)->get('dismissible'));
 	}
 }

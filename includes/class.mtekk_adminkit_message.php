@@ -60,7 +60,7 @@ class mtekk_adminKit_message
 	public function was_dismissed()
 	{
 		$this->dismissed = get_transient($this->uid);
-		return $this->dismissed ;
+		return $this->dismissed;
 	}
 	/**
 	 * Dismisses the message, preventing it from being rendered

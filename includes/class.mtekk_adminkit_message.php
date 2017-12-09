@@ -35,8 +35,9 @@ class mtekk_adminKit_message
 	 */
 	public function __construct($contents, $type = 'info', $dismissible = false, $uid = '')
 	{
+		$uid = sanitize_html_class($uid);
 		//If the message is dismissable, the UID better not be null/empty
-		if($dismissible === true && $uid == null)
+		if($dismissible === true && $uid === '')
 		{
 			//Let the user know they're doing it wrong
 			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$uid must not be null if message is dismissible', 'mtekk_adminKit'), '1.0.0');

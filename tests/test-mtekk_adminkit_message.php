@@ -65,6 +65,7 @@ class adminKitMessageTest extends WP_UnitTestCase {
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 3', 'info', true, 'uida');
 		$this->assertTrue(end($this->messages)->get('dismissible'));
 		//Now try our invalid uids
+		$this->setExpectedIncorrectUsage('mtekk_adminKit_message::__construct');
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 4', 'info', true, '');
 		$this->assertFalse(end($this->messages)->get('dismissible'));
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 5', 'info', true, ' ');

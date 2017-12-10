@@ -62,7 +62,7 @@ class bcn_admin extends mtekk_adminKit
 	{
 		$this->breadcrumb_trail =& $breadcrumb_trail;
 		$this->plugin_basename = $basename;
-		$this->full_name = __('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
+		$this->full_name = esc_html__('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt =& $this->breadcrumb_trail->opt;
 		//We're going to make sure we load the parent's constructor
@@ -311,14 +311,14 @@ class bcn_admin extends mtekk_adminKit
 		//Add contextual help on current screen
 		if($screen->id == 'settings_page_' . $this->identifier)
 		{
-			$general_tab = '<p>' . __('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
-				'</p><h5>' . __('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
-				sprintf(__("%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">', '</a>') . '</li><li>' .
-				sprintf(__('%sOnline Documentation%s: Check out the documentation for more indepth technical information.', 'breadcrumb-navxt'), '<a title="' . __('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="https://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">', '</a>') . '</li><li>' .
-				sprintf(__('%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-' . $this::version . '/#respond">', '</a>') . '</li></ul>' . 
-				'<h5>' . __('Giving Back', 'breadcrumb-navxt') . '</h5><ul><li>' .
-				sprintf(__('%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer.', 'breadcrumb-navxt'),'<a title="' . __('Go to PayPal to give a donation to Breadcrumb NavXT.', 'breadcrumb-navxt') . '" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">', '</a>') . '</li><li>' .
-				sprintf(__('%sTranslate%s: Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt'),'<a title="' . __('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">', '</a>') . '</li></ul>';
+			$general_tab = '<p>' . esc_html__('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
+				'</p><h5>' . esc_html__('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
+				sprintf(esc_html__("%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">', '</a>') . '</li><li>' .
+				sprintf(esc_html__('%sOnline Documentation%s: Check out the documentation for more indepth technical information.', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="https://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">', '</a>') . '</li><li>' .
+				sprintf(esc_html__('%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/wordpress/plugins-wordpress/breadcrumb-navxt-' . $this::version . '/#respond">', '</a>') . '</li></ul>' . 
+				'<h5>' . esc_html__('Giving Back', 'breadcrumb-navxt') . '</h5><ul><li>' .
+				sprintf(esc_html__('%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to PayPal to give a donation to Breadcrumb NavXT.', 'breadcrumb-navxt') . '" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">', '</a>') . '</li><li>' .
+				sprintf(esc_html__('%sTranslate%s: Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">', '</a>') . '</li></ul>';
 			
 			$screen->add_help_tab(
 				array(
@@ -326,14 +326,14 @@ class bcn_admin extends mtekk_adminKit
 				'title' => __('General', 'breadcrumb-navxt'),
 				'content' => $general_tab
 				));
-			$quickstart_tab = '<p>' . __('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
-				'</p><h5>' . __('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;' . "
+			$quickstart_tab = '<p>' . esc_html__('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
+				'</p><h5>' . esc_html__('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;' . "
 	&lt;?php if(function_exists('bcn_display'))
 	{
 		bcn_display();
 	}?&gt;
 &lt;/div&gt;</code></pre>" .
-				'<h5>' . __('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;'."
+				'<h5>' . esc_html__('Breadcrumb trail in list form', 'breadcrumb-navxt').'</h5><pre><code>&lt;ol class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;'."
 	&lt;?php if(function_exists('bcn_display_list'))
 	{
 		bcn_display_list();
@@ -345,7 +345,7 @@ class bcn_admin extends mtekk_adminKit
 				'title' => __('Quick Start', 'breadcrumb-navxt'),
 				'content' => $quickstart_tab
 				));
-			$styling_tab = '<p>' . __('Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail.', 'breadcrumb-navxt') . '</p>' .
+			$styling_tab = '<p>' . esc_html__('Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail.', 'breadcrumb-navxt') . '</p>' .
 				'<pre><code>.breadcrumbs
 {
 	font-size: 1.1em;
@@ -407,20 +407,20 @@ class bcn_admin extends mtekk_adminKit
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsiteoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsiteoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_isitemayoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_isitemayoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsitemayoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsitemayoveride');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nosetting');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nosetting');
 			}
 		}
 	}
@@ -432,7 +432,7 @@ class bcn_admin extends mtekk_adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->opt['blimit_title']) && $this->opt['blimit_title'])
 		{
-			$this->messages[] = new mtekk_adminKit_message(sprintf(__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'), 'warning');
+			$this->messages[] = new mtekk_adminKit_message(sprintf(esc_html__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'), 'warning');
 		}
 	}
 	/**
@@ -562,7 +562,7 @@ class bcn_admin extends mtekk_adminKit
 									}
 								}
 							?>
-							<p class="description"><?php _e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
+							<p class="description"><?php esc_html_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -605,7 +605,7 @@ class bcn_admin extends mtekk_adminKit
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<label for="<?php echo $optid;?>"><?php printf(__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
+							<label for="<?php echo $optid;?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
 						</th>
 						<td>
 							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->opt['apost_' . $post_type->name . '_root']));?>
@@ -644,11 +644,11 @@ class bcn_admin extends mtekk_adminKit
 							<?php
 							if($post_type->hierarchical)
 							{
-								_e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); 
+								esc_html_e('The hierarchy which the breadcrumb trail will show.', 'breadcrumb-navxt'); 
 							}
 							else
 							{
-								_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt');
+								esc_html_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt');
 							}
 							?>
 							</p>
@@ -735,17 +735,17 @@ class bcn_admin extends mtekk_adminKit
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">
-							<?php _e('Title Length', 'breadcrumb-navxt'); ?>						
+							<?php esc_html_e('Title Length', 'breadcrumb-navxt'); ?>						
 						</th>
 						<td>
 							<label>
 								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
-								<?php printf(__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
+								<?php printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
 							</label><br />
 							<ul>
 								<li>
 									<label for="amax_title_length">
-										<?php _e('Max Title Length: ','breadcrumb-navxt');?>
+										<?php esc_html_e('Max Title Length: ','breadcrumb-navxt');?>
 										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
 									</label>
 								</li>

@@ -143,7 +143,7 @@ class bcn_network_admin extends bcn_admin
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
@@ -151,17 +151,17 @@ class bcn_network_admin extends bcn_admin
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isitemayoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isitemayoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nsmayoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nsmayoveride');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nosetting');
-				$this->messages[] = new mtekk_adminKit_message(__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nosetting');
+				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 		}
 	}

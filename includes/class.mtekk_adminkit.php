@@ -888,7 +888,7 @@ abstract class mtekk_adminKit
 	{
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />', esc_atr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]));
+		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]));
 	}
 	/**
 	 * This will output a well formed option label
@@ -913,19 +913,17 @@ abstract class mtekk_adminKit
 	{
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />', esc_atr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), $disabled_str);?>
+				<?php printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false));?>
 				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -960,19 +958,17 @@ abstract class mtekk_adminKit
 		{
 			$extras .= 'step="' . esc_attr($step) . '" ';
 		}
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />', esc_atr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), $disabled_str, $extras);?>
+				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), $extras);?>
 				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -992,19 +988,17 @@ abstract class mtekk_adminKit
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$class .= ' large-text';
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_atr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), $disabled_str, esc_attr($height));?>
+				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_attr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), disabled($disable, true, false), esc_attr($height));?>
 					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -1021,21 +1015,19 @@ abstract class mtekk_adminKit
 	 */
 	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
-		$optid = mtekk_adminKit::get_valid_id($option);
+		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$class = 'mtekk_mce';
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_atr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), $disabled_str, esc_attr($height));?>
+				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_attr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), disabled($disable, true, false), esc_attr($height));?>
 				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -1055,12 +1047,10 @@ abstract class mtekk_adminKit
 	{
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
@@ -1068,7 +1058,7 @@ abstract class mtekk_adminKit
 			</th>
 			<td>	
 				<label>
-					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />', esc_atr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), $disabled_str, checked(true, $this->opt[$option]));?>
+					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($this->opt[$option], true, false));?>
 					<?php echo $instruction; ?>
 				</label><br />
 				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
@@ -1089,16 +1079,14 @@ abstract class mtekk_adminKit
 	{
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		$disabled_str = '';
 		$class .= ' togx';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<label>
-			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />', esc_atr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), $disabled_str, checked(true, $this->opt[$option]));?>
+			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($value, $this->opt[$option], false));?>
 			<?php echo $instruction; ?>
 		</label><br/>
 	<?php
@@ -1123,19 +1111,17 @@ abstract class mtekk_adminKit
 		}
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		$disabled_str = '';
 		if($disable)
 		{
 			$this->input_hidden($option);
 			$class .= ' disabled';
-			$disabled_str = 'disabled="disabled" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($optid, $label);?>
+				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />', esc_atr($opt_name), esc_attr($opt_id), $this->select_options($option, $titles, $values), esc_attr($class), $disabled_str);?>
+				<?php printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />', esc_attr($opt_name), esc_attr($opt_id), $this->select_options($option, $titles, $values), esc_attr($class), disabled($disable, true, false));?>
 				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
 			</td>
 		</tr>
@@ -1148,18 +1134,22 @@ abstract class mtekk_adminKit
 	 * @param array $options array of names of options that can be selected
 	 * @param array $values array of the values of the options that can be selected
 	 * @param array $exclude(optional) array of names in $options array to be excluded
+	 * 
+	 * @return string The assembled HTML for the select options
 	 */
 	function select_options($optionname, $options, $values, $exclude = array())
 	{
+		$options_html = '';
 		$value = $this->opt[$optionname];
 		//Now do the rest
 		foreach($options as $key => $option)
 		{
 			if(!in_array($option, $exclude))
 			{
-				printf('<option value="%1$s" %2$s>%3$s</option>', esc_attr($values[$key]), selected(true, ($value === $values[$key]), false), $option);
+				$options_html .= sprintf('<option value="%1$s" %2$s>%3$s</option>', esc_attr($values[$key]), selected($value, $values[$key], false), $option);
 			}
 		}
+		return $options_html;
 	}
 	/**
 	 * A local pass through for get_option so that we can hook in and pick the correct method if needed

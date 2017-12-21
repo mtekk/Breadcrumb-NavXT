@@ -70,7 +70,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb_unlinked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), NULL, 101);
 		$breadcrumb_string_unlinked1 = $breadcrumb_unlinked->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked1);
-		
+
 		//Now set a URL
 		$breadcrumb_unlinked->set_url('http://flowissues.com/code');
 		$breadcrumb_string_linked1 = $breadcrumb_unlinked->assemble(true, 1);
@@ -78,7 +78,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Make sure we have the expected URL in the output
 		$this->assertContains('http://flowissues.com/code', $breadcrumb_string_linked1);
-		
+
 		//Now change the URL
 		$breadcrumb_unlinked->set_url('http://flowissues.com/food');
 		$breadcrumb_string_linked2 = $breadcrumb_unlinked->assemble(true, 1);
@@ -86,16 +86,21 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
 		//Make sure we have the expected URL in the output
 		$this->assertContains('http://flowissues.com/food', $breadcrumb_string_linked2);
-		
+
 		//Now pass in a blank URL
 		$breadcrumb_unlinked->set_url('');
 		$breadcrumb_string_unlinked2 = $breadcrumb_unlinked->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked2);
-		
-		//Now pass in a NULL URL
-		$breadcrumb_unlinked->set_url(NULL);
+
+		//Now pass in a blank URL
+		$breadcrumb_unlinked->set_url(' ');
 		$breadcrumb_string_unlinked3 = $breadcrumb_unlinked->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked3);
+
+		//Now pass in a NULL URL
+		$breadcrumb_unlinked->set_url(null);
+		$breadcrumb_string_unlinked4 = $breadcrumb_unlinked->assemble(true, 1);
+		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked4);
 	}
 	function test_bad_url() {	
 		//First test a linked breadcrumb

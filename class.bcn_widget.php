@@ -59,13 +59,13 @@ class bcn_widget extends WP_Widget
 		if($instance['type'] == 'list')
 		{
 			//Display the list output breadcrumb
-			echo wp_kses($instance['pretext'], wp_kses_allowed_html('post')) . '<ol class="breadcrumb_trail breadcrumbs">';
+			echo wp_kses($instance['pretext'], $this->allowed_html) . '<ol class="breadcrumb_trail breadcrumbs">';
 			bcn_display_list(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</ol>';
 		}
 		else if($instance['type'] == 'microdata')
 		{
-			echo '<div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">' . wp_kses($instance['pretext'], wp_kses_allowed_html('post'));
+			echo '<div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">' . wp_kses($instance['pretext'], $this->allowed_html);
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</div>';
@@ -73,7 +73,7 @@ class bcn_widget extends WP_Widget
 		else if($instance['type'] == 'plain')
 		{
 			//Display the pretext
-			echo wp_kses($instance['pretext'], wp_kses_allowed_html('post'));
+			echo wp_kses($instance['pretext'], $this->allowed_html);
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
 		}

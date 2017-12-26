@@ -2,7 +2,7 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 4.6
+Requires at least: 4.7
 Tested up to: 4.8
 Stable tag: 5.7.1
 Requires PHP: 5.3
@@ -34,13 +34,11 @@ Breadcrumb NavXT now supports WordPress.org language packs. Want to translate Br
 
 == Installation ==
 Open the appropriate file for your theme (typically header.php). This can be done within WordPress’ administration panel through Presentation > Theme Editor or through your favorite text editor. Place the following code where you want the breadcrumb trail to appear.
-`<div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
-    <?php if(function_exists('bcn_display'))
+`if(function_exists('bcn_display'))
     {
         bcn_display();
-    }?>
-</div>`
-Save the file (upload if applicable). Now you should have a breadcrumb trail on your WordPress powered site. To customize the breadcrumb trail you may edit the default values for the options in the administrative interface. This is located in your administration panel under Settings > Breadcrumb NavXT.
+    }`
+Save the file (upload if applicable). Now you should have a breadcrumb trail on your WordPress powered site. To customize the breadcrumb trail you may edit the default values for the options in the administrative interface. This is located in your administration panel under Settings > Breadcrumb NavXT. See the [Calling the Breadcrumb Trail](http://mtekk.us/archives/guides/calling-the-breadcrumb-trail "Read more on calling the breadcrumb trail") article for more information on calling the breadcrumb trail.
 
 Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/ "Go to Breadcrumb NavXT's Documentation.") page for more information.
 
@@ -53,6 +51,24 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.0.0 =
+Release date: December, 26th 2017
+
+* Behavior change: `bcn_breadcrumb_trail::display_list()` deprecated in favor of using the `$template` parameter in `bcn_breadcrumb_trail::display()`.
+* Behavior change: `bcn_breadcrumb_trail::do_attachment()` deprecated in favor of calling `bcn_breadcrumb_trail::do_post()`.
+* Behavior change: `bcn_breadcrumb_trail::do_front_page()` deprecated in favor of calling `bcn_breadcrumb_trail::do_home()`.
+* Behavior change: `bcn_li_attributes` filter was deprecated in favor of `bcn_display_attributes`.
+* Behavior change: `bcn_breadcrumb_trail::do_archive_by_date()` deprecated in favor of calling bcn_breadcrumb_trail::do_day()`, `bcn_breadcrumb_trail::do_month()`, and/or `bcn_breadcrumb_trail::do_year()`.
+* Behavior change: `bcn_breadcrumb_trail::find_type()` deprecated and removed from bcn_breadcrumb_trail.
+* Behavior change: Breadcrumb for 404 error pages changed to be a child of the front page.
+* New feature: Added support for various HTML tags in the widget's pretext field.
+* New feature: Added `bcn_default_hierarchy_display` filter.
+* New feature: Added `bcn_default_hierarchy_type` filter.
+* New feature: Added `$posttype_name` as the third parameter to `bcn_show_tax_private`.
+* Bug fix: Fixed UI/UX issue in the settings screen where enabling/disabling settings groups for the Home, Blog, and Mainsite breadcrumb settings did not work.
+* Bug fix: Fixed UI/UX issue in the settings screen where not including the paged breadcrumb still allowed the paged breadcrumb template to be edited.
+* Bug fix: Removed use of `create_function` in registering the widget as it was deprecated in PHP 7.2.
 
 = 5.7.1 =
 Release date: June 30th, 2017

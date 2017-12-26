@@ -28,7 +28,7 @@ if(!class_exists('bcn_admin'))
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '5.9.90';
+	const version = '6.0.0';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**

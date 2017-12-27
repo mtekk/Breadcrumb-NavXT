@@ -24,7 +24,7 @@ if(!class_exists('mtekk_adminKit_message'))
 }
 abstract class mtekk_adminKit
 {
-	const version = '2.0.0';
+	const version = '2.0.1';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -1086,7 +1086,7 @@ abstract class mtekk_adminKit
 			$class .= ' disabled';
 		}?>
 		<label>
-			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($value, $this->opt[$option], false));?>
+			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($value), esc_attr($class), disabled($disable, true, false), checked($value, $this->opt[$option], false));?>
 			<?php echo $instruction; ?>
 		</label><br/>
 	<?php

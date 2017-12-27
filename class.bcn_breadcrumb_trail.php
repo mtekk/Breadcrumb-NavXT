@@ -966,6 +966,14 @@ class bcn_breadcrumb_trail
 			//Exit early since we have breadcrumbs in the trail
 			return null;
 		}
+		if($this->opt['bblog_display'])
+		{
+			$this->opt['apost_post_root'] = get_option('page_for_posts');
+		}
+		else
+		{
+			$this->opt['apost_post_root'] = false;
+		}
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_before_fill', $this);
 		$type = $wp_query->get_queried_object();
@@ -1062,10 +1070,7 @@ class bcn_breadcrumb_trail
 			{
 				$this->type_archive($type);
 			}
-			if($type_str !== 'post')
-			{
-				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
-			}
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 		}
 		//For 404 pages
 		else if(is_404())

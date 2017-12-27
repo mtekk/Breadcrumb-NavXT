@@ -52,10 +52,6 @@ class bcn_breadcrumb_trail
 			'Hhome_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Should the blog page be shown globally
 			'bblog_display' => true,
-			//The breadcrumb template for the blog page only in static front page mode
-			'Hblog_template' => bcn_breadcrumb::get_default_template(),
-			//The breadcrumb template for the blog page only in static front page mode, used when an anchor is not needed
-			'Hblog_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
 			//the first and not after the last breadcrumb
 			'hseparator' => ' &gt; ',

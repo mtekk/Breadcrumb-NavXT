@@ -510,8 +510,6 @@ class bcn_admin extends mtekk_adminKit
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), '', 'adminkit-enset-ctrl adminkit-enset');
-						$this->textbox(__('Blog Template', 'breadcrumb-navxt'), 'Hblog_template', '6', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments.', 'breadcrumb-navxt'), 'adminkit-enset');
-						$this->textbox(__('Blog Template (Unlinked)', 'breadcrumb-navxt'), 'Hblog_template_no_anchor', '4', $this->maybe_disable_blog_options(), __('The template for the blog breadcrumb, used only in static front page environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_blog', $this->opt);
 					?>
 				</table>

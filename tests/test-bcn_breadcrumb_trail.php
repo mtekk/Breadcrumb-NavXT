@@ -402,10 +402,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
-/*	
-	These tests no longer valid for new do_root function, may make more sense as a fill() test set
-
-	function test_do_root_blog_home()
+	function test_fill_blog_home()
 	{
 		//Create some pages
 		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
@@ -421,20 +418,23 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_for_posts', $paid[6]);
 		//"Go to" our post
 		$this->go_to(get_home_url());
-		$this->breadcrumb_trail->call('do_root', array('post',  $this->breadcrumb_trail->opt['apost_post_root']));
-		//Ensure we have 4 breadcrumbs
-		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill');
+		//Ensure we have 1 breadcrumbs
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
-		$this->assertEquals($paid[3], $this->breadcrumb_trail->breadcrumbs[3]->get_id());
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		
+		/*$this->assertEquals($paid[3], $this->breadcrumb_trail->breadcrumbs[3]->get_id());
 		$this->assertSame(get_the_title($paid[3]), $this->breadcrumb_trail->breadcrumbs[3]->get_title());
 		$this->assertEquals($paid[0], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
 		$this->assertSame(get_the_title($paid[0]), $this->breadcrumb_trail->breadcrumbs[2]->get_title());
 		$this->assertEquals($paid[5], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
 		$this->assertSame(get_the_title($paid[5]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertEquals($paid[6], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
-		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());*/
 	}
-	function test_do_root_no_blog()
+	function test_fill_bblog_display()
 	{
 		//Create some pages
 		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
@@ -448,7 +448,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
-		$this->set_permalink_structure('/%category%/%postname%/');
+		//Breadcrumb NavXT normally grabs this on instantiation, but we're late in setting the option
+		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
 		//Create some terms
 		$tids = $this->factory->category->create_many(10);
 		//Create a test post
@@ -462,13 +463,48 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_set_object_terms($pid, array($tids[5]), 'category');
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//We don't want the blog breadcrumb
+		$this->breadcrumb_trail->opt['bblog_display'] = true;
+		$this->breadcrumb_trail->call('fill');
+		//Ensure we have 9 breadcrumbs
+		$this->assertCount(9, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertEquals($pid, $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($pid), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertEquals($tids[5], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_term($tids[5])->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($tids[7], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
+		$this->assertSame(get_term($tids[7])->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertEquals($tids[8], $this->breadcrumb_trail->breadcrumbs[3]->get_id());
+		$this->assertSame(get_term($tids[8])->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertEquals($tids[6], $this->breadcrumb_trail->breadcrumbs[4]->get_id());
+		$this->assertSame(get_term($tids[6])->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertEquals($paid[6], $this->breadcrumb_trail->breadcrumbs[5]->get_id());
+		$this->assertSame(get_the_title($paid[6]), $this->breadcrumb_trail->breadcrumbs[5]->get_title());
+		$this->assertEquals($paid[5], $this->breadcrumb_trail->breadcrumbs[6]->get_id());
+		$this->assertSame(get_the_title($paid[5]), $this->breadcrumb_trail->breadcrumbs[6]->get_title());
+		$this->assertEquals($paid[0], $this->breadcrumb_trail->breadcrumbs[7]->get_id());
+		$this->assertSame(get_the_title($paid[0]), $this->breadcrumb_trail->breadcrumbs[7]->get_title());
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[8]->get_title());
+		$this->breadcrumb_trail->breadcrumbs = array();
 		//We don't want the blog breadcrumb
 		$this->breadcrumb_trail->opt['bblog_display'] = false;
-		$this->breadcrumb_trail->call('do_root', array(get_queried_object()));
-		//Ensure we have 0 breadcrumbs
-		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('fill');
+		//Ensure we have 6 breadcrumbs
+		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertEquals($pid, $this->breadcrumb_trail->breadcrumbs[0]->get_id());
+		$this->assertSame(get_the_title($pid), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertEquals($tids[5], $this->breadcrumb_trail->breadcrumbs[1]->get_id());
+		$this->assertSame(get_term($tids[5])->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertEquals($tids[7], $this->breadcrumb_trail->breadcrumbs[2]->get_id());
+		$this->assertSame(get_term($tids[7])->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertEquals($tids[8], $this->breadcrumb_trail->breadcrumbs[3]->get_id());
+		$this->assertSame(get_term($tids[8])->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertEquals($tids[6], $this->breadcrumb_trail->breadcrumbs[4]->get_id());
+		$this->assertSame(get_term($tids[6])->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[5]->get_title());
 	}
-	function test_do_root_search()
+/*	function test_do_root_search()
 	{
 		register_post_type('bcn_testa', 
 			array('public' => true,

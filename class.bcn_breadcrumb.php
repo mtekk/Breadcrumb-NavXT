@@ -118,9 +118,10 @@ class bcn_breadcrumb
 	 */
 	public function set_url($url)
 	{
+		$url = trim($url);
 		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
 		//If the URL seemed nullish, we are not linked
-		if($this->url == null)
+		if($this->url === '')
 		{
 			$this->linked = false;
 		}

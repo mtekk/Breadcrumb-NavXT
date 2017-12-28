@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -51,6 +51,13 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.0.1 =
+Release date: December, 28th 2017
+
+* Behavior change: Removed unused Blog Template and Blog Template (Unlinked) from settings page.
+* Bug fix: Fixed issue where changes to the hierarchy type for any post type would not save.
+* Bug fix: Fixed issue where the blog display setting was ignored.
 
 = 6.0.0 =
 Release date: December, 26th 2017
@@ -237,12 +244,8 @@ Release date: November 20th, 2013
 * Bug fix: The current_item breadcrumb for search results should result in a valid HTTPS link when appropriate.
 
 == Upgrade Notice ==
+= 6.0.0 =
+This version requires PHP5.3 or newer. This version introduces three new filters and deprecates a filter.
 
 = 5.6.0 =
 This version requires PHP5.3 or newer. This version introduces a new 4th optional parameter to `bcn_display()` and `bcn_display_list()` that bypasses the internal caching mechanism.
-
-= 5.5.0 =
-This version requires PHP5.3 or newer. This version introduces contextually aware taxonomy selection for post hierarchies.
-
-= 5.4.0 =
-This version requires PHP5.3 or newer. This version introduces three new filters: `bcn_post_terms`, `bcn_add_post_type_arg`, and `bcn_pick_post_term`.

@@ -145,6 +145,16 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			. '</span><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_option('blogname')
 			. '</span><meta property="position" content="7"></span>'
 			, bcn_display(true, false, true, true));
+		//Now linked
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_option('blogname') . '." href="' . get_home_url() . '" class="home"><span property="name">' . get_option('blogname')
+			. '</span></a><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_the_title($this->blog) . '." href="' . get_permalink($this->blog) . '" class="post-root post post-post"><span property="name">' . get_the_title($this->blog)
+			. '</span></a><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[6])->name . ' category archives." href="' . get_term_link($this->terms[6]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[6])->name
+			. '</span></a><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[8])->name . ' category archives." href="' . get_term_link($this->terms[8]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[8])->name
+			. '</span></a><meta property="position" content="4"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[7])->name . ' category archives." href="' . get_term_link($this->terms[7]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[7])->name
+			. '</span></a><meta property="position" content="5"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[5])->name . ' category archives." href="' . get_term_link($this->terms[5]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[5])->name
+			. '</span></a><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
+			. '</span><meta property="position" content="7"></span>'
+			, bcn_display(true, true, false, true));
 	}
 	function test_bcn_display_list()
 	{
@@ -169,6 +179,16 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			. '</span><meta property="position" content="6"></span></li>' . "\n" . '<li class="home"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_option('blogname')
 			. '</span><meta property="position" content="7"></span></li>' . "\n"
 			, bcn_display_list(true, false, true, true));
+		//Now linked
+		$this->assertSame('<li class="home"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_option('blogname') . '." href="' . get_home_url() . '" class="home"><span property="name">' . get_option('blogname')
+			. '</span></a><meta property="position" content="1"></span></li>' . "\n" . '<li class="post-root post post-post"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_the_title($this->blog) . '." href="' . get_permalink($this->blog) . '" class="post-root post post-post"><span property="name">' . get_the_title($this->blog)
+			. '</span></a><meta property="position" content="2"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[6])->name . ' category archives." href="' . get_term_link($this->terms[6]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[6])->name
+			. '</span></a><meta property="position" content="3"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[8])->name . ' category archives." href="' . get_term_link($this->terms[8]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[8])->name
+			. '</span></a><meta property="position" content="4"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[7])->name . ' category archives." href="' . get_term_link($this->terms[7]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[7])->name
+			. '</span></a><meta property="position" content="5"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[5])->name . ' category archives." href="' . get_term_link($this->terms[5]) . '" class="taxonomy category"><span property="name">' . get_term($this->terms[5])->name
+			. '</span></a><meta property="position" content="6"></span></li>' . "\n" . '<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
+			. '</span><meta property="position" content="7"></span></li>' . "\n"
+			, bcn_display_list(true, true, false, true));
 	}
 	function test_bcn_display_json_ld()
 	{

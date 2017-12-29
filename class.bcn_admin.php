@@ -484,7 +484,7 @@ class bcn_admin extends mtekk_adminKit
 				<h3><?php _e('General', 'breadcrumb-navxt'); ?></h3>
 				<table class="form-table">
 					<?php
-						$this->input_text(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', 'regular-text', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
+						$this->textbox(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_general', $this->opt);
 					?>
 				</table>
@@ -493,7 +493,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes', 'breadcrumb-navxt'));
 						$this->input_check(_x('Paged Breadcrumb', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'bpaged_display', __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt'), 'adminkit-enset-ctrl adminkit-enset');
-						$this->input_text(_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'Hpaged_template', 'large-text adminkit-enset', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'));
+						$this->textbox(_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'), 'Hpaged_template', '4', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_current_item', $this->opt);
 					?>
 				</table>

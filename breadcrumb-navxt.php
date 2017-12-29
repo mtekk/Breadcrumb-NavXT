@@ -414,7 +414,7 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display($return, $linked, $reverse);
+		return $this->breadcrumb_trail->display($return, $linked, $reverse, $template);
 	}
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags

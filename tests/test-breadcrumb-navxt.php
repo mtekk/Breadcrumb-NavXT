@@ -135,20 +135,40 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			. '</span><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
 			. '</span><meta property="position" content="7"></span>'
 			, bcn_display(true, false, false, true));
+		//Now in reverse order
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
+			. '</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[5])->name
+			. '</span><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[7])->name
+			. '</span><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[8])->name
+			. '</span><meta property="position" content="4"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[6])->name
+			. '</span><meta property="position" content="5"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->blog)
+			. '</span><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">' . get_option('blogname')
+			. '</span><meta property="position" content="7"></span>'
+			, bcn_display(true, false, true, true));
 	}
 	function test_bcn_display_list()
 	{
 		$this->go_to(get_permalink($this->posts[0]));
 		//Now test the normal order mode
 		$this->assertSame('<li class="home"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_option('blogname')
-			. '</span><meta property="position" content="1"></span></li>' . "\n" . '<li><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->blog)
-			. '</span><meta property="position" content="2"></span></li>' . "\n" . '<li><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[6])->name
-			. '</span><meta property="position" content="3"></span></li>' . "\n" . '<li><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[8])->name
-			. '</span><meta property="position" content="4"></span></li>' . "\n" . '<li><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[7])->name
-			. '</span><meta property="position" content="5"></span></li>' . "\n" . '<li><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[5])->name
-			. '</span><meta property="position" content="6"></span></li>' . "\n" . '<li class="current_item"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
+			. '</span><meta property="position" content="1"></span></li>' . "\n" . '<li class="post-root post post-post"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->blog)
+			. '</span><meta property="position" content="2"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[6])->name
+			. '</span><meta property="position" content="3"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[8])->name
+			. '</span><meta property="position" content="4"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[7])->name
+			. '</span><meta property="position" content="5"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[5])->name
+			. '</span><meta property="position" content="6"></span></li>' . "\n" . '<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
 			. '</span><meta property="position" content="7"></span></li>' . "\n"
 			, bcn_display_list(true, false, false, true));
+		//Now in reverse order
+		$this->assertSame('<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->posts[0])
+			. '</span><meta property="position" content="1"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[5])->name
+			. '</span><meta property="position" content="2"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[7])->name
+			. '</span><meta property="position" content="3"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[8])->name
+			. '</span><meta property="position" content="4"></span></li>' . "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_term($this->terms[6])->name
+			. '</span><meta property="position" content="5"></span></li>' . "\n" . '<li class="post-root post post-post"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_the_title($this->blog)
+			. '</span><meta property="position" content="6"></span></li>' . "\n" . '<li class="home"><span property="itemListElement" typeof="ListItem"><span property="name">' . get_option('blogname')
+			. '</span><meta property="position" content="7"></span></li>' . "\n"
+			, bcn_display_list(true, false, true, true));
 	}
 	function test_bcn_display_json_ld()
 	{

@@ -1173,42 +1173,22 @@ class bcn_breadcrumb_trail
 	protected function display_loop($linked, $reverse, $template)
 	{
 		$position = 1;
+		$last_position = count($this->breadcrumbs);
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
-			$class = '';
-			//On the first run we need to add in a class for the home breadcrumb
-			if($trail_str === '')
+			$types = $breadcrumb->get_types();
+			array_walk($types, 'sanitize_html_class');
+			$class = sprintf(' class="%s"', esc_attr(implode(' ', $types)));
+			//Deal with the separator
+			if($position < $last_position)
 			{
-				$class .= ' class="home';
-				if($key === 0)
-				{
-					$class .= ' current_item';
-				}
-				$class .= '"';
-			}
-			//If we are on the current item there are some things that must be done
-			else if($key === 0)
-			{
-				//Add in a class for current_item
-				$class .= ' class="current_item"';
-			}
-			$separator = '';
-			//Deal with determining if a separator is applicable
-			if($reverse)
-			{
-				if($position > 1)
-				{
-					$separator = $this->opt['hseparator'];
-				}
+				$separator = $this->opt['hseparator'];
 			}
 			else
 			{
-				if($key > 0)
-				{
-					$separator = $this->opt['hseparator'];
-				}
+				$separator = '';
 			}
 			//Filter li_attributes adding attributes to the li element
 			$attribs = apply_filters_deprecated('bcn_li_attributes', array($class, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');

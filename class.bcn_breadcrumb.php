@@ -231,7 +231,12 @@ class bcn_breadcrumb
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements['%type%']))
 		{
-			$replacements['%type%'] = implode(' ', $replacements['%type%']);
+			array_walk($replacements['%type%'], 'sanitize_html_class');
+			$replacements['%type%'] = esc_attr(implode(' ', $replacements['%type%']));
+		}
+		else
+		{
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('bcn_breadcrumb::type must be an array', 'breadcrumb-navxt'), '6.0.2');	
 		}
 		$replacements = apply_filters('bcn_template_tags', $replacements, $this->type, $this->id);
 		//If we are linked we'll need to use the normal template

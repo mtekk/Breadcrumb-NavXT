@@ -391,6 +391,9 @@ class breadcrumb_navxt
 				$this->breadcrumb_trail->opt = wp_parse_args(get_site_option('bcn_options'), get_option('bcn_options'));
 			}
 		}
+		//Currently only support using post_parent for the page hierarchy
+		$this->breadcrumb_trail->opt['bpost_page_hierarchy_display'] = true;
+		$this->breadcrumb_trail->opt['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
 	}
 	/**
 	 * Outputs the breadcrumb trail

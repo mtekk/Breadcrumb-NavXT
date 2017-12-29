@@ -87,6 +87,16 @@ class bcn_admin extends mtekk_adminKit
 		breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
+	 * Sets hard constants into the options array
+	 * 
+	 * @param &$opts The options array to set hard constants into
+	 */
+	function opts_fix(&$opts)
+	{
+		$opts['bpost_page_hierarchy_display'] = true;
+		$opts['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
+	}
+	/**
 	 * Upgrades input options array, sets to $this->opt
 	 * 
 	 * @param array $opts

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 6.0.1
+Stable tag: 6.0.2
 Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -51,6 +51,15 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.0.2 =
+Release date: December, 30th 2017
+
+* Behavior change: Added warning alerting that `bcn_breadcrumb::type` must be an array.
+* Bug fix: Changed Breadcrumb Separator and Paged Template from an input field to a textbox to reduce confusion caused by HTML entities.
+* Bug fix: Fixed issue where the parents of a page may not show up in the breadcrumb trail.
+* Bug fix: Fixed issue where the `$reverse` parameter for `bcn_display` and `bcn_display_list` did not work properly.
+* Bug fix: Fixed issue where the `bcn_display_list` function did not include the `li` elements.
 
 = 6.0.1 =
 Release date: December, 28th 2017

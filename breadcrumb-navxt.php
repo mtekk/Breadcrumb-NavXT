@@ -394,6 +394,8 @@ class breadcrumb_navxt
 		//Currently only support using post_parent for the page hierarchy
 		$this->breadcrumb_trail->opt['bpost_page_hierarchy_display'] = true;
 		$this->breadcrumb_trail->opt['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
+		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
+		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
 	}
 	/**
 	 * Outputs the breadcrumb trail

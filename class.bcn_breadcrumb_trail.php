@@ -330,7 +330,7 @@ class bcn_breadcrumb_trail
 				//Grab the frontpage, we'll need it shortly
 				$frontpage = get_option('page_on_front');
 				//If there is a parent page let's find it
-				if($parent && $id != $parent && $frontpage != $parent)
+				if($parent > 0 && $id != $parent && $frontpage != $parent)
 				{
 					$parent = $this->post_parents($parent, $frontpage);
 				}
@@ -454,7 +454,7 @@ class bcn_breadcrumb_trail
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($id), $this->opt['Hpost_' . $parent->post_type . '_template'], array('post', 'post-' . $parent->post_type), get_permalink($id), $id));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
-		if($parent->post_parent >= 0 && $parent->post_parent != false && $id != $parent->post_parent && $frontpage != $parent->post_parent)
+		if($parent->post_parent > 0 && $id != $parent->post_parent && $frontpage != $parent->post_parent)
 		{
 			//If valid, recursively call this function
 			$parent = $this->post_parents($parent->post_parent, $frontpage);
@@ -499,7 +499,7 @@ class bcn_breadcrumb_trail
 			//Done with the current item, now on to the parents
 			$frontpage = get_option('page_on_front');
 			//Make sure the id is valid, and that we won't end up spinning in a loop
-			if($post->post_parent >= 0 && $post->post_parent != false && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
+			if($post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 			{
 				//Get the parent's information
 				$parent = get_post($post->post_parent);
@@ -919,7 +919,7 @@ class bcn_breadcrumb_trail
 				//Get the blog page
 				$bcn_post = get_post($root_id);
 				//If there is a parent post let's find it
-				if($bcn_post->post_parent && $bcn_post->ID != $bcn_post->post_parent && $frontpage_id != $bcn_post->post_parent)
+				if($bcn_post->post_parent > 0 && $bcn_post->ID != $bcn_post->post_parent && $frontpage_id != $bcn_post->post_parent)
 				{
 					$this->post_parents($bcn_post->post_parent, $frontpage_id);
 				}

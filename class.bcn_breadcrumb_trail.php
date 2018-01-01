@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2017  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2018  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.0.2';
+	const version = '6.0.3';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();

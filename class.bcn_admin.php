@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2017  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2018  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.0.2';
+	const version = '6.0.3';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';

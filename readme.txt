@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 6.0.2
+Stable tag: 6.0.3
 Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -51,6 +51,12 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.0.3 =
+Release date: January, 1st 2018
+
+* Bug fix: Fixed issue where an improper breadcrumb would be generated in the trail for pages under some circumstances.
+* Bug fix: Fixed issue where the post and page roots were not updating to track user changes in Settings > Reading.
 
 = 6.0.2 =
 Release date: December, 30th 2017

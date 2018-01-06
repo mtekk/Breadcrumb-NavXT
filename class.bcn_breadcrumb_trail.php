@@ -1083,7 +1083,7 @@ class bcn_breadcrumb_trail
 				$this->type_archive($type);
 				$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
 			}
-			else if($this->opt['bblog_display'])
+			else if($this->opt['bblog_display'] || is_home())
 			{
 				$type_str = 'post';
 			}

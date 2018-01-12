@@ -1083,11 +1083,15 @@ class bcn_breadcrumb_trail
 				$this->type_archive($type);
 				$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
 			}
+			//Otherwise, it's likely the blog page
 			else if($this->opt['bblog_display'] || is_home())
 			{
 				$type_str = 'post';
 			}
-			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			if(isset($this->opt['apost_' . $type_str . '_root']))
+			{
+				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			}
 		}
 		//We always do the home link last, unless on the frontpage
 		if(!is_front_page())

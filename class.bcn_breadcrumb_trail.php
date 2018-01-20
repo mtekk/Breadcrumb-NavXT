@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.0.3';
+	const version = '6.0.4';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -91,6 +91,11 @@ class bcn_breadcrumb_trail
 			//What hierarchy should be shown leading to the post, tag or category
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
+			'bpost_attachment_hierarchy_display' => true,
+			//What hierarchy should be shown leading to the attachment
+			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
+			//Give an invlaid page ID for the attachement root
+			'apost_attachment_root' => 0,
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
 			//The breadcrumb template for attachment breadcrumbs, used when an anchor is not needed

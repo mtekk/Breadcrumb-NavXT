@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.0.3
+Version: 6.0.4
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.0.3';
+	const version = '6.0.4';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -397,6 +397,21 @@ class breadcrumb_navxt
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
+		
+		//Loop through all of the post types in the array, migrate automatically if necessary
+		foreach($GLOBALS['wp_post_types'] as $post_type)
+		{
+			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']))
+			{
+				$this->opt['Spost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_type'];
+				unset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']);
+			}
+			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']))
+			{
+				$this->opt['Spost_' . $post_type->name . '_hierarchy_display'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_display'];
+				unset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']);
+			}
+		}
 	}
 	/**
 	 * Outputs the breadcrumb trail

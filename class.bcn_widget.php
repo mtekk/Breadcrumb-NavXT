@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '6.0.3';
+	const version = '6.0.4';
 	protected $allowed_html = array();
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false, 'force' => false);
 	//Default constructor

@@ -112,7 +112,7 @@ class bcn_widget extends WP_Widget
 			<label for="<?php echo esc_attr($this->get_field_id('type')); ?>"> <?php _e('Output trail as:', 'breadcrumb-navxt'); ?></label>
 			<select name="<?php echo esc_attr($this->get_field_name('type')); ?>" id="<?php echo esc_attr($this->get_field_id('type')); ?>">
 				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
-				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Google (RDFa) Breadcrumbs', 'breadcrumb-navxt'); ?></option>
+				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (RDFa)', 'breadcrumb-navxt'); ?></option>
 				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
 				<?php do_action('bcn_widget_display_types', $instance);?>
 			</select>

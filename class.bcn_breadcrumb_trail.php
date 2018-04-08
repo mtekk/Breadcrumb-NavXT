@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.0.4';
+	const version = '6.0.60';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -127,6 +127,8 @@ class bcn_breadcrumb_trail
 			'Hauthor_template_no_anchor' => __('<span property="itemListElement" typeof="ListItem"><span property="name">Articles by: %htitle%</span><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
+			//Give an invlaid page ID for the author root
+			'aauthor_root' => 0,
 			//Category stuff
 			//The breadcrumb template for category breadcrumbs
 			'Htax_category_template' => __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %title% category archives." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt'),
@@ -1026,7 +1028,7 @@ class bcn_breadcrumb_trail
 		else if(is_author())
 		{
 			$this->do_author($type, is_paged());
-			$this->do_root('post', get_option('page_for_posts'), is_paged(), false);
+			$this->do_root('post', $this->opt['aauthor_root'], is_paged(), false);
 		}
 		//For archives
 		else if(is_archive())

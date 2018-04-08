@@ -392,7 +392,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
 		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
-		//Set page '3' as the home page
+		//Set page '9' as the home page
 		update_option('page_on_front', $paid[9]);
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
@@ -401,6 +401,69 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_root', array('page',  $this->breadcrumb_trail->opt['apost_page_root']));
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
+	function test_fill_author_no_root()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '9' as the home page
+		update_option('page_on_front', $paid[9]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Some setup
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Now go to the author archives
+		$this->go_to(get_author_posts_url($author_id));
+		$this->breadcrumb_trail->call('fill');
+		//Ensure we have 2 breadcrumbs
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+	}
+	function test_fill_author_root()
+	{
+		//Create some pages
+		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
+		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
+		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
+		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
+		//Set page '9' as the home page
+		update_option('page_on_front', $paid[9]);
+		//Set page '6' as the root for posts
+		update_option('page_for_posts', $paid[6]);
+		//Some setup
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$this->breadcrumb_trail->opt['aauthor_root'] = $paid[0];
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Now go to the author archives
+		$this->go_to(get_author_posts_url($author_id));
+		$this->breadcrumb_trail->call('fill');
+		//Ensure we have 4 breadcrumbs
+		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_the_title($paid[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_the_title($paid[0]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 	}
 	function test_fill_blog_home()
 	{

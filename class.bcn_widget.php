@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '6.0.4';
+	const version = '6.0.55';
 	protected $allowed_html = array();
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false, 'force' => false);
 	//Default constructor
@@ -41,6 +41,7 @@ class bcn_widget extends WP_Widget
 		$instance =  wp_parse_args((array) $instance, $this->defaults);
 		$instance['title'] = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$instance['pretext'] = apply_filters('widget_text', $instance['pretext'], $instance);
+		$instance['pretext'] = apply_filters('bcn_widget_pretext', $instance['pretext'], $instance);
 		$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		//A bit of a hack but we need the DB settings to know if we should exit early
 		$opt = get_option('bcn_options');

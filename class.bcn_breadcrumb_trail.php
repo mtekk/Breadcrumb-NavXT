@@ -428,19 +428,27 @@ class bcn_breadcrumb_trail
 	 * @param int $id The id of the term
 	 * @param string $taxonomy The name of the taxonomy that the term belongs to
 	 * 
-	 * @return WP_Term The term we stopped at
+	 * @return WP_Term|WP_Error The term we stopped at
 	 */
 	protected function term_parents($id, $taxonomy)
 	{
 		//Get the current category object, filter applied within this call
 		$term = get_term($id, $taxonomy);
-		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), $this->maybe_add_post_type_arg(get_term_link($term), null, $taxonomy), $id));
-		//Make sure the id is valid, and that we won't end up spinning in a loop
-		if($term->parent && $term->parent != $id)
+		if($term instanceof WP_Term)
 		{
-			//Figure out the rest of the term hiearchy via recursion
-			$term = $this->term_parents($term->parent, $taxonomy);
+			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb($term->name, $this->opt['Htax_' . $taxonomy . '_template'], array('taxonomy', $taxonomy), $this->maybe_add_post_type_arg(get_term_link($term), null, $taxonomy), $id));
+			//Make sure the id is valid, and that we won't end up spinning in a loop
+			if($term->parent && $term->parent != $id)
+			{
+				//Figure out the rest of the term hiearchy via recursion
+				$ret_term = $this->term_parents($term->parent, $taxonomy);
+				//May end up with WP_Error, don't update the term if that's the case
+				if($ret_term instanceof WP_Term)
+				{
+					$term = $ret_term;
+				}
+			}
 		}
 		return $term;
 	}

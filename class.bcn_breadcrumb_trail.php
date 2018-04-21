@@ -1116,16 +1116,29 @@ class bcn_breadcrumb_trail
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_after_fill', $this);
 	}
-	public function fill_rest($item)
+	public function fill_REST($item)
 	{
+		//Handle Posts
 		if($item instanceof WP_Post)
 		{
 			$this->do_post($item, false, true);
+			$this->do_root($item->post_type, $this->opt['apost_' . $item->post_type . '_root'], false, false);
 		}
+		//Handle Terms
 		else if($item instanceof WP_Term)
 		{
 			$this->do_archive_by_term($item, true);
+			$this->type_archive($item);
+			$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$item->taxonomy]->object_type[0]);
+			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 		}
+		//Handle Author Archives
+		else if($item instanceof WP_User)
+		{
+			$this->do_author($item, true);
+			$this->do_root('post', $this->opt['aauthor_root'], false, false);
+		}
+		$this->do_home(true, false, false);
 	}
 	/**
 	 * This function will either set the order of the trail to reverse key 

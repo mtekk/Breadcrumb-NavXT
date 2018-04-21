@@ -115,7 +115,6 @@ class breadcrumb_navxt
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_rest_controller.php');
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
-			add_action('rest_api_init', array($this->rest_controller, 'register_routes'));
 		}
 	}
 	public function register_widget()
@@ -493,7 +492,7 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse));
+		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES);
 		if($return)
 		{
 			return $trail_string;

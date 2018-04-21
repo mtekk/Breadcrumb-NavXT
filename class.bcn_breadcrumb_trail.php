@@ -1116,6 +1116,17 @@ class bcn_breadcrumb_trail
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_after_fill', $this);
 	}
+	public function fill_rest($item)
+	{
+		if($item instanceof WP_Post)
+		{
+			$this->do_post($item, false, true);
+		}
+		else if($item instanceof WP_Term)
+		{
+			$this->do_archive_by_term($item, true);
+		}
+	}
 	/**
 	 * This function will either set the order of the trail to reverse key 
 	 * order, or make sure it is forward key ordered.
@@ -1138,7 +1149,6 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in string form.
 	 *
-	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * @param string $template The template to use for the string output.
@@ -1146,37 +1156,26 @@ class bcn_breadcrumb_trail
 	 * @return void Void if Option to print out breadcrumb trail was chosen.
 	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($return = false, $linked = true, $reverse = false, $template = '%1$s%2$s')
+	public function display($linked = true, $reverse = false, $template = '%1$s%2$s')
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
 		//The main compiling loop
 		$trail_str = $this->display_loop($linked, $reverse, $template);
-		//Should we return or echo the assembled trail?
-		if($return)
-		{
-			return $trail_str;
-		}
-		else
-		{
-			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
-			echo $credits . $trail_str;
-		}
+		return $trail_str;
 	}
 	/**
 	 * This functions outputs or returns the breadcrumb trail in list form.
 	 *
 	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
 	 * 
-	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * 
 	 * @return void Void if option to print out breadcrumb trail was chosen.
 	 * @return string String version of the breadcrumb trail.
 	 */
-	public function display_list($return = false, $linked = true, $reverse = false)
+	public function display_list($linked = true, $reverse = false)
 	{
 		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::display');
 		return $this->display($return, $linked, $reverse, "<li%3\$s>%1\$s</li>\n");
@@ -1228,32 +1227,20 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in Schema.org BreadcrumbList compliant JSON-LD
 	 *
-	 * @param bool $return Whether to return data or to echo it.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * 
 	 * @return void Void if option to print out breadcrumb trail was chosen.
-	 * @return string String version of the breadcrumb trail.
+	 * @return object basic object version of the breadcrumb trail ready for json_encode.
 	 */
-	public function display_json_ld($return = false, $reverse = false)
+	public function display_json_ld($reverse = false)
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
-		$trail_str =  json_encode(
-			(object)array(
-				'@context' => 'http://schema.org',
-				'@type' => 'BreadcrumbList',
-				'itemListElement' => $this->json_ld_loop())
-			, JSON_UNESCAPED_SLASHES
-		);
-		//Should we return or echo the assembled trail?
-		if($return)
-		{
-			return $trail_str;
-		}
-		else
-		{
-			echo $trail_str;
-		}
+		$trail_str = (object)array(
+			'@context' => 'http://schema.org',
+			'@type' => 'BreadcrumbList',
+			'itemListElement' => $this->json_ld_loop());
+		return $trail_str;
 	}
 	/**
 	 * This function assembles all of the breadcrumbs into an object ready for json_encode

@@ -59,7 +59,10 @@ class bcn_rest_controller
 					'validate_callback' => array($this, 'validate_id')
 				)
 			),
-			array('methods' => 'GET', 'callback' => array($this, 'display_rest_post')))
+			'methods' => 'GET',
+			'callback' => array($this, 'display_rest_post'),
+			'permission_callback' => array($this, 'display_rest_post_permissions_check')
+			)
 		);
 		register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
 			'args' => array(
@@ -74,7 +77,9 @@ class bcn_rest_controller
 					'validate_callback' => array($this, 'validate_id')
 				)
 			),
-			array('methods' => 'GET', 'callback' => array($this, 'display_rest_term')))
+			'methods' => 'GET',
+			'callback' => array($this, 'display_rest_term')
+			)
 		);
 		//register_rest_route( $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array('methods' => 'GET', 'callback' => array($this, 'display_rest_author')));
 	}
@@ -101,6 +106,54 @@ class bcn_rest_controller
 	public function validate_taxonomy($param, $request, $key)
 	{
 		return taxonomy_exists(esc_attr($param));
+	}
+	public function display_rest_post_permissions_check(WP_REST_Request $request)
+	{
+		$post = get_post(absint($request->get_param('id')));
+		if($post instanceof WP_Post && !empty($request['password']))
+		{
+			if(!hash_equals($post->post_password, $request['password]']))
+			{
+				return new WP_Error('rest_post_incorrect_password', __('Incorrect post password.'), array('status' => 403));
+			}
+		}
+		return $this->check_post_read_permission($post);
+	}
+	/**
+	 * Check to ensure the current user can read the post (and subsequently view its breadcrumb trail)
+	 * 
+	 * @param WP_Post $post The post to check if the current user can view the breadcrumb trail for
+	 * @return bool Whether or not the post should be readable
+	 */
+	public function check_post_read_permission($post)
+	{
+		$post_type = get_post_type_object($post->post_type);
+		if(empty($post_type) || empty($post_type->show_in_rest))
+		{
+			return false;
+		}
+		if($post->post_status === 'publish' || current_user_can($post_type->cap->read_post, $post->ID))
+		{
+			return true;
+		}
+		$post_status_obj = get_post_status_object($post->post_status);
+		if($post_status_obj && $post_status_obj->public)
+		{
+			return true;
+		}
+		if($post->post_status === 'inherit' && $post->post_parent > 0)
+		{
+			$parent = get_post($post->post_parent);
+			if($parent)
+			{
+				return $this->check_post_read_permission($parent);
+			}
+		}
+		if($post->post_status === 'inherit')
+		{
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Breadcrumb trail handler for REST requests for post breadcrumb trails

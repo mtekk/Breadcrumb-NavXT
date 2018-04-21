@@ -568,7 +568,7 @@ abstract class mtekk_adminKit
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support post for your version.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . $this::version . '/#respond">', '</a>'), 'info');
+			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support forum.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . '">', '</a>'), 'info');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}

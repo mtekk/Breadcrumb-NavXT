@@ -100,7 +100,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			'" class="post-root post post-post"><span property="name">Articles</span></a><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the Uncategorized category archives." href="'
 			. get_term_link(1) .
 			'" class="taxonomy category"><span property="name">Uncategorized</span></a><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">Test Post 1</span><meta property="position" content="4"></span>',
-			bcn_display(true, true, false, false));
+			bcn_display(true, true, false, true));
 		//"Go to" post B
 		$this->go_to(get_permalink($pidb));
 		//Check the breadcrumb trail, should be the same as before with caching

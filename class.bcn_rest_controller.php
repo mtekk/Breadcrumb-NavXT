@@ -201,6 +201,7 @@ class bcn_rest_controller
 		$post = get_post(absint($request->get_param('id')));
 		if($post instanceof WP_Post)
 		{
+			$this->breadcrumb_trail->breadcrumbs = array();
 			//Generate the breadcrumb trail
 			$this->breadcrumb_trail->fill_REST($post);
 			return $this->breadcrumb_trail->display_json_ld(false);
@@ -217,6 +218,7 @@ class bcn_rest_controller
 		$term = get_term(absint($request->get_param('id')), esc_attr($request->get_param('taxonomy')));
 		if($term instanceof WP_Term)
 		{
+			$this->breadcrumb_trail->breadcrumbs = array();
 			//Generate the breadcrumb trail
 			$this->breadcrumb_trail->fill_REST($term);
 			return $this->breadcrumb_trail->display_json_ld(false);
@@ -233,6 +235,7 @@ class bcn_rest_controller
 		$user = get_user_by('ID', absint($request->get_param('id')), esc_attr($request->get_param('taxonomy')));
 		if($user instanceof WP_User)
 		{
+			$this->breadcrumb_trail->breadcrumbs = array();
 			//Generate the breadcrumb trail
 			$this->breadcrumb_trail->fill_REST($user);
 			return $this->breadcrumb_trail->display_json_ld(false);

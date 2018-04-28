@@ -1118,6 +1118,10 @@ class bcn_breadcrumb_trail
 	}
 	public function fill_REST($item)
 	{
+		if($item instanceof WP_Error || $item === null)
+		{
+			return;
+		}
 		//Handle Posts
 		if($item instanceof WP_Post)
 		{

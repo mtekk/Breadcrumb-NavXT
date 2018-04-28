@@ -37,6 +37,7 @@ class bcn_rest_controller
 	const version = '1';
 	protected $unique_prefix = 'bcn';
 	protected $breadcrumb_trail = null;
+	protected $methods = array('GET', 'OPTIONS');
 	/**
 	 * Default constructor
 	 * 
@@ -56,28 +57,36 @@ class bcn_rest_controller
 				'id' => array(
 					'description' => __('The ID of the post (any type) to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
 					'type' => 'integer',
+					'required' => true,
 					'validate_callback' => array($this, 'validate_id')
+				),
+				'password' => array(
+					'description' => __('The password for the post if it is password protected.', 'breadcrumb-navxt'),
+					'type' => 'string',
+					'required' => false
 				)
 			),
-			'methods' => 'GET',
+			'methods' => $this->methods,
 			'callback' => array($this, 'display_rest_post'),
 			'permission_callback' => array($this, 'display_rest_post_permissions_check')
 			)
 		);
 		register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
 			'args' => array(
-				'taxonomy' => array(
-					'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-					'type' => 'string',
-					'validate_callback' => array($this, 'validate_taxonomy')
-				),
 				'id' => array(
 					'description' => __('The ID of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
 					'type' => 'integer',
+					'required' => true,
 					'validate_callback' => array($this, 'validate_id')
+				),
+				'taxonomy' => array(
+					'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+					'type' => 'string',
+					'required' => true,
+					'validate_callback' => array($this, 'validate_taxonomy')
 				)
 			),
-			'methods' => 'GET',
+			'methods' => $this->methods,
 			'callback' => array($this, 'display_rest_term')
 			)
 		);
@@ -86,10 +95,11 @@ class bcn_rest_controller
 				'id' => array(
 					'description' => __('The ID of the author to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
 					'type' => 'integer',
+					'required' => true,
 					'validate_callback' => array($this, 'validate_id')
 				)
 			),
-			'methods' => 'GET',
+			'methods' => $this->methods,
 			'callback' => array($this, 'display_rest_author')
 			)
 		);
@@ -97,7 +107,7 @@ class bcn_rest_controller
 	/**
 	 * Checks to see if the request ID looks like it could be an ID (numeric and greater than 0)
 	 * 
-	 * @param mixed @param The parameter to validate
+	 * @param mixed $param The parameter to validate
 	 * @param WP_REST_Request $request REST API request data
 	 * @param string $key The paramter key
 	 * @return bool Whether or not the ID is valid (or atleast looks valid)
@@ -109,7 +119,7 @@ class bcn_rest_controller
 	/**
 	 * Checks to see if the request taxonomy is a valid taxonomy
 	 * 
-	 * @param mixed @param The parameter to validate
+	 * @param mixed $param The parameter to validate
 	 * @param WP_REST_Request $request REST API request data
 	 * @param string $key The paramter key
 	 * @return bool Whether or not the ID is valid (or atleast looks valid)
@@ -127,6 +137,10 @@ class bcn_rest_controller
 	public function display_rest_post_permissions_check(WP_REST_Request $request)
 	{
 		$post = get_post(absint($request->get_param('id')));
+		if($post === NULL)
+		{
+			return true;
+		}
 		if($post instanceof WP_Post && !empty($request['password']))
 		{
 			if(!hash_equals($post->post_password, $request['password]']))
@@ -144,6 +158,10 @@ class bcn_rest_controller
 	 */
 	public function check_post_read_permission($post)
 	{
+		if(!($post instanceof WP_Post))
+		{
+			return false;
+		}
 		$post_type = get_post_type_object($post->post_type);
 		if(empty($post_type) || empty($post_type->show_in_rest))
 		{
@@ -176,36 +194,48 @@ class bcn_rest_controller
 	 * Breadcrumb trail handler for REST requests for post breadcrumb trails
 	 * 
 	 * @param WP_REST_Request $request REST API request data
-	 * @return string String-Data of breadcrumb trail.
+	 * @return STD_Object Basic object data of the Schema.org Breadcrumb List compatible breadcrumb trail
 	 */
 	public function display_rest_post(WP_REST_Request $request)
 	{
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill_REST(get_post(absint($request->get_param('id'))));
-		return $this->breadcrumb_trail->display_json_ld(false);
+		$post = get_post(absint($request->get_param('id')));
+		if($post instanceof WP_Post)
+		{
+			//Generate the breadcrumb trail
+			$this->breadcrumb_trail->fill_REST($post);
+			return $this->breadcrumb_trail->display_json_ld(false);
+		}
 	}
 	/**
 	 * Breadcrumb trail handler for REST requests for term breadcrumb trails
 	 * 
 	 * @param WP_REST_Request $request REST API request data
-	 * @return string String-Data of breadcrumb trail.
+	 * @return STD_Object Basic object data of the Schema.org Breadcrumb List compatible breadcrumb trail
 	 */
 	public function display_rest_term(WP_REST_Request $request)
 	{
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill_REST(get_term(absint($request->get_param('id')), esc_attr($request->get_param('taxonomy'))));
-		return $this->breadcrumb_trail->display_json_ld(false);
+		$term = get_term(absint($request->get_param('id')), esc_attr($request->get_param('taxonomy')));
+		if($term instanceof WP_Term)
+		{
+			//Generate the breadcrumb trail
+			$this->breadcrumb_trail->fill_REST($term);
+			return $this->breadcrumb_trail->display_json_ld(false);
+		}
 	}
 	/**
 	 * Breadcrumb trail handler for REST requests for term breadcrumb trails
 	 * 
 	 * @param WP_REST_Request $request REST API request data
-	 * @return string String-Data of breadcrumb trail.
+	 * @return STD_Object Basic object data of the Schema.org Breadcrumb List compatible breadcrumb trail
 	 */
 	public function display_rest_author(WP_REST_Request $request)
 	{
-		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill_REST(get_user_by('ID', absint($request->get_param('id')), esc_attr($request->get_param('taxonomy'))));
-		return $this->breadcrumb_trail->display_json_ld(false);
+		$user = get_user_by('ID', absint($request->get_param('id')), esc_attr($request->get_param('taxonomy')));
+		if($user instanceof WP_User)
+		{
+			//Generate the breadcrumb trail
+			$this->breadcrumb_trail->fill_REST($user);
+			return $this->breadcrumb_trail->display_json_ld(false);
+		}
 	}
 }

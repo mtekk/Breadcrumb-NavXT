@@ -19,6 +19,10 @@ if(class_exists('bcn_breadcrumb_trail'))
 }
 class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public $breadcrumb_trail;
+	protected $pids;
+	protected $paids;
+	protected $tids;
+	
 	function setUp() {
 		parent::setUp();
 		$this->breadcrumb_trail = new bcn_breadcrumb_trail_DUT();
@@ -58,6 +62,27 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			'hierarchical' => true,
 			)
 		);
+		//Create some posts
+		$this->pids = $this->factory->post->create_many(10, array('post_type' => 'post'));
+		//Create some terms
+		$this->tids = $this->factory->category->create_many(10);
+		//Make some of the terms be in a hierarchy
+		wp_update_term($this->tids[7], 'category', array('parent' => $this->tids[8]));
+		wp_update_term($this->tids[8], 'category', array('parent' => $this->tids[6]));
+		wp_update_term($this->tids[9], 'category', array('parent' => $this->tids[8]));
+		wp_update_term($this->tids[5], 'category', array('parent' => $this->tids[7]));
+		//Assign a category to a post
+		wp_set_object_terms($this->pids[0], array($this->tids[5]), 'category');
+		wp_set_object_terms($this->pids[5], array($this->tids[0]), 'category');
+		wp_set_object_terms($this->pids[7], array($this->tids[7]), 'category');
+		//Create some pages
+		$this->paids = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		//Setup some relationships between the posts
+		wp_update_post(array('ID' => $this->paids[0], 'post_parent' => $this->paids[3]));
+		wp_update_post(array('ID' => $this->paids[1], 'post_parent' => $this->paids[2]));
+		wp_update_post(array('ID' => $this->paids[2], 'post_parent' => $this->paids[3]));
+		wp_update_post(array('ID' => $this->paids[6], 'post_parent' => $this->paids[5]));
+		wp_update_post(array('ID' => $this->paids[5], 'post_parent' => $this->paids[0]));
 	}
 	public function tearDown() {
 		parent::tearDown();
@@ -400,6 +425,59 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->go_to(get_permalink($paid[1]));
 		$this->breadcrumb_trail->call('do_root', array('page',  $this->breadcrumb_trail->opt['apost_page_root']));
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
+	public function test_fill_REST_author()
+	{
+		//Some setup
+		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill_REST', array(get_user_by('id', $author_id)));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame('Cool Editor' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('author', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+	}
+	public function test_fill_REST_post()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill_REST', array(get_post($this->pids[0])));
+		//Ensure we have 6 breadcrumb from the do_author portion
+		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[5]->get_title());
+		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term($this->tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title($this->pids[0]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	public function test_fill_REST_term()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill_REST', array(get_term($this->tids[7], 'category')));
+		//Ensure we have 4 breadcrumb from the do_author portion
+		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	/**
+	 * Tests for invalid items being passed into the fill_REST function
+	 */
+	public function test_fill_REST_invalids()
+	{
+		//Try passing in NULL
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill_REST', array(null));
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Try passing in WP_Error
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('fill_REST', array(new WP_Error('test_error', 'test error')));
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 	function test_fill_author_no_root()

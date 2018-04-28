@@ -2,7 +2,7 @@
 /**
  * This file contains tests for the bcn_breadcrumb class
  *
- * @group bcn_breadcrumb_trail
+ * @group bcn_rest_api
  * @group bcn_core
  */
 class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
@@ -231,7 +231,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		//Ensure we have 4 breadcrumb from the do_author portion
 		$this->assertCount(4, $data->itemListElement);
 		//Look at each breadcrumb
-		$this->assertSame(get_option('blogname') ,$data->itemListElement[0]->item->name);
+		$this->assertSame(get_option('blogname'), $data->itemListElement[0]->item->name);
 		$this->assertSame(get_term($this->tids[6], 'category')->name, $data->itemListElement[1]->item->name);
 		$this->assertSame(get_term($this->tids[8], 'category')->name, $data->itemListElement[2]->item->name);
 		$this->assertSame(get_term($this->tids[7], 'category')->name, $data->itemListElement[3]->item->name);
@@ -253,7 +253,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		//Ensure we have 6 breadcrumb from the do_author portion
 		$this->assertCount(6, $data->itemListElement);
 		//Look at each breadcrumb
-		$this->assertSame(get_option('blogname') ,$data->itemListElement[0]->item->name);
+		$this->assertSame(get_option('blogname'), $data->itemListElement[0]->item->name);
 		$this->assertSame(get_term($this->tids[6], 'category')->name, $data->itemListElement[1]->item->name);
 		$this->assertSame(get_term($this->tids[8], 'category')->name, $data->itemListElement[2]->item->name);
 		$this->assertSame(get_term($this->tids[7], 'category')->name, $data->itemListElement[3]->item->name);

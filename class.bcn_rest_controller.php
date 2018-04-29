@@ -59,11 +59,6 @@ class bcn_rest_controller
 					'type' => 'integer',
 					'required' => true,
 					'validate_callback' => array($this, 'validate_id')
-				),
-				'password' => array(
-					'description' => __('The password for the post if it is password protected.', 'breadcrumb-navxt'),
-					'type' => 'string',
-					'required' => false
 				)
 			),
 			'methods' => $this->methods,
@@ -137,16 +132,9 @@ class bcn_rest_controller
 	public function display_rest_post_permissions_check(WP_REST_Request $request)
 	{
 		$post = get_post(absint($request->get_param('id')));
-		if($post === NULL)
+		if($post === null)
 		{
 			return true;
-		}
-		if($post instanceof WP_Post && !empty($request['password']))
-		{
-			if(!hash_equals($post->post_password, $request['password]']))
-			{
-				return new WP_Error('rest_post_incorrect_password', __('Incorrect post password.'), array('status' => 403));
-			}
 		}
 		return $this->check_post_read_permission($post);
 	}

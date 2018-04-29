@@ -175,24 +175,6 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		$this->assertEmpty( $response->get_data() );
 		$this->assertEquals( 200, $response->get_status() );
 	}
-	
-	public function test_get_items_status_without_permissions() {
-		$draft_id = $this->factory->post->create(
-			array(
-				'post_status' => 'draft',
-			)
-		);
-		wp_set_current_user( 0 );
-
-		$request  = new WP_REST_Request( 'GET', sprintf('/bcn/v1/post/%d', $draft_id ) );
-		$response = rest_get_server()->dispatch( $request );
-
-		$this->assertEquals( 401, $response->get_status() );
-
-		$data = $response->get_data();
-		$this->assertEquals('rest_forbidden', $data['code']);
-		$this->assertEquals(array('status' => 401), $data['data']);
-	}
 	/**
 	 * Tests for a REST author request
 	 */
@@ -259,5 +241,73 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		$this->assertSame(get_term($this->tids[7], 'category')->name, $data->itemListElement[3]->item->name);
 		$this->assertSame(get_term($this->tids[5], 'category')->name, $data->itemListElement[4]->item->name);
 		$this->assertSame(get_the_title($this->pids[0]), $data->itemListElement[5]->item->name);
+	}
+	/**
+	 * Tests for a REST password protected post request
+	 */
+	function test_rest_password_post_request() {
+		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_password' => 'password123'));
+		wp_set_object_terms($pid, array($this->tids[0]), 'category');
+		//Now request the author archives
+		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertNotWPError( $response );
+		$response = rest_ensure_response( $response );
+
+		$this->assertEquals( 200, $response->get_status() );
+
+		$data = $response->get_data();
+		
+		//Ensure we have 2 breadcrumb from the do_author portion
+		$this->assertCount(3, $data->itemListElement);
+		//Look at each breadcrumb
+		$this->assertSame(get_option('blogname'), $data->itemListElement[0]->item->name);
+		$this->assertSame(get_term($this->tids[0], 'category')->name, $data->itemListElement[1]->item->name);
+		$this->assertSame(get_the_title($pid), $data->itemListElement[2]->item->name);
+	}
+	/**
+	 * Tests for a draft post request without permissions
+	 */
+	function test_rest_draft_post_no_permissions_request() {
+		wp_set_current_user( 0 );
+		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
+		wp_set_object_terms($pid, array($this->tids[0]), 'category');
+		//Now request the author archives
+		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertNotWPError( $response );
+		$response = rest_ensure_response( $response );
+		$this->assertEquals( 401, $response->get_status() );
+
+		$data = $response->get_data();
+		
+		//Ensure we have an error message
+		$this->assertSame('rest_forbidden', $data['code']);
+	}
+	/**
+	 * Tests for a draft post request with permissions
+	 */
+	function test_rest_draft_post_with_permissions_request() {
+		wp_set_current_user( self::$editor_id );
+		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
+		wp_set_object_terms($pid, array($this->tids[0]), 'category');
+		//Now request the author archives
+		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertNotWPError( $response );
+		$response = rest_ensure_response( $response );
+		$this->assertEquals( 200, $response->get_status() );
+
+		$data = $response->get_data();
+
+		//Ensure we have 2 breadcrumb from the do_author portion
+		$this->assertCount(3, $data->itemListElement);
+		//Look at each breadcrumb
+		$this->assertSame(get_option('blogname'), $data->itemListElement[0]->item->name);
+		$this->assertSame(get_term($this->tids[0], 'category')->name, $data->itemListElement[1]->item->name);
+		$this->assertSame(get_the_title($pid), $data->itemListElement[2]->item->name);
 	}
 }

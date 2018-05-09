@@ -263,8 +263,23 @@ class bcn_breadcrumb
 	{
 		if ( empty( $this->url ) ) {
 			$this->url = get_permalink();
-		}
-		
+
+			/**
+			 * Accounting for archive links for JSON-LD output
+			 */
+			if ( is_archive() ) {
+				$queried_obj = get_queried_object();
+				$terms = get_terms( $wp_query->tax_query->queries[0]['taxonomy'], array( 
+					'hide_empty' => false,
+				) );
+				foreach ( $terms as $term) {
+					if ( $queried_obj->slug === $term->slug ) {
+						$this->url = get_term_link( $queried_obj );
+					}
+				}
+			}
+		} // End if empty URL
+
 		return (object)array(
 			'@type' => 'ListItem',
 			'position' => $position,

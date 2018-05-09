@@ -261,6 +261,10 @@ class bcn_breadcrumb
 	 */
 	public function assemble_json_ld($position)
 	{
+		if ( empty( $this->url ) ) {
+			$this->url = get_permalink();
+		}
+		
 		return (object)array(
 			'@type' => 'ListItem',
 			'position' => $position,

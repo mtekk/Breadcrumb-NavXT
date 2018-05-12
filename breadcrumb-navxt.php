@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.0.4
+Version: 6.0.60
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.0.4';
+	const version = '6.0.60';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -69,6 +69,7 @@ class breadcrumb_navxt
 	protected $opt = null;
 	protected $breadcrumb_trail = null;
 	protected $admin = null;
+	protected $rest_controller = null;
 	/**
 	 * Constructor for a new breadcrumb_navxt object
 	 * 
@@ -104,9 +105,17 @@ class breadcrumb_navxt
 	}
 	public function init()
 	{
+		breadcrumb_navxt::setup_options($this->opt);
+		$this->get_settings();
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
+		//Only include the REST API if enabled
+		if(!defined('BCN_DISABLE_REST_API') || !BCN_DISABLE_REST_API)
+		{
+			require_once(dirname(__FILE__) . '/class.bcn_rest_controller.php');
+			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
+		}
 	}
 	public function register_widget()
 	{
@@ -242,7 +251,7 @@ class breadcrumb_navxt
 	}
 	public function wp_loaded()
 	{
-		breadcrumb_navxt::setup_options($this->opt);
+
 	}
 	public function uninstall()
 	{
@@ -427,7 +436,6 @@ class breadcrumb_navxt
 	 */
 	public function display($return = false, $linked = true, $reverse = false, $force = false, $template = '%1$s%2$s')
 	{
-		$this->get_settings();
 		//If we're being forced to fill the trail, clear it before calling fill
 		if($force)
 		{
@@ -435,7 +443,17 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display($return, $linked, $reverse, $template);
+		$trail_string = $this->breadcrumb_trail->display($linked, $reverse, $template);
+		if($return)
+		{
+			return $trail_string;
+		}
+		else
+		{
+			//Helps track issues, please don't remove it
+			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
+			echo $credits . $trail_string;
+		}
 	}
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags
@@ -467,7 +485,6 @@ class breadcrumb_navxt
 	 */
 	public function display_json_ld($return = false, $reverse = false, $force = false)
 	{
-		$this->get_settings();
 		//If we're being forced to fill the trail, clear it before calling fill
 		if($force)
 		{
@@ -475,7 +492,15 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		return $this->breadcrumb_trail->display_json_ld($return, $reverse);
+		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES);
+		if($return)
+		{
+			return $trail_string;
+		}
+		else
+		{
+			echo $trail_string;
+		}
 	}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to

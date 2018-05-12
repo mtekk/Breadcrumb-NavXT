@@ -19,7 +19,7 @@
 require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_widget extends WP_Widget
 {
-	const version = '6.0.4';
+	const version = '6.0.55';
 	protected $allowed_html = array();
 	protected $defaults = array('title' => '', 'pretext' => '', 'type' => 'microdata', 'linked' => true, 'reverse' => false, 'front' => false, 'force' => false);
 	//Default constructor
@@ -41,6 +41,7 @@ class bcn_widget extends WP_Widget
 		$instance =  wp_parse_args((array) $instance, $this->defaults);
 		$instance['title'] = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$instance['pretext'] = apply_filters('widget_text', $instance['pretext'], $instance);
+		$instance['pretext'] = apply_filters('bcn_widget_pretext', $instance['pretext'], $instance);
 		$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		//A bit of a hack but we need the DB settings to know if we should exit early
 		$opt = get_option('bcn_options');
@@ -56,21 +57,28 @@ class bcn_widget extends WP_Widget
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		//We'll want to switch between the two breadcrumb output types
-		if($instance['type'] == 'list')
+		if($instance['type'] === 'list')
 		{
 			//Display the list output breadcrumb
 			echo wp_kses($instance['pretext'], $this->allowed_html) . '<ol class="breadcrumb_trail breadcrumbs">';
 			bcn_display_list(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</ol>';
 		}
-		else if($instance['type'] == 'microdata')
+		else if($instance['type'] === 'microdata' || $instance['type'] === 'breadcrumblist_rdfa')
 		{
 			echo '<div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">' . wp_kses($instance['pretext'], $this->allowed_html);
 			//Display the regular output breadcrumb
 			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
 			echo '</div>';
 		}
-		else if($instance['type'] == 'plain')
+		else if($instance['type'] === 'breadcrumblist_microdata')
+		{
+			echo '<div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">' . wp_kses($instance['pretext'], $this->allowed_html);
+			//Display the regular output breadcrumb
+			bcn_display(false, $instance['linked'], $instance['reverse'], $instance['force']);
+			echo '</div>';
+		}
+		else if($instance['type'] === 'plain')
 		{
 			//Display the pretext
 			echo wp_kses($instance['pretext'], $this->allowed_html);
@@ -112,7 +120,8 @@ class bcn_widget extends WP_Widget
 			<label for="<?php echo esc_attr($this->get_field_id('type')); ?>"> <?php _e('Output trail as:', 'breadcrumb-navxt'); ?></label>
 			<select name="<?php echo esc_attr($this->get_field_name('type')); ?>" id="<?php echo esc_attr($this->get_field_id('type')); ?>">
 				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
-				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Google (RDFa) Breadcrumbs', 'breadcrumb-navxt'); ?></option>
+				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (RDFa)', 'breadcrumb-navxt'); ?></option>
+				<option value="breadcrumblist_microdata" <?php selected('breadcrumblist_microdata', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (microdata)', 'breadcrumb-navxt'); ?></option>
 				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
 				<?php do_action('bcn_widget_display_types', $instance);?>
 			</select>

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 6.0.4
+Stable tag: 6.1.0
 Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -48,6 +48,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.1.0 =
+Release date: June, 1st 2018
+
+*Behavior change: Links to generate support requests migrated to the WordPress.org forums.
+*New feature: Added support for Schema.org BreadcrumbList (microdata format) in the included widget.
+*New feature: Added new Root Page support for author archives.
+*New feature: Added REST API endpoint for posts, terms, and author archives.
+*Bug fix: Corrected label for the Schema.org BreadcrumbList (RDFa format) option in the included widget.
+*Bug fix: Fixed issue where a PHP warning would be thrown due to `get_term()` returning something other than an instance of `WP_Term`.
 
 = 6.0.4 =
 Release date: January, 26th 2018

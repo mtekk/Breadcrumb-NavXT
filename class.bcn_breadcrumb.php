@@ -88,7 +88,7 @@ class bcn_breadcrumb
 	 */
 	static public function get_default_template()
 	{
-		return sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to %title%.','breadcrumb-navxt'));
+		return sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to %title%.','breadcrumb-navxt'));
 	}
 	/**
 	 * Function to set the protected title member

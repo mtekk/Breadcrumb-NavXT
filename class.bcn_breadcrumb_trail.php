@@ -64,6 +64,8 @@ class bcn_breadcrumb_trail
 			//Static page options
 			//Should the trail include the hierarchy of the page
 			'bpost_page_hierarchy_display' => true,
+			//Should the post parent be followed first for this type, then fallback to the hierarchy type
+			'bpost_page_hierarchy_parent_first' => false,
 			//What hierarchy should be shown leading to the page
 			'Spost_page_hierarchy_type' => 'BCN_POST_PARENT',
 			//The anchor template for page breadcrumbs
@@ -86,12 +88,16 @@ class bcn_breadcrumb_trail
 			'apost_post_root' => get_option('page_for_posts'),
 			//Should the trail include the hierarchy of the post
 			'bpost_post_hierarchy_display' => true,
+			//Should the post parent be followed first for this type, then fallback to the hierarchy type
+			'bpost_post_hierarchy_parent_first' => false,
 			//Should the trail reflect the referer taxonomy or not
 			'bpost_post_taxonomy_referer' => false,
 			//What hierarchy should be shown leading to the post, tag or category
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
 			'bpost_attachment_hierarchy_display' => true,
+			//Should the post parent be followed first for this type, then fallback to the hierarchy type
+			'bpost_attachment_hierarchy_parent_first' => true,
 			//What hierarchy should be shown leading to the attachment
 			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//Give an invlaid page ID for the attachement root
@@ -514,8 +520,8 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink($post));
 		}
-		//If we have an attachment, run through the post again
-		if($post->post_type === 'attachment')
+		//If we are to follow the hierarchy first (with hierarchy type backup), run through the post again
+		if($this->opt['bpost_' . $post->post_type. '_hierarchy_parent_first'])
 		{
 			//Done with the current item, now on to the parents
 			$frontpage = get_option('page_on_front');

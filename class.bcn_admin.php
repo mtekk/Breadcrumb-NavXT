@@ -295,7 +295,7 @@ class bcn_admin extends mtekk_adminKit
 			}
 		}
 		//Save the passed in opts to the object's option array
-		$this->opt = $opts;
+		$this->opt = mtekk_adminKit::parse_args($opts, $this->opt);
 		//End with resetting up the options
 		breadcrumb_navxt::setup_options($this->opt);
 	}

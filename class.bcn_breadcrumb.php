@@ -261,12 +261,12 @@ class bcn_breadcrumb
 	 */
 	public function assemble_json_ld($position)
 	{
-		return (object)array(
+		return (object) apply_filters('bcn_breadcrumb_assembled_json_ld_array', array(
 			'@type' => 'ListItem',
 			'position' => $position,
 			'item' => (object)array(
 				'@id' => esc_url($this->url),
 				'name' => esc_attr($this->title))
-		);
+		), $this->type, $this->id);
 	}
 }

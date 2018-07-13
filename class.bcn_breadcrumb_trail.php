@@ -314,7 +314,7 @@ class bcn_breadcrumb_trail
 	protected function post_hierarchy($id, $type, $parent = null)
 	{
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
-		if($this->opt['bpost_' . $type . '_hierarchy_display'])
+		if(!empty($this->opt['bpost_' . $type . '_hierarchy_display']))
 		{
 			//Check if we have a date 'taxonomy' request
 			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
@@ -495,7 +495,8 @@ class bcn_breadcrumb_trail
 			return;
 		}
 		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $this->opt['Hpost_' . $post->post_type . '_template_no_anchor'], array('post', 'post-' . $post->post_type), null, $post->ID));
+		$title_str = !empty($this->opt['Hpost_' . $post->post_type . '_template_no_anchor']) ?: "";
+		$breadcrumb = $this->add(new bcn_breadcrumb(get_the_title($post), $title_str, array('post', 'post-' . $post->post_type), null, $post->ID));
 		if($is_current_item)
 		{
 			$breadcrumb->add_type('current-item');
@@ -879,7 +880,7 @@ class bcn_breadcrumb_trail
 			$type_str = $this->get_type_string_query_var();
 		}
 		//If this is a custom post type with a post type archive, add it
-		if($type_str && !$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
+		if($type_str && empty($this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display']) && $this->has_archive($type_str))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb($this->post_type_archive_title(get_post_type_object($type_str)), $this->opt['Hpost_' . $type_str . '_template'], array('post', 'post-' . $type_str . '-archive'), get_post_type_archive_link($type_str)));
@@ -1025,7 +1026,8 @@ class bcn_breadcrumb_trail
 				$post = get_post();
 				$type = get_post($post->post_parent); //TODO check for WP_Error?
 			}
-			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
+			$root_id_str = !empty($this->opt['apost_' . $type->post_type . '_root']) ? $this->opt['apost_' . $type->post_type . '_root'] : null;
+			$this->do_root($type->post_type, $root_id_str, is_paged(), false);
 		}
 		//For searches
 		else if(is_search())

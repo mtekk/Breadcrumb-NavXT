@@ -520,19 +520,15 @@ class bcn_breadcrumb_trail
 			//Add the link
 			$breadcrumb->set_url(get_permalink($post));
 		}
+		//Done with the current item, now on to the parents
+		$frontpage = get_option('page_on_front');
 		//If we are to follow the hierarchy first (with hierarchy type backup), run through the post again
-		if($this->opt['bpost_' . $post->post_type. '_hierarchy_parent_first'])
+		if($this->opt['bpost_' . $post->post_type. '_hierarchy_parent_first'] && $post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 		{
-			//Done with the current item, now on to the parents
-			$frontpage = get_option('page_on_front');
-			//Make sure the id is valid, and that we won't end up spinning in a loop
-			if($post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
-			{
-				//Get the parent's information
-				$parent = get_post($post->post_parent);
-				//Take care of the parent's breadcrumb
-				$this->do_post($parent, true, false, false);
-			}
+			//Get the parent's information
+			$parent = get_post($post->post_parent);
+			//Take care of the parent's breadcrumb
+			$this->do_post($parent, true, false, false);
 		}
 		//Otherwise we need the follow the hiearchy tree
 		else

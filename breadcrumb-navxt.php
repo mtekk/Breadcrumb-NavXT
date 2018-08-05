@@ -116,10 +116,34 @@ class breadcrumb_navxt
 			require_once(dirname(__FILE__) . '/class.bcn_rest_controller.php');
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
 		}
+		//Register Guternberg
+		$this->register_block();
 	}
 	public function register_widget()
 	{
 		return register_widget($this->unique_prefix . '_widget');
+	}
+	public function render_block($attributes)
+	{
+		$extra_classs = '';
+		if(isset($attributes['className']))
+		{
+			$extra_classs = esc_attr($attributes['className']);
+		}
+		return sprintf('<div class="breadcrumbs %2$s" typeof="BreadcrumbList" vocab="https://schema.org/">%1$s</div>', bcn_display(true), $extra_classs);
+	}
+	public function register_block()
+	{
+		wp_register_script($this->unique_prefix . '-breadcrumb-trail-block-script', plugins_url('bcn_gutenberg_block.js', __FILE__), array('wp-blocks', 'wp-element', 'wp-i18n', 'wp-api'));
+		if(function_exists('register_block_type'))
+		{
+			register_block_type( $this->unique_prefix . '/breadcrumb-trail', array(
+				'editor_script' => $this->unique_prefix . '-breadcrumb-trail-block-script',
+				'render_callback' => array($this, 'render_block')
+				/*'editor_style' => ''/*,
+				'style' => ''*/
+			));
+		}
 	}
 	public function allowed_html($tags)
 	{
@@ -295,6 +319,9 @@ class breadcrumb_navxt
 				{
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
+				}
+				if(!isset($opts['Hpost_' . $post_type->name . '_template_no_anchor']))
+				{
 					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
@@ -402,6 +429,7 @@ class breadcrumb_navxt
 		}
 		//Currently only support using post_parent for the page hierarchy
 		$this->breadcrumb_trail->opt['bpost_page_hierarchy_display'] = true;
+		$this->breadcrumb_trail->opt['bpost_page_hierarchy_parent_first'] = true;
 		$this->breadcrumb_trail->opt['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only

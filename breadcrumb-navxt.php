@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.1.40
+Version: 6.1.50
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.1.40';
+	const version = '6.1.50';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -126,6 +126,12 @@ class breadcrumb_navxt
 	{
 		return register_widget($this->unique_prefix . '_widget');
 	}
+	/**
+	 * Server-side rendering for front-end block display
+	 * 
+	 * @param array $attributes Array of attributes set by the Gutenberg sidebar
+	 * @return string The Breadcrumb Trail string
+	 */
 	public function render_block($attributes)
 	{
 		$extra_classs = '';
@@ -135,6 +141,9 @@ class breadcrumb_navxt
 		}
 		return sprintf('<div class="breadcrumbs %2$s" typeof="BreadcrumbList" vocab="https://schema.org/">%1$s</div>', bcn_display(true), $extra_classs);
 	}
+	/**
+	 * Handles registering the Breadcrumb Trail Gutenberg block
+	 */
 	public function register_block()
 	{
 		wp_register_script($this->unique_prefix . '-breadcrumb-trail-block-script', plugins_url('bcn_gutenberg_block.js', __FILE__), array('wp-blocks', 'wp-element', 'wp-i18n', 'wp-api'));
@@ -146,6 +155,19 @@ class breadcrumb_navxt
 				/*'editor_style' => ''/*,
 				'style' => ''*/
 			));
+			if(!is_textdomain_loaded('breadcrumb-navxt-gutenberg'))
+			{
+				load_plugin_textdomain('breadcrumb-navxt-gutenberg', false, $this->plugin_basename . '/languages');
+			}
+			//Setup our translation strings
+			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
+					'wp.i18n.setLocaleData( ' . json_encode(gutenberg_get_jed_locale_data('breadcrumb-navxt-gutenberg')) . ', "breadcrumb-navxt-gutenberg" );',
+					'before');
+			//Setup some bcn settings
+			//TODO: New settings arch should make this easier
+			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
+					$this->unique_prefix . 'Opts = ' . json_encode($this->opt) . ';',
+					'before');
 		}
 	}
 	public function allowed_html($tags)

@@ -1111,7 +1111,7 @@ class bcn_breadcrumb_trail
 			{
 				$type_str = 'post';
 			}
-			if(isset($this->opt['apost_' . $type_str . '_root']))
+			if(isset($type_str) && isset($this->opt['apost_' . $type_str . '_root']))
 			{
 				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 			}

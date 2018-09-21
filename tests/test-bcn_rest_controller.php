@@ -106,16 +106,61 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		wp_update_post(array('ID' => $this->paids[6], 'post_parent' => $this->paids[5]));
 		wp_update_post(array('ID' => $this->paids[5], 'post_parent' => $this->paids[0]));
 	}
+	public function register_all_rest_endpoint_filter($register, $endpoint, $version, $methods)
+	{
+		return true;
+	}
+	public function register_post_rest_endpoint_filter($register, $endpoint, $version, $methods)
+	{
+		if($endpoint === 'post')
+		{
+			$register = true;
+		}
+		return $register;
+	}
+	public function register_term_rest_endpoint_filter($register, $endpoint, $version, $methods)
+	{
+		if($endpoint === 'term')
+		{
+			$register = true;
+		}
+		return $register;
+	}
+	public function register_author_rest_endpoint_filter($register, $endpoint, $version, $methods)
+	{
+		if($endpoint === 'author')
+		{
+			$register = true;
+		}
+		return $register;
+	}
+	public function reset_rest_server()
+	{
+		$GLOBALS['wp_rest_server'] = null;
+	}
 	public function tearDown() {
 		parent::tearDown();
+		$this->reset_rest_server();
 	}
 	public function test_register_routes() {
 		$routes = rest_get_server()->get_routes();
 		
+		$this->assertArrayNotHasKey('/bcn/v1/post/(?P<id>[\d]+)', $routes);
+		$this->assertArrayNotHasKey('/bcn/v1/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', $routes);
+		$this->assertArrayNotHasKey('/bcn/v1/author/(?P<id>\d+)', $routes);
+		
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_term_rest_endpoint_filter'), 10, 4);
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_author_rest_endpoint_filter'), 10, 4);
+		$this->reset_rest_server();
+		$routes = rest_get_server()->get_routes();
+		
 		$this->assertArrayHasKey('/bcn/v1/post/(?P<id>[\d]+)', $routes);
 		$this->assertCount(1, $routes['/bcn/v1/post/(?P<id>[\d]+)']);
+
 		$this->assertArrayHasKey('/bcn/v1/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', $routes);
 		$this->assertCount(1, $routes['/bcn/v1/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)']);
+		
 		$this->assertArrayHasKey('/bcn/v1/author/(?P<id>\d+)', $routes);
 		$this->assertCount(1, $routes['/bcn/v1/author/(?P<id>\d+)']);
 	}
@@ -157,6 +202,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		);
 	}*/
 	public function test_get_items_empty_query() {
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_all_rest_endpoint_filter'), 10, 4);
 		$request = new WP_REST_Request( 'GET', '/bcn/v1/post/99999999' );
 		$response = rest_get_server()->dispatch( $request );
 
@@ -175,6 +221,9 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		$this->assertEmpty( $response->get_data() );
 		$this->assertEquals( 200, $response->get_status() );
 	}
+	public function test_rest_register_rest_endpoint() {
+		
+	}
 	/**
 	 * Tests for a REST author request
 	 */
@@ -182,6 +231,12 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		//Some setup
 		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
 		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		
+		//Try without endpoint enabled
+		
+		
+		//Now enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_author_rest_endpoint_filter'), 10, 4);
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/author/%d', $author_id));
 		$response = rest_get_server()->dispatch( $request );
@@ -200,6 +255,11 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 * Tests for a REST taxonomy term request
 	 */
 	function test_rest_term_request() {
+		//Try without endpoint enabled
+		
+		
+		//Now enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_term_rest_endpoint_filter'), 10, 4);
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/term/category/%d', $this->tids[7]));
 		$response = rest_get_server()->dispatch( $request );
@@ -222,6 +282,11 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 * Tests for a REST post request
 	 */
 	function test_rest_post_request() {
+		//Try without endpoint enabled
+		
+		
+		//Now enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $this->pids[0]));
 		$response = rest_get_server()->dispatch( $request );
@@ -246,6 +311,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 * Tests for a REST password protected post request
 	 */
 	function test_rest_password_post_request() {
+		//Enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_password' => 'password123'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');
 		//Now request the author archives
@@ -270,6 +337,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 * Tests for a draft post request without permissions
 	 */
 	function test_rest_draft_post_no_permissions_request() {
+		//Enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		wp_set_current_user( 0 );
 		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');
@@ -290,6 +359,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 * Tests for a draft post request with permissions
 	 */
 	function test_rest_draft_post_with_permissions_request() {
+		//Enable the endpoint
+		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		wp_set_current_user( self::$editor_id );
 		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');

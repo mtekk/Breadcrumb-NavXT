@@ -52,52 +52,61 @@ class bcn_rest_controller
 	}
 	public function register_routes()
 	{
-		register_rest_route( $this->unique_prefix . '/v' . $this::version, '/post/(?P<id>[\d]+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __('The ID of the post (any type) to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-					'type' => 'integer',
-					'required' => true,
-					'validate_callback' => array($this, 'validate_id')
-				)
-			),
-			'methods' => $this->methods,
-			'callback' => array($this, 'display_rest_post'),
-			'permission_callback' => array($this, 'display_rest_post_permissions_check')
-			)
-		);
-		register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __('The ID of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-					'type' => 'integer',
-					'required' => true,
-					'validate_callback' => array($this, 'validate_id')
+		if(apply_filters('bcn_register_rest_endpoint', false, 'post', $this::version, $this->methods))
+		{
+			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/post/(?P<id>[\d]+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __('The ID of the post (any type) to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+						'type' => 'integer',
+						'required' => true,
+						'validate_callback' => array($this, 'validate_id')
+					)
 				),
-				'taxonomy' => array(
-					'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-					'type' => 'string',
-					'required' => true,
-					'validate_callback' => array($this, 'validate_taxonomy')
+				'methods' => $this->methods,
+				'callback' => array($this, 'display_rest_post'),
+				'permission_callback' => array($this, 'display_rest_post_permissions_check')
 				)
-			),
-			'methods' => $this->methods,
-			'callback' => array($this, 'display_rest_term')
-			)
-		);
-		register_rest_route( $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __('The ID of the author to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-					'type' => 'integer',
-					'required' => true,
-					'validate_callback' => array($this, 'validate_id')
+			);
+		}
+		if(apply_filters('bcn_register_rest_endpoint', false, 'term', $this::version, $this->methods))
+		{
+			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __('The ID of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+						'type' => 'integer',
+						'required' => true,
+						'validate_callback' => array($this, 'validate_id')
+					),
+					'taxonomy' => array(
+						'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+						'type' => 'string',
+						'required' => true,
+						'validate_callback' => array($this, 'validate_taxonomy')
+					)
+				),
+				'methods' => $this->methods,
+				'callback' => array($this, 'display_rest_term')
 				)
-			),
-			'methods' => $this->methods,
-			'callback' => array($this, 'display_rest_author')
-			)
-		);
+			);
+		}
+		if(apply_filters('bcn_register_rest_endpoint', false, 'author', $this::version, $this->methods))
+		{
+			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __('The ID of the author to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+						'type' => 'integer',
+						'required' => true,
+						'validate_callback' => array($this, 'validate_id')
+					)
+				),
+				'methods' => $this->methods,
+				'callback' => array($this, 'display_rest_author')
+				)
+			);
+		}
 	}
 	/**
 	 * Checks to see if the request ID looks like it could be an ID (numeric and greater than 0)

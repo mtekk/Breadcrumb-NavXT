@@ -25,7 +25,6 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb2 = new bcn_breadcrumb('test', '', array('page', 'current-item'), 'http://flowissues.com/test', 101);
 		$breadcrumb_string_linked2 = $breadcrumb2->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
-		
 	}
 	function test_assemble_unlinked() {
 		//Test a breadcrumb that can be linked, but is unlinked from the assemble function
@@ -153,5 +152,21 @@ class BreadcrumbTest extends WP_UnitTestCase {
 	}
 	function test_assemble_json_ld() {
 		$this->assertJsonStringEqualsJsonString('{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"test"}}', json_encode($this->breadcrumb->assemble_json_ld(1)));
+	}
+	function test_assemble_json_ld_filter() {
+		//Now register our filter
+		add_filter('bcn_breadcrumb_assembled_json_ld_array',
+				function($ld_array, $type, $id) {
+					if($id === 101)
+					{
+						$ld_array['item']->image = 'http://flowissues.com/testimage.png';
+					}
+					else
+					{
+						$ld_array['item']->image = 'http://flowissues.com/testimage2.png';
+					}
+					return $ld_array;
+				}, 3, 10);
+		$this->assertJsonStringEqualsJsonString('{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"test","image":"http://flowissues.com/testimage.png"}}', json_encode($this->breadcrumb->assemble_json_ld(1)));
 	}
 }

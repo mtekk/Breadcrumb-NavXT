@@ -106,7 +106,10 @@ class breadcrumb_navxt
 	public function init()
 	{
 		breadcrumb_navxt::setup_options($this->opt);
-		$this->get_settings();
+		if(!is_admin() || !isset($_POST[$this->unique_prefix . '_admin_reset']))
+		{
+			$this->get_settings(); //This breaks the reset options script, so only do it if we're not trying to reset the settings
+		}
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
@@ -337,7 +340,7 @@ class breadcrumb_navxt
 					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 				}
 				//If the post type does not have settings in the options array yet, we need to load some defaults
-				if(!isset($opts['Hpost_' . $post_type->name . '_template']) || !$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
+				if(!isset($opts['Hpost_' . $post_type->name . '_template']))
 				{
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
@@ -345,6 +348,9 @@ class breadcrumb_navxt
 				if(!isset($opts['Hpost_' . $post_type->name . '_template_no_anchor']))
 				{
 					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+				}
+				if(!$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
+				{
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
 						$opts['bpost_' . $post_type->name . '_archive_display'] = true;
@@ -381,6 +387,12 @@ class breadcrumb_navxt
 					//Run through some filters, allowing extensions to directly influence the default hierarchy selection/display
 					$opts['Spost_' . $post_type->name . '_hierarchy_type'] = apply_filters('bcn_default_hierarchy_type', $opts['Spost_' . $post_type->name . '_hierarchy_type'], $post_type->name);
 					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = apply_filters('bcn_default_hierarchy_display', $opts['bpost_' . $post_type->name . '_hierarchy_display'], $post_type->name, $opts['Spost_' . $post_type->name . '_hierarchy_type']);
+				}
+				//New for 6.2
+				if(!isset($opts['bpost_' . $post_type->name . '_hierarchy_parent_first']))
+				{
+					$opts['bpost_' . $post_type->name . '_hierarchy_parent_first'] = false;
+					$opts['bpost_' . $post_type->name . '_hierarchy_parent_first'] = apply_filters('bcn_default_hierarchy_parent_first', $opts['bpost_' . $post_type->name . '_hierarchy_parent_first'], $post_type->name);
 				}
 			}
 		}

@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.7
-Tested up to: 4.9
-Stable tag: 6.1.0
+Tested up to: 4.9.8
+Stable tag: 6.2.0
 Requires PHP: 5.3
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -48,6 +48,18 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.2.0 =
+Release date: September, 24th 2018
+
+* Behavior change: Cleaned up translations for default templates, simplifying and clarifying the translatable content.
+* Behavior change: Default unlinked breadcrumb templates no longer contain Schema.org BreadcrumbList markup.
+* Behavior change: Breadcrumb NavXT REST API endpoints are no longer enabled by default.
+* New feature: Added `bcn_register_rest_endpoint` filter.
+* New feature: Added `bcn_breadcrumb_assemble_json_ld_array` filter.
+* New feature: Added support for following the post parent hierarchy first then falling back to a secondary hierarchy.
+* Bug fix: Fixed issue where on loading the settings page immediately after migrating settings causes PHP warnings on CPT and custom taxonomy settings.
+* Bug fix: Fixed issue that caused the settings reset option under the help drop down to not work.
 
 = 6.1.0 =
 Release date: June, 1st 2018

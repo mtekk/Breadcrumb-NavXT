@@ -24,7 +24,7 @@ if(!class_exists('mtekk_adminKit_message'))
 }
 abstract class mtekk_adminKit
 {
-	const version = '2.0.1';
+	const version = '2.0.2';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -275,7 +275,7 @@ abstract class mtekk_adminKit
 			$this->add_option($this->unique_prefix . '_options', $opts);
 			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
 			//Add the version, no need to autoload the db version
-			$this->add_option($this->unique_prefix . '_version', $this::version, '', 'no');
+			$this->update_option($this->unique_prefix . '_version', $this::version, 'no');
 		}
 		else
 		{

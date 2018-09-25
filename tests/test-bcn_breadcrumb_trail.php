@@ -187,6 +187,35 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
 	}
+	function test_do_post_hierarchy_first() {
+		wp_update_post(array('ID' => $this->pids[0], 'post_parent' => $this->pids[5]));
+		//Try with default (post_post_hierarchy_parent_first false
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post = get_post($this->pids[0]);
+		//$this->breadcrumb_trail->opt['bpost_post_hierarchy_parent_first'] = false;
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(5, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(get_term($this->tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());		
+		//Try with default (post_post_hierarchy_parent_first true
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Ensure we have 0 breadcrumbs from the do_root portion
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->opt['bpost_post_hierarchy_parent_first'] = true;
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(get_the_title($this->pids[5]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
+		$this->assertSame(get_term($this->tids[0], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());	
+	}
 	function test_query_var_to_taxonomy() {
 		//Setup some taxonomies
 		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
@@ -960,11 +989,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Test</span><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="3"></span>', $breadcrumb_string);
+		$this->assertSame('Home &gt; A Test &gt; A Preposterous Post', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them
 		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="2"></span>', $breadcrumb_string2);
+		$this->assertSame('Home &gt; A Preposterous Post', $breadcrumb_string2);
 	}
 }

@@ -25,22 +25,21 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb2 = new bcn_breadcrumb('test', '', array('page', 'current-item'), 'http://flowissues.com/test', 101);
 		$breadcrumb_string_linked2 = $breadcrumb2->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
-		
 	}
 	function test_assemble_unlinked() {
 		//Test a breadcrumb that can be linked, but is unlinked from the assemble function
 		$breadcrumb_string_unlinked1 = $this->breadcrumb->assemble(false, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked1);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked1);
 		
 		//Now test a breadcrumb that shouldn't be linked (both assemble and creation)
 		$breadcrumb_unlinked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), NULL, 102);
 		$breadcrumb_string_unlinked2 = $breadcrumb_unlinked->assemble(false, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked2);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked2);
 		
 		//Now test a breadcrumb that shouldn't be linked (just creation)
 		$breadcrumb_unlinked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), NULL, 103);
 		$breadcrumb_string_unlinked3 = $breadcrumb_unlinked->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked3);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked3);
 	}
 	function test_get_title() {
 		//Test to see if we get back the title we expect
@@ -69,7 +68,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Start with an unlinked breadcrumb trail assembly
 		$breadcrumb_unlinked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), NULL, 101);
 		$breadcrumb_string_unlinked1 = $breadcrumb_unlinked->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked1);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked1);
 
 		//Now set a URL
 		$breadcrumb_unlinked->set_url('http://flowissues.com/code');
@@ -90,17 +89,17 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Now pass in a blank URL
 		$breadcrumb_unlinked->set_url('');
 		$breadcrumb_string_unlinked2 = $breadcrumb_unlinked->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked2);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked2);
 
 		//Now pass in a blank URL
 		$breadcrumb_unlinked->set_url(' ');
 		$breadcrumb_string_unlinked3 = $breadcrumb_unlinked->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked3);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked3);
 
 		//Now pass in a NULL URL
 		$breadcrumb_unlinked->set_url(null);
 		$breadcrumb_string_unlinked4 = $breadcrumb_unlinked->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name">%s</span><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked4);
+		$this->assertStringMatchesFormat('%s', $breadcrumb_string_unlinked4);
 	}
 	function test_bad_url() {	
 		//First test a linked breadcrumb
@@ -153,5 +152,21 @@ class BreadcrumbTest extends WP_UnitTestCase {
 	}
 	function test_assemble_json_ld() {
 		$this->assertJsonStringEqualsJsonString('{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"test"}}', json_encode($this->breadcrumb->assemble_json_ld(1)));
+	}
+	function test_assemble_json_ld_filter() {
+		//Now register our filter
+		add_filter('bcn_breadcrumb_assembled_json_ld_array',
+				function($ld_array, $type, $id) {
+					if($id === 101)
+					{
+						$ld_array['item']->image = 'http://flowissues.com/testimage.png';
+					}
+					else
+					{
+						$ld_array['item']->image = 'http://flowissues.com/testimage2.png';
+					}
+					return $ld_array;
+				}, 3, 10);
+		$this->assertJsonStringEqualsJsonString('{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"test","image":"http://flowissues.com/testimage.png"}}', json_encode($this->breadcrumb->assemble_json_ld(1)));
 	}
 }

@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.1.0';
+	const version = '6.1.80';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -38,7 +38,7 @@ class bcn_breadcrumb
 	//The type of this breadcrumb
 	protected $type;
 	protected $allowed_html = array();
-	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name">%htitle%</span><meta property="position" content="%position%"></span>';
+	const default_template_no_anchor = '%htitle%';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *
@@ -88,7 +88,7 @@ class bcn_breadcrumb
 	 */
 	static public function get_default_template()
 	{
-		return __('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %title%." href="%link%" class="%type%"><span property="name">%htitle%</span></a><meta property="position" content="%position%"></span>', 'breadcrumb-navxt');
+		return sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to %title%.','breadcrumb-navxt'));
 	}
 	/**
 	 * Function to set the protected title member
@@ -261,12 +261,12 @@ class bcn_breadcrumb
 	 */
 	public function assemble_json_ld($position)
 	{
-		return (object)array(
+		return (object) apply_filters('bcn_breadcrumb_assembled_json_ld_array', array(
 			'@type' => 'ListItem',
 			'position' => $position,
 			'item' => (object)array(
 				'@id' => esc_url($this->url),
 				'name' => esc_attr($this->title))
-		);
+		), $this->type, $this->id);
 	}
 }

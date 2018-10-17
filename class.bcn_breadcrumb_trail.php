@@ -522,8 +522,10 @@ class bcn_breadcrumb_trail
 		}
 		//Done with the current item, now on to the parents
 		$frontpage = get_option('page_on_front');
+		// Set the object key we need to check if it exists
+		$bcn_object_key = 'bpost_' . $post->post_type. '_hierarchy_parent_first';
 		//If we are to follow the hierarchy first (with hierarchy type backup), run through the post again
-		if($this->opt['bpost_' . $post->post_type. '_hierarchy_parent_first'] && $post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
+		if(array_key_exists($bcn_object_key, $this->opt) && $this->opt[$bcn_object_key] && $post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 		{
 			//Get the parent's information
 			$parent = get_post($post->post_parent);

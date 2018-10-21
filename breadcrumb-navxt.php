@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.2.0
+Version: 6.2.1
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.2.0';
+	const version = '6.2.1';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -300,7 +300,17 @@ class breadcrumb_navxt
 					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
 					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 				}
-				if(!$post_type->hierarchical && !isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
+				if(!isset($opts['apost_' . $post_type->name . '_root']))
+				{
+					//Default to not showing a post_root
+					$opts['apost_' . $post_type->name . '_root'] = 0;
+				}
+				if(!isset($opts['bpost_' . $post_type->name . '_hierarchy_display']))
+				{
+					//Default to not displaying a taxonomy
+					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = false;
+				}
+				if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
 				{
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
@@ -310,25 +320,29 @@ class breadcrumb_navxt
 					{
 						$opts['bpost_' . $post_type->name . '_archive_display'] = false;		
 					}
-					//Default to not showing a post_root
-					$opts['apost_' . $post_type->name . '_root'] = 0;
-					//Default to not displaying a taxonomy
-					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = false;
-					//Loop through all of the possible taxonomies
-					foreach($wp_taxonomies as $taxonomy)
+					if(!$post_type->hierarchical)
 					{
-						//Check for non-public taxonomies
-						if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
+						//Loop through all of the possible taxonomies
+						foreach($wp_taxonomies as $taxonomy)
 						{
-							continue;
+							//Check for non-public taxonomies
+							if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
+							{
+								continue;
+							}
+							//Activate the first taxonomy valid for this post type and exit the loop
+							if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
+							{
+								$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
+								$opts['Spost_' . $post_type->name . '_hierarchy_type'] = $taxonomy->name;
+								break;
+							}
 						}
-						//Activate the first taxonomy valid for this post type and exit the loop
-						if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
-						{
-							$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
-							$opts['Spost_' . $post_type->name . '_hierarchy_type'] = $taxonomy->name;
-							break;
-						}
+					}
+					else
+					{
+						$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
+						$opts['Spost_' . $post_type->name . '_hierarchy_type'] = 'BCN_PARENT';
 					}
 					//If there are no valid taxonomies for this type, setup our defaults
 					if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))

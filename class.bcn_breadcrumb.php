@@ -38,7 +38,7 @@ class bcn_breadcrumb
 	//The type of this breadcrumb
 	protected $type;
 	protected $allowed_html = array();
-	const default_template_no_anchor = '%htitle%';
+	const default_template_no_anchor = '<span class="%type%">%htitle%</span>';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *

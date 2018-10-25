@@ -76,7 +76,7 @@ class bcn_breadcrumb_trail
 			'apost_page_root' => get_option('page_on_front'),
 			//Paged options
 			//The template for paged breadcrumb
-			'Hpaged_template' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
+			'Hpaged_template' => sprintf('<span class="%%type%%">%1$s</span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
 			//Should we try filling out paged information
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
@@ -117,7 +117,7 @@ class bcn_breadcrumb_trail
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
 					sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary
-			'Hsearch_template_no_anchor' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+			'Hsearch_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs
@@ -135,7 +135,7 @@ class bcn_breadcrumb_trail
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'),
 				sprintf('<a title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 			//The anchor template for author breadcrumbs, used when anchors are not needed
-			'Hauthor_template_no_anchor' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+			'Hauthor_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'), '%htitle%')),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',

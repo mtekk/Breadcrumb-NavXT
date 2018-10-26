@@ -989,11 +989,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('Home &gt; A Test &gt; A Preposterous Post', $breadcrumb_string);
+		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post">A Test</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them
 		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('Home &gt; A Preposterous Post', $breadcrumb_string2);
+		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string2);
 	}
 }

@@ -1054,10 +1054,10 @@ abstract class mtekk_adminKit
 		}?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $label);?>
+				<?php echo esc_html( $label ); ?>
 			</th>
-			<td>	
-				<label>
+			<td>
+				<label for="<?php echo esc_attr( $opt_id ); ?>">
 					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($this->opt[$option], true, false));?>
 					<?php echo $instruction; ?>
 				</label><br />

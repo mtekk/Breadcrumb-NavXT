@@ -479,7 +479,7 @@ class bcn_admin extends mtekk_adminKit
 		//Display our messages
 		$this->messages();
 		?>
-		<div class="wrap"><h2><?php echo $this->full_name; ?></h2>
+		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
 		if(!$this->version_check($this->get_option($this->unique_prefix . '_version')))
@@ -491,15 +491,15 @@ class bcn_admin extends mtekk_adminKit
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('A collection of settings most likely to be modified are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('General', 'breadcrumb-navxt'); ?></h3>
-				<h3><?php _e('General', 'breadcrumb-navxt'); ?></h3>
+				<legend class="screen-reader-text" data-title="<?php _e( 'A collection of settings most likely to be modified are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'General', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php _e('General', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Breadcrumb Separator', 'breadcrumb-navxt'), 'hseparator', '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
 						do_action($this->unique_prefix . '_settings_general', $this->opt);
 					?>
 				</table>
-				<h3><?php _e('Current Item', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Current Item', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_check(__('Link Current Item', 'breadcrumb-navxt'), 'bcurrent_item_linked', __('Yes', 'breadcrumb-navxt'));
@@ -508,23 +508,23 @@ class bcn_admin extends mtekk_adminKit
 						do_action($this->unique_prefix . '_settings_current_item', $this->opt);
 					?>
 				</table>
-				<h3><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
-					<?php 
+					<?php
 						$this->input_check(__('Home Breadcrumb', 'breadcrumb-navxt'), 'bhome_display', __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
 						$this->textbox(__('Home Template', 'breadcrumb-navxt'), 'Hhome_template', '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'), 'adminkit-enset');
 						$this->textbox(__('Home Template (Unlinked)', 'breadcrumb-navxt'), 'Hhome_template_no_anchor', '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_home', $this->opt);
 					?>
 				</table>
-				<h3><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_check(__('Blog Breadcrumb', 'breadcrumb-navxt'), 'bblog_display', __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), '', 'adminkit-enset-ctrl adminkit-enset');
 						do_action($this->unique_prefix . '_settings_blog', $this->opt);
 					?>
 				</table>
-				<h3><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->input_check(__('Main Site Breadcrumb', 'breadcrumb-navxt'), 'bmainsite_display', __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options(), '', 'adminkit-enset-ctrl adminkit-enset');
@@ -536,8 +536,8 @@ class bcn_admin extends mtekk_adminKit
 				<?php do_action($this->unique_prefix . '_after_settings_tab_general', $this->opt); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Post Types', 'breadcrumb-navxt'); ?></h3>
-				<h3><?php _e('Posts', 'breadcrumb-navxt'); ?></h3>
+				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Post Types', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php _e('Posts', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->textbox(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', '6', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
@@ -576,7 +576,7 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 				</table>
-				<h3><?php _e('Pages', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Pages', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Page Template', 'breadcrumb-navxt'), 'Hpost_page_template', '6', false, __('The template for page breadcrumbs.', 'breadcrumb-navxt'));
@@ -586,7 +586,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_hidden('Spost_page_hierarchy_type');
 					?>
 				</table>
-				<h3><?php _e('Attachments', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Attachments', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Attachment Template', 'breadcrumb-navxt'), 'Hpost_attachment_template', '6', false, __('The template for attachment breadcrumbs.', 'breadcrumb-navxt'));
@@ -607,7 +607,7 @@ class bcn_admin extends mtekk_adminKit
 				{
 					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
-				<h3><?php echo $post_type->labels->singular_name; ?></h3>
+				<h2><?php echo $post_type->labels->singular_name; ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->textbox(sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template', '6', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc));
@@ -674,22 +674,22 @@ class bcn_admin extends mtekk_adminKit
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
-				<h3 class="tab-title" title="<?php _e('The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Taxonomies', 'breadcrumb-navxt'); ?></h3>
-				<h3><?php _e('Categories', 'breadcrumb-navxt'); ?></h3>
+				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Taxonomies', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php _e('Categories', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Category Template', 'breadcrumb-navxt'), 'Htax_category_template', '6', false, __('The template for category breadcrumbs.', 'breadcrumb-navxt'));
 						$this->textbox(__('Category Template (Unlinked)', 'breadcrumb-navxt'), 'Htax_category_template_no_anchor', '4', false, __('The template for category breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<h3><?php _e('Tags', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Tags', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Tag Template', 'breadcrumb-navxt'), 'Htax_post_tag_template', '6', false, __('The template for tag breadcrumbs.', 'breadcrumb-navxt'));
 						$this->textbox(__('Tag Template (Unlinked)', 'breadcrumb-navxt'), 'Htax_post_tag_template_no_anchor', '4', false, __('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<h3><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Post Format Template', 'breadcrumb-navxt'), 'Htax_post_format_template', '6', false, __('The template for post format breadcrumbs.', 'breadcrumb-navxt'));
@@ -723,8 +723,8 @@ class bcn_admin extends mtekk_adminKit
 			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->opt); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
-				<h3 class="tab-title" title="<?php _e('The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt');?>"><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
-				<h3><?php _e('Author Archives', 'breadcrumb-navxt'); ?></h3>
+				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Miscellaneous', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php _e('Author Archives', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Author Template', 'breadcrumb-navxt'), 'Hauthor_template', '6', false, __('The template for author breadcrumbs.', 'breadcrumb-navxt'));
@@ -741,7 +741,7 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 				</table>
-				<h3><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->textbox(__('Date Template', 'breadcrumb-navxt'), 'Hdate_template', '6', false, __('The template for date breadcrumbs.', 'breadcrumb-navxt'));
@@ -752,11 +752,11 @@ class bcn_admin extends mtekk_adminKit
 						$this->textbox(__('404 Template', 'breadcrumb-navxt'), 'H404_template', '4', false, __('The template for 404 breadcrumbs.', 'breadcrumb-navxt'));
 					?>
 				</table>
-				<h3><?php _e('Deprecated', 'breadcrumb-navxt'); ?></h3>
+				<h2><?php _e('Deprecated', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">
-							<?php esc_html_e('Title Length', 'breadcrumb-navxt'); ?>						
+							<?php esc_html_e('Title Length', 'breadcrumb-navxt'); ?>
 						</th>
 						<td>
 							<label>

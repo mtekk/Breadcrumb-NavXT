@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2018  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2019  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.2.1';
+	const version = '6.2.50';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -213,11 +213,20 @@ class bcn_breadcrumb
 	 *
 	 * @param bool $linked Allow the output to contain anchors?
 	 * @param int $position The position of the breadcrumb in the trail (between 1 and n when there are n breadcrumbs in the trail)
+	 * @param bool $is_current_item Whether or not this breadcrumb represents the current item
 	 *
 	 * @return string The compiled breadcrumb string
 	 */
-	public function assemble($linked, $position)
+	public function assemble($linked, $position, $is_current_item = false)
 	{
+		if($is_current_item)
+		{
+			$aria_current_str = 'aria-current="page"';
+		}
+		else
+		{
+			$aria_current_str = '';
+		}
 		//Build our replacements array
 		$replacements = array(
 			'%title%' => esc_attr(strip_tags($this->title)),
@@ -226,7 +235,8 @@ class bcn_breadcrumb
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
 			'%fhtitle%' => $this->_title,
-			'%position%' => $position
+			'%position%' => $position,
+			'%aria-current%' => $aria_current_str
 			);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements['%type%']))

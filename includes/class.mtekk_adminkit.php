@@ -865,6 +865,7 @@ abstract class mtekk_adminKit
 		$form .= sprintf('<form action="options-general.php?page=%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->identifier), esc_attr($this->unique_prefix));
 		$form .= wp_nonce_field($this->unique_prefix . '_admin_import_export', '_wpnonce', true, false);
 		$form .= sprintf('<fieldset id="import_export" class="%s_options">', esc_attr($this->unique_prefix));
+		$form .= '<legend class="screen-reader-text">' . esc_html__( 'Import settings', $this->identifier ) . '</legend>';
 		$form .= '<p>' . esc_html__('Import settings from a XML file, export the current settings to a XML file, or reset to the default settings.', $this->identifier) . '</p>';
 		$form .= '<table class="form-table"><tr valign="top"><th scope="row">';
 		$form .= sprintf('<label for="%s_admin_import_file">', esc_attr($this->unique_prefix));
@@ -1054,10 +1055,10 @@ abstract class mtekk_adminKit
 		}?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $label);?>
+				<?php echo esc_html( $label ); ?>
 			</th>
-			<td>	
-				<label>
+			<td>
+				<label for="<?php echo esc_attr( $opt_id ); ?>">
 					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($this->opt[$option], true, false));?>
 					<?php echo $instruction; ?>
 				</label><br />

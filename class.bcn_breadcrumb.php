@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.1.0';
+	const version = '6.2.1';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -38,7 +38,7 @@ class bcn_breadcrumb
 	//The type of this breadcrumb
 	protected $type;
 	protected $allowed_html = array();
-	const default_template_no_anchor = '%htitle%';
+	const default_template_no_anchor = '<span class="%type%">%htitle%</span>';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
 	 *

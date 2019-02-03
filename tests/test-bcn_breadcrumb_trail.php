@@ -989,11 +989,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Test</span><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="3"></span>', $breadcrumb_string);
+		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post">A Test</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them
 		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name">Home</span><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name">A Preposterous Post</span><meta property="position" content="2"></span>', $breadcrumb_string2);
+		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string2);
 	}
 }

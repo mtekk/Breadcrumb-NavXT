@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.1.0';
+	const version = '6.2.1';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -76,7 +76,7 @@ class bcn_breadcrumb_trail
 			'apost_page_root' => get_option('page_on_front'),
 			//Paged options
 			//The template for paged breadcrumb
-			'Hpaged_template' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
+			'Hpaged_template' => sprintf('<span class="%%type%%">%1$s</span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
 			//Should we try filling out paged information
 			'bpaged_display' => false,
 			//The post options previously singleblogpost
@@ -117,7 +117,7 @@ class bcn_breadcrumb_trail
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
 					sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary
-			'Hsearch_template_no_anchor' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+			'Hsearch_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs
@@ -135,7 +135,7 @@ class bcn_breadcrumb_trail
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'),
 				sprintf('<a title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 			//The anchor template for author breadcrumbs, used when anchors are not needed
-			'Hauthor_template_no_anchor' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+			'Hauthor_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'), '%htitle%')),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
@@ -151,18 +151,6 @@ class bcn_breadcrumb_trail
 			//The breadcrumb template for date breadcrumbs, used when anchors are not needed
 			'Hdate_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor
 		);
-	}
-	/**
-	 * This returns the internal version
-	 * 
-	 * @deprecated 5.2.0 No longer needed, superceeded bcn_breadcrumb_trail::version
-	 *
-	 * @return string internal version of the Breadcrumb trail
-	 */
-	public function get_version()
-	{
-		_deprecated_function( __FUNCTION__, '5.2', 'bcn_breadcrumb_trail::version' );
-		return self::version;
 	}
 	/**
 	 * Adds a breadcrumb to the breadcrumb trail
@@ -540,18 +528,6 @@ class bcn_breadcrumb_trail
 	/**
 	 * A Breadcrumb Trail Filling Function
 	 * 
-	 * @deprecated 6.0.0 No longer needed, superceeded by do_post
-	 * 
-	 * This functions fills a breadcrumb for an attachment page.
-	 */
-	protected function do_attachment()
-	{
-		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::do_post');
-		$this->do_post(get_post());
-	}
-	/**
-	 * A Breadcrumb Trail Filling Function
-	 * 
 	 * This function fills a breadcrumb for any taxonomy archive, was previously two separate functions
 	 * 
 	 * @param WP_Term $term The term object to generate the breadcrumb for
@@ -660,30 +636,6 @@ class bcn_breadcrumb_trail
 			//Deal with the anchor
 			$breadcrumb->set_url($this->maybe_add_post_type_arg($url, $type));
 		}
-	}
-	/**
-	 * A Breadcrumb Trail Filling Function
-	 * 
-	 * This functions fills a breadcrumb for a date archive.
-	 * 
-	 * @param string $type The type to restrict the date archives to
-	 * 
-	 * @deprecated 6.0.0 No longer needed, superceeded by do_day, do_month, and/or do_year
-	 */
-	protected function do_archive_by_date($type)
-	{
-		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::do_day, bcn_breadcrumb_trail::do_month, and/or bcn_breadcrumb_trail::do_year');
-		//First deal with the day breadcrumb
-		if(is_day() || is_single())
-		{
-			$this->do_day(get_post(), $type, is_paged(), is_day());
-		}
-		//Now deal with the month breadcrumb
-		if(is_month() || is_day() || is_single())
-		{
-			$this->do_month(get_post(), $type, is_paged(), is_month());
-		}
-		$this->do_year(get_post(), $type, is_paged(), is_year());
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -979,7 +931,7 @@ class bcn_breadcrumb_trail
 	 */
 	public function fill()
 	{
-		global $wpdb, $wp_query, $wp;
+		global $wpdb, $wp_query, $wp, $wp_taxonomies;
 		//Check to see if the trail is already populated
 		if(count($this->breadcrumbs) > 0)
 		{
@@ -1190,22 +1142,6 @@ class bcn_breadcrumb_trail
 		return $trail_str;
 	}
 	/**
-	 * This functions outputs or returns the breadcrumb trail in list form.
-	 *
-	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
-	 * 
-	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
-	 * @param bool $reverse[optional] Whether to reverse the output or not.
-	 * 
-	 * @return void Void if option to print out breadcrumb trail was chosen.
-	 * @return string String version of the breadcrumb trail.
-	 */
-	public function display_list($linked = true, $reverse = false)
-	{
-		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::display');
-		return $this->display($return, $linked, $reverse, "<li%3\$s>%1\$s</li>\n");
-	}
-	/**
 	 * This function assembles the breadcrumbs in the breadcrumb trail in accordance with the passed in template
 	 * 
 	 * @param bool $linked  Whether to allow hyperlinks in the trail or not.
@@ -1283,5 +1219,72 @@ class bcn_breadcrumb_trail
 			$postion++;
 		}
 		return $breadcrumbs;
+	}
+	/**
+	 * Deprecated functions, don't use these
+	 */
+	/**
+	 * This returns the internal version
+	 *
+	 * @deprecated 5.2.0 No longer needed, superceeded bcn_breadcrumb_trail::version
+	 *
+	 * @return string internal version of the Breadcrumb trail
+	 */
+	public function get_version()
+	{
+		_deprecated_function( __FUNCTION__, '5.2', 'bcn_breadcrumb_trail::version' );
+		return self::version;
+	}
+	/**
+	 * A Breadcrumb Trail Filling Function
+	 *
+	 * @deprecated 6.0.0 No longer needed, superceeded by do_post
+	 *
+	 * This functions fills a breadcrumb for an attachment page.
+	 */
+	protected function do_attachment()
+	{
+		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::do_post');
+		$this->do_post(get_post());
+	}
+	/**
+	 * A Breadcrumb Trail Filling Function
+	 *
+	 * This functions fills a breadcrumb for a date archive.
+	 *
+	 * @param string $type The type to restrict the date archives to
+	 *
+	 * @deprecated 6.0.0 No longer needed, superceeded by do_day, do_month, and/or do_year
+	 */
+	protected function do_archive_by_date($type)
+	{
+		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::do_day, bcn_breadcrumb_trail::do_month, and/or bcn_breadcrumb_trail::do_year');
+		//First deal with the day breadcrumb
+		if(is_day() || is_single())
+		{
+			$this->do_day(get_post(), $type, is_paged(), is_day());
+		}
+		//Now deal with the month breadcrumb
+		if(is_month() || is_day() || is_single())
+		{
+			$this->do_month(get_post(), $type, is_paged(), is_month());
+		}
+		$this->do_year(get_post(), $type, is_paged(), is_year());
+	}
+	/**
+	 * This functions outputs or returns the breadcrumb trail in list form.
+	 *
+	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 *
+	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
+	 *
+	 * @return void Void if option to print out breadcrumb trail was chosen.
+	 * @return string String version of the breadcrumb trail.
+	 */
+	public function display_list($linked = true, $reverse = false)
+	{
+		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::display');
+		return $this->display($return, $linked, $reverse, "<li%3\$s>%1\$s</li>\n");
 	}
 }

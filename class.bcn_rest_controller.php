@@ -50,63 +50,73 @@ class bcn_rest_controller
 		$this->unique_prefix = $unique_prefix;
 		add_action('rest_api_init', array($this, 'register_routes'));
 	}
+	/**
+	 * A quick wrapper for register_rest_route to add our inclusion filter
+	 * 
+	 * @param string $namespace The first URL segment after core prefix. Should be unique
+	 * @param string $route The base URL for route being added
+	 * @param array $args Optional. Either an array of options for the endpoint, or an array of arrays for
+	 *                          multiple methods. Default empty array.
+	 * @param bool $override Optional. If the route already exists, should we override it?
+	 * @param string $endpoint The endpoint name passed into the bcn_register_rest_endpoint filter
+	 * @return boolean True on success, false on error.
+	 */
+	protected function register_rest_route($namespace, $route, $args = array(), $override = false, $endpoint)
+	{
+		if(apply_filters('bcn_register_rest_endpoint', false, $endpoint, $this::version, $this->methods))
+		{
+			return register_rest_route($namespace, $route, $args, $override);
+		}
+		return false;
+	}
 	public function register_routes()
 	{
-		if(apply_filters('bcn_register_rest_endpoint', false, 'post', $this::version, $this->methods))
-		{
-			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/post/(?P<id>[\d]+)', array(
-				'args' => array(
-					'id' => array(
-						'description' => __('The ID of the post (any type) to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-						'type' => 'integer',
-						'required' => true,
-						'validate_callback' => array($this, 'validate_id')
-					)
-				),
-				'methods' => $this->methods,
-				'callback' => array($this, 'display_rest_post'),
-				'permission_callback' => array($this, 'display_rest_post_permissions_check')
+		$this->register_rest_route( $this->unique_prefix . '/v' . $this::version, '/post/(?P<id>[\d]+)', array(
+			'args' => array(
+				'id' => array(
+					'description' => __('The ID of the post (any type) to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+					'type' => 'integer',
+					'required' => true,
+					'validate_callback' => array($this, 'validate_id')
 				)
-			);
-		}
-		if(apply_filters('bcn_register_rest_endpoint', false, 'term', $this::version, $this->methods))
-		{
-			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
-				'args' => array(
-					'id' => array(
-						'description' => __('The ID of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-						'type' => 'integer',
-						'required' => true,
-						'validate_callback' => array($this, 'validate_id')
-					),
-					'taxonomy' => array(
-						'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-						'type' => 'string',
-						'required' => true,
-						'validate_callback' => array($this, 'validate_taxonomy')
-					)
+			),
+			'methods' => $this->methods,
+			'callback' => array($this, 'display_rest_post'),
+			'permission_callback' => array($this, 'display_rest_post_permissions_check')
+			), false, 'post'
+		);
+		$this->register_rest_route( $this->unique_prefix . '/v' . $this::version, '/term/(?P<taxonomy>[\w-]+)/(?P<id>[\d]+)', array(
+			'args' => array(
+				'id' => array(
+					'description' => __('The ID of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+					'type' => 'integer',
+					'required' => true,
+					'validate_callback' => array($this, 'validate_id')
 				),
-				'methods' => $this->methods,
-				'callback' => array($this, 'display_rest_term')
+				'taxonomy' => array(
+					'description' => __('The taxonomy of the term to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+					'type' => 'string',
+					'required' => true,
+					'validate_callback' => array($this, 'validate_taxonomy')
 				)
-			);
-		}
-		if(apply_filters('bcn_register_rest_endpoint', false, 'author', $this::version, $this->methods))
-		{
-			register_rest_route( $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array(
-				'args' => array(
-					'id' => array(
-						'description' => __('The ID of the author to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
-						'type' => 'integer',
-						'required' => true,
-						'validate_callback' => array($this, 'validate_id')
-					)
-				),
-				'methods' => $this->methods,
-				'callback' => array($this, 'display_rest_author')
+			),
+			'methods' => $this->methods,
+			'callback' => array($this, 'display_rest_term')
+			), false, 'term'
+		);
+		$this->register_rest_route( $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array(
+			'args' => array(
+				'id' => array(
+					'description' => __('The ID of the author to retrieve the breadcrumb trail for.', 'breadcrumb-navxt'),
+					'type' => 'integer',
+					'required' => true,
+					'validate_callback' => array($this, 'validate_id')
 				)
-			);
-		}
+			),
+			'methods' => $this->methods,
+			'callback' => array($this, 'display_rest_author')
+			), false, 'author'
+		);
 	}
 	/**
 	 * Checks to see if the request ID looks like it could be an ID (numeric and greater than 0)

@@ -115,25 +115,25 @@ class bcn_breadcrumb_trail
 			//The breadcrumb template for search breadcrumbs
 			'Hsearch_template' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
-					sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
+					sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 			//The breadcrumb template for search breadcrumbs, used when an anchor is not necessary
 			'Hsearch_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 					sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
 			//Tag related stuff
 			//The breadcrumb template for tag breadcrumbs
-			'Htax_post_tag_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% tag archives.', 'breadcrumb-navxt')),
+			'Htax_post_tag_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% tag archives.', 'breadcrumb-navxt')),
 			//The breadcrumb template for tag breadcrumbs, used when an anchor is not necessary
 			'Htax_post_tag_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Post format related stuff
 			//The breadcrumb template for post format breadcrumbs, used when an anchor is not necessary
-			'Htax_post_format_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
+			'Htax_post_format_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
 			//The breadcrumb template for post format breadcrumbs
 			'Htax_post_format_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//Author page stuff
 			//The anchor template for author breadcrumbs
 			'Hauthor_template' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'),
-				sprintf('<a title="%1$s" href="%%link%%" class="%%type%%">%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
+				sprintf('<a title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 			//The anchor template for author breadcrumbs, used when anchors are not needed
 			'Hauthor_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'), '%htitle%')),
@@ -143,11 +143,11 @@ class bcn_breadcrumb_trail
 			'aauthor_root' => 0,
 			//Category stuff
 			//The breadcrumb template for category breadcrumbs
-			'Htax_category_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% category archives.', 'breadcrumb-navxt')),
+			'Htax_category_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% category archives.', 'breadcrumb-navxt')),
 			//The breadcrumb template for category breadcrumbs, used when anchors are not needed
 			'Htax_category_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor,
 			//The breadcrumb template for date breadcrumbs
-			'Hdate_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
+			'Hdate_template' => sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
 			//The breadcrumb template for date breadcrumbs, used when anchors are not needed
 			'Hdate_template_no_anchor' => bcn_breadcrumb::default_template_no_anchor
 		);

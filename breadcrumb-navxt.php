@@ -431,7 +431,7 @@ class breadcrumb_navxt
 				if(!isset($opts['Htax_' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
-					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 					$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%%htitle%%</span><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 				}
 			}

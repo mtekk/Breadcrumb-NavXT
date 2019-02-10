@@ -299,7 +299,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we do not have double wrapped items
 		foreach($title_exploded as $title_under_test)
 		{
-			$this->assertRegExp('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*"><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
+			$this->assertRegExp('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*" ><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
 		}
 	}
 	/**

@@ -88,7 +88,7 @@ class bcn_breadcrumb
 	 */
 	static public function get_default_template()
 	{
-		return sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to %title%.','breadcrumb-navxt'));
+		return sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to %title%.','breadcrumb-navxt'));
 	}
 	/**
 	 * Function to set the protected title member
@@ -236,7 +236,7 @@ class bcn_breadcrumb
 			'%ftitle%' => esc_attr(strip_tags($this->_title)),
 			'%fhtitle%' => $this->_title,
 			'%position%' => $position,
-			'%aria-current%' => $aria_current_str
+			'bcn-aria-current' => $aria_current_str
 			);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements['%type%']))

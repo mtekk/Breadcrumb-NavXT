@@ -161,9 +161,9 @@ class breadcrumb_navxt
 				load_plugin_textdomain('breadcrumb-navxt-gutenberg', false, $this->plugin_basename . '/languages');
 			}
 			//Setup our translation strings
-			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
-					'wp.i18n.setLocaleData( ' . json_encode(gutenberg_get_jed_locale_data('breadcrumb-navxt-gutenberg')) . ', "breadcrumb-navxt-gutenberg" );',
-					'before');
+			/*wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
+					'wp.i18n.setLocaleData( ' . json_encode(wp_get_jed_locale_data('breadcrumb-navxt-gutenberg')) . ', "breadcrumb-navxt-gutenberg" );',
+					'before');*/
 			//Setup some bcn settings
 			//TODO: New settings arch should make this easier
 			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
@@ -195,7 +195,8 @@ class breadcrumb_navxt
 						'property' => true,
 						'vocab' => true,
 						'translate' => true,
-						'lang' => true
+						'lang' => true,
+						'bcn-aria-current' => true
 					),
 					'img' => array(
 						'alt' => true,

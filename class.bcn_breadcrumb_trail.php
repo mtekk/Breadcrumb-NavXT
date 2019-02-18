@@ -1160,7 +1160,8 @@ class bcn_breadcrumb_trail
 		{
 			$types = $breadcrumb->get_types();
 			array_walk($types, 'sanitize_html_class');
-			$class = sprintf(' class="%s"', esc_attr(implode(' ', $types)));
+			$attrib_array = array('class' => implode(' ', $types));
+			$attribs = '';
 			//Deal with the separator
 			if($position < $last_position)
 			{
@@ -1170,9 +1171,16 @@ class bcn_breadcrumb_trail
 			{
 				$separator = '';
 			}
+			//Allow others to hook into the attribute array
+			$attrib_array= apply_filters('bcn_display_attribute_array', $attrib_array, $breadcrumb->get_types(), $breadcrumb->get_id());
+			//Stringify the array
+			foreach($attrib_array as $attrib => $value)
+			{
+				$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr($value));
+			}
 			//Filter li_attributes adding attributes to the li element
-			$attribs = apply_filters_deprecated('bcn_li_attributes', array($class, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
-			$attribs = apply_filters('bcn_display_attributes', $class, $breadcrumb->get_types(), $breadcrumb->get_id());
+			$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
+			$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
 			//Trim titles, if requested
 			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
 			{

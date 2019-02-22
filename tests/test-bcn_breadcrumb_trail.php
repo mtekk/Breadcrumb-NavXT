@@ -996,4 +996,30 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(false));
 		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string2);
 	}
+	function test_display_loop()
+	{
+		//Clear any breadcrumbs that may be lingering
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Add some breadcrumbs to the trail
+		//Setup our three breadcrumbs and add them to the breadcrumbs array
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$this->breadcrumb_trail->call('add', array($breadcrumba));
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$this->breadcrumb_trail->call('add', array($breadcrumbb));
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102);
+		$this->breadcrumb_trail->call('add', array($breadcrumbc));
+		$this->breadcrumb_trail->call('order', array(false));
+		//Test without a filter
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
+		$this->assertSame('<li class="post post-post"><span class="post post-post">Home</span></li><li class="post post-post"><span class="post post-post">A Test</span></li><li class="post post-post current-item"><span class="post post-post current-item">A Preposterous Post</span></li>', $breadcrumb_string);
+		//Add our filter
+		add_filter('bcn_display_attribute_array', function($attrib_array, $types, $id){
+			$attrib_array['class'][] = 'dynamico';
+			$attrib_array['arria-current'][0] = 'page';
+			return $attrib_array;
+		}, 10, 3);
+		//Test with filtered result
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
+		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span class="post post-post">Home</span></li><li class="post post-post dynamico" arria-current="page"><span class="post post-post">A Test</span></li><li class="post post-post current-item dynamico" arria-current="page"><span class="post post-post current-item">A Preposterous Post</span></li>', $breadcrumb_string);
+	}
 }

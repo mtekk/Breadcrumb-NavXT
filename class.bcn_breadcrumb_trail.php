@@ -1160,7 +1160,7 @@ class bcn_breadcrumb_trail
 		{
 			$types = $breadcrumb->get_types();
 			array_walk($types, 'sanitize_html_class');
-			$attrib_array = array('class' => implode(' ', $types));
+			$attrib_array = array('class' => $types);
 			$attribs = '';
 			//Deal with the separator
 			if($position < $last_position)
@@ -1176,7 +1176,7 @@ class bcn_breadcrumb_trail
 			//Stringify the array
 			foreach($attrib_array as $attrib => $value)
 			{
-				$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr($value));
+				$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr(implode(' ', $value)));
 			}
 			//Filter li_attributes adding attributes to the li element
 			$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');

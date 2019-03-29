@@ -132,11 +132,11 @@ class bcn_breadcrumb_trail
 			//Author page stuff
 			//The anchor template for author breadcrumbs
 			'Hauthor_template' => sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
-				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'),
+				sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'),
 				sprintf('<a title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 			//The anchor template for author breadcrumbs, used when anchors are not needed
 			'Hauthor_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
-				sprintf(esc_attr__('Articles by: %1$s', 'breacrumb-navxt'), '%htitle%')),
+				sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Sauthor_name' => 'display_name',
 			//Give an invlaid page ID for the author root
@@ -1187,7 +1187,7 @@ class bcn_breadcrumb_trail
 				//Trim the breadcrumb's title
 				$breadcrumb->title_trim($this->opt['amax_title_length']);
 			}
-			//Assemble the breadrumb
+			//Assemble the breadcrumb
 			$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
 			$position++;
 		}

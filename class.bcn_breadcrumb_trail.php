@@ -1293,6 +1293,6 @@ class bcn_breadcrumb_trail
 	public function display_list($linked = true, $reverse = false)
 	{
 		_deprecated_function( __FUNCTION__, '6.0', 'bcn_breadcrumb_trail::display');
-		return $this->display($return, $linked, $reverse, "<li%3\$s>%1\$s</li>\n");
+		return $this->display($linked, $reverse, "<li%3\$s>%1\$s</li>\n");
 	}
 }

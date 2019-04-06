@@ -156,20 +156,26 @@ class breadcrumb_navxt
 				/*'editor_style' => ''/*,
 				'style' => ''*/
 			));
-			if(!is_textdomain_loaded('breadcrumb-navxt-gutenberg'))
+			if(function_exists('wp_set_script_translations'))
 			{
-				load_plugin_textdomain('breadcrumb-navxt-gutenberg', false, $this->plugin_basename . '/languages');
+				//Setup our translation strings
+				wp_set_script_translations($this->unique_prefix . '-breadcrumb-trail-block-script', 'breadcrumb-navxt');
 			}
-			//Setup our translation strings
-			/*wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
-					'wp.i18n.setLocaleData( ' . json_encode(wp_get_jed_locale_data('breadcrumb-navxt-gutenberg')) . ', "breadcrumb-navxt-gutenberg" );',
-					'before');*/
 			//Setup some bcn settings
 			//TODO: New settings arch should make this easier
 			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
 					$this->unique_prefix . 'Opts = ' . json_encode($this->opt) . ';',
 					'before');
 		}
+		add_filter('bcn_register_rest_endpoint', array($this, 'api_enable_for_block'), 10, 4);
+	}
+	public function api_enable_for_block($register_rest_endpoint, $endpoint, $version, $methods)
+	{
+		/*if(is_admin() && current_user_can('edit_posts') &&  $endpoint === 'post')
+		{
+			return true;
+		}*/
+		return $register_rest_endpoint;
 	}
 	public function allowed_html($tags)
 	{

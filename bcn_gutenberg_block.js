@@ -66,7 +66,7 @@
 		},
 		
 		resolvers: {
-/*			* getBreadcrumbTrail( state, post ) {
+			/*getBreadcrumbTrail( state, post ) {
 				const path = '/bcn/v1/post/' + post;
 				const breadcrumbTrail = yield actions.fetchFromAPI( path );
 				return actions.setBreadcrumbTrail( post, breadcrumbTrail );
@@ -96,16 +96,16 @@
 	}
 	function displayBreadcrumbTrail( { breadcrumbTrail } ) {
 		if( ! breadcrumbTrail ) {
-			return __( 'Loading...', 'breadcrumb-navxt-gutenberg' );
+			return __( 'Loading...', 'breadcrumb-navxt' );
 		}
 		if( breadcrumbTrail.itemListElement === 0 ) {
-			return __( 'No breadcrumb trail', 'breadcrumb-navxt-gutenberg' );
+			return __( 'No breadcrumb trail', 'breadcrumb-navxt' );
 		}
 		var breadcrumb = breadcrumbTrail.itemListElement[ 0 ];
 		return renderBreadcrumbTrail(breadcrumbTrail);
 	}
 	registerBlockType( 'bcn/breadcrumb-trail', {
-		title: __( 'Breadcrumb Trail', 'breadcrumb-navxt-gutenberg' ),
+		title: __( 'Breadcrumb Trail', 'breadcrumb-navxt' ),
 		icon: iconBCN,
 		category: 'widgets',
 

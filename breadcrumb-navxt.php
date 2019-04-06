@@ -85,6 +85,7 @@ class breadcrumb_navxt
 		$this->plugin_basename = plugin_basename(__FILE__);
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
+		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
 		//Run a little later than everyone else
 		add_action('init', array($this, 'init'), 11);
 		//Register the WordPress 2.8 Widget
@@ -122,6 +123,10 @@ class breadcrumb_navxt
 		}
 		//Register Guternberg
 		$this->register_block();
+	}
+	public function rest_api_init()
+	{
+		add_filter('bcn_register_rest_endpoint', array($this, 'api_enable_for_block'), 10, 4);
 	}
 	public function register_widget()
 	{
@@ -167,14 +172,14 @@ class breadcrumb_navxt
 					$this->unique_prefix . 'Opts = ' . json_encode($this->opt) . ';',
 					'before');
 		}
-		add_filter('bcn_register_rest_endpoint', array($this, 'api_enable_for_block'), 10, 4);
 	}
 	public function api_enable_for_block($register_rest_endpoint, $endpoint, $version, $methods)
 	{
-		/*if(is_admin() && current_user_can('edit_posts') &&  $endpoint === 'post')
+		//Enable if the current user can edit posts
+		if(current_user_can('edit_posts') && $endpoint === 'post')
 		{
 			return true;
-		}*/
+		}
 		return $register_rest_endpoint;
 	}
 	public function allowed_html($tags)

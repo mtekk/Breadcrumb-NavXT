@@ -66,14 +66,9 @@
 		},
 		
 		resolvers: {
-			/*getBreadcrumbTrail( state, post ) {
+			* getBreadcrumbTrail( post ) {
 				const path = '/bcn/v1/post/' + post;
 				const breadcrumbTrail = yield actions.fetchFromAPI( path );
-				return actions.setBreadcrumbTrail( post, breadcrumbTrail );
-			}*/
-			async getBreadcrumbTrail( state, post ) {
-				const path = '/bcn/v1/post/' + post;
-				const breadcrumbTrail = await apiFetch( { path: path } );
 				return actions.setBreadcrumbTrail( post, breadcrumbTrail );
 			}
 		},

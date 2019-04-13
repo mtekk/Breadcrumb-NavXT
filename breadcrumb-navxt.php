@@ -169,7 +169,11 @@ class breadcrumb_navxt
 			//Setup some bcn settings
 			//TODO: New settings arch should make this easier
 			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
-					$this->unique_prefix . 'Opts = ' . json_encode($this->opt) . ';',
+					$this->unique_prefix . 'Opts = ' . json_encode(
+							array(
+									'bcurrent_item_linked' => $this->opt['bcurrent_item_linked'],
+									'hseparator' => $this->opt['hseparator']
+							)) . ';',
 					'before');
 		}
 	}

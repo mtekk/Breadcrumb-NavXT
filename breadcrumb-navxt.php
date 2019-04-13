@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.2.1
+Version: 6.2.70
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -11,7 +11,7 @@ Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
 /*
-	Copyright 2007-2018  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2019  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.2.1';
+	const version = '6.2.70';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -85,6 +85,7 @@ class breadcrumb_navxt
 		$this->plugin_basename = plugin_basename(__FILE__);
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
+		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
 		//Run a little later than everyone else
 		add_action('init', array($this, 'init'), 11);
 		//Register the WordPress 2.8 Widget
@@ -120,10 +121,70 @@ class breadcrumb_navxt
 			require_once(dirname(__FILE__) . '/class.bcn_rest_controller.php');
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
 		}
+		//Register Guternberg
+		$this->register_block();
+	}
+	public function rest_api_init()
+	{
+		add_filter('bcn_register_rest_endpoint', array($this, 'api_enable_for_block'), 10, 4);
 	}
 	public function register_widget()
 	{
 		return register_widget($this->unique_prefix . '_widget');
+	}
+	/**
+	 * Server-side rendering for front-end block display
+	 * 
+	 * @param array $attributes Array of attributes set by the Gutenberg sidebar
+	 * @return string The Breadcrumb Trail string
+	 */
+	public function render_block($attributes)
+	{
+		$extra_classs = '';
+		if(isset($attributes['className']))
+		{
+			$extra_classs = esc_attr($attributes['className']);
+		}
+		return sprintf('<div class="breadcrumbs %2$s" typeof="BreadcrumbList" vocab="https://schema.org/">%1$s</div>', bcn_display(true), $extra_classs);
+	}
+	/**
+	 * Handles registering the Breadcrumb Trail Gutenberg block
+	 */
+	public function register_block()
+	{
+		wp_register_script($this->unique_prefix . '-breadcrumb-trail-block-script', plugins_url('bcn_gutenberg_block.js', __FILE__), array('wp-blocks', 'wp-element', 'wp-i18n', 'wp-api'));
+		if(function_exists('register_block_type'))
+		{
+			register_block_type( $this->unique_prefix . '/breadcrumb-trail', array(
+				'editor_script' => $this->unique_prefix . '-breadcrumb-trail-block-script',
+				'render_callback' => array($this, 'render_block')
+				/*'editor_style' => ''/*,
+				'style' => ''*/
+			));
+			if(function_exists('wp_set_script_translations'))
+			{
+				//Setup our translation strings
+				wp_set_script_translations($this->unique_prefix . '-breadcrumb-trail-block-script', 'breadcrumb-navxt');
+			}
+			//Setup some bcn settings
+			//TODO: New settings arch should make this easier
+			wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
+					$this->unique_prefix . 'Opts = ' . json_encode(
+							array(
+									'bcurrent_item_linked' => $this->opt['bcurrent_item_linked'],
+									'hseparator' => $this->opt['hseparator']
+							)) . ';',
+					'before');
+		}
+	}
+	public function api_enable_for_block($register_rest_endpoint, $endpoint, $version, $methods)
+	{
+		//Enable if the current user can edit posts
+		if(current_user_can('edit_posts') && $endpoint === 'post')
+		{
+			return true;
+		}
+		return $register_rest_endpoint;
 	}
 	public function allowed_html($tags)
 	{
@@ -149,7 +210,8 @@ class breadcrumb_navxt
 						'property' => true,
 						'vocab' => true,
 						'translate' => true,
-						'lang' => true
+						'lang' => true,
+						'bcn-aria-current' => true
 					),
 					'img' => array(
 						'alt' => true,
@@ -299,6 +361,9 @@ class breadcrumb_navxt
 				{
 					//Add the necessary option array members
 					$opts['Hpost_' . $post_type->name . '_template'] = bcn_breadcrumb::get_default_template();
+				}
+				if(!isset($opts['Hpost_' . $post_type->name . '_template_no_anchor']))
+				{
 					$opts['Hpost_' . $post_type->name . '_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 				}
 				if(!isset($opts['apost_' . $post_type->name . '_root']))
@@ -381,7 +446,7 @@ class breadcrumb_navxt
 				if(!isset($opts['Htax_' . $taxonomy->name . '_template']))
 				{
 					//Add the necessary option array members
-					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%"><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
+					$opts['Htax_' . $taxonomy->name . '_template'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 					$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = __(sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%%htitle%%</span><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt');
 				}
 			}
@@ -429,6 +494,7 @@ class breadcrumb_navxt
 		}
 		//Currently only support using post_parent for the page hierarchy
 		$this->breadcrumb_trail->opt['bpost_page_hierarchy_display'] = true;
+		$this->breadcrumb_trail->opt['bpost_page_hierarchy_parent_first'] = true;
 		$this->breadcrumb_trail->opt['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only

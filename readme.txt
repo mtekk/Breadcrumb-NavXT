@@ -2,10 +2,10 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 4.7
-Tested up to: 5.0.0
+Requires at least: 4.8
+Tested up to: 5.1.0
 Stable tag: 6.2.1
-Requires PHP: 5.3
+Requires PHP: 5.5
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -48,6 +48,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.3.0 =
+Release date: May, 3rd 2019
+
+* New feature: Added Gutenberg block for displaying breadcrumb trails.
+* New feature: Added `bcn_display_attribute_array` filter.
+* New feature: Added `bcn-aria-current` template tag to facilitate WAI-ARIA Breadcrumb support.
+* Bug Fix: Updated settings page to follow WP core standards for header structure.
+* Bug Fix: Updated checkbox in adminKit to eliminate multiple labels to follow WCAG 2.0.
+* Bug Fix: Fixed PHP error in circumstances of `bcn_breadcrumb_trail::fill()` falling back on treating an unknown item as a taxonomy.
 
 = 6.2.1 =
 Release date: October, 26th 2018

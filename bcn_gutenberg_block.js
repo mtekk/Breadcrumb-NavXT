@@ -101,6 +101,7 @@
 	}
 	registerBlockType( 'bcn/breadcrumb-trail', {
 		title: __( 'Breadcrumb Trail', 'breadcrumb-navxt' ),
+		description: __( "Display a breadcrumb trail representing this post's location on this website.", 'breadcrumb-navxt'),
 		icon: iconBCN,
 		category: 'widgets',
 

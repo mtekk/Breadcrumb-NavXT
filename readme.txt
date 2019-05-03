@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.8
 Tested up to: 5.2.0
-Stable tag: 6.2.1
+Stable tag: 6.3.0
 Requires PHP: 5.5
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -135,8 +135,8 @@ Release date: December, 26th 2017
 * Bug fix: Removed use of `create_function` in registering the widget as it was deprecated in PHP 7.2.
 
 == Upgrade Notice ==
+= 6.3.0 =
+This version requires PHP5.5 or newer. This version introduces a Gutenberg Breadcrumb Trail block.
+
 = 6.0.0 =
 This version requires PHP5.3 or newer. This version introduces three new filters and deprecates a filter.
-
-= 5.6.0 =
-This version requires PHP5.3 or newer. This version introduces a new 4th optional parameter to `bcn_display()` and `bcn_display_list()` that bypasses the internal caching mechanism.

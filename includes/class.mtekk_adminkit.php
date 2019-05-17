@@ -792,7 +792,7 @@ abstract class mtekk_adminKit
 			$message->render();
 		}
 		//Old deprecated messages
-		if(count($this->message))
+		if(is_array($this->message) && count($this->message))
 		{
 			_deprecated_function( __FUNCTION__, '2.0.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
 			//Loop through our message classes

@@ -201,12 +201,12 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 				. '"}},{"@type":"ListItem","position":4,"item":{"@id":"' . get_term_link($this->terms[8]) . '","name":"' . get_term($this->terms[8])->name
 				. '"}},{"@type":"ListItem","position":5,"item":{"@id":"' . get_term_link($this->terms[7]) . '","name":"' . get_term($this->terms[7])->name
 				. '"}},{"@type":"ListItem","position":6,"item":{"@id":"' . get_term_link($this->terms[5]) . '","name":"' . get_term($this->terms[5])->name
-				. '"}},{"@type":"ListItem","position":7,"item":{"@id":null,"name":"' . get_the_title($this->posts[0])
+				. '"}},{"@type":"ListItem","position":7,"item":{"@id":"' . get_permalink($this->posts[0]) . '","name":"' . get_the_title($this->posts[0])
 				. '"}}]}',
 			bcn_display_json_ld(true, false, true));
 		//Now test the reverse order mode
 		$this->assertJsonStringEqualsJsonString(
-			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":null,"name":"' . get_the_title($this->posts[0])
+				'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"' . get_permalink($this->posts[0]). '","name":"' . get_the_title($this->posts[0])
 				. '"}},{"@type":"ListItem","position":2,"item":{"@id":"' . get_term_link($this->terms[5]) . '","name":"' . get_term($this->terms[5])->name
 				. '"}},{"@type":"ListItem","position":3,"item":{"@id":"' . get_term_link($this->terms[7]) . '","name":"' . get_term($this->terms[7])->name
 				. '"}},{"@type":"ListItem","position":4,"item":{"@id":"' . get_term_link($this->terms[8]) . '","name":"' . get_term($this->terms[8])->name

@@ -9,7 +9,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 	public $breadcrumb;
 	function setUp() {
 		parent::setUp();
-		$this->breadcrumb = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/test', 101);
+		$this->breadcrumb = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/test', 101, true);
 	}
 	public function tearDown() {
 		parent::tearDown();
@@ -22,7 +22,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertContains('content="81"', $breadcrumb_string_linked1);
 		
 		//Now test a breadcrumb that didn't have a template passed in
-		$breadcrumb2 = new bcn_breadcrumb('test', '', array('page', 'current-item'), 'http://flowissues.com/test', 101);
+		$breadcrumb2 = new bcn_breadcrumb('test', '', array('page', 'current-item'), 'http://flowissues.com/test', 101, true);
 		$breadcrumb_string_linked2 = $breadcrumb2->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
 	}
@@ -79,6 +79,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 
 		//Now set a URL
 		$breadcrumb_unlinked->set_url('http://flowissues.com/code');
+		$breadcrumb_unlinked->set_linked(true);
 		$breadcrumb_string_linked1 = $breadcrumb_unlinked->assemble(true, 1);
 		//Make sure we changed automatically to a linked template
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
@@ -129,6 +130,17 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->breadcrumb->set_template('<a href="%link%">%htitle%</a>');
 		$breadcrumb_string_linked2 = $this->breadcrumb->assemble(true, 1);
 		$this->assertStringMatchesFormat('<a href="%s">%s</a>', $breadcrumb_string_linked2);
+	}
+	function test_set_linked() {
+		//Test linked
+		//Ensure the raw setup is as expected
+		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);
+		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
+		//Test unlinked
+		$this->breadcrumb->set_linked(false);
+		//Ensure the raw setup is as expected
+		$breadcrumb_string_unlinked = $this->breadcrumb->assemble(true, 1);
+		$this->assertStringMatchesFormat('<span class="%s" >%s</span></a>', $breadcrumb_string_unlinked);
 	}
 	function test_get_id() {
 		//Test to see if we get back the ID we expect

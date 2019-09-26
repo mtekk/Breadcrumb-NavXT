@@ -140,7 +140,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->breadcrumb->set_linked(false);
 		//Ensure the raw setup is as expected
 		$breadcrumb_string_unlinked = $this->breadcrumb->assemble(true, 1);
-		$this->assertStringMatchesFormat('<span class="%s" >%s</span></a>', $breadcrumb_string_unlinked);
+		$this->assertStringMatchesFormat('<span class="%s">%s</span>', $breadcrumb_string_unlinked);
 	}
 	function test_get_id() {
 		//Test to see if we get back the ID we expect

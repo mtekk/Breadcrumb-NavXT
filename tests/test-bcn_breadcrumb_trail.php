@@ -944,7 +944,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Setup our two breadcrumbs and add them to the breadcrumbs array
 		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
-		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
 		//Now test the JSON-LD loop prepairer
 		$breadcrumbs = $this->breadcrumb_trail->call('json_ld_loop', array());
@@ -960,7 +960,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Setup our two breadcrumbs and add them to the breadcrumbs array
 		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
-		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
 		//Now test the normal order mode
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_json_ld', array(false));
@@ -983,9 +983,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Setup our three breadcrumbs and add them to the breadcrumbs array
 		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
-		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
-		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102);
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
@@ -1004,9 +1004,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Setup our three breadcrumbs and add them to the breadcrumbs array
 		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
-		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102);
+		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
-		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102);
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		$this->breadcrumb_trail->call('order', array(false));
 		//Test without a filter

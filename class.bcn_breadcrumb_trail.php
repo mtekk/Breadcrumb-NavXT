@@ -479,6 +479,11 @@ class bcn_breadcrumb_trail
 	{
 		//Use WordPress API, though a bit heavier than the old method, this will ensure compatibility with other plug-ins
 		$parent = get_post($id);
+		//Check for non-public taxonomies
+		if(!apply_filters('bcn_show_post_private', get_post_status($parent) !== 'private', $parent->ID))
+		{
+			return $parent;
+		}
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(
 				get_the_title($id),
@@ -539,6 +544,10 @@ class bcn_breadcrumb_trail
 		{
 			//Get the parent's information
 			$parent = get_post($post->post_parent);
+			if(!apply_filters('bcn_show_post_private', get_post_status($parent) !== 'private', $parent->ID))
+			{
+				return;
+			}
 			//Take care of the parent's breadcrumb
 			$this->do_post($parent, true, false, false);
 		}

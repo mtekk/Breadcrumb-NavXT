@@ -80,9 +80,10 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $this->paids[0], 'post_parent' => $this->paids[3]));
 		wp_update_post(array('ID' => $this->paids[1], 'post_parent' => $this->paids[2]));
-		wp_update_post(array('ID' => $this->paids[2], 'post_parent' => $this->paids[3]));
+		wp_update_post(array('ID' => $this->paids[2], 'post_parent' => $this->paids[3], 'post_status' => 'private'));
 		wp_update_post(array('ID' => $this->paids[6], 'post_parent' => $this->paids[5]));
 		wp_update_post(array('ID' => $this->paids[5], 'post_parent' => $this->paids[0]));
+		wp_update_post(array('ID' => $this->paids[9], 'post_parent' => $this->paids[1]));
 	}
 	public function tearDown() {
 		parent::tearDown();
@@ -186,6 +187,48 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 		$this->assertSame('Test Parent' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
+	}
+	/**
+	 * Tests for the bcn_pick_post_term filter
+	 */
+	function test_bcn_show_post_private() {
+		//Try with default (post_post_hierarchy_parent_first false
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($this->paids[1]);
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		//Again with the private post in a deeper location
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($this->paids[9]);
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		//Add a filter that enables showing private posts in the hierarchy
+		add_filter('bcn_show_post_private',
+				function($display, $id) {
+					return true;
+				}, 2, 10);
+		//Have another go
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($this->paids[1]);
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title($this->paids[2]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		//Again with the private post in a deeper location
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$post = get_post($this->paids[9]);
+		$this->breadcrumb_trail->call('do_post', array($post));
+		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertSame(get_the_title($this->paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title($this->paids[2]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[3]->get_title());
 	}
 	function test_do_post_hierarchy_first() {
 		wp_update_post(array('ID' => $this->pids[0], 'post_parent' => $this->pids[5]));

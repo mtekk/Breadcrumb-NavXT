@@ -479,19 +479,18 @@ class bcn_breadcrumb_trail
 	{
 		//Use WordPress API, though a bit heavier than the old method, this will ensure compatibility with other plug-ins
 		$parent = get_post($id);
-		//Check for non-public taxonomies
-		if(!apply_filters('bcn_show_post_private', get_post_status($parent) !== 'private', $parent->ID))
+		//Only add the breadcrumb if it is non-private or we allow private posts in the breadcrumb trail
+		if(apply_filters('bcn_show_post_private', get_post_status($parent) !== 'private', $parent->ID))
 		{
-			return $parent;
+			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
+			$breadcrumb = $this->add(new bcn_breadcrumb(
+					get_the_title($id),
+					$this->opt['Hpost_' . $parent->post_type . '_template'],
+					array('post', 'post-' . $parent->post_type),
+					get_permalink($id),
+					$id,
+					true));
 		}
-		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(
-				get_the_title($id),
-				$this->opt['Hpost_' . $parent->post_type . '_template'],
-				array('post', 'post-' . $parent->post_type),
-				get_permalink($id),
-				$id,
-				true));
 		//Make sure the id is valid, and that we won't end up spinning in a loop
 		if($parent->post_parent > 0 && $id != $parent->post_parent && $frontpage != $parent->post_parent)
 		{
@@ -518,24 +517,28 @@ class bcn_breadcrumb_trail
 			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$post global is not of type WP_Post', 'breadcrumb-navxt'), '5.1.1');
 			return;
 		}
-		//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
-		$breadcrumb = $this->add(new bcn_breadcrumb(
-				get_the_title($post),
-				$this->opt['Hpost_' . $post->post_type . '_template_no_anchor'],
-				array('post', 'post-' . $post->post_type),
-				get_permalink($post),
-				$post->ID));
-		if($is_current_item)
+		//If this is the current item or if we're allowing private posts in the trail add a breadcrumb
+		if($is_current_item || apply_filters('bcn_show_post_private', get_post_status($post) !== 'private', $post->ID))
 		{
-			$breadcrumb->add_type('current-item');
-		}
-		//Under a couple of circumstances we will want to link this breadcrumb
-		if($force_link || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
-		{
-			//Change the template over to the normal, linked one
-			$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
-			//Add the link
-			$breadcrumb->set_linked(true);
+			//Place the breadcrumb in the trail, uses the bcn_breadcrumb constructor to set the title, template, and type
+			$breadcrumb = $this->add(new bcn_breadcrumb(
+					get_the_title($post),
+					$this->opt['Hpost_' . $post->post_type . '_template_no_anchor'],
+					array('post', 'post-' . $post->post_type),
+					get_permalink($post),
+					$post->ID));
+			if($is_current_item)
+			{
+				$breadcrumb->add_type('current-item');
+			}
+			//Under a couple of circumstances we will want to link this breadcrumb
+			if($force_link || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
+			{
+				//Change the template over to the normal, linked one
+				$breadcrumb->set_template($this->opt['Hpost_' . $post->post_type . '_template']);
+				//Add the link
+				$breadcrumb->set_linked(true);
+			}
 		}
 		//Done with the current item, now on to the parents
 		$frontpage = get_option('page_on_front');
@@ -544,10 +547,6 @@ class bcn_breadcrumb_trail
 		{
 			//Get the parent's information
 			$parent = get_post($post->post_parent);
-			if(!apply_filters('bcn_show_post_private', get_post_status($parent) !== 'private', $parent->ID))
-			{
-				return;
-			}
 			//Take care of the parent's breadcrumb
 			$this->do_post($parent, true, false, false);
 		}
@@ -878,6 +877,7 @@ class bcn_breadcrumb_trail
 	 * @param string $type_str The type string for the archive
 	 * 
 	 * TODO: Remove dependancies to current state (state should be passed in)
+	 * TODO: Add method/filter for disabling this via filter for taxonomies
 	 */
 	protected function type_archive($type, $type_str = false)
 	{

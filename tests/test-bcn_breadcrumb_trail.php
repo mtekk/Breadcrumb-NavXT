@@ -63,9 +63,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 		//Create some posts
-		$this->pids = $this->factory->post->create_many(10, array('post_type' => 'post'));
+		$this->pids = self::factory()->post->create_many(10, array('post_type' => 'post'));
 		//Create some terms
-		$this->tids = $this->factory->category->create_many(10);
+		$this->tids = self::factory()->category->create_many(10);
 		//Make some of the terms be in a hierarchy
 		wp_update_term($this->tids[7], 'category', array('parent' => $this->tids[8]));
 		wp_update_term($this->tids[8], 'category', array('parent' => $this->tids[6]));
@@ -76,7 +76,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_set_object_terms($this->pids[5], array($this->tids[0]), 'category');
 		wp_set_object_terms($this->pids[7], array($this->tids[7]), 'category');
 		//Create some pages
-		$this->paids = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$this->paids = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $this->paids[0], 'post_parent' => $this->paids[3]));
 		wp_update_post(array('ID' => $this->paids[1], 'post_parent' => $this->paids[2]));
@@ -89,7 +89,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		parent::tearDown();
 	}
 	function test_add() {
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
 		$post = get_post($pid);
 		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
 		$this->breadcrumb_trail->breadcrumbs = array();
@@ -106,8 +106,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_do_author() {
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
-		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$author_id = self::factory()->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = self::factory()->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
@@ -130,7 +130,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_do_post() {
 		//Test a single post
-		$popid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$popid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
 		$post = get_post($popid);
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs to start
@@ -144,8 +144,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 		
 		//Test a page
-		$papid = $this->factory->post->create(array('post_title' => 'Test Parent', 'post_type' => 'page'));
-		$papid = $this->factory->post->create(array('post_title' => 'Test Child', 'post_type' => 'page', 'post_parent' => $papid));
+		$papid = self::factory()->post->create(array('post_title' => 'Test Parent', 'post_type' => 'page'));
+		$papid = self::factory()->post->create(array('post_title' => 'Test Child', 'post_type' => 'page', 'post_parent' => $papid));
 		$post = get_post($papid);
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs to start
@@ -159,8 +159,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 
 		//Test an attachment
-		$attpida = $this->factory->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
-		$attpidb = $this->factory->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
+		$attpida = self::factory()->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
+		$attpidb = self::factory()->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
@@ -279,16 +279,16 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'hierarchical true'
 				)));
 		//Create some terms
-		$tids = $this->factory->category->create_many(10);
-		$ttid1 = $this->factory()->term->create(array(
+		$tids = self::factory()->category->create_many(10);
+		$ttid1 = self::factory()()->term->create(array(
 			'taxonomy' => 'wptests_tax2',
 			'slug' => 'ctxterm1'));
-		$ttid2 = $this->factory()->term->create(array(
+		$ttid2 = self::factory()()->term->create(array(
 			'taxonomy' => 'wptests_tax2',
 			'slug' => 'ctxterm2',
 			'parent' => $ttid1));
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
 		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
@@ -312,8 +312,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	 */
 	function test_bcn_post_terms() {
 		//Create our terms and post
-		$tids = $this->factory->tag->create_many(10);
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$tids = self::factory()->tag->create_many(10);
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Assign the terms to the post
 		wp_set_object_terms($pid, $tids, 'post_tag');
 		//Now call post_terms
@@ -369,8 +369,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_bcn_pick_post_term() {
 		global $tids;
 		//Create our terms and post
-		$tids = $this->factory->category->create_many(10);
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$tids = self::factory()->category->create_many(10);
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
 		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
@@ -415,8 +415,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_pick_post_term() {
 		global $tids;
 		//Create our terms and post
-		$tids = $this->factory->category->create_many(10);
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$tids = self::factory()->category->create_many(10);
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
 		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
@@ -441,7 +441,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -456,9 +456,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
 		$this->set_permalink_structure('/%category%/%postname%/');
 		//Create some terms
-		$tids = $this->factory->category->create_many(10);
+		$tids = self::factory()->category->create_many(10);
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
 		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
@@ -482,7 +482,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root_page()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -502,8 +502,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public function test_fill_REST_author()
 	{
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
-		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$author_id = self::factory()->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = self::factory()->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		$this->breadcrumb_trail->call('fill_REST', array(get_user_by('id', $author_id)));
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
@@ -555,7 +555,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_fill_author_no_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -567,8 +567,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
-		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$author_id = self::factory()->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = self::factory()->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
@@ -585,7 +585,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_fill_author_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -597,8 +597,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $paid[6]);
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
-		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$author_id = self::factory()->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = self::factory()->post->create_many(10, array('author' => $author_id));
 		$this->breadcrumb_trail->opt['aauthor_root'] = $paid[0];
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs
@@ -618,7 +618,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_fill_blog_home()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -650,7 +650,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_fill_bblog_display()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -664,9 +664,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Breadcrumb NavXT normally grabs this on instantiation, but we're late in setting the option
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
 		//Create some terms
-		$tids = $this->factory->category->create_many(10);
+		$tids = self::factory()->category->create_many(10);
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($tids[7], 'category', array('parent' => $tids[8]));
 		wp_update_term($tids[8], 'category', array('parent' => $tids[6]));
@@ -732,7 +732,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			'show_in_nav_menus' => true)));
 		flush_rewrite_rules();
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -749,7 +749,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$this->set_permalink_structure('/%category%/%postname%/');
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
 		
 		//"Go to" our search, non-post type restricted
 		$this->go_to(get_search_link('test'));
@@ -761,7 +761,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root_cpt()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -780,7 +780,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$this->set_permalink_structure('/%category%/%postname%/');
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
 		$this->breadcrumb_trail->call('do_root', array('bcn_testa',  $this->breadcrumb_trail->opt['apost_bcn_testa_root']));
@@ -798,7 +798,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_do_root_cpt_null_root()
 	{
 		//Create some pages
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
@@ -817,7 +817,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->opt['Hpost_bcn_testa_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$this->set_permalink_structure('/%category%/%postname%/');
 		//Create a test post
-		$pid = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
+		$pid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'bcn_testa'));
 		//"Go to" our post
 		$this->go_to(get_permalink($pid));
 		$this->breadcrumb_trail->call('do_root', array('bcn_testa',  $this->breadcrumb_trail->opt['apost_bcn_testa_root']));
@@ -837,15 +837,15 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_treat_as_root_page()
 	{
 		//TODO complete all cases
-		$paid = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$paid = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $paid[0], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[1], 'post_parent' => $paid[2]));
 		wp_update_post(array('ID' => $paid[2], 'post_parent' => $paid[3]));
 		wp_update_post(array('ID' => $paid[6], 'post_parent' => $paid[5]));
 		wp_update_post(array('ID' => $paid[5], 'post_parent' => $paid[0]));
-		$pidc = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
-		$pidb = $this->factory->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
 		//Set page '3' as the home page
 		update_option('page_on_front', $paid[3]);
 		//Set page '6' as the root for posts
@@ -928,13 +928,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	}
 	function test_maybe_add_post_type_arg()
 	{
-		$tida = $this->factory->term->create(array('name' => 'Test Category', 'taxonomy' => 'category'));
-		$tidb = $this->factory->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
-		$pida = $this->factory->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
+		$tida = self::factory()->term->create(array('name' => 'Test Category', 'taxonomy' => 'category'));
+		$tidb = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
+		$pida = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
 		//Assign the terms to the post
 		wp_set_object_terms($pida, array($tida), 'category');
 		wp_set_object_terms($pida, array($tidb), 'party');
-		$pidb = $this->factory->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
 		//Assign the terms to the czar
 		wp_set_object_terms($pida, array($tida), 'category');
 		wp_set_object_terms($pida, array($tidb), 'party');

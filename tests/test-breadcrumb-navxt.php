@@ -50,23 +50,23 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			)
 		);
 		//Create some pages
-		$this->pages = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$this->pages = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $this->pages[0], 'post_parent' => $this->pages[3]));
 		wp_update_post(array('ID' => $this->pages[1], 'post_parent' => $this->pages[2]));
 		wp_update_post(array('ID' => $this->pages[2], 'post_parent' => $this->pages[3]));
 		wp_update_post(array('ID' => $this->pages[6], 'post_parent' => $this->pages[5]));
 		wp_update_post(array('ID' => $this->pages[5], 'post_parent' => $this->pages[0]));
-		$this->home = $this->factory->post->create(array('post_title' => 'Home', 'post_type' => 'page'));
-		$this->blog = $this->factory->post->create(array('post_title' => 'Articles', 'post_type' => 'page'));
+		$this->home = self::factory()->post->create(array('post_title' => 'Home', 'post_type' => 'page'));
+		$this->blog = self::factory()->post->create(array('post_title' => 'Articles', 'post_type' => 'page'));
 		//Set page '3' as the home page
 		update_option('page_on_front', $this->home);
 		//Set page '6' as the root for posts
 		update_option('page_for_posts', $this->blog);
 		//Create some terms
-		$this->terms = $this->factory->category->create_many(10);
+		$this->terms = self::factory()->category->create_many(10);
 		//Create a test post
-		$this->posts[] = $this->factory->post->create(array('post_title' => 'Test Post'));
+		$this->posts[] = self::factory()->post->create(array('post_title' => 'Test Post'));
 		//Make some of the terms be in a hierarchy
 		wp_update_term($this->terms[7], 'category', array('parent' => $this->terms[8]));
 		wp_update_term($this->terms[8], 'category', array('parent' => $this->terms[6]));
@@ -87,9 +87,9 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 	function test_bcn_display_cache()
 	{
 		//Create a test post
-		$pid1 = $this->factory->post->create(array('post_title' => 'Test Post 1', 'post_type' => 'post'));
+		$pid1 = self::factory()->post->create(array('post_title' => 'Test Post 1', 'post_type' => 'post'));
 		//Create another test post
-		$pidb = $this->factory->post->create(array('post_title' => 'Test Post B', 'post_type' => 'post'));
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Post B', 'post_type' => 'post'));
 		//"Go to" our post
 		$this->go_to(get_permalink($pid1));
 		//Check the breadcrumb trail

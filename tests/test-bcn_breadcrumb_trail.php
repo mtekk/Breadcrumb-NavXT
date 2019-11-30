@@ -19,78 +19,79 @@ if(class_exists('bcn_breadcrumb_trail'))
 }
 class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public $breadcrumb_trail;
-	protected $pids;
-	protected $paids;
-	protected $tids;
-	
-	function setUp() {
-		parent::setUp();
-		$this->breadcrumb_trail = new bcn_breadcrumb_trail_DUT();
+	protected static $pids;
+	protected static $paids;
+	protected static $tids;
+	public static function wpSetUpBeforeClass($factory)
+	{
 		//Register some types to use for various tests
 		register_post_type('czar', array(
-			'label' => 'Czars',
-			'public' => true,
-			'hierarchical' => false,
-			'has_archive' => true,
-			'publicaly_queryable' => true,
-			'taxonomies' => array('post_tag', 'category')
-			)
-		);
+				'label' => 'Czars',
+				'public' => true,
+				'hierarchical' => false,
+				'has_archive' => true,
+				'publicaly_queryable' => true,
+				'taxonomies' => array('post_tag', 'category')
+		)
+				);
 		register_post_type('bureaucrat', array(
-			'label' => 'Bureaucrats',
-			'public' => true,
-			'hierarchical' => true,
-			'has_archive' => true,
-			'publicaly_queryable' => true
-			)
-		);
+				'label' => 'Bureaucrats',
+				'public' => true,
+				'hierarchical' => true,
+				'has_archive' => true,
+				'publicaly_queryable' => true
+		)
+				);
 		register_taxonomy('ring', 'czar', array(
-			'label' => 'Rings',
-			'public' => true,
-			'hierarchical' => false,
-			)
-		);
+				'label' => 'Rings',
+				'public' => true,
+				'hierarchical' => false,
+		)
+				);
 		register_taxonomy('party', array('czar', 'post'), array(
-			'label' => 'Parties',
-			'public' => true,
-			'hierarchical' => true,
-			)
-		);
+				'label' => 'Parties',
+				'public' => true,
+				'hierarchical' => true,
+		)
+				);
 		register_taxonomy('job_title', 'bureaucrat', array(
-			'label' => 'Job Title',
-			'public' => true,
-			'hierarchical' => true,
-			)
-		);
+				'label' => 'Job Title',
+				'public' => true,
+				'hierarchical' => true,
+		)
+				);
 		//Create some posts
-		$this->pids = self::factory()->post->create_many(10, array('post_type' => 'post'));
+		self::$pids = $factory->post->create_many(10, array('post_type' => 'post'));
 		//Create some terms
-		$this->tids = self::factory()->category->create_many(10);
+		self::$tids = $factory->category->create_many(10);
 		//Make some of the terms be in a hierarchy
-		wp_update_term($this->tids[7], 'category', array('parent' => $this->tids[8]));
-		wp_update_term($this->tids[8], 'category', array('parent' => $this->tids[6]));
-		wp_update_term($this->tids[9], 'category', array('parent' => $this->tids[8]));
-		wp_update_term($this->tids[5], 'category', array('parent' => $this->tids[7]));
+		wp_update_term(self::$tids[7], 'category', array('parent' => self::$tids[8]));
+		wp_update_term(self::$tids[8], 'category', array('parent' => self::$tids[6]));
+		wp_update_term(self::$tids[9], 'category', array('parent' => self::$tids[8]));
+		wp_update_term(self::$tids[5], 'category', array('parent' => self::$tids[7]));
 		//Assign a category to a post
-		wp_set_object_terms($this->pids[0], array($this->tids[5]), 'category');
-		wp_set_object_terms($this->pids[5], array($this->tids[0]), 'category');
-		wp_set_object_terms($this->pids[7], array($this->tids[7]), 'category');
+		wp_set_object_terms(self::$pids[0], array(self::$tids[5]), 'category');
+		wp_set_object_terms(self::$pids[5], array(self::$tids[0]), 'category');
+		wp_set_object_terms(self::$pids[7], array(self::$tids[7]), 'category');
 		//Create some pages
-		$this->paids = self::factory()->post->create_many(10, array('post_type' => 'page'));
+		self::$paids = $factory->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
-		wp_update_post(array('ID' => $this->paids[0], 'post_parent' => $this->paids[3]));
-		wp_update_post(array('ID' => $this->paids[1], 'post_parent' => $this->paids[2]));
-		wp_update_post(array('ID' => $this->paids[2], 'post_parent' => $this->paids[3], 'post_status' => 'private'));
-		wp_update_post(array('ID' => $this->paids[6], 'post_parent' => $this->paids[5]));
-		wp_update_post(array('ID' => $this->paids[5], 'post_parent' => $this->paids[0]));
-		wp_update_post(array('ID' => $this->paids[9], 'post_parent' => $this->paids[1]));
+		wp_update_post(array('ID' => self::$paids[0], 'post_parent' => self::$paids[3]));
+		wp_update_post(array('ID' => self::$paids[1], 'post_parent' => self::$paids[2]));
+		wp_update_post(array('ID' => self::$paids[2], 'post_parent' => self::$paids[3], 'post_status' => 'private'));
+		wp_update_post(array('ID' => self::$paids[6], 'post_parent' => self::$paids[5]));
+		wp_update_post(array('ID' => self::$paids[5], 'post_parent' => self::$paids[0]));
+		wp_update_post(array('ID' => self::$paids[9], 'post_parent' => self::$paids[1]));
+	}
+	public function setUp() {
+		parent::setUp();
+		$this->breadcrumb_trail = new bcn_breadcrumb_trail_DUT();
 	}
 	public function tearDown() {
 		parent::tearDown();
 	}
 	function test_add() {
-		$pid = self::factory()->post->create(array('post_title' => 'Test Post', 'post_type' => 'post'));
-		$post = get_post($pid);
+		$post = get_post(self::$pids[0]);
 		$breadcrumb = new bcn_breadcrumb(get_the_title($post), bcn_breadcrumb::default_template_no_anchor, array('post', 'post-' . $post->post_type, 'current-item'), NULL, $post->ID);
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -194,19 +195,19 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_bcn_show_post_private() {
 		//Try with default (post_post_hierarchy_parent_first false
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$post = get_post($this->paids[1]);
+		$post = get_post(self::$paids[1]);
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(2, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$paids[3]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		//Again with the private post in a deeper location
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$post = get_post($this->paids[9]);
+		$post = get_post(self::$paids[9]);
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_the_title(self::$paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
 		//Add a filter that enables showing private posts in the hierarchy
 		add_filter('bcn_show_post_private',
 				function($display, $id) {
@@ -214,38 +215,38 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				}, 2, 10);
 		//Have another go
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$post = get_post($this->paids[1]);
+		$post = get_post(self::$paids[1]);
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(get_the_title($this->paids[2]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_the_title(self::$paids[1]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$paids[2]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$paids[3]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
 		//Again with the private post in a deeper location
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$post = get_post($this->paids[9]);
+		$post = get_post(self::$paids[9]);
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(get_the_title($this->paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_the_title($this->paids[2]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
-		$this->assertSame(get_the_title($this->paids[3]) , $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_the_title(self::$paids[9]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$paids[1]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$paids[2]) , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_the_title(self::$paids[3]) , $this->breadcrumb_trail->breadcrumbs[3]->get_title());
 	}
 	function test_do_post_hierarchy_first() {
-		wp_update_post(array('ID' => $this->pids[0], 'post_parent' => $this->pids[5]));
+		wp_update_post(array('ID' => self::$pids[0], 'post_parent' => self::$pids[5]));
 		//Try with default (post_post_hierarchy_parent_first false
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
-		$post = get_post($this->pids[0]);
+		$post = get_post(self::$pids[0]);
 		//$this->breadcrumb_trail->opt['bpost_post_hierarchy_parent_first'] = false;
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(5, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
-		$this->assertSame(get_term($this->tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
-		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
-		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());		
+		$this->assertSame(get_term(self::$tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());		
 		//Try with default (post_post_hierarchy_parent_first true
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -253,11 +254,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->opt['bpost_post_hierarchy_parent_first'] = true;
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
-		$this->assertSame(get_the_title($this->pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_the_title(self::$pids[0]) , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('post', 'post-post', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
-		$this->assertSame(get_the_title($this->pids[5]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$pids[5]) , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
-		$this->assertSame(get_term($this->tids[0], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());	
+		$this->assertSame(get_term(self::$tids[0], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());	
 	}
 	function test_query_var_to_taxonomy() {
 		//Setup some taxonomies
@@ -280,10 +281,10 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				)));
 		//Create some terms
 		$tids = self::factory()->category->create_many(10);
-		$ttid1 = self::factory()()->term->create(array(
+		$ttid1 = self::factory()->term->create(array(
 			'taxonomy' => 'wptests_tax2',
 			'slug' => 'ctxterm1'));
-		$ttid2 = self::factory()()->term->create(array(
+		$ttid2 = self::factory()->term->create(array(
 			'taxonomy' => 'wptests_tax2',
 			'slug' => 'ctxterm2',
 			'parent' => $ttid1));
@@ -515,28 +516,28 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	public function test_fill_REST_post()
 	{
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$this->breadcrumb_trail->call('fill_REST', array(get_post($this->pids[0])));
+		$this->breadcrumb_trail->call('fill_REST', array(get_post(self::$pids[0])));
 		//Ensure we have 6 breadcrumb from the do_author portion
 		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
 		//Look at each breadcrumb
 		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[5]->get_title());
-		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
-		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
-		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
-		$this->assertSame(get_term($this->tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_the_title($this->pids[0]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[5], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$pids[0]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	public function test_fill_REST_term()
 	{
 		$this->breadcrumb_trail->breadcrumbs = array();
-		$this->breadcrumb_trail->call('fill_REST', array(get_term($this->tids[7], 'category')));
+		$this->breadcrumb_trail->call('fill_REST', array(get_term(self::$tids[7], 'category')));
 		//Ensure we have 4 breadcrumb from the do_author portion
 		$this->assertCount(4, $this->breadcrumb_trail->breadcrumbs);
 		//Look at each breadcrumb
 		$this->assertSame(get_option('blogname'), $this->breadcrumb_trail->breadcrumbs[3]->get_title());
-		$this->assertSame(get_term($this->tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
-		$this->assertSame(get_term($this->tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
-		$this->assertSame(get_term($this->tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
 	/**
 	 * Tests for invalid items being passed into the fill_REST function

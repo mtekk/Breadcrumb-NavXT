@@ -407,7 +407,12 @@ class bcn_breadcrumb_trail
 		//Only process if we have terms
 		if(is_array($bcn_terms))
 		{
-			$title = '';	
+			//For single terms, treat as if they are hierarchical
+			if(count($bcn_terms) === 1 && $bcn_terms[0] instanceof WP_Term)
+			{
+				return $this->term_parents($bcn_terms[0]->term_id, $taxonomy);
+			}
+			$title = '';
 			$is_first = true;
 			//Loop through all of the term results
 			foreach($bcn_terms as $term)

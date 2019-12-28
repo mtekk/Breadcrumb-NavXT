@@ -42,6 +42,14 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'publicaly_queryable' => true
 		)
 				);
+		register_post_type('autocrat', array(
+				'label' => 'Autocrats',
+				'public' => true,
+				'hierarchical' => true,
+				'has_archive' => false,
+				'publicaly_queryable' => true
+		)
+				);
 		register_taxonomy('ring', 'czar', array(
 				'label' => 'Rings',
 				'public' => true,
@@ -439,6 +447,70 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 	}
+	function test_type_archive()
+	{
+		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
+		////
+		//Test bad type
+		////
+		$this->go_to(get_permalink($pidc));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('type_archive', array(false, false));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		////
+		//Test CPT post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('type_archive', array($cpt_inst, 'bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('post', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		////
+		//Test CPT post with archive display disabled
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = false;
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('type_archive', array($cpt_inst, 'bureaucrat'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test "Post" post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post_inst = get_post(self::$pids[0]);
+		$this->breadcrumb_trail->call('type_archive', array($post_inst, 'post'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test CPT post w/o archive
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pida);
+		$this->breadcrumb_trail->call('type_archive', array($cpt_inst, 'autocrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test custom taxonomy
+		////
+		
+		
+		
+	}
 	function test_do_root()
 	{
 		//Create some pages
@@ -499,6 +571,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('do_root', array('page',  $this->breadcrumb_trail->opt['apost_page_root']));
 		//Ensure we have 0 breadcrumbs, root should not do anything for pages (we get to all but the home in post_parents)
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//TODO: Need more test cases here?
 	}
 	public function test_fill_REST_author()
 	{

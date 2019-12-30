@@ -450,8 +450,14 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	function test_type_archive()
 	{
 		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
+		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = true;
 		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
 		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
+		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
+		$tidb = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
+		//Assign the terms to the post
+		wp_set_object_terms($pidc, array($tidb), 'party');
 		////
 		//Test bad type
 		////
@@ -506,9 +512,23 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
 		//Test custom taxonomy
+
 		////
+		//"Go to" our term archive
+		$this->go_to(get_term_link($tidb));
+		$this->breadcrumb_trail->breadcrumbs = array();
 		
+		//Test with invalid type
 		
+		//Test with taxonomy that is unaffiliated with a post type
+		
+		//Test with taxonomy that is afficilated primarily with a builtin type
+		
+		//Test with affiliaed postype with dissabled archive via setting
+
+		//Test with affiliaed postype that does not have archives
+		
+		//Test with multiple post types in the query, not sure if possible to do here
 		
 	}
 	function test_do_root()

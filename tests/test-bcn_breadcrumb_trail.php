@@ -68,6 +68,19 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'hierarchical' => true,
 		)
 				);
+		register_taxonomy('family', 'autocrat', array(
+				'label' => 'House Name',
+				'public' => true,
+				'hierarchical' => true,
+		)
+				);
+		//Can we really do this?
+		register_taxonomy('nonassociated', null, array(
+				'label' => 'Non Assoicated',
+				'public' => true,
+				'hierarchical' => false,
+		)
+				);
 		//Create some posts
 		self::$pids = $factory->post->create_many(10, array('post_type' => 'post'));
 		//Create some terms
@@ -451,16 +464,19 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 	{
 		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
 		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = true;
-		$this->breadcrumb_trail->opt['bpost_czar_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_czar_template'] = bcn_breadcrumb::get_default_template();
 		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
 		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
-		$this->breadcrumb_trail->opt['bpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
 		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
 		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
-		$this->breadcrumb_trail->opt['bpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
 		$tidb = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
-		//Assign the terms to the post
+		$tidc = self::factory()->term->create(array('name' => 'Test Non Associated', 'taxonomy' => 'nonassociated'));
+		$tidd = self::factory()->term->create(array('name' => 'Test House', 'taxonomy' => 'family'));
+		//Assign the terms to their posts
 		wp_set_object_terms($pidc, array($tidb), 'party');
+		wp_set_object_terms($pida, array($tidd), 'family');
 		////
 		//Test bad type
 		////
@@ -513,6 +529,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('type_archive', array($cpt_inst, 'autocrat'));
 		//Ensure we have 1 breadcrumb
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		
 		////
 		//Test custom taxonomy
 		////
@@ -527,31 +544,62 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
-		
-		////
-		//Test with invalid type
-		////
-		
 		////
 		//Test with taxonomy that is unaffiliated with a post type
 		////
-		
+		$this->go_to(get_term_link($tidc));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term($tidc, 'party');
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
-		//Test with taxonomy that is afficilated primarily with a builtin type
+		//Test with taxonomy that is affiliated primarily with a builtin type
 		////
-		
+		//"Go to" our term archive
+		$this->go_to(get_term_link(self::$tids[0]));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term(self::$tids[0], 'party');
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
 		//Test with affiliaed postype with dissabled archive via setting
 		////
-		
+		//"Go to" our term archive
+		$this->go_to(get_term_link($tidb));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term($tidb, 'party');
+		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = false;
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
 		//Test with affiliaed postype that does not have archives
 		////
-		
+		//"Go to" our term archive
+		$this->go_to(get_term_link($tidd));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term($tidd, 'family');
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
 		//Test with multiple post types in the query, not sure if possible to do here
 		////
-		
+		//"Go to" our term archive
+		$this->go_to(add_query_arg(array('post_type' => array('bureaucrat', 'czar')), get_term_link($tidb)));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term($tidb, 'party');
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+
 	}
 	function test_do_root()
 	{

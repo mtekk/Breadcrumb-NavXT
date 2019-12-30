@@ -95,9 +95,12 @@ class bcn_breadcrumb_trail
 			//What hierarchy should be shown leading to the post, tag or category
 			'Spost_post_hierarchy_type' => 'category',
 			//Attachment settings
+			'bpost_attachment_archive_display' => false,
 			'bpost_attachment_hierarchy_display' => true,
 			//Should the post parent be followed first for this type, then fallback to the hierarchy type
 			'bpost_attachment_hierarchy_parent_first' => true,
+			//Should the trail reflect the referer taxonomy or not
+			'bpost_attachment_taxonomy_referer' => false,
 			//What hierarchy should be shown leading to the attachment
 			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//Give an invlaid page ID for the attachement root

@@ -577,6 +577,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('type_archive', array($term_inst));
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		//Cleanup
+		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = true;
 		////
 		//Test with affiliaed postype that does not have archives
 		////
@@ -599,7 +601,29 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('type_archive', array($term_inst));
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
-
+		////
+		//Test with filter disabling showing the archive for the taxonomy in question
+		////
+		//Now, let's add a filter that selects a middle id
+		add_filter('bcn_show_type_term_archive',
+				function($show, $taxonomy) {
+					if($taxonomy === 'party')
+					{
+						return false;
+					}
+					else
+					{
+						return $show;
+					}
+				}, 2, 10);
+		//"Go to" our term archive
+		$this->go_to(get_term_link($tidb));
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$term_inst = get_term($tidb, 'party');
+		$this->breadcrumb_trail->call('type_archive', array($term_inst));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 	}
 	function test_do_root()
 	{

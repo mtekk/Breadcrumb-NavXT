@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2019  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.3.0';
+	const version = '6.4.0';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'manage_options';
@@ -586,13 +586,6 @@ class bcn_admin extends mtekk_adminKit
 						$this->input_hidden('Spost_page_hierarchy_type');
 					?>
 				</table>
-				<h2><?php _e('Attachments', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<?php
-						$this->textbox(__('Attachment Template', 'breadcrumb-navxt'), 'Hpost_attachment_template', '6', false, __('The template for attachment breadcrumbs.', 'breadcrumb-navxt'));
-						$this->textbox(__('Attachment Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_attachment_template_no_anchor', '4', false, __('The template for attachment breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-					?>
-				</table>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
@@ -603,7 +596,7 @@ class bcn_admin extends mtekk_adminKit
 					continue;
 				}
 				//We only want custom post types
-				if(!$post_type->_builtin)
+				if($post_type->name === 'attachment' || !$post_type->_builtin)
 				{
 					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>

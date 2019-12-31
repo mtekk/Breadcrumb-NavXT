@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2019  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2020  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.3.0';
+	const version = '6.4.0';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -46,8 +46,9 @@ class bcn_breadcrumb
 	 * @param string $template (optional) The html template for the breadcrumb
 	 * @param string $type (optional) The breadcrumb type
 	 * @param string $url (optional) The url the breadcrumb links to
+	 * @param bool $linked (optional) Whether or not the breadcrumb uses the linked or unlinked template
 	 */
-	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = null)
+	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = null, $linked = false)
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
@@ -67,19 +68,19 @@ class bcn_breadcrumb
 		//If something was passed in template wise, update the appropriate internal template
 		else
 		{
-			//Loose comparison, evaluates to true if URL is '' or null
-			if($url == null)
+			if($linked)
+			{
+				$this->set_template($template);
+			}
+			else
 			{
 				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
 				$this->set_template(bcn_breadcrumb::get_default_template());
 			}
-			else
-			{
-				$this->set_template($template);
-			}
 		}
 		//Always null if unlinked
 		$this->set_url($url);
+		$this->set_linked($linked);
 	}
 	/**
 	 * Function to return the translated default template
@@ -120,15 +121,15 @@ class bcn_breadcrumb
 	{
 		$url = trim($url);
 		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
-		//If the URL seemed nullish, we are not linked
-		if($this->url === '')
-		{
-			$this->linked = false;
-		}
-		else
-		{
-			$this->linked = true;
-		}
+	}
+	/**
+	 * Function to se tthe internal breadcrumb linked status
+	 * 
+	 * @param bool $linked whether or not the breadcrumb uses the linked or unlinked template
+	 */
+	public function set_linked($linked)
+	{
+		$this->linked = $linked;
 	}
 	/**
 	 * Function to set the internal breadcrumb template

@@ -59,24 +59,24 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 			'hierarchical' => true,
 			)
 		);
-		$this->tids = $this->factory->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
-		self::$superadmin_id  = $this->factory->user->create(
+		$this->tids = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
+		self::$superadmin_id  = self::factory()->user->create(
 			array(
 				'role'       => 'administrator',
 				'user_login' => 'superadmin',
 			)
 		);
-		self::$editor_id      = $this->factory->user->create(
+		self::$editor_id      = self::factory()->user->create(
 			array(
 				'role' => 'editor',
 			)
 		);
-		self::$author_id      = $this->factory->user->create(
+		self::$author_id      = self::factory()->user->create(
 			array(
 				'role' => 'author',
 			)
 		);
-		self::$contributor_id = $this->factory->user->create(
+		self::$contributor_id = self::factory()->user->create(
 			array(
 				'role' => 'contributor',
 			)
@@ -85,9 +85,9 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 			update_site_option( 'site_admins', array( 'superadmin' ) );
 		}
 		//Create some posts
-		$this->pids = $this->factory->post->create_many(10, array('post_type' => 'post'));
+		$this->pids = self::factory()->post->create_many(10, array('post_type' => 'post'));
 		//Create some terms
-		$this->tids = $this->factory->category->create_many(10);
+		$this->tids = self::factory()->category->create_many(10);
 		//Make some of the terms be in a hierarchy
 		wp_update_term($this->tids[7], 'category', array('parent' => $this->tids[8]));
 		wp_update_term($this->tids[8], 'category', array('parent' => $this->tids[6]));
@@ -98,7 +98,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		wp_set_object_terms($this->pids[5], array($this->tids[0]), 'category');
 		wp_set_object_terms($this->pids[7], array($this->tids[7]), 'category');
 		//Create some pages
-		$this->paids = $this->factory->post->create_many(10, array('post_type' => 'page'));
+		$this->paids = self::factory()->post->create_many(10, array('post_type' => 'page'));
 		//Setup some relationships between the posts
 		wp_update_post(array('ID' => $this->paids[0], 'post_parent' => $this->paids[3]));
 		wp_update_post(array('ID' => $this->paids[1], 'post_parent' => $this->paids[2]));
@@ -229,8 +229,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	 */
 	public function test_rest_author_request() {
 		//Some setup
-		$author_id = $this->factory->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
-		$pids = $this->factory->post->create_many(10, array('author' => $author_id));
+		$author_id = self::factory()->user->create(array('role' => 'editor', 'user_login' => 'cooleditor1', 'display_name' => 'Cool Editor'));
+		$pids = self::factory()->post->create_many(10, array('author' => $author_id));
 		
 		//Try without endpoint enabled
 		
@@ -313,7 +313,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	function test_rest_password_post_request() {
 		//Enable the endpoint
 		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
-		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_password' => 'password123'));
+		$pid = self::factory()->post->create(array('author' => self::$author_id, 'post_password' => 'password123'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));
@@ -340,7 +340,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		//Enable the endpoint
 		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		wp_set_current_user( 0 );
-		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
+		$pid = self::factory()->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));
@@ -362,7 +362,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		//Enable the endpoint
 		add_filter('bcn_register_rest_endpoint', array($this, 'register_post_rest_endpoint_filter'), 10, 4);
 		wp_set_current_user( self::$editor_id );
-		$pid = $this->factory->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
+		$pid = self::factory()->post->create(array('author' => self::$author_id, 'post_status' => 'draft'));
 		wp_set_object_terms($pid, array($this->tids[0]), 'category');
 		//Now request the author archives
 		$request  = new WP_REST_Request('GET', sprintf('/bcn/v1/post/%d', $pid));

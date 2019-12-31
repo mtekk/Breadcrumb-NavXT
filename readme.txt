@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.8
-Tested up to: 5.2.0
-Stable tag: 6.3.0
+Tested up to: 5.4.0
+Stable tag: 6.4.0
 Requires PHP: 5.5
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -48,6 +48,17 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.4.0 =
+Release date: December, 31st 2020
+
+* Behavior change: Attachment post type settings moved to Media, additional post type options made available.
+* Behavior change: Privately published parent posts are now, by default, skipped over in breadcrumb trails.
+* Behavior change: On single post breadcrumb trails, the hierarchical term code path is now used in cases where only a single term from a non-hierarchical taxonomy is present for the current post.
+* New feature: Allow `%link%` tag in unlinked breadcrumb templates.
+* New feature: Added `bcn_show_post_private` filter.
+* New feature: Added `bcn_show_type_term_archive` filter.
+
 
 = 6.3.0 =
 Release date: May, 3rd 2019

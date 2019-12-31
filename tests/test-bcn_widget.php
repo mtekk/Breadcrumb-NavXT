@@ -20,7 +20,7 @@ class WidgetTest extends WP_UnitTestCase {
 			'type' => 'microdata',
 			'linked' => true
 		);
-		wp_set_current_user( $this->factory()->user->create(array(
+		wp_set_current_user( self::factory()->user->create(array(
 			'role' => 'administrator',
 		)));
 		

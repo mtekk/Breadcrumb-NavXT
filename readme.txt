@@ -50,7 +50,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Changelog ==
 
 = 6.4.0 =
-Release date: December, 31st 2020
+Release date: December, 31st 2019
 
 * Behavior change: Attachment post type settings moved to Media, additional post type options made available.
 * Behavior change: Privately published parent posts are now, by default, skipped over in breadcrumb trails.

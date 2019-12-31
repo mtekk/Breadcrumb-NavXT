@@ -884,8 +884,7 @@ class bcn_breadcrumb_trail
 	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
 	 * @param string $type_str The type string for the archive
 	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
-	 * TODO: Add method/filter for disabling this via filter for taxonomies
+	 * TODO: Split and redo calls to it, see #224
 	 */
 	protected function type_archive($type, $type_str = false)
 	{

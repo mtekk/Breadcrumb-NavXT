@@ -83,7 +83,7 @@ Release date: September, 24th 2018
 * Behavior change: Default unlinked breadcrumb templates no longer contain Schema.org BreadcrumbList markup.
 * Behavior change: Breadcrumb NavXT REST API endpoints are no longer enabled by default.
 * New feature: Added `bcn_register_rest_endpoint` filter.
-* New feature: Added `bcn_breadcrumb_assemble_json_ld_array` filter.
+* New feature: Added `bcn_breadcrumb_assembled_json_ld_array` filter.
 * New feature: Added support for following the post parent hierarchy first then falling back to a secondary hierarchy.
 * Bug fix: Fixed issue where on loading the settings page immediately after migrating settings causes PHP warnings on CPT and custom taxonomy settings.
 * Bug fix: Fixed issue that caused the settings reset option under the help drop down to not work.

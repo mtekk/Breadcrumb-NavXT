@@ -121,6 +121,24 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we do not have the bad URL items in the output
 		$this->assertRegExp('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
 	}
+	function test_set_url_filter() {
+		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
+		$breadcrumb_string_linked1 = $breadcrumb_unlinked->assemble(true, 1);
+		//Make sure we have the expected URL in the output
+		$this->assertContains('http://flowissues.com/testurl/gdg', $breadcrumb_string_linked1);
+		//Now register our filter
+		add_filter('bcn_breadcrumb_url',
+				function($url, $type, $id) {
+					if($id === 101)
+					{
+						return 'http://flowissues.com/testurl1';
+					}
+					return $url;
+				}, 3, 10);
+		$breadcrumb_string_linked1 = $breadcrumb_unlinked->assemble(true, 1);
+		//Make sure we have the expected URL in the output
+		$this->assertContains('http://flowissues.com/testurl1', $breadcrumb_string_linked1);
+	}
 	function test_set_template() {
 		//Ensure the raw setup is as expected
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);

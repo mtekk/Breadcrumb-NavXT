@@ -129,7 +129,7 @@ class bcn_breadcrumb
 	 */
 	public function set_linked($linked)
 	{
-		$this->linked = $linked;
+		$this->linked = apply_filters('bcn_breadcrumb_linked', $linked, $this->type, $this->id);
 	}
 	/**
 	 * Function to set the internal breadcrumb template

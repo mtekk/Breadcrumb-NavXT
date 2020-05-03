@@ -122,7 +122,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertRegExp('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
 	}
 	function test_set_url_filter() {
-		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
+		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked->assemble(true, 1);
 		//Make sure we have the expected URL in the output
 		$this->assertContains('http://flowissues.com/testurl/gdg', $breadcrumb_string_linked1);
@@ -135,6 +135,8 @@ class BreadcrumbTest extends WP_UnitTestCase {
 					}
 					return $url;
 				}, 3, 10);
+		//Recreate breadcrumb object so the filter runs
+		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked->assemble(true, 1);
 		//Make sure we have the expected URL in the output
 		$this->assertContains('http://flowissues.com/testurl1', $breadcrumb_string_linked1);
@@ -161,8 +163,8 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertStringMatchesFormat('<span class="%s">%s</span>', $breadcrumb_string_unlinked);
 	}
 	function test_set_linked_filter() {
-		$breadcrumb_linked1 = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
-		$breadcrumb_linked2 = new bcn_breadcrumb('test', bcn_breadcrumb::default_template_no_anchor, array('page', 'current-item'), 'http://flowissues.com/testurl/ga', 102, true);
+		$breadcrumb_linked1 = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
+		$breadcrumb_linked2 = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/ga', 102, true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked1->assemble(true, 1);
 		$breadcrumb_string_linked2 = $breadcrumb_linked2->assemble(true, 1);
 		//Make sure we have the expected URL in the output
@@ -177,6 +179,9 @@ class BreadcrumbTest extends WP_UnitTestCase {
 					}
 					return $linked;
 				}, 3, 10);
+		//Re-run linked to get the filter to run
+		$breadcrumb_linked1->set_linked(true);
+		$breadcrumb_linked2->set_linked(true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked1->assemble(true, 1);
 		$breadcrumb_string_linked2 = $breadcrumb_linked2->assemble(true, 1);
 		//Make sure we have the expected URL in the output

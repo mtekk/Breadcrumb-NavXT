@@ -24,7 +24,7 @@ if(!class_exists('mtekk_adminKit_message'))
 }
 abstract class mtekk_adminKit
 {
-	const version = '2.0.2';
+	const version = '2.1.0';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -63,6 +63,17 @@ abstract class mtekk_adminKit
 	function get_admin_class_version()
 	{
 		return mtekk_adminKit::version;
+	}
+	/**
+	 * Checks if the administrator has the access capability, and adds it if they don't
+	 */
+	function add_cap()
+	{
+		$role = get_role('administrator');
+		if(!$role->has_cap($this->access_level))
+		{
+			$role->add_cap($this->access_level);
+		}
 	}
 	/**
 	 * Return the URL of the settings page for the plugin
@@ -123,6 +134,7 @@ abstract class mtekk_adminKit
 	}
 	function init()
 	{
+		$this->add_cap();
 		//Admin Options reset hook
 		if(isset($_POST[$this->unique_prefix . '_admin_reset']))
 		{
@@ -639,7 +651,7 @@ abstract class mtekk_adminKit
 		//We want to catch errors ourselves
 		set_error_handler('error');
 		//Load the user uploaded file, handle failure gracefully
-		if($dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 		{
 			$opts_temp = array();
 			$version = '';

@@ -617,8 +617,12 @@ abstract class mtekk_adminKit
 		//Loop through the options array
 		foreach($this->opt as $key=>$option)
 		{
+			if(is_array($option))
+			{
+				continue;
+			}
 			//Add a option tag under the options tag, store the option value
-			$node = $dom->createElement('option', htmlentities($option, ENT_COMPAT, 'UTF-8'));
+			$node = $dom->createElement('option', htmlentities($option, ENT_COMPAT | ENT_XML1, 'UTF-8'));
 			$newnode = $plugnode->appendChild($node);
 			//Change the tag's name to that of the stored option
 			$newnode->setAttribute('name', $key);

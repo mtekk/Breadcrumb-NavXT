@@ -43,10 +43,10 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.4.0';
+	const version = '6.4.90';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
-	protected $access_level = 'manage_options';
+	protected $access_level = 'bcn_manage_options';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
 	protected $plugin_basename = null;

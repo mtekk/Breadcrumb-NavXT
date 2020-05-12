@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.4.0';
+	const version = '6.4.90';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -129,7 +129,7 @@ class bcn_breadcrumb
 	 */
 	public function set_linked($linked)
 	{
-		$this->linked = $linked;
+		$this->linked = apply_filters('bcn_breadcrumb_linked', $linked, $this->type, $this->id);
 	}
 	/**
 	 * Function to set the internal breadcrumb template

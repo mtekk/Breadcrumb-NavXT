@@ -155,7 +155,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			. '</span></a><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[8])->name . ' category archives." href="' . get_term_link($this->terms[8]) . '" class="taxonomy category" ><span property="name">' . get_term($this->terms[8])->name
 			. '</span></a><meta property="position" content="4"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[7])->name . ' category archives." href="' . get_term_link($this->terms[7]) . '" class="taxonomy category" ><span property="name">' . get_term($this->terms[7])->name
 			. '</span></a><meta property="position" content="5"></span> &gt; <span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the ' . get_term($this->terms[5])->name . ' category archives." href="' . get_term_link($this->terms[5]) . '" class="taxonomy category" ><span property="name">' . get_term($this->terms[5])->name
-			. '</span></a><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item"">' . get_the_title($this->posts[0])
+			. '</span></a><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">' . get_the_title($this->posts[0])
 			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="7"></span>'
 			, bcn_display(true, true, false, true));
 	}
@@ -173,7 +173,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="7"></span></li>' . "\n"
 			, bcn_display_list(true, false, false, true));
 		//Now in reverse order
-		$this->assertSame('<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">' . get_the_title($this->posts[0])
+		$this->assertSame('<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">' . get_the_title($this->posts[0])
 			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="1"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[5])->name
 			. '</span><meta property="url" content="' . get_term_link($this->terms[5]). '"><meta property="position" content="2"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[7])->name
 			. '</span><meta property="url" content="' . get_term_link($this->terms[7]) . '"><meta property="position" content="3"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[8])->name

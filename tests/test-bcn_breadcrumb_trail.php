@@ -1173,7 +1173,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Clear any breadcrumbs that may be lingering
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Setup our two breadcrumbs and add them to the breadcrumbs array
-		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), 'http://flowissues.com/test/a-prepost-post', 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
 		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
@@ -1181,7 +1181,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumbs = $this->breadcrumb_trail->call('json_ld_loop', array());
 		//Now check our work
 		$this->assertJsonStringEqualsJsonString(
-			'[{"@type":"ListItem","position":1,"item":{"@id":null,"name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
+			'[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
 			json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display_json_ld()
@@ -1189,7 +1189,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Clear any breadcrumbs that may be lingering
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Setup our two breadcrumbs and add them to the breadcrumbs array
-		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), 'http://flowissues.com/test/a-prepost-post', 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
 		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
@@ -1197,13 +1197,13 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_json_ld', array(false));
 		//Now check our work
 		$this->assertJsonStringEqualsJsonString(
-			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}},{"@type":"ListItem","position":2,"item":{"@id":null,"name":"A Preposterous Post"}}]}',
+			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}}]}',
 			json_encode($breadcrumb_string, JSON_UNESCAPED_SLASHES));
 		//Now test the reverse order mode
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_json_ld', array(true));
 		//Now check our work
 		$this->assertJsonStringEqualsJsonString(
-			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":null,"name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
+			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
 			json_encode($breadcrumb_string, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display()
@@ -1212,20 +1212,20 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Add some breadcrumbs to the trail
 		//Setup our three breadcrumbs and add them to the breadcrumbs array
-		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), 'http://flowissues.com/test/a-prepost-post', 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
 		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
-		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102, true);
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 103, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post">A Test</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string);
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them
 		$breadcrumb_string2 = $this->breadcrumb_trail->call('display', array(false));
-		$this->assertSame('<span class="post post-post">Home</span> &gt; <span class="post post-post current-item">A Preposterous Post</span>', $breadcrumb_string2);
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="2"></span>', $breadcrumb_string2);
 	}
 	function test_display_loop()
 	{
@@ -1233,7 +1233,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Add some breadcrumbs to the trail
 		//Setup our three breadcrumbs and add them to the breadcrumbs array
-		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), NULL, 101);
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), 'http://flowissues.com/test/a-prepost-post', 101);
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
 		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
@@ -1242,7 +1242,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('order', array(false));
 		//Test without a filter
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
-		$this->assertSame('<li class="post post-post"><span class="post post-post">Home</span></li><li class="post post-post"><span class="post post-post">A Test</span></li><li class="post post-post current-item"><span class="post post-post current-item">A Preposterous Post</span></li>', $breadcrumb_string);
+		$this->assertSame('<li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
 		//Add our filter
 		add_filter('bcn_display_attribute_array', function($attrib_array, $types, $id){
 			$attrib_array['class'][] = 'dynamico';
@@ -1251,6 +1251,6 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		}, 10, 3);
 		//Test with filtered result
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
-		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span class="post post-post">Home</span></li><li class="post post-post dynamico" arria-current="page"><span class="post post-post">A Test</span></li><li class="post post-post current-item dynamico" arria-current="page"><span class="post post-post current-item">A Preposterous Post</span></li>', $breadcrumb_string);
+		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
 	}
 }

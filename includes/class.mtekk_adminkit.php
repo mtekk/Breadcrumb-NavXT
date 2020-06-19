@@ -70,7 +70,7 @@ abstract class mtekk_adminKit
 	function add_cap()
 	{
 		$role = get_role('administrator');
-		if(!$role->has_cap($this->access_level))
+		if($role instanceof WP_Role && !$role->has_cap($this->access_level))
 		{
 			$role->add_cap($this->access_level);
 		}

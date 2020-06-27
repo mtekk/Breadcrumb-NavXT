@@ -392,7 +392,7 @@ class bcn_breadcrumb_trail
 			$parent = get_post($id);
 		}
 		//Finish off with trying to find the type archive
-		$this->type_archive($parent, $type);
+		$this->type_archive($parent, $parent->post_type);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -1117,7 +1117,11 @@ class bcn_breadcrumb_trail
 			{
 				$this->type_archive($type);
 			}
-			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			//Occasionally, we may end up with garbage for the type string, if so, skip the root
+			if(isset($this->opt['apost_' . $type_str . '_root']))
+			{
+				$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
+			}
 		}
 		//For 404 pages
 		else if(is_404())

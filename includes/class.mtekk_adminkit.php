@@ -24,7 +24,7 @@ if(!class_exists('mtekk_adminKit_message'))
 }
 abstract class mtekk_adminKit
 {
-	const version = '2.1.0';
+	const version = '2.1.1';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;

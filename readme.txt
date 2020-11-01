@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.9
-Tested up to: 5.4.2
-Stable tag: 6.5.0
+Tested up to: 5.5.3
+Stable tag: 6.6.0
 Requires PHP: 5.5
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -48,6 +48,12 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 6.6.0 =
+Release date: October, 31st 2020
+
+* Behavior change: Moved to using the post type of the parent post for the type archive rather than that of the current item.
+* Bug fix: Fixed error thrown when a site does not have an `administrator` role.
 
 = 6.5.0 =
 Release date: June, 12th 2020

@@ -1231,11 +1231,12 @@ class bcn_breadcrumb_trail
 	 */
 	protected function display_loop($linked, $reverse, $template)
 	{
+		$breadcrumbs = apply_filters( 'bcn_before_loop', $this->breadcrumbs );
 		$position = 1;
-		$last_position = count($this->breadcrumbs);
+		$last_position = count($breadcrumbs);
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
-		foreach($this->breadcrumbs as $key => $breadcrumb)
+		foreach($breadcrumbs as $key => $breadcrumb)
 		{
 			$types = $breadcrumb->get_types();
 			array_walk($types, 'sanitize_html_class');

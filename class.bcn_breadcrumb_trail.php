@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.6.0';
+	const version = '6.6.40';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -375,8 +375,7 @@ class bcn_breadcrumb_trail
 					if($term instanceof WP_Term)
 					{
 						//Fill out the term hiearchy
-						//FIXME: Change to just passing in term instance (work for 7.0)
-						$parent = $this->term_parents($term->term_id, $term->taxonomy);
+						$parent = $this->term_parents($term);
 					}
 				}
 				//Handle the rest of the taxonomies, including tags
@@ -414,8 +413,7 @@ class bcn_breadcrumb_trail
 			//For single terms, treat as if they are hierarchical
 			if(count($bcn_terms) === 1 && $bcn_terms[0] instanceof WP_Term)
 			{
-				//FIXME: Change to just passing in term instance (work for 7.0)
-				return $this->term_parents($bcn_terms[0]->term_id, $bcn_terms[0]->taxonomy);
+				return $this->term_parents($bcn_terms[0]);
 			}
 			$title = '';
 			$is_first = true;
@@ -443,15 +441,12 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This recursive functions fills the trail with breadcrumbs for parent terms
 	 * 
-	 * @param int $id The id of the term
-	 * @param string $taxonomy The name of the taxonomy that the term belongs to
+	 * @param WP_Term $term The term object to generate breadcrumbs for
 	 * 
 	 * @return WP_Term|WP_Error The term we stopped at
 	 */
-	protected function term_parents($id, $taxonomy)
+	protected function term_parents($term)
 	{
-		//Get the current category object, filter applied within this call
-		$term = get_term($id, $taxonomy);
 		if($term instanceof WP_Term)
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
@@ -462,11 +457,10 @@ class bcn_breadcrumb_trail
 					$term->term_id,
 					true));
 			//Make sure the id is valid, and that we won't end up spinning in a loop
-			if($term->parent && $term->parent != $id)
+			if($term->parent && $term->parent != $term->term_id)
 			{
 				//Figure out the rest of the term hiearchy via recursion
-				//FIXME: Change to just passing in term instance (work for 7.0)
-				$ret_term = $this->term_parents($term->parent, $taxonomy);
+				$ret_term = $this->term_parents(get_term($term->parent, $term->taxonomy));
 				//May end up with WP_Error, don't update the term if that's the case
 				if($ret_term instanceof WP_Term)
 				{
@@ -595,8 +589,7 @@ class bcn_breadcrumb_trail
 		//Get parents of current term
 		if($term->parent)
 		{
-			//FIXME: Change to just passing in term instance (work for 7.0)
-			$this->term_parents($term->parent, $term->taxonomy);
+			$this->term_parents($term);
 		}
 	}
 	/**

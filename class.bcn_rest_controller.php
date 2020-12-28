@@ -101,7 +101,8 @@ class bcn_rest_controller
 				)
 			),
 			'methods' => $this->methods,
-			'callback' => array($this, 'display_rest_term')
+			'callback' => array($this, 'display_rest_term'),
+			'permission_callback' => '__return_true'
 			), false
 		);
 		$this->register_rest_route('author', $this->unique_prefix . '/v' . $this::version, '/author/(?P<id>\d+)', array(
@@ -114,7 +115,8 @@ class bcn_rest_controller
 				)
 			),
 			'methods' => $this->methods,
-			'callback' => array($this, 'display_rest_author')
+			'callback' => array($this, 'display_rest_author'),
+			'permission_callback' => '__return_true'
 			), false
 		);
 	}

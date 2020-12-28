@@ -980,6 +980,38 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertEquals($paid[1], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
 		$this->assertSame(get_the_title($paid[1]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
+	function test_term_parents()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('term_parents', array(get_term(self::$tids[7], 'category')));
+		//Ensure we have 3 breadcrumbs
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	function test_do_archive_by_term()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('do_archive_by_term', array(get_term(self::$tids[7], 'category')));
+		//Ensure we have 3 breadcrumbs
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		
+		//A test with a term w/o parents
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('do_archive_by_term', array(get_term(self::$tids[6], 'category')));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		
+		//TODO add tests for the is_paged parameter
+	}
 	/**
 	 * Test for when the CPT root setting is a non-integer see #148
 	 */

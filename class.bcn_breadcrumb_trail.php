@@ -589,7 +589,7 @@ class bcn_breadcrumb_trail
 		//Get parents of current term
 		if($term->parent)
 		{
-			$this->term_parents($term);
+			$this->term_parents(get_term($term->parent, $term->taxonomy));
 		}
 	}
 	/**
@@ -1157,13 +1157,13 @@ class bcn_breadcrumb_trail
 		//Handle Posts
 		if($item instanceof WP_Post)
 		{
-			$this->do_post($item, false, true);
+			$this->do_post($item, false);
 			$this->do_root($item->post_type, $this->opt['apost_' . $item->post_type . '_root'], false, false);
 		}
 		//Handle Terms
 		else if($item instanceof WP_Term)
 		{
-			$this->do_archive_by_term($item, true);
+			$this->do_archive_by_term($item);
 			$this->type_archive($item);
 			$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$item->taxonomy]->object_type[0]);
 			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
@@ -1171,7 +1171,7 @@ class bcn_breadcrumb_trail
 		//Handle Author Archives
 		else if($item instanceof WP_User)
 		{
-			$this->do_author($item, true);
+			$this->do_author($item);
 			$this->do_root('post', $this->opt['aauthor_root'], false, false);
 		}
 		$this->do_home(true, false, false);

@@ -391,7 +391,7 @@ class bcn_breadcrumb_trail
 			$parent = get_post($id);
 		}
 		//Finish off with trying to find the type archive
-		$this->type_archive($parent, $parent->post_type);
+		$this->do_post_type_archive($parent->post_type);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -690,32 +690,6 @@ class bcn_breadcrumb_trail
 	/**
 	 * A Breadcrumb Trail Filling Function
 	 * 
-	 * This functions fills a breadcrumb for a post type archive (WP 3.1 feature)
-	 * 
-	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
-	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
-	 */
-	protected function do_archive_by_post_type($type_str, $is_paged = false)
-	{
-		//Manually grabbing the post type object insted of post_type_archive_title('', false) to remove get_query_var() dependancy
-		$post_type_obj = get_post_type_object($type_str);
-		$title = apply_filters('post_type_archive_title', $post_type_obj->labels->name, $type_str);
-		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-		$breadcrumb = $this->add(new bcn_breadcrumb(
-				$title,
-				$this->opt['Hpost_' . $type_str . '_template_no_anchor'],
-				array('archive', 'post-' . $type_str . '-archive', 'current-item'),
-				get_post_type_archive_link($type_str)));
-		if($this->opt['bcurrent_item_linked'] || ($is_paged && $this->opt['bpaged_display']))
-		{
-			
-			$breadcrumb->set_template($this->opt['Hpost_' . $type_str . '_template']);
-			$breadcrumb->set_linked(true);
-		}
-	}
-	/**
-	 * A Breadcrumb Trail Filling Function
-	 * 
 	 * This functions fills a breadcrumb for the front page
 	 * 
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
@@ -875,6 +849,46 @@ class bcn_breadcrumb_trail
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
+	 *
+	 * This functions fills a breadcrumb for a post type archive (WP 3.1 feature)
+	 *
+	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
+	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
+	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
+	 * @param bool $is_current_item Whether or not the breadcrumb being generated is the current item
+	 */
+	protected function do_archive_by_post_type($type_str, $force_link = false, $is_paged = false, $is_current_item = true)
+	{
+		//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
+		$breadcrumb = $this->add(new bcn_breadcrumb(
+				$this->post_type_archive_title(get_post_type_object($type_str)),
+				$this->opt['Hpost_' . $type_str . '_template_no_anchor'],
+				array('archive', 'post-' . $type_str . '-archive'),
+				get_post_type_archive_link($type_str)));
+		if($is_current_item)
+		{
+			$breadcrumb->add_type('current-item');
+		}
+		//Under a couple of circumstances we will want to link this breadcrumb
+		if($force_link || ($is_current_item && $this->opt['bcurrent_item_linked']) || ($is_paged && $this->opt['bpaged_display']))
+		{
+			//Change the template over to the normal, linked one
+			$breadcrumb->set_template($this->opt['Hpost_' . $type_str. '_template']);
+			//Add the link
+			$breadcrumb->set_linked(true);
+		}
+	}
+	protected function do_post_type_archive($type_str)
+	{
+		//If this is a custom post type with a post type archive, add it
+		if(!$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
+		{
+			//Going farther down the rabbit hole here
+			$this->do_archive_by_post_type($type_str, true, false, false);
+		}
+	}
+	/**
+	 * A Breadcrumb Trail Filling Function
 	 * 
 	 * Deals with the post type archive and taxonomy archives
 	 * 
@@ -893,32 +907,20 @@ class bcn_breadcrumb_trail
 		//If this is a custom post type with a post type archive, add it
 		if($type_str && !$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
 		{
-			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(
-					$this->post_type_archive_title(get_post_type_object($type_str)),
-					$this->opt['Hpost_' . $type_str . '_template'],
-					array('post', 'post-' . $type_str . '-archive'),
-					get_post_type_archive_link($type_str),
-					null,
-					true));
+			$this->do_archive_by_post_type($type_str, true, false, false);
 		}
 		//Otherwise, if this is a custom taxonomy with an archive, add it
-		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]) 
-			&& !$this->is_builtin($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0])) 
-			&& $this->opt['bpost_' . $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]) . '_archive_display'] 
-			&& $this->has_archive($this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]))
-				&& !$this->is_type_query_var_array() && apply_filters('bcn_show_type_term_archive', true, $type->taxonomy))
-		{
-			//We end up using the post type in several places, give it a variable
-			$post_type = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]));
-			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
-			$breadcrumb = $this->add(new bcn_breadcrumb(
-					$this->post_type_archive_title(get_post_type_object($post_type)),
-					$this->opt['Hpost_' . $post_type . '_template'],
-					array('post', 'post-' . $post_type . '-archive'),
-					get_post_type_archive_link($post_type),
-					null,
-					true));
+		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]))
+		{	
+			$type_str = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]));
+			if(!$this->is_builtin($type_str) 
+				&& $this->opt['bpost_' . $type_str. '_archive_display'] 
+				&& $this->has_archive($type_str)
+				&& !$this->is_type_query_var_array()
+				&& apply_filters('bcn_show_type_term_archive', true, $type->taxonomy))
+			{
+				$this->do_archive_by_post_type($type_str, true, false, false);
+			}
 		}
 	}
 	/**
@@ -1091,23 +1093,27 @@ class bcn_breadcrumb_trail
 				}
 				$this->do_year(get_post(), $this->get_type_string_query_var(), is_paged(), is_year());
 				$type_str = $this->get_type_string_query_var();
-				$this->type_archive($type, $type_str);
+				//FIXME?
+				$this->do_post_type_archive($type_str);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)
 				&& (!is_numeric($this->opt['apost_' . $type_str . '_root']) || $this->opt['bpost_' . $type_str . '_archive_display']))
 			{
+				//FIXME?
 				$this->do_archive_by_post_type($this->get_type_string_query_var(), is_paged());
 			}
 			//For taxonomy based archives
 			else if(is_category() || is_tag() || is_tax())
 			{
 				$this->do_archive_by_term($type, is_paged());
+				//FIXME
 				$this->type_archive($type);
 				$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0]);
 			}
 			else
 			{
+				//FIXME
 				$this->type_archive($type);
 			}
 			//Occasionally, we may end up with garbage for the type string, if so, skip the root
@@ -1127,6 +1133,7 @@ class bcn_breadcrumb_trail
 			if(isset($type->taxonomy))
 			{
 				$this->do_archive_by_term($type, is_paged());
+				//FIXME
 				$this->type_archive($type);
 				$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
 			}
@@ -1164,6 +1171,7 @@ class bcn_breadcrumb_trail
 		else if($item instanceof WP_Term)
 		{
 			$this->do_archive_by_term($item);
+			//FIXME
 			$this->type_archive($item);
 			$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$item->taxonomy]->object_type[0]);
 			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));

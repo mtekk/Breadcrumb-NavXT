@@ -465,12 +465,15 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
 		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_czar_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_czar_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
 		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
 		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$tidb = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
 		$tidc = self::factory()->term->create(array('name' => 'Test Non Associated', 'taxonomy' => 'nonassociated'));
 		$tidd = self::factory()->term->create(array('name' => 'Test House', 'taxonomy' => 'family'));
@@ -488,7 +491,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test CPT post
 		////
@@ -500,7 +503,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test CPT post with archive display disabled
 		////
@@ -543,7 +546,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test with taxonomy that is unaffiliated with a post type
 		////

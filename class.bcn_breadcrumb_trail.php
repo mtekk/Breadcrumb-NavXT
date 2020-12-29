@@ -878,6 +878,7 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_linked(true);
 		}
 	}
+	//FIXME: Find a better name
 	protected function do_post_type_archive($type_str)
 	{
 		//If this is a custom post type with a post type archive, add it
@@ -899,29 +900,20 @@ class bcn_breadcrumb_trail
 	 */
 	protected function type_archive($type, $type_str = false)
 	{
-		global $wp_taxonomies;
+		//Not at taxonomy, and didn't get a type string, see if we can get the info from the query var
 		if(!isset($type->taxonomy) && $type_str === false) //TODO could probably check the class type here
 		{
 			$type_str = $this->get_type_string_query_var();
 		}
-		//If this is a custom post type with a post type archive, add it
-		if($type_str && !$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
-		{
-			$this->do_archive_by_post_type($type_str, true, false, false);
-		}
-		//Otherwise, if this is a custom taxonomy with an archive, add it
-		else if(isset($type->taxonomy) && isset($wp_taxonomies[$type->taxonomy]->object_type[0]))
-		{	
-			$type_str = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]));
-			if(!$this->is_builtin($type_str) 
-				&& $this->opt['bpost_' . $type_str. '_archive_display'] 
-				&& $this->has_archive($type_str)
+		//Have a taxonomy, try to figure the type out from that
+		else if(isset($type->taxonomy) && isset($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0])
 				&& !$this->is_type_query_var_array()
 				&& apply_filters('bcn_show_type_term_archive', true, $type->taxonomy))
-			{
-				$this->do_archive_by_post_type($type_str, true, false, false);
-			}
+		{
+			$type_str = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0]));
 		}
+		$this->do_post_type_archive($type_str);
+		return $type_str;
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function 
@@ -1081,18 +1073,18 @@ class bcn_breadcrumb_trail
 			//For date based archives
 			if(is_date())
 			{
+				$type_str = $this->get_type_string_query_var();
 				//First deal with the day breadcrumb
 				if(is_day())
 				{
-					$this->do_day(get_post(), $this->get_type_string_query_var(), is_paged(), true);
+					$this->do_day(get_post(), $type_str, is_paged(), true);
 				}
 				//Now deal with the month breadcrumb
 				if(is_month() || is_day())
 				{
-					$this->do_month(get_post(), $this->get_type_string_query_var(), is_paged(), is_month());
+					$this->do_month(get_post(), $type_str, is_paged(), is_month());
 				}
-				$this->do_year(get_post(), $this->get_type_string_query_var(), is_paged(), is_year());
-				$type_str = $this->get_type_string_query_var();
+				$this->do_year(get_post(), $type_str, is_paged(), is_year());
 				//FIXME?
 				$this->do_post_type_archive($type_str);
 			}
@@ -1100,20 +1092,16 @@ class bcn_breadcrumb_trail
 			else if(is_post_type_archive() && !isset($type->taxonomy)
 				&& (!is_numeric($this->opt['apost_' . $type_str . '_root']) || $this->opt['bpost_' . $type_str . '_archive_display']))
 			{
-				//FIXME?
 				$this->do_archive_by_post_type($this->get_type_string_query_var(), false, is_paged(), true);
 			}
 			//For taxonomy based archives
 			else if(is_category() || is_tag() || is_tax())
 			{
 				$this->do_archive_by_term($type, is_paged());
-				//FIXME
-				$this->type_archive($type);
-				$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0]);
+				$type_str = $this->type_archive($type);
 			}
 			else
 			{
-				//FIXME
 				$this->type_archive($type);
 			}
 			//Occasionally, we may end up with garbage for the type string, if so, skip the root
@@ -1133,9 +1121,7 @@ class bcn_breadcrumb_trail
 			if(isset($type->taxonomy))
 			{
 				$this->do_archive_by_term($type, is_paged());
-				//FIXME
-				$this->type_archive($type);
-				$type_str = $this->get_type_string_query_var($wp_taxonomies[$type->taxonomy]->object_type[0]);
+				$type_str = $this->type_archive($type);
 			}
 			//Otherwise, it's likely the blog page
 			else if($this->opt['bblog_display'] || is_home())
@@ -1171,9 +1157,7 @@ class bcn_breadcrumb_trail
 		else if($item instanceof WP_Term)
 		{
 			$this->do_archive_by_term($item);
-			//FIXME
-			$this->type_archive($item);
-			$type_str = $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$item->taxonomy]->object_type[0]);
+			$type_str = $this->type_archive($item);
 			$this->do_root($type_str, $this->opt['apost_' . $type_str . '_root'], is_paged(), $this->treat_as_root_page($type_str));
 		}
 		//Handle Author Archives

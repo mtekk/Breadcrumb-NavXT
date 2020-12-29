@@ -1101,7 +1101,7 @@ class bcn_breadcrumb_trail
 				&& (!is_numeric($this->opt['apost_' . $type_str . '_root']) || $this->opt['bpost_' . $type_str . '_archive_display']))
 			{
 				//FIXME?
-				$this->do_archive_by_post_type($this->get_type_string_query_var(), is_paged());
+				$this->do_archive_by_post_type($this->get_type_string_query_var(), false, is_paged(), true);
 			}
 			//For taxonomy based archives
 			else if(is_category() || is_tag() || is_tax())

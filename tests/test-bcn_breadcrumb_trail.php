@@ -460,6 +460,150 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 	}
+	function test_do_archive_by_post_type()
+	{
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		////
+		//Nominal test
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Nominal test with bcurrent_item_linked set true
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = true;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with forced link
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with is_paged
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with is_paged and bpaged_display set true
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = true;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with all optional parameters set false
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, false, false));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+	}
+	function test_maybe_do_archive_by_post_type()
+	{
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
+		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$tidd = self::factory()->term->create(array('name' => 'Test House', 'taxonomy' => 'family'));
+		//Assign the terms to their posts
+		wp_set_object_terms($pida, array($tidd), 'family');
+		////
+		//Test CPT post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		////
+		//Test CPT post with archive display disabled
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = false;
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test "Post" post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post_inst = get_post(self::$pids[0]);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('post'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test CPT post w/o archive
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('autocrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
 	function test_type_archive()
 	{
 		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));

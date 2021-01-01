@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -112,12 +112,21 @@ class bcn_breadcrumb
 	/**
 	 * Function to set the internal URL variable
 	 *
-	 * @param string $url the url to link to
+	 * @param string $url the URL to link to
 	 */
 	public function set_url($url)
 	{
 		$url = trim($url);
 		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
+	}
+	/**
+	 * Function to get the internal URL variable
+	 * 
+	 * @return string the URL that the breadcrumb links to
+	 */
+	public function get_url()
+	{
+		return $this->url;
 	}
 	/**
 	 * Function to se tthe internal breadcrumb linked status
@@ -127,6 +136,15 @@ class bcn_breadcrumb
 	public function set_linked($linked)
 	{
 		$this->linked = apply_filters('bcn_breadcrumb_linked', $linked, $this->type, $this->id);
+	}
+	/**
+	 * Function to check if this breadcrumb will be linked
+	 * 
+	 * @return boolean whether or not this breadcrumb is linked
+	 */
+	public function is_linked()
+	{
+		return $this->linked;
 	}
 	/**
 	 * A wrapper for wp_kses which handles getting the allowed html

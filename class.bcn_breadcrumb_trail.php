@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -391,7 +391,7 @@ class bcn_breadcrumb_trail
 			$parent = get_post($id);
 		}
 		//Finish off with trying to find the type archive
-		$this->do_post_type_archive($parent->post_type);
+		$this->maybe_do_archive_by_post_type($parent->post_type);
 	}
 	/**
 	 * A Breadcrumb Trail Filling Function
@@ -878,8 +878,12 @@ class bcn_breadcrumb_trail
 			$breadcrumb->set_linked(true);
 		}
 	}
-	//FIXME: Find a better name
-	protected function do_post_type_archive($type_str)
+	/**
+	 * A wrapper function for do_archive_by_post_type which checks to ensure generating the post type archive is appropriate
+	 * 
+	 * @param string $type_str The type string for the post type archive
+	 */
+	protected function maybe_do_archive_by_post_type($type_str)
 	{
 		//If this is a custom post type with a post type archive, add it
 		if(!$this->is_builtin($type_str) && $this->opt['bpost_' . $type_str . '_archive_display'] && $this->has_archive($type_str))
@@ -895,8 +899,6 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param WP_Post|WP_Taxonomy $type The post or taxonomy to generate the archive breadcrumb for
 	 * @param string $type_str The type string for the archive
-	 * 
-	 * TODO: Split and redo calls to it, see #224
 	 */
 	protected function type_archive($type, $type_str = false)
 	{
@@ -912,7 +914,7 @@ class bcn_breadcrumb_trail
 		{
 			$type_str = apply_filters('bcn_type_archive_post_type', $this->get_type_string_query_var($GLOBALS['wp_taxonomies'][$type->taxonomy]->object_type[0]));
 		}
-		$this->do_post_type_archive($type_str);
+		$this->maybe_do_archive_by_post_type($type_str);
 		return $type_str;
 	}
 	/**
@@ -1085,8 +1087,7 @@ class bcn_breadcrumb_trail
 					$this->do_month(get_post(), $type_str, is_paged(), is_month());
 				}
 				$this->do_year(get_post(), $type_str, is_paged(), is_year());
-				//FIXME?
-				$this->do_post_type_archive($type_str);
+				$this->maybe_do_archive_by_post_type($type_str);
 			}
 			//If we have a post type archive, and it does not have a root page generate the archive
 			else if(is_post_type_archive() && !isset($type->taxonomy)

@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.6.0';
+	const version = '6.6.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'bcn_manage_options';
@@ -109,190 +109,8 @@ class bcn_admin extends mtekk_adminKit
 		//If our version is not the same as in the db, time to update
 		if(version_compare($version, $this::version, '<'))
 		{
-			//Upgrading to 3.8.1
-			if(version_compare($version, '3.8.1', '<'))
-			{
-				$opts['post_page_root'] = $this->get_option('page_on_front');
-				$opts['post_post_root'] = $this->get_option('page_for_posts');
-			}
-			//Upgrading to 4.0
-			if(version_compare($version, '4.0.0', '<'))
-			{
-				//Only migrate if we haven't migrated yet
-				if(isset($opts['current_item_linked']))
-				{
-					//Loop through the old options, migrate some of them
-					foreach($opts as $option => $value)
-					{
-						//Handle all of our boolean options first, they're real easy, just add a 'b'
-						if(strpos($option, 'display') > 0 || $option == 'current_item_linked')
-						{
-							$this->breadcrumb_trail->opt['b' . $option] = $value;
-						}
-						//Handle migration of anchor templates to the templates
-						else if(strpos($option, 'anchor') > 0)
-						{
-							$parts = explode('_', $option);
-							//Do excess slash removal sanitation
-							$this->breadcrumb_trail->opt['H' . $parts[0] . '_template'] = $value . '%htitle%</a>';
-						}
-						//Handle our abs integers
-						else if($option == 'max_title_length' || $option == 'post_post_root' || $option == 'post_page_root')
-						{
-							$this->breadcrumb_trail->opt['a' . $option] = $value;
-						}
-						//Now everything else, minus prefix and suffix
-						else if(strpos($option, 'prefix') === false && strpos($option, 'suffix') === false)
-						{
-							$this->breadcrumb_trail->opt['S' . $option] = $value;
-						}
-					}
-				}
-				//Add in the new settings for CPTs introduced in 4.0
-				foreach($wp_post_types as $post_type)
-				{
-					//We only want custom post types
-					if(!$post_type->_builtin)
-					{
-						//Add in the archive_display option
-						$this->breadcrumb_trail->opt['bpost_' . $post_type->name . '_archive_display'] = $post_type->has_archive;
-					}
-				}
-				$opts = $this->breadcrumb_trail->opt;
-			}
-			if(version_compare($version, '4.0.1', '<'))
-			{
-				if(isset($opts['Hcurrent_item_template_no_anchor']))
-				{
-					unset($opts['Hcurrent_item_template_no_anchor']);
-				}
-				if(isset($opts['Hcurrent_item_template']))
-				{
-					unset($opts['Hcurrent_item_template']);
-				}
-			}
-			//Upgrading to 4.3.0
-			if(version_compare($version, '4.3.0', '<'))
-			{
-				//Removed home_title
-				if(isset($opts['Shome_title']))
-				{
-					unset($opts['Shome_title']);
-				}
-				//Removed mainsite_title
-				if(isset($opts['Smainsite_title']))
-				{
-					unset($opts['Smainsite_title']);
-				}
-			}
-			//Upgrading to 5.1.0
-			if(version_compare($version, '5.1.0', '<'))
-			{
-				foreach($wp_taxonomies as $taxonomy)
-				{
-					//If we have the old options style for it, update
-					if($taxonomy->name !== 'post_format' && isset($opts['H' . $taxonomy->name . '_template']))
-					{
-						//Migrate to the new setting name
-						$opts['Htax_' . $taxonomy->name . '_template'] = $opts['H' . $taxonomy->name . '_template'];
-						$opts['Htax_' . $taxonomy->name . '_template_no_anchor'] = $opts['H' . $taxonomy->name . '_template_no_anchor'];
-						//Clean up old settings
-						unset($opts['H' . $taxonomy->name . '_template']);
-						unset($opts['H' . $taxonomy->name . '_template_no_anchor']);
-					}
-				}
-			}
-			//Upgrading to 5.4.0
-			if(version_compare($version, '5.4.0', '<'))
-			{
-				//Migrate users to schema.org breadcrumbs for author and search if still on the defaults for posts
-				if($opts['Hpost_post_template'] === bcn_breadcrumb::get_default_template() && $opts['Hpost_post_template_no_anchor'] === bcn_breadcrumb::default_template_no_anchor)
-				{
-					if($opts['Hpaged_template'] === 'Page %htitle%')
-					{
-						$opts['Hpaged_template'] = $this->opt['Hpaged_template'];
-					}
-					if($opts['Hsearch_template'] === 'Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;' || $opts['Hsearch_template'] === 'Search results for &#039;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#039;')
-					{
-						$opts['Hsearch_template'] = $this->opt['Hsearch_template'];
-					}
-					if($opts['Hsearch_template_no_anchor'] === 'Search results for &#39;%htitle%&#39;' || $opts['Hsearch_template_no_anchor'] === 'Search results for &#039;%htitle%&#039;')
-					{
-						$opts['Hsearch_template_no_anchor'] = $this->opt['Hsearch_template_no_anchor'];
-					}
-					if($opts['Hauthor_template'] === 'Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>')
-					{
-						$opts['Hauthor_template'] = $this->opt['Hauthor_template'];
-					}
-					if($opts['Hauthor_template_no_anchor'] === 'Articles by: %htitle%')
-					{
-						$opts['Hauthor_template_no_anchor'] = $this->opt['Hauthor_template_no_anchor'];
-					}
-				}
-			}
-			//Upgrading to 5.5.0
-			if(version_compare($version, '5.5.0', '<'))
-			{
-				//Translate the old 'page' taxonomy type to BCN_POST_PARENT
-				if($this->opt['Spost_post_taxonomy_type'] === 'page')
-				{
-					$this->opt['Spost_post_taxonomy_type'] = 'BCN_POST_PARENT';
-				}
-				if(!isset($this->opt['Spost_post_taxonomy_referer']))
-				{
-					$this->opt['bpost_post_taxonomy_referer'] = false;
-				}
-				//Loop through all of the post types in the array
-				foreach($wp_post_types as $post_type)
-				{
-					//Check for non-public CPTs
-					if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name))
-					{
-						continue;
-					}
-					//We only want custom post types
-					if(!$post_type->_builtin)
-					{
-						//Translate the old 'page' taxonomy type to BCN_POST_PARENT
-						if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'page')
-						{
-							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
-						}
-						//Translate the old 'date' taxonomy type to BCN_DATE
-						if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'date')
-						{
-							$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
-						}
-						if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
-						{
-							$this->opt['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
-						}
-					}
-				}
-			}
-			//Upgrading to 6.0.0
-			if(version_compare($version, '6.0.0', '<'))
-			{
-				//Loop through all of the post types in the array
-				foreach($wp_post_types as $post_type)
-				{
-					if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']))
-					{
-						$this->opt['Spost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_type'];
-						unset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']);
-					}
-					if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']))
-					{
-						$this->opt['Spost_' . $post_type->name . '_hierarchy_display'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_display'];
-						unset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']);
-					}
-				}
-			}
-			//Set the max title length to 20 if we are not limiting the title and the length was 0
-			if(!$opts['blimit_title'] && $opts['amax_title_length'] == 0)
-			{
-				$opts['amax_title_length'] = 20;
-			}
+			require_once(dirname(__FILE__) . '/options_upgrade.php');
+			bcn_options_upgrade_handler($opts, $version, $this->breadcrumb_trail->opt);
 		}
 		//Save the passed in opts to the object's option array
 		$this->opt = mtekk_adminKit::parse_args($opts, $this->opt);
@@ -537,55 +355,6 @@ class bcn_admin extends mtekk_adminKit
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
 				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Post Types', 'breadcrumb-navxt' ); ?></legend>
-				<h2><?php _e('Posts', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table adminkit-enset-top">
-					<?php
-						$this->textbox(__('Post Template', 'breadcrumb-navxt'), 'Hpost_post_template', '6', false, __('The template for post breadcrumbs.', 'breadcrumb-navxt'));
-						$this->textbox(__('Post Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_post_template_no_anchor', '4', false, __('The template for post breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->input_check(__('Post Hierarchy Display', 'breadcrumb-navxt'), 'bpost_post_hierarchy_display', __('Show the hierarchy (specified below) leading to a post in the breadcrumb trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
-						$this->input_check(__('Post Hierarchy Use Parent First', 'breadcrumb-navxt'), 'bpost_post_hierarchy_parent_first', __('Use the parent of the post as the primary hierarchy, falling back to the hierarchy selected below when the parent hierarchy is exhausted.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
-						$this->input_check(__('Post Hierarchy Referer Influence', 'breadcrumb-navxt'), 'bpost_post_taxonomy_referer', __('Allow the referring page to influence the taxonomy selected for the hierarchy.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
-					?>
-					<tr valign="top">
-						<th scope="row">
-							<?php _e('Post Hierarchy', 'breadcrumb-navxt'); ?>
-						</th>
-						<td>
-							<?php
-								$this->input_radio('Spost_post_hierarchy_type', 'category', __('Categories'), false, 'adminkit-enset');
-								$this->input_radio('Spost_post_hierarchy_type', 'BCN_DATE', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
-								$this->input_radio('Spost_post_hierarchy_type', 'post_tag', __('Tags'), false, 'adminkit-enset');
-								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->input_radio('Spost_post_hierarchy_type', 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
-								//Loop through all of the taxonomies in the array
-								foreach($wp_taxonomies as $taxonomy)
-								{
-									//Check for non-public taxonomies
-									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, 'post'))
-									{
-										continue;
-									}
-									//We only want custom taxonomies
-									if(($taxonomy->object_type == 'post' || is_array($taxonomy->object_type) && in_array('post', $taxonomy->object_type)) && !$taxonomy->_builtin)
-									{
-										$this->input_radio('Spost_post_hierarchy_type', $taxonomy->name, mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'), false, 'adminkit-enset');
-									}
-								}
-							?>
-							<p class="description"><?php esc_html_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt'); ?></p>
-						</td>
-					</tr>
-				</table>
-				<h2><?php _e('Pages', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<?php
-						$this->textbox(__('Page Template', 'breadcrumb-navxt'), 'Hpost_page_template', '6', false, __('The template for page breadcrumbs.', 'breadcrumb-navxt'));
-						$this->textbox(__('Page Template (Unlinked)', 'breadcrumb-navxt'), 'Hpost_page_template_no_anchor', '4', false, __('The template for page breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->input_hidden('bpost_page_hierarchy_display');
-						$this->input_hidden('bpost_page_hierarchy_parent_first');
-						$this->input_hidden('Spost_page_hierarchy_type');
-					?>
-				</table>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
@@ -595,16 +364,15 @@ class bcn_admin extends mtekk_adminKit
 				{
 					continue;
 				}
-				//We only want custom post types
-				if($post_type->name === 'attachment' || !$post_type->_builtin)
-				{
-					$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
+				$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
 				<h2><?php echo $post_type->labels->singular_name; ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->textbox(sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template', '6', false, sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc));
 						$this->textbox(sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'Hpost_' . $post_type->name . '_template_no_anchor', '4', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));
+						if(!in_array($post_type->name, array('page', 'post')))
+						{
 						$optid = mtekk_adminKit::get_valid_id('apost_' . $post_type->name . '_root');
 					?>
 					<tr valign="top">
@@ -616,10 +384,13 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 					<?php
-						$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
-						$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_hierarchy_display', sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset-ctrl adminkit-enset');
-						$this->input_check(sprintf(__('%s Hierarchy Use Parent First', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_hierarchy_parent_first', sprintf(__('Use the parent of the %s as the primary hierarchy, falling back to the hierarchy selected below when the parent hierarchy is exhausted.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset');
-						$this->input_check(sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_referer', __('Allow the referring page to influence the taxonomy selected for the hierarchy.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
+							$this->input_check(sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_archive_display', sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
+						}
+						if(!in_array($post_type->name, array('page')))
+						{
+							$this->input_check(sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_hierarchy_display', sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset-ctrl adminkit-enset');
+							$this->input_check(sprintf(__('%s Hierarchy Use Parent First', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_hierarchy_parent_first', sprintf(__('Use the parent of the %s as the primary hierarchy, falling back to the hierarchy selected below when the parent hierarchy is exhausted.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset');
+							$this->input_check(sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name), 'bpost_' . $post_type->name . '_taxonomy_referer', __('Allow the referring page to influence the taxonomy selected for the hierarchy.', 'breadcrumb-navxt'), false, '', 'adminkit-enset');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -659,9 +430,11 @@ class bcn_admin extends mtekk_adminKit
 							</p>
 						</td>
 					</tr>
-				</table>
 					<?php
-				}
+						}
+					?>
+				</table>
+				<?php
 			}
 			do_action($this->unique_prefix . '_after_settings_tab_post', $this->opt);
 			?>

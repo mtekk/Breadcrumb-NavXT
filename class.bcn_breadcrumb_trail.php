@@ -375,7 +375,7 @@ class bcn_breadcrumb_trail
 					if($term instanceof WP_Term)
 					{
 						//Fill out the term hiearchy
-						$parent = $this->term_parents($term);
+						$parent = $this->term_parents($term, $type);
 					}
 				}
 				//Handle the rest of the taxonomies, including tags
@@ -413,7 +413,7 @@ class bcn_breadcrumb_trail
 			//For single terms, treat as if they are hierarchical
 			if(count($bcn_terms) === 1 && $bcn_terms[0] instanceof WP_Term)
 			{
-				return $this->term_parents($bcn_terms[0]);
+				return $this->term_parents($bcn_terms[0], get_post_type($id));
 			}
 			$title = '';
 			$is_first = true;
@@ -442,10 +442,11 @@ class bcn_breadcrumb_trail
 	 * This recursive functions fills the trail with breadcrumbs for parent terms
 	 * 
 	 * @param WP_Term $term The term object to generate breadcrumbs for
+	 * @param string|null $type The post type string to use for determining whether or not to add the post type argument
 	 * 
 	 * @return WP_Term|WP_Error The term we stopped at
 	 */
-	protected function term_parents($term)
+	protected function term_parents($term, $type = null)
 	{
 		if($term instanceof WP_Term)
 		{
@@ -453,14 +454,14 @@ class bcn_breadcrumb_trail
 			$breadcrumb = $this->add(new bcn_breadcrumb(
 					$term->name, $this->opt['Htax_' . $term->taxonomy . '_template'],
 					array('taxonomy', $term->taxonomy),
-					$this->maybe_add_post_type_arg(get_term_link($term), null, $term->taxonomy),
+					$this->maybe_add_post_type_arg(get_term_link($term), $type, $term->taxonomy),
 					$term->term_id,
 					true));
 			//Make sure the id is valid, and that we won't end up spinning in a loop
 			if($term->parent && $term->parent != $term->term_id)
 			{
 				//Figure out the rest of the term hiearchy via recursion
-				$ret_term = $this->term_parents(get_term($term->parent, $term->taxonomy));
+				$ret_term = $this->term_parents(get_term($term->parent, $term->taxonomy), $type);
 				//May end up with WP_Error, don't update the term if that's the case
 				if($ret_term instanceof WP_Term)
 				{

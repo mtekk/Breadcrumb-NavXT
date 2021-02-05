@@ -140,13 +140,13 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			, bcn_display(true, false, false, true));
 		//Now in reverse order
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">' . get_the_title($this->posts[0])
-			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[5])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[5]) . '"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[7])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[7]) . '"><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[8])->name
+			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="7"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[5])->name
+			. '</span><meta property="url" content="' . get_term_link($this->terms[5]) . '"><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[7])->name
+			. '</span><meta property="url" content="' . get_term_link($this->terms[7]) . '"><meta property="position" content="5"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[8])->name
 			. '</span><meta property="url" content="' . get_term_link($this->terms[8]) . '"><meta property="position" content="4"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[6])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[6]) . '"><meta property="position" content="5"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post-root post post-post">' . get_the_title($this->blog)
-			. '</span><meta property="url" content="' . get_permalink($this->blog). '"><meta property="position" content="6"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="home">' . get_option('blogname')
-			. '</span><meta property="url" content="' . get_home_url() . '"><meta property="position" content="7"></span>'
+			. '</span><meta property="url" content="' . get_term_link($this->terms[6]) . '"><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post-root post post-post">' . get_the_title($this->blog)
+			. '</span><meta property="url" content="' . get_permalink($this->blog). '"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="home">' . get_option('blogname')
+			. '</span><meta property="url" content="' . get_home_url() . '"><meta property="position" content="1"></span>'
 			, bcn_display(true, false, true, true));
 		//Now linked
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_option('blogname') . '." href="' . get_home_url() . '" class="home" ><span property="name">' . get_option('blogname')
@@ -174,13 +174,13 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			, bcn_display_list(true, false, false, true));
 		//Now in reverse order
 		$this->assertSame('<li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">' . get_the_title($this->posts[0])
-			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="1"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[5])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[5]). '"><meta property="position" content="2"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[7])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[7]) . '"><meta property="position" content="3"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[8])->name
+			. '</span><meta property="url" content="' . get_the_permalink($this->posts[0]) . '"><meta property="position" content="7"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[5])->name
+			. '</span><meta property="url" content="' . get_term_link($this->terms[5]). '"><meta property="position" content="6"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[7])->name
+			. '</span><meta property="url" content="' . get_term_link($this->terms[7]) . '"><meta property="position" content="5"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[8])->name
 			. '</span><meta property="url" content="' . get_term_link($this->terms[8]) . '"><meta property="position" content="4"></span></li>'. "\n" . '<li class="taxonomy category"><span property="itemListElement" typeof="ListItem"><span property="name" class="taxonomy category">' . get_term($this->terms[6])->name
-			. '</span><meta property="url" content="' . get_term_link($this->terms[6]) . '"><meta property="position" content="5"></span></li>'. "\n" . '<li class="post-root post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post-root post post-post">' . get_the_title($this->blog)
-			. '</span><meta property="url" content="' . get_permalink($this->blog) . '"><meta property="position" content="6"></span></li>' . "\n" . '<li class="home"><span property="itemListElement" typeof="ListItem"><span property="name" class="home">' . get_option('blogname')
-			. '</span><meta property="url" content="' . get_home_url() . '"><meta property="position" content="7"></span></li>'. "\n"
+			. '</span><meta property="url" content="' . get_term_link($this->terms[6]) . '"><meta property="position" content="3"></span></li>'. "\n" . '<li class="post-root post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post-root post post-post">' . get_the_title($this->blog)
+			. '</span><meta property="url" content="' . get_permalink($this->blog) . '"><meta property="position" content="2"></span></li>' . "\n" . '<li class="home"><span property="itemListElement" typeof="ListItem"><span property="name" class="home">' . get_option('blogname')
+			. '</span><meta property="url" content="' . get_home_url() . '"><meta property="position" content="1"></span></li>'. "\n"
 			, bcn_display_list(true, false, true, true));
 		//Now linked
 		$this->assertSame('<li class="home"><span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to ' . get_option('blogname') . '." href="' . get_home_url() . '" class="home" ><span property="name">' . get_option('blogname')
@@ -209,13 +209,13 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			bcn_display_json_ld(true, false, true));
 		//Now test the reverse order mode
 		$this->assertJsonStringEqualsJsonString(
-				'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"' . get_permalink($this->posts[0]). '","name":"' . get_the_title($this->posts[0])
-				. '"}},{"@type":"ListItem","position":2,"item":{"@id":"' . get_term_link($this->terms[5]) . '","name":"' . get_term($this->terms[5])->name
-				. '"}},{"@type":"ListItem","position":3,"item":{"@id":"' . get_term_link($this->terms[7]) . '","name":"' . get_term($this->terms[7])->name
+				'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":7,"item":{"@id":"' . get_permalink($this->posts[0]). '","name":"' . get_the_title($this->posts[0])
+				. '"}},{"@type":"ListItem","position":6,"item":{"@id":"' . get_term_link($this->terms[5]) . '","name":"' . get_term($this->terms[5])->name
+				. '"}},{"@type":"ListItem","position":5,"item":{"@id":"' . get_term_link($this->terms[7]) . '","name":"' . get_term($this->terms[7])->name
 				. '"}},{"@type":"ListItem","position":4,"item":{"@id":"' . get_term_link($this->terms[8]) . '","name":"' . get_term($this->terms[8])->name
-				. '"}},{"@type":"ListItem","position":5,"item":{"@id":"' . get_term_link($this->terms[6]) . '","name":"' . get_term($this->terms[6])->name
-				. '"}},{"@type":"ListItem","position":6,"item":{"@id":"' . get_permalink($this->blog) . '","name":"' . get_the_title($this->blog)
-				. '"}},{"@type":"ListItem","position":7,"item":{"@id":"' . get_home_url() . '","name":"' . get_option('blogname')
+				. '"}},{"@type":"ListItem","position":3,"item":{"@id":"' . get_term_link($this->terms[6]) . '","name":"' . get_term($this->terms[6])->name
+				. '"}},{"@type":"ListItem","position":2,"item":{"@id":"' . get_permalink($this->blog) . '","name":"' . get_the_title($this->blog)
+				. '"}},{"@type":"ListItem","position":1,"item":{"@id":"' . get_home_url() . '","name":"' . get_option('blogname')
 				. '"}}]}',
 			bcn_display_json_ld(true, true, true));
 	}

@@ -1362,6 +1362,12 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertJsonStringEqualsJsonString(
 			'[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
 			json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
+		//Now test the JSON-LD loop in reverse
+		$breadcrumbs = $this->breadcrumb_trail->call('json_ld_loop', array(true));
+		//Now check our work
+		$this->assertJsonStringEqualsJsonString(
+				'[{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
+				json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display_json_ld()
 	{
@@ -1382,7 +1388,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_json_ld', array(true));
 		//Now check our work
 		$this->assertJsonStringEqualsJsonString(
-			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
+			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
 			json_encode($breadcrumb_string, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display()
@@ -1400,6 +1406,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
+		//Now try reversing
+		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false, true));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span>', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them

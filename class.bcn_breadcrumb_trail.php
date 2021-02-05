@@ -1233,7 +1233,7 @@ class bcn_breadcrumb_trail
 			$attrib_array = array('class' => $types);
 			$attribs = '';
 			//Deal with the separator
-			if(($position < $last_position) || ($reverse && $position === 1))
+			if((!$reverse && ($position < $last_position)) || ($reverse && $position !== 1))
 			{
 				$separator = $this->opt['hseparator'];
 			}
@@ -1285,23 +1285,35 @@ class bcn_breadcrumb_trail
 		$trail_str = (object)array(
 			'@context' => 'http://schema.org',
 			'@type' => 'BreadcrumbList',
-			'itemListElement' => $this->json_ld_loop());
+			'itemListElement' => $this->json_ld_loop($reverse));
 		return $trail_str;
 	}
 	/**
 	 * This function assembles all of the breadcrumbs into an object ready for json_encode
 	 *
+	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * @return array The array of breadcrumbs prepared for JSON-LD
 	 */
-	protected function json_ld_loop()
+	protected function json_ld_loop($reverse = false)
 	{		
-		$postion = 1;
+		$position = 1;
+		if($reverse)
+		{
+			$position = count($this->breadcrumbs);
+		}
 		$breadcrumbs = array();
 		//Loop around our breadcrumbs, call the JSON-LD assembler
 		foreach($this->breadcrumbs as $breadcrumb)
 		{
-			$breadcrumbs[] = $breadcrumb->assemble_json_ld($postion);
-			$postion++;
+			$breadcrumbs[] = $breadcrumb->assemble_json_ld($position);
+			if($reverse)
+			{
+				$position--;
+			}
+			else
+			{
+				$position++;
+			}
 		}
 		return $breadcrumbs;
 	}

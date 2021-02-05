@@ -1220,6 +1220,10 @@ class bcn_breadcrumb_trail
 	{
 		$position = 1;
 		$last_position = count($this->breadcrumbs);
+		if($reverse)
+		{
+			$position = $last_position;
+		}
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
 		foreach($this->breadcrumbs as $key => $breadcrumb)
@@ -1229,7 +1233,7 @@ class bcn_breadcrumb_trail
 			$attrib_array = array('class' => $types);
 			$attribs = '';
 			//Deal with the separator
-			if($position < $last_position)
+			if(($position < $last_position) || ($reverse && $position === 1))
 			{
 				$separator = $this->opt['hseparator'];
 			}
@@ -1255,7 +1259,14 @@ class bcn_breadcrumb_trail
 			}
 			//Assemble the breadcrumb
 			$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
-			$position++;
+			if($reverse)
+			{
+				$position--;
+			}
+			else
+			{
+				$position++;
+			}
 		}
 		return $trail_str;
 	}

@@ -181,7 +181,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 
 		//Test an attachment
-		$attpida = self::factory()->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
+		$attpida = self::factory()->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => self::$pids[0]));
 		$attpidb = self::factory()->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -189,13 +189,24 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$post = get_post($attpida);
 		//Call do_post on the post attachement
 		$this->breadcrumb_trail->call('do_post', array($post));
-		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
-		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$pids[0]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
-		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[5])->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term_link(self::$tids[5]), $this->breadcrumb_trail->breadcrumbs[2]->get_url());
 		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
+		$this->assertSame(get_term(self::$tids[7])->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term_link(self::$tids[7]), $this->breadcrumb_trail->breadcrumbs[3]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[3]->get_types());
+		$this->assertSame(get_term(self::$tids[8])->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertSame(get_term_link(self::$tids[8]), $this->breadcrumb_trail->breadcrumbs[4]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[4]->get_types());
+		$this->assertSame(get_term(self::$tids[6])->name, $this->breadcrumb_trail->breadcrumbs[5]->get_title());
+		$this->assertSame(get_term_link(self::$tids[6]), $this->breadcrumb_trail->breadcrumbs[5]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[5]->get_types());
+		
 		$this->breadcrumb_trail->breadcrumbs = array();
 		$post = get_post($attpidb);
 		//Ensure we have 0 breadcrumbs from the do_root portion

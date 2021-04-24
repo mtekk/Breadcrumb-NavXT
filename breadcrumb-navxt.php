@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.6.40
+Version: 6.9.40
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -61,7 +61,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends mtekk_plugKit
 class breadcrumb_navxt
 {
-	const version = '6.6.40';
+	const version = '6.9.60';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -523,11 +523,12 @@ class breadcrumb_navxt
 	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param bool $force Whether or not to force the fill function to run.
 	 * @param string $template The template to use for the string output.
+	 * @param string $outer_template The template to place an entire dimension of the trail into for all dimensions higher than 1.
 	 * 
 	 * @return void Void if Option to print out breadcrumb trail was chosen.
 	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($return = false, $linked = true, $reverse = false, $force = false, $template = '%1$s%2$s')
+	public function display($return = false, $linked = true, $reverse = false, $force = false, $template = '%1$s%2$s', $outer_template = '%1$s')
 	{
 		//If we're being forced to fill the trail, clear it before calling fill
 		if($force)
@@ -641,7 +642,7 @@ function bcn_display_list($return = false, $linked = true, $reverse = false, $fo
 	global $breadcrumb_navxt;
 	if($breadcrumb_navxt !== null)
 	{
-		return $breadcrumb_navxt->display($return, $linked, $reverse, $force, "<li%3\$s>%1\$s</li>\n");
+		return $breadcrumb_navxt->display($return, $linked, $reverse, $force, "<li%3\$s>%1\$s</li>\n", "<ul>%1\$s</ul>\n");
 	}
 }
 /**

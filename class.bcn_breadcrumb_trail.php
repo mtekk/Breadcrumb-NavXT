@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '6.6.40';
+	const version = '6.9.50';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -55,6 +55,9 @@ class bcn_breadcrumb_trail
 			//Separator that is placed between each item in the breadcrumb trial, but not placed before
 			//the first and not after the last breadcrumb
 			'hseparator' => ' &gt; ',
+			//Separator that is placed between each item in the breadcrumb trial on the 2nd and higher dimensions, but not placed before
+			//the first and not after the last breadcrumb
+			'hseparator_higher_dim' => ' , ',
 			//Whether or not we should trim the breadcrumb titles
 			'blimit_title' => false,
 			//The maximum title length
@@ -1195,16 +1198,17 @@ class bcn_breadcrumb_trail
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.
 	 * @param string $template The template to use for the string output.
+	 * @param string $outer_template The template to place an entire dimension of the trail into for all dimensions higher than 1.
 	 * 
 	 * @return void Void if Option to print out breadcrumb trail was chosen.
 	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($linked = true, $reverse = false, $template = '%1$s%2$s')
+	public function display($linked = true, $reverse = false, $template = '%1$s%2$s', $outer_template = '%1$s')
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
 		//The main compiling loop
-		$trail_str = $this->display_loop($linked, $reverse, $template);
+		$trail_str = $this->display_loop($linked, $reverse, $template, $outer_template, $this->opt['hseparator']);
 		return $trail_str;
 	}
 	/**
@@ -1212,11 +1216,13 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @param bool $linked  Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse Whether to reverse the output or not.
-	 * @param string $template The template to use for the string output.
+	 * @param string $template The template to use for the string output of each breadcrumb. Also known as the inner template.
+	 * @param string $outer_template The template to place an entire dimension of the trail into for all dimensions higher than 1.
+	 * @param string $separator The separator to use at this level of the breadcrumb trail
 	 * 
-	 * @return string String-Data of breadcrumb trail.
+	 * @return string Compiled string version of breadcrumb trail ready for display.
 	 */
-	protected function display_loop($linked, $reverse, $template)
+	protected function display_loop($linked, $reverse, $template, $outer_template, $separator)
 	{
 		$position = 1;
 		$last_position = count($this->breadcrumbs);
@@ -1228,37 +1234,43 @@ class bcn_breadcrumb_trail
 		$trail_str = '';
 		foreach($this->breadcrumbs as $key => $breadcrumb)
 		{
-			$types = $breadcrumb->get_types();
-			array_walk($types, 'sanitize_html_class');
-			$attrib_array = array('class' => $types);
-			$attribs = '';
-			//Deal with the separator
-			if((!$reverse && ($position < $last_position)) || ($reverse && $position !== 1))
+			if(is_array($breadcrumb))
 			{
-				$separator = $this->opt['hseparator'];
+				$trail_str .= sprintf($outer_template, 
+						$this->display_loop($linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim']));
 			}
-			else
+			else if($breadcrumb instanceof bcn_breadcrumb)
 			{
-				$separator = '';
+				$types = $breadcrumb->get_types();
+				array_walk($types, 'sanitize_html_class');
+				$attrib_array = array('class' => $types);
+				$attribs = '';
+				//Blank the separator if we are dealing with what is the last breadcrumb in the assembled trail
+				if((!$reverse && ($position >= $last_position)) || ($reverse && $position == 1))
+				{
+					$separator = '';
+				}
+				//Allow others to hook into the attribute array
+				$attrib_array = apply_filters('bcn_display_attribute_array', $attrib_array, $breadcrumb->get_types(), $breadcrumb->get_id());
+				//Stringify the array
+				foreach($attrib_array as $attrib => $value)
+				{
+					$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr(implode(' ', $value)));
+				}
+				//Filter li_attributes adding attributes to the li element
+				//TODO: Remove the bcn_li_attributes filter
+				$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
+				$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
+				//Trim titles, if requested
+				//TODO: Remove calls to bcn_breadcrumb::title_trim()
+				if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
+				{
+					//Trim the breadcrumb's title
+					$breadcrumb->title_trim($this->opt['amax_title_length']);
+				}
+				//Assemble the breadcrumb
+				$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
 			}
-			//Allow others to hook into the attribute array
-			$attrib_array= apply_filters('bcn_display_attribute_array', $attrib_array, $breadcrumb->get_types(), $breadcrumb->get_id());
-			//Stringify the array
-			foreach($attrib_array as $attrib => $value)
-			{
-				$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr(implode(' ', $value)));
-			}
-			//Filter li_attributes adding attributes to the li element
-			$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
-			$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
-			//Trim titles, if requested
-			if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
-			{
-				//Trim the breadcrumb's title
-				$breadcrumb->title_trim($this->opt['amax_title_length']);
-			}
-			//Assemble the breadcrumb
-			$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
 			if($reverse)
 			{
 				$position--;

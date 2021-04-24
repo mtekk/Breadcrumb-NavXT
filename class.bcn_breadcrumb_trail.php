@@ -1261,13 +1261,6 @@ class bcn_breadcrumb_trail
 				//TODO: Remove the bcn_li_attributes filter
 				$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
 				$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
-				//Trim titles, if requested
-				//TODO: Remove calls to bcn_breadcrumb::title_trim()
-				if($this->opt['blimit_title'] && $this->opt['amax_title_length'] > 0)
-				{
-					//Trim the breadcrumb's title
-					$breadcrumb->title_trim($this->opt['amax_title_length']);
-				}
 				//Assemble the breadcrumb
 				$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
 			}

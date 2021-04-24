@@ -43,7 +43,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.6.50';
+	const version = '6.6.0';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'bcn_manage_options';
@@ -261,7 +261,11 @@ class bcn_admin extends mtekk_adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->opt['blimit_title']) && $this->opt['blimit_title'])
 		{
-			$this->messages[] = new mtekk_adminKit_message(sprintf(esc_html__('Warning: Your are using a deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated), please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), '<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'), 'warning');
+			$this->messages[] = new mtekk_adminKit_message(
+					sprintf(
+							esc_html__('Error: The deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated) has no effect in this version Breadcrumb NavXT. Please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), 
+							'<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
+					'error');
 		}
 	}
 	/**

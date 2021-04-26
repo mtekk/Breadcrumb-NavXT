@@ -1208,12 +1208,13 @@ class bcn_breadcrumb_trail
 		//Set trail order based on reverse flag
 		$this->order($reverse);
 		//The main compiling loop
-		$trail_str = $this->display_loop($linked, $reverse, $template, $outer_template, $this->opt['hseparator']);
+		$trail_str = $this->display_loop($this->breadcrumbs, $linked, $reverse, $template, $outer_template, $this->opt['hseparator']);
 		return $trail_str;
 	}
 	/**
 	 * This function assembles the breadcrumbs in the breadcrumb trail in accordance with the passed in template
 	 * 
+	 * @param array $breadcrumbs Array containing bcn_breadcrumb objects to render
 	 * @param bool $linked  Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse Whether to reverse the output or not.
 	 * @param string $template The template to use for the string output of each breadcrumb. Also known as the inner template.
@@ -1222,22 +1223,22 @@ class bcn_breadcrumb_trail
 	 * 
 	 * @return string Compiled string version of breadcrumb trail ready for display.
 	 */
-	protected function display_loop($linked, $reverse, $template, $outer_template, $separator)
+	protected function display_loop($breadcrumbs, $linked, $reverse, $template, $outer_template, $separator)
 	{
 		$position = 1;
-		$last_position = count($this->breadcrumbs);
+		$last_position = count($breadcrumbs);
 		if($reverse)
 		{
 			$position = $last_position;
 		}
 		//Initilize the string which will hold the assembled trail
 		$trail_str = '';
-		foreach($this->breadcrumbs as $key => $breadcrumb)
+		foreach($breadcrumbs as $key => $breadcrumb)
 		{
 			if(is_array($breadcrumb))
 			{
 				$trail_str .= sprintf($outer_template, 
-						$this->display_loop($linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim']));
+						$this->display_loop($breadcrumb, $linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim']));
 			}
 			else if($breadcrumb instanceof bcn_breadcrumb)
 			{

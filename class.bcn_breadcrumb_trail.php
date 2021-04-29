@@ -57,7 +57,7 @@ class bcn_breadcrumb_trail
 			'hseparator' => ' &gt; ',
 			//Separator that is placed between each item in the breadcrumb trial on the 2nd and higher dimensions, but not placed before
 			//the first and not after the last breadcrumb
-			'hseparator_higher_dim' => ' , ',
+			'hseparator_higher_dim' => ', ',
 			//Whether or not we should trim the breadcrumb titles
 			'blimit_title' => false,
 			//The maximum title length
@@ -1203,7 +1203,7 @@ class bcn_breadcrumb_trail
 	 * @return void Void if Option to print out breadcrumb trail was chosen.
 	 * @return string String-Data of breadcrumb trail.
 	 */
-	public function display($linked = true, $reverse = false, $template = '%1$s%2$s', $outer_template = '%1$s')
+	public function display($linked = true, $reverse = false, $template = '%1$s%2$s', $outer_template = '<span>%1$s</span>%2$s')
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
@@ -1235,10 +1235,15 @@ class bcn_breadcrumb_trail
 		$trail_str = '';
 		foreach($breadcrumbs as $key => $breadcrumb)
 		{
+			//Blank the separator if we are dealing with what is the last breadcrumb in the assembled trail
+			if((!$reverse && ($position >= $last_position)) || ($reverse && $position == 1))
+			{
+				$separator = '';
+			}
 			if(is_array($breadcrumb))
 			{
 				$trail_str .= sprintf($outer_template, 
-						$this->display_loop($breadcrumb, $linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim']));
+						$this->display_loop($breadcrumb, $linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim']), $separator);
 			}
 			else if($breadcrumb instanceof bcn_breadcrumb)
 			{
@@ -1246,11 +1251,6 @@ class bcn_breadcrumb_trail
 				array_walk($types, 'sanitize_html_class');
 				$attrib_array = array('class' => $types);
 				$attribs = '';
-				//Blank the separator if we are dealing with what is the last breadcrumb in the assembled trail
-				if((!$reverse && ($position >= $last_position)) || ($reverse && $position == 1))
-				{
-					$separator = '';
-				}
 				//Allow others to hook into the attribute array
 				$attrib_array = apply_filters('bcn_display_attribute_array', $attrib_array, $breadcrumb->get_types(), $breadcrumb->get_id());
 				//Stringify the array

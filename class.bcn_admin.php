@@ -35,7 +35,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {
-	require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
+	require_once(dirname(__FILE__) . '/includes/adminKit/class.mtekk_adminkit.php');
 }
 /**
  * The administrative interface class 

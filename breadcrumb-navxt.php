@@ -46,7 +46,7 @@ require_once(dirname(__FILE__) . '/includes/multibyte_supplicant.php');
 //Include admin base class
 if(!class_exists('mtekk_adminKit'))
 {
-	require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit.php');
+	require_once(dirname(__FILE__) . '/includes/adminKit/class.mtekk_adminkit.php');
 }
 //Include the breadcrumb class
 require_once(dirname(__FILE__) . '/class.bcn_breadcrumb.php');

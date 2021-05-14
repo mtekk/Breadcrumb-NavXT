@@ -17,7 +17,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 require_once(dirname(__FILE__) . '/block_direct_access.php');
-//Include admin base class
+//Include message class
 if(!class_exists('mtekk_adminKit_message'))
 {
 	require_once(dirname(__FILE__) . '/class.mtekk_adminkit_message.php');
@@ -188,13 +188,13 @@ abstract class mtekk_adminKit
 			$suffix = '.min';
 		}
 		//Register JS for more permanently dismissing messages
-		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
+		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for enable/disable settings groups
-		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
+		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for tabs
-		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
+		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
 		//Register CSS for tabs
-		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.css'));
+		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.css'));
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now

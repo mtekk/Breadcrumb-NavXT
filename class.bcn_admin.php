@@ -267,6 +267,33 @@ class bcn_admin extends mtekk_adminKit
 							'<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
 					'error');
 		}
+		foreach($this->opt as $key => $opt)
+		{
+			if($key[0] == "H" && substr_count($key, '_template') >= 1)
+			{
+				$deprecated_tags = array();
+				$replacement_tags = array();
+				//Deprecated ftitle check
+				if(substr_count($opt, '%ftitle%') >= 1)
+				{
+					$deprecated_tags[] = '%ftitle%';
+					$replacement_tags[] = '%title%';
+				}
+				//Deprecated fhtitle check
+				if(substr_count($opt, '%fhtitle%') >= 1)
+				{
+					$deprecated_tags[] = '%fhtitle%';
+					$replacement_tags[] = '%htitle%';
+				}
+				if(count($deprecated_tags) > 0)
+				{
+					$this->messages[] = new mtekk_adminKit_message(
+							sprintf(
+									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please %2$s instead.', 'breadcrumb-navxt'), implode(' and ', $deprecated_tags),  implode(' and ', $replacement_tags), $key),
+							'error');
+				}
+			}
+		}
 	}
 	/**
 	 * Function checks the current site to see if the blog options should be disabled

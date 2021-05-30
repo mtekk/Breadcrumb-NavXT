@@ -22,7 +22,7 @@ if(!class_exists('mtekk_adminKit_setting_base'))
 {
 	require_once( __DIR__ . '/class.mtekk_adminKit_setting_base.php');
 }
-class mtekk_adminKit_setting_int extends mtekk_adminKit_setting_base
+class mtekk_adminKit_setting_absint extends mtekk_adminKit_setting_base
 {
 	/**
 	 * Default constructor function

@@ -22,6 +22,41 @@ if(!class_exists('mtekk_adminKit_message'))
 {
 	require_once(__DIR__ . '/class.mtekk_adminkit_message.php');
 }
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_absint'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_absint.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_boolean'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_boolean.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_enum'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_enum.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_float'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_float.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_html'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_html.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_int'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_int.php');
+}
+//Include setting class
+if(!class_exists('mtekk_adminKit_setting_string'))
+{
+	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_string.php');
+}
 abstract class mtekk_adminKit
 {
 	const version = '2.1.1';

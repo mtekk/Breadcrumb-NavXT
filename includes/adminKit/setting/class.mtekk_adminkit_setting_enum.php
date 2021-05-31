@@ -20,7 +20,7 @@ require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
 if(!class_exists('mtekk_adminKit_setting_base'))
 {
-	require_once( __DIR__ . '/class.mtekk_adminKit_setting_base.php');
+	require_once( __DIR__ . '/class.mtekk_adminkit_setting_base.php');
 }
 class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 {
@@ -30,7 +30,7 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, boolean $deprecated, array $allowed_vals)
+	public function __construct(string $name, string $value, string $title, bool $deprecated, array $allowed_vals)
 	{
 		$this->name = $name;
 		$this->value = $value;

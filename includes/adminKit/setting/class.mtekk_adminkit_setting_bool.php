@@ -20,16 +20,16 @@ require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
 if(!class_exists('mtekk_adminKit_setting_base'))
 {
-	require_once( __DIR__ . '/class.mtekk_adminKit_setting_base.php');
+	require_once( __DIR__ . '/class.mtekk_adminkit_setting_base.php');
 }
-class mtekk_adminKit_setting_boolean extends mtekk_adminKit_setting_base
+class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 {
 	/**
 	 * Default constructor function
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, boolean $value, string $title, boolean $deprecated)
+	public function __construct(string $name, bool $value, string $title, bool $deprecated)
 	{
 		$this->name = $name;
 		$this->value = $value;

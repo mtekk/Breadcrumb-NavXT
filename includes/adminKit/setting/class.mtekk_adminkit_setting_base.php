@@ -20,7 +20,7 @@ require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting interface
 if(!interface_exists('mtekk_adminKit_setting'))
 {
-	require_once( __DIR__ . '/interface.mtekk_adminKit_setting.php');
+	require_once( __DIR__ . '/interface.mtekk_adminkit_setting.php');
 }
 abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 {

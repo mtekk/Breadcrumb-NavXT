@@ -25,41 +25,41 @@ if(!class_exists('mtekk_adminKit_message'))
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_absint'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_absint.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_absint.php');
 }
 //Include setting class
-if(!class_exists('mtekk_adminKit_setting_boolean'))
+if(!class_exists('mtekk_adminKit_setting_bool'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_boolean.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_bool.php');
 }
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_enum'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_enum.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_enum.php');
 }
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_float'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_float.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_float.php');
 }
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_html'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_html.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_html.php');
 }
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_int'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_int.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_int.php');
 }
 //Include setting class
 if(!class_exists('mtekk_adminKit_setting_string'))
 {
-	require_once(__DIR__ . '/setting/class.mtekk_adminKit_setting_string.php');
+	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_string.php');
 }
 abstract class mtekk_adminKit
 {
-	const version = '2.1.1';
+	const version = '2.9.50';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -71,6 +71,7 @@ abstract class mtekk_adminKit
 	protected $message;
 	protected $support_url;
 	protected $allowed_html;
+	protected $settings = array();
 	function __construct()
 	{
 		$this->message = array();
@@ -91,6 +92,14 @@ abstract class mtekk_adminKit
 	{
 		//Filter our allowed html tags
 		$this->allowed_html = apply_filters($this->unique_prefix . '_allowed_html', wp_kses_allowed_html('post'));
+		$this->setup_setting_defaults();
+	}
+	/**
+	 * Establishes/setup default settings
+	 */
+	function setup_setting_defaults()
+	{
+		//This should be abstract, but we want compatiblity with things that may be extending under old API
 	}
 	/**
 	 * Returns the internal mtekk_admin_class version

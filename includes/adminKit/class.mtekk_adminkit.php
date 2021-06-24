@@ -57,6 +57,11 @@ if(!class_exists('mtekk_adminKit_setting_string'))
 {
 	require_once(__DIR__ . '/setting/class.mtekk_adminkit_setting_string.php');
 }
+//Include from class
+if(!class_exists('mtekk_adminKit_form'))
+{
+	require_once(__DIR__ . '/class.mtekk_adminkit_form.php');
+}
 abstract class mtekk_adminKit
 {
 	const version = '2.9.50';
@@ -72,6 +77,7 @@ abstract class mtekk_adminKit
 	protected $support_url;
 	protected $allowed_html;
 	protected $settings = array();
+	protected $form;
 	function __construct()
 	{
 		$this->message = array();
@@ -85,6 +91,7 @@ abstract class mtekk_adminKit
 		//Initilizes l10n domain
 		$this->local();
 		add_action('wp_loaded', array($this, 'wp_loaded'));
+		$this->form = new mtekk_adminKit_form($this->unique_prefix);
 		//Register Help Output
 		//add_action('add_screen_help_and_options', array($this, 'help'));
 	}

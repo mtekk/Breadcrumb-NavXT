@@ -41,7 +41,7 @@ class mtekk_adminKit_setting_absint extends mtekk_adminKit_setting_base
 	 */
 	public function validate($new_value, $allow_empty = false)
 	{
-		return absint($nev_value);
+		return absint($new_value);
 	}
 	/**
 	 *

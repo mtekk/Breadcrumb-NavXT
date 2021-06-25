@@ -41,7 +41,7 @@ class mtekk_adminKit_setting_float extends mtekk_adminKit_setting_base
 	 */
 	public function validate($new_value, $allow_empty = false)
 	{
-		return (float) $nev_value;
+		return (float) $new_value;
 	}
 	/**
 	 *

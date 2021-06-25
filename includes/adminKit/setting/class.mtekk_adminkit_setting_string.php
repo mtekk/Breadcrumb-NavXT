@@ -45,7 +45,7 @@ class mtekk_adminKit_setting_string extends mtekk_adminKit_setting_base
 		{
 			return $this->value;
 		}
-		return esc_html($nev_value);
+		return esc_html($new_value);
 	}
 	/**
 	 *

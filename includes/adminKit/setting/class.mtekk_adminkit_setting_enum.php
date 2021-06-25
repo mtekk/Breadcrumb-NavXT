@@ -36,7 +36,7 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 		$this->value = $value;
 		$this->title = $title;
 		$this->deprecated = $deprecated;
-		$this->allowed_values = $allowed_vals;
+		$this->allowed_vals= $allowed_vals;
 	}
 	/**
 	 * Validates the new value against the allowed values for this setting
@@ -46,7 +46,7 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 	 */
 	public function validate($new_value, $allow_empty = false)
 	{
-		if(in_array($new_value, $allowed_vals))
+		if(in_array($new_value, $this->allowed_vals))
 		{
 			return $new_value;
 		}

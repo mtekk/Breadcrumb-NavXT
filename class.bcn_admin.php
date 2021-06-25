@@ -337,6 +337,20 @@ class bcn_admin extends mtekk_adminKit
 				__('Maximum Title Length', 'breadcrumb-navxt'),
 				true);
 	}
+	function setting_merge($opts)
+	{
+		foreach($opts as $key => $value)
+		{
+			if(isset($this->settings[$key]) && $this->settings[$key] instanceof mtekk_adminKit_setting)
+			{
+				$this->settings[$key]->setValue($value);
+			}
+			else
+			{
+				var_dump($key);
+			}
+		}
+	}
 	/**
 	 * admin initialization callback function
 	 * 
@@ -600,6 +614,7 @@ class bcn_admin extends mtekk_adminKit
 		do_action($this->unique_prefix . '_settings_pre_messages', $this->opt);
 		//Display our messages
 		$this->messages();
+		$this->setting_merge($this->opt);
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php

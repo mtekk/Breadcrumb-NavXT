@@ -41,7 +41,7 @@ class mtekk_adminKit_setting_int extends mtekk_adminKit_setting_base
 	 */
 	public function validate($new_value, $allow_empty = false)
 	{
-		return (int) $nev_value;
+		return (int) $new_value;
 	}
 	/**
 	 *

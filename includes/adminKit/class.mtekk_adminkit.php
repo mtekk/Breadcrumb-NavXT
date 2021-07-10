@@ -370,6 +370,7 @@ abstract class mtekk_adminKit
 	/**
 	 * Compares the supplided version with the internal version, places an upgrade warning if there is a missmatch
 	 * TODO: change this to being auto called in admin_init action
+	 * TODO: Change to using settings instead of opt
 	 */
 	function version_check($version)
 	{
@@ -441,6 +442,31 @@ abstract class mtekk_adminKit
 	{
 		//Set the backup options in the DB to the current options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'));
+	}
+	/**
+	 * The new, simpler settings update loop, handles the new settings array and replaces the old opts_update_loop
+	 * 
+	 * @param array $settings
+	 * @param array $input
+	 */
+	protected function settings_update_loop(&$settings, $input)
+	{
+		foreach($settings as $key => $setting)
+		{
+			if(isset($imput[$key]) && is_array($setting))
+			{
+				$this->settings_update_loop($settings[$key], $input[$key]);
+			}
+			else
+			{
+				$allow_empty = true;
+				if(in_array($key[0], array('H', 'S')))
+				{
+					$allow_empty = false;
+				}
+				$setting->maybeUpdateFromFormInput($input, $allow_empty);
+			}
+		}
 	}
 	/**
 	 * Runs recursivly through the opts array, sanitizing and merging in updates from the $input array
@@ -604,6 +630,7 @@ abstract class mtekk_adminKit
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
 		$this->opts_update_loop($this->opt, $input);
+		$this->settings_update_loop($this->settings, $input);
 		//Commit the option changes
 		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save

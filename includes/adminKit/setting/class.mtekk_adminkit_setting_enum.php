@@ -56,13 +56,6 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 		}
 	}
 	/**
-	 *
-	 */
-	public function setValue($new_value)
-	{
-		$this->value = $this->validate($new_value);
-	}
-	/**
 	 * Setter for the allowed values array
 	 * 
 	 * @param array $allowed_vals Array of allowed values

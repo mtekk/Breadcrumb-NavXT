@@ -45,13 +45,6 @@ class mtekk_adminKit_setting_html extends mtekk_adminKit_setting_base
 		{
 			return $this->value;
 		}
-		return wp_kses(stripslashes(($new_value)), apply_filters('mtekk_adminkit_allowed_html', wp_kses_allowed_html('post')));
-	}
-	/**
-	 *
-	 */
-	public function setValue($new_value)
-	{
-		$this->value = $this->validate($new_value);
+		return wp_kses(stripslashes($new_value), apply_filters('mtekk_adminkit_allowed_html', wp_kses_allowed_html('post')));
 	}
 }

@@ -23,7 +23,7 @@ interface mtekk_adminKit_setting
 	 * Validation method
 	 * 
 	 * @param unknown $new_value new setting value to validate
-	 * @param string $allow_empty Whether or not the new setting value may be empty
+	 * @param bool $allow_empty Whether or not the new setting value may be empty
 	 * @return the validated version of the setting (may be old/current value if new value was invalid)
 	 */
 	public function validate($new_value, $allow_empty = false);
@@ -33,5 +33,12 @@ interface mtekk_adminKit_setting
 	public function setValue($new_value);
 	public function getTitle();
 	public function getName();
+	/**
+	 * Update from form values method
+	 * 
+	 * @param array $input Array of new values from well formatted form POST request
+	 * @param bool $allow_empty Whether or not the new setting value may be empty
+	 */
+	public function maybeUpdateFromFormInput($input, $allow_empty = false);
 	//public function render(); //This is a future item we'll add, maybe
 }

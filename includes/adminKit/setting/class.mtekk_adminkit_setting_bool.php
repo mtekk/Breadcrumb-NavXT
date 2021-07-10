@@ -45,9 +45,11 @@ class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 	}
 	/**
 	 *
+	 * {@inheritDoc}
+	 * @see mtekk_adminKit_setting::updateFromFormInput()
 	 */
-	public function setValue($new_value)
+	public function maybeUpdateFromFormInput($input, $allow_empty = false)
 	{
-		$this->value = $this->validate($new_value);
+		$this->setValue($this->validate(isset($input[$this->name]), $allow_empty));
 	}
 }

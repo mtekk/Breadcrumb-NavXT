@@ -41,6 +41,10 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	{
 		return $this->value;
 	}
+	public function setValue($new_value)
+	{
+		$this->value = $new_value;
+	}
 	public function getTitle()
 	{
 		return $this->title;
@@ -48,5 +52,18 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	public function getName()
 	{
 		return $this->name;
+	}
+	/**
+	 * Basic updateFromFormInput method
+	 * 
+	 * {@inheritDoc}
+	 * @see mtekk_adminKit_setting::updateFromFormInput()
+	 */
+	public function maybeUpdateFromFormInput($input, $allow_empty = false)
+	{
+		if(isset($input[$this->name]))
+		{
+			$this->setValue($this->validate($input[$this->name], $allow_empty));
+		}
 	}
 }

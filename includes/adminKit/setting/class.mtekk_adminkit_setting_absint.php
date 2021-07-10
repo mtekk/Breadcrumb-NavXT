@@ -43,11 +43,4 @@ class mtekk_adminKit_setting_absint extends mtekk_adminKit_setting_base
 	{
 		return absint($new_value);
 	}
-	/**
-	 *
-	 */
-	public function setValue($new_value)
-	{
-		$this->value = $this->validate($new_value);
-	}
 }

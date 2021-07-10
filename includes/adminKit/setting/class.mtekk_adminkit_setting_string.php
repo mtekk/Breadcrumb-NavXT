@@ -47,11 +47,4 @@ class mtekk_adminKit_setting_string extends mtekk_adminKit_setting_base
 		}
 		return esc_html($new_value);
 	}
-	/**
-	 *
-	 */
-	public function setValue($new_value)
-	{
-		$this->value = $this->validate($new_value);
-	}
 }

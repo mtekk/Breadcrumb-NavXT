@@ -43,11 +43,4 @@ class mtekk_adminKit_setting_int extends mtekk_adminKit_setting_base
 	{
 		return (int) $new_value;
 	}
-	/**
-	 *
-	 */
-	public function setValue($new_value)
-	{
-		$this->value = $this->validate($new_value);
-	}
 }

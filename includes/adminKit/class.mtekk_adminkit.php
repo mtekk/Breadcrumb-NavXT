@@ -474,6 +474,8 @@ abstract class mtekk_adminKit
 	 * @param array $opts good, clean array
 	 * @param array $input unsanitzed input array, not trusted at all
 	 * @todo This function should probably get a filter thrown within it to be more extensible
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	protected function opts_update_loop(&$opts, $input)
 	{
@@ -941,6 +943,8 @@ abstract class mtekk_adminKit
 	 * Returns a valid xHTML element ID
 	 *
 	 * @param object $option
+	 * 
+	 * FIXME: potentially deprecated
 	 */
 	static public function get_valid_id($option)
 	{
@@ -978,9 +982,12 @@ abstract class mtekk_adminKit
 	 * This will output a well formed hidden option
 	 *
 	 * @param string $option
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_hidden($option)
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_hidden');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]));
@@ -990,9 +997,12 @@ abstract class mtekk_adminKit
 	 *
 	 * @param string $opt_id
 	 * @param string $label
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function label($opt_id, $label)
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::label');
 		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), $label);
 	}
 	/**
@@ -1003,9 +1013,12 @@ abstract class mtekk_adminKit
 	 * @param string $class (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_text');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		if($disable)
@@ -1035,9 +1048,12 @@ abstract class mtekk_adminKit
 	 * @param int|string $min (optional) 
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_number');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$extras = '';
@@ -1077,9 +1093,12 @@ abstract class mtekk_adminKit
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::textbox');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$class .= ' large-text';
@@ -1107,9 +1126,12 @@ abstract class mtekk_adminKit
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::tinymce');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$class = 'mtekk_mce';
 		if($disable)
@@ -1137,9 +1159,12 @@ abstract class mtekk_adminKit
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 * @param string $class (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_check');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		if($disable)
@@ -1169,9 +1194,12 @@ abstract class mtekk_adminKit
 	 * @param string $instruction
 	 * @param object $disable (optional)
 	 * @param string $class (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_radio($option, $value, $instruction, $disable = false, $class = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_radio');
 		$opt_id = mtekk_adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$class .= ' togx';
@@ -1196,9 +1224,12 @@ abstract class mtekk_adminKit
 	 * @param string $description (optional)
 	 * @param array $titles (optional) The array of titiles for the options, if they should be different from the values
 	 * @param string $class (optional) Extra class to apply to the elements
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_select($label, $option, $values, $disable = false, $description = '', $titles = false, $class = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::input_select');
 		//If we don't have titles passed in, we'll use option names as values
 		if(!$titles)
 		{
@@ -1231,9 +1262,12 @@ abstract class mtekk_adminKit
 	 * @param array $exclude(optional) array of names in $options array to be excluded
 	 * 
 	 * @return string The assembled HTML for the select options
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function select_options($optionname, $options, $values, $exclude = array())
 	{
+		_deprecated_function( __FUNCTION__, '7.0', 'adminKit_form::select_options');
 		$options_html = '';
 		$value = $this->opt[$optionname];
 		//Now do the rest

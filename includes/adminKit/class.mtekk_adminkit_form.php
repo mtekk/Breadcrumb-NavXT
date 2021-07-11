@@ -56,7 +56,7 @@ class mtekk_adminKit_form
 	 *
 	 * @param string $option
 	 */
-	function input_hidden(mtekk_adminKit_setting $option)
+	public function input_hidden(mtekk_adminKit_setting $option)
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
 		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
@@ -71,7 +71,7 @@ class mtekk_adminKit_form
 	 * @param string $opt_id
 	 * @param string $label
 	 */
-	function label($opt_id, $label)
+	public function label($opt_id, $label)
 	{
 		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), $label);
 	}
@@ -83,27 +83,31 @@ class mtekk_adminKit_form
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	function input_text(mtekk_adminKit_setting $option, $class = 'regular-text', $disable = false, $description = '')
+	public function input_text(mtekk_adminKit_setting $option, $class = 'regular-text', $disable = false, $description = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->getTitle());?>
 			</th>
 			<td>
-				<?php printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />',
+				<?php
+				if($disable)
+				{
+					$this->input_hidden($option);
+					$class .= ' disabled';
+				}
+				printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
 						esc_attr($option->getValue()),
 						esc_attr($class),
-						disabled($disable, true, false));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+						disabled($disable, true, false));
+				if($description !== '')
+				{
+					printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 	<?php
@@ -119,7 +123,7 @@ class mtekk_adminKit_form
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
 	 */
-	function input_number(mtekk_adminKit_setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
+	public function input_number(mtekk_adminKit_setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
 		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
@@ -135,25 +139,29 @@ class mtekk_adminKit_form
 		if($step !== '')
 		{
 			$extras .= 'step="' . esc_attr($step) . '" ';
-		}
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
 		}?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->getTitle());?>
 			</th>
 			<td>
-				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />',
+				<?php
+				if($disable)
+				{
+					$this->input_hidden($option);
+					$class .= ' disabled';
+				}
+				printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
 						esc_attr($option->getValue()),
 						esc_attr($class),
 						disabled($disable, true, false),
-						$extras);?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+						$extras);
+				if($description !== '')
+				{
+							printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 	<?php
@@ -166,29 +174,33 @@ class mtekk_adminKit_form
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	function textbox(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '', $class = '')
+	public function textbox(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
 		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		$class .= ' large-text';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$class .= ' large-text';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->getTitle());?>
 			</th>
 			<td>
-				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
+				<?php
+				if($disable)
+				{
+					$this->input_hidden($option);
+					$class .= ' disabled';
+				}
+				printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
 						esc_textarea($option->getValue()),
 						esc_attr($class),
 						disabled($disable, true, false),
-						esc_attr($height));?>
-					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+						esc_attr($height));
+				if($description !== '')
+				{
+					printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 		<?php
@@ -201,29 +213,33 @@ class mtekk_adminKit_form
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	function tinymce(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '')
+	public function tinymce(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
 		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		$class = 'mtekk_mce';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$class = 'mtekk_mce';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->getTitle());?>
 			</th>
 			<td>
-				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
+				<?php
+				if($disable)
+				{
+					$this->input_hidden($option);
+					$class .= ' disabled';
+				}
+				printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
 						esc_textarea($option->getValue()),
 						esc_attr($class),
 						disabled($disable, true, false),
-						esc_attr($height));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+						esc_attr($height));
+				if($description !== '')
+				{
+					printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 	<?php
@@ -237,31 +253,36 @@ class mtekk_adminKit_form
 	 * @param string $description (optional)
 	 * @param string $class (optional)
 	 */
-	function input_check(mtekk_adminKit_setting $option, $instruction, $disable = false, $description = '', $class = '')
+	public function input_check(mtekk_adminKit_setting $option, $instruction, $disable = false, $description = '', $class = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php echo esc_html($option->getTitle()); ?>
 			</th>
 			<td>
 				<label for="<?php echo esc_attr( $opt_id ); ?>">
-					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
+					<?php
+					if($disable)
+					{
+						$this->input_hidden($option);
+						$class .= ' disabled';
+					}
+					printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
 							esc_attr($opt_name),
 							esc_attr($opt_id),
 							esc_attr($option->getValue()),
 							esc_attr($class),
 							disabled($disable, true, false),
-							checked($option->getValue(), true, false));?>
-					<?php echo $instruction; ?>
+							checked($option->getValue(), true, false));
+					echo $instruction;?>
 				</label><br />
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php
+				if($description !== '')
+				{
+					printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 	<?php
@@ -275,25 +296,26 @@ class mtekk_adminKit_form
 	 * @param object $disable (optional)
 	 * @param string $class (optional)
 	 */
-	function input_radio(mtekk_adminKit_setting $option, $value, $instruction, $disable = false, $class = '')
+	public function input_radio(mtekk_adminKit_setting $option, $value, $instruction, $disable = false, $class = '')
 	{
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
 		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		$class .= ' togx';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$class .= ' togx';?>
 		<label>
-			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
+			<?php
+			if($disable)
+			{
+				$this->input_hidden($option);
+				$class .= ' disabled';
+			}
+			printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
 					esc_attr($opt_name),
 					esc_attr($opt_id),
 					esc_attr($value),
 					esc_attr($class),
 					disabled($disable, true, false),
-					checked($value, $option->getValue(), false));?>
-			<?php echo $instruction; ?>
+					checked($value, $option->getValue(), false));
+			echo $instruction; ?>
 		</label><br/>
 	<?php
 	}
@@ -307,7 +329,7 @@ class mtekk_adminKit_form
 	 * @param array $titles (optional) The array of titiles for the options, if they should be different from the values
 	 * @param string $class (optional) Extra class to apply to the elements
 	 */
-	function input_select(mtekk_adminKit_setting $option, $values, $disable = false, $description = '', $titles = false, $class = '')
+	public function input_select(mtekk_adminKit_setting $option, $values, $disable = false, $description = '', $titles = false, $class = '')
 	{
 		//If we don't have titles passed in, we'll use option names as values
 		if(!$titles)
@@ -315,24 +337,28 @@ class mtekk_adminKit_form
 			$titles = $values;
 		}
 		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
-		if($disable)
-		{
-			$this->input_hidden($option);
-			$class .= ' disabled';
-		}?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->getTitle());?>
 			</th>
 			<td>
-				<?php printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />',
+				<?php
+				if($disable)
+				{
+					$this->input_hidden($option);
+					$class .= ' disabled';
+				}
+				printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
 						$this->select_options($option->getValue(), $titles, $values),
 						esc_attr($class),
-						disabled($disable, true, false));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+						disabled($disable, true, false));
+				if($description !== '')
+				{
+					printf('<p class="description">%s</p>', $description);
+				}?>
 			</td>
 		</tr>
 	<?php
@@ -347,7 +373,7 @@ class mtekk_adminKit_form
 	 * 
 	 * @return string The assembled HTML for the select options
 	 */
-	function select_options($current_value, $options, $values, $exclude = array())
+	public function select_options($current_value, $options, $values, $exclude = array())
 	{
 		$options_html = '';
 		//Now do the rest

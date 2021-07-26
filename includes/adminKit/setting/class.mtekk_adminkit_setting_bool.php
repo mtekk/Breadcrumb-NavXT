@@ -41,7 +41,7 @@ class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 	 */
 	public function validate($new_value, $allow_empty = false)
 	{
-		return isset($new_value);
+		return (bool) $new_value;
 	}
 	/**
 	 *

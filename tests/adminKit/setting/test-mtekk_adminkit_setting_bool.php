@@ -50,17 +50,12 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		//Check default value
 		$this->assertTrue($this->settings['normal_setting']->getValue());
 		//Change the value
-		$this->setting['normal_setting']->setValue(false);
+		$this->settings['normal_setting']->setValue(false);
 		//Check
 		$this->assertFalse($this->settings['normal_setting']->getValue());
 	}
 	function test_getTitile() {
 		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
-	}
-	function test_setTitle() {
-		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
-		$this->settings['normal_setting']->setTitle('New Title');
-		$this->assertSame($this->settings['normal_setting']->getTitle(), 'New Title');
 	}
 	function test_getName() {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');

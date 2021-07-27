@@ -50,17 +50,12 @@ class adminKitSettingAbsintTest extends WP_UnitTestCase {
 		//Check default value
 		$this->assertSame($this->settings['normal_setting']->getValue(), 42);
 		//Change the value
-		$this->setting['normal_setting']->setValue(67);
+		$this->settings['normal_setting']->setValue(67);
 		//Check
 		$this->assertSame($this->settings['normal_setting']->getValue(), 67);
 	}
 	function test_getTitile() {
 		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
-	}
-	function test_setTitle() {
-		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
-		$this->settings['normal_setting']->setTitle('New Title');
-		$this->assertSame($this->settings['normal_setting']->getTitle(), 'New Title');
 	}
 	function test_getName() {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');

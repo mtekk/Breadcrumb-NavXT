@@ -29,7 +29,7 @@ class mtekk_adminKit_setting_int extends mtekk_adminKit_setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, bool $deprecated)
+	public function __construct(string $name, int $value, string $title, bool $deprecated)
 	{
 		$this->name = $name;
 		$this->value = $value;

@@ -61,14 +61,24 @@ class adminKitSettingAbsintTest extends WP_UnitTestCase {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');
 	}
 	function test_maybeUpdateFromFormInput() {
-		$imput = array('normal_setting' => 45, 'normal_settinga' => 423);
+		$input = array('normal_setting' => 45, 'normal_settinga' => 423);
 		$input_notthere = array('normal_settinga' => 53, 'abnormal_setting' => 33);
 		//Test allowing empty
-		$this->assertSame($this->settings['normal_setting']->maybeUpdateFromFormInput($imput, true), 45);
-		$this->assertSame($this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, true), 0);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, true);
+		$this->assertSame($this->settings['normal_setting']->getValue(), 45);
+		//Change the value
+		$this->settings['normal_setting']->setValue(67);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, true);
+		$this->assertSame($this->settings['normal_setting']->getValue(), 67);
 		//Test diallowing empty
-		$this->assertSame($this->settings['normal_setting']->maybeUpdateFromFormInput($imput, false), 45);
-		$this->assertSame($this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, false), 0);
+		//Change the value
+		$this->settings['normal_setting']->setValue(67);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, false);
+		$this->assertSame($this->settings['normal_setting']->getValue(), 45);
+		//Change the value
+		$this->settings['normal_setting']->setValue(67);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, false);
+		$this->assertSame($this->settings['normal_setting']->getValue(), 67);
 	}
 	function test_validate() {
 		//Test a normal/expected condition

@@ -1,22 +1,22 @@
 <?php
 /**
- * This file contains tests for the mtekk_adminKit setting_bool class
+ * This file contains tests for the mtekk_adminKit setting_float class
  *
  * @group adminKit
  * @group bcn_core
  */
-class adminKitSettingBoolTest extends WP_UnitTestCase {
+class adminKitSettingFloatTest extends WP_UnitTestCase {
 	public $settings = array();
 	function setUp() {
 		parent::setUp();
-		$this->settings['normal_setting'] = new mtekk_adminKit_setting_bool(
+		$this->settings['normal_setting'] = new mtekk_adminKit_setting_float(
 				'normal_setting',
-				true,
+				42.1,
 				'Normal Setting',
 				false);
-		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_bool(
+		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_float(
 				'deprecated_setting',
-				true,
+				30.2,
 				'Deprecated Setting',
 				true);
 	}
@@ -30,7 +30,7 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 	function test_setDeprecated() {
 		$new_setting = new mtekk_adminKit_setting_absint(
 				'normal_setting',
-				true,
+				42.1,
 				'Normal Setting',
 				false);
 		//Check initial value from the constructed version
@@ -43,16 +43,16 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->assertFalse($new_setting->is_deprecated());
 	}
 	function test_getValue() {
-		$this->assertTrue($this->settings['normal_setting']->getValue());
-		$this->assertTrue($this->settings['deprecated_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 42.1);
+		$this->assertSame($this->settings['deprecated_setting']->getValue(), 30.2);
 	}
 	function test_setValue() {
 		//Check default value
-		$this->assertTrue($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 42.1);
 		//Change the value
-		$this->settings['normal_setting']->setValue(false);
+		$this->settings['normal_setting']->setValue(67);
 		//Check
-		$this->assertFalse($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 67);
 	}
 	function test_getTitile() {
 		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
@@ -61,25 +61,31 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');
 	}
 	function test_maybeUpdateFromFormInput() {
-		$input = array('normal_setting' => 1, 'normal_settinga' => true);
-		$input_notthere = array('normal_settinga' => true, 'abnormal_setting' => 'sdf');
+		$input = array('normal_setting' => 45.6, 'normal_settinga' => 423);
+		$input_notthere = array('normal_settinga' => 53, 'abnormal_setting' => 33);
 		//Test allowing empty
 		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, true);
-		$this->assertTrue($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 45.6);
+		//Change the value
+		$this->settings['normal_setting']->setValue(67.0);
 		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, true);
-		$this->assertFalse($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 67.0);
 		//Test diallowing empty
+		//Change the value
+		$this->settings['normal_setting']->setValue(67.0);
 		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, false);
-		$this->assertTrue($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 45.6);
+		//Change the value
+		$this->settings['normal_setting']->setValue(67.0);
 		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, false);
-		$this->assertFalse($this->settings['normal_setting']->getValue());
+		$this->assertSame($this->settings['normal_setting']->getValue(), 67.0);
 	}
 	function test_validate() {
 		//Test a normal/expected condition
-		$this->assertFalse($this->settings['normal_setting']->validate(false));
-		$this->assertTrue($this->settings['normal_setting']->validate(true));
+		$this->assertSame($this->settings['normal_setting']->validate(42.1), 42.1);
 		//Test a string
-		$this->assertTrue($this->settings['normal_setting']->validate('false'));
-		//TODO: Test some PHP type jugling stuff here
+		$this->assertSame($this->settings['normal_setting']->validate('42'), 42.0);
+		//Test a negative numbeer
+		$this->assertSame($this->settings['normal_setting']->validate(-42), -42.0);
 	}
 }

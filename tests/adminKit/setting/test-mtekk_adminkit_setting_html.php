@@ -1,20 +1,20 @@
 <?php
 /**
- * This file contains tests for the mtekk_adminKit setting_string class
+ * This file contains tests for the mtekk_adminKit setting_html class
  *
  * @group adminKit
  * @group bcn_core
  */
-class adminKitSettingStringTest extends WP_UnitTestCase {
+class adminKitSettingHTMLTest extends WP_UnitTestCase {
 	public $settings = array();
 	function setUp() {
 		parent::setUp();
-		$this->settings['normal_setting'] = new mtekk_adminKit_setting_string(
+		$this->settings['normal_setting'] = new mtekk_adminKit_setting_html(
 				'normal_setting',
 				'A Value',
 				'Normal Setting',
 				false);
-		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_string(
+		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_html(
 				'deprecated_setting',
 				'A different Value',
 				'Deprecated Setting',
@@ -28,7 +28,7 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 		$this->assertTrue($this->settings['deprecated_setting']->is_deprecated());
 	}
 	function test_setDeprecated() {
-		$new_setting = new mtekk_adminKit_setting_string(
+		$new_setting = new mtekk_adminKit_setting_html(
 				'normal_setting',
 				'A Value',
 				'Normal Setting',
@@ -101,6 +101,8 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 		$this->assertSame($this->settings['normal_setting']->validate('', true), '');
 		$this->assertSame($this->settings['normal_setting']->validate('', false), 'A Value');
 		//Test HTML
-		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), '&lt;span&gt;Hello World&lt;/span&gt;');
+		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), '<span>Hello World</span>');
+		//Try a script
+		$this->assertSame($this->settings['normal_setting']->validate('<script>alert("porkchop sandwiches!")</script>Hello World'), 'alert("porkchop sandwiches!")Hello World');
 	}
 }

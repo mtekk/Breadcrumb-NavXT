@@ -28,7 +28,7 @@ class adminKitSettingIntTest extends WP_UnitTestCase {
 		$this->assertTrue($this->settings['deprecated_setting']->is_deprecated());
 	}
 	function test_setDeprecated() {
-		$new_setting = new mtekk_adminKit_setting_absint(
+		$new_setting = new mtekk_adminKit_setting_int(
 				'normal_setting',
 				42,
 				'Normal Setting',

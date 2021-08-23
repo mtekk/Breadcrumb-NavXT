@@ -68,6 +68,12 @@ class bcn_admin extends mtekk_adminKit
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}
+	/**
+	 * Establishes default settings for Breadcrumb NavXT
+	 * 
+	 * {@inheritDoc}
+	 * @see mtekk_adminKit::setup_setting_defaults()
+	 */
 	function setup_setting_defaults()
 	{
 		$this->settings['bmainsite_display'] = new mtekk_adminKit_setting_bool(
@@ -339,6 +345,7 @@ class bcn_admin extends mtekk_adminKit
 	}
 	function setting_merge($opts)
 	{
+		$unknown = array();
 		foreach($opts as $key => $value)
 		{
 			if(isset($this->settings[$key]) && $this->settings[$key] instanceof mtekk_adminKit_setting)
@@ -347,8 +354,17 @@ class bcn_admin extends mtekk_adminKit
 			}
 			else
 			{
-				var_dump($key);
+				$unknown[] = $key;
 			}
+		}
+		//Add a message if we found some unknown settings while merging
+		if(count($unknown) > 0)
+		{
+			$this->messages[] = new mtekk_adminKit_message(
+					sprintf(__('Found %u unknown legacy settings: %s','breadcrumb-navxt'), count($unknown), implode(', ', $unknown)),
+					'warning',
+					true,
+					'bcn_unkonwn_legacy_settings');
 		}
 	}
 	/**
@@ -612,9 +628,9 @@ class bcn_admin extends mtekk_adminKit
 		//Do a check for multisite settings mode
 		$this->multisite_settings_warn();
 		do_action($this->unique_prefix . '_settings_pre_messages', $this->opt);
+		$this->setting_merge($this->opt);
 		//Display our messages
 		$this->messages();
-		$this->setting_merge($this->opt);
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php

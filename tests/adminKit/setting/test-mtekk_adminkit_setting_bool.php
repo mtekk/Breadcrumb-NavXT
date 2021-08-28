@@ -12,12 +12,17 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->settings['normal_setting'] = new mtekk_adminKit_setting_bool(
 				'normal_setting',
 				true,
+				'Normal Setting');
+		$this->settings['empty_ok_setting'] = new mtekk_adminKit_setting_bool(
+				'empty_ok_setting',
+				true,
 				'Normal Setting',
-				false);
+				true);
 		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_bool(
 				'deprecated_setting',
 				true,
 				'Deprecated Setting',
+				false,
 				true);
 	}
 	public function tearDown() {
@@ -60,18 +65,29 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 	function test_getName() {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');
 	}
+	function test_getAllowEmpty() {
+		$this->assertFalse($this->settings['normal_setting']->getAllowEmpty());
+		$this->assertTrue($this->settings['empty_ok_setting']->getAllowEmpty());
+	}
+	function test_setAllowEmpty() {
+		$this->assertTrue($this->settings['empty_ok_setting']->getAllowEmpty());
+		$this->settings['empty_ok_setting']->setAllowEmpty(false);
+		$this->assertFalse($this->settings['empty_ok_setting']->getAllowEmpty());
+	}
 	function test_maybeUpdateFromFormInput() {
 		$input = array('normal_setting' => 1, 'normal_settinga' => true);
 		$input_notthere = array('normal_settinga' => true, 'abnormal_setting' => 'sdf');
 		//Test allowing empty
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, true);
+		$this->settings['normal_setting']->setAllowEmpty(true);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
 		$this->assertTrue($this->settings['normal_setting']->getValue());
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, true);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
 		$this->assertFalse($this->settings['normal_setting']->getValue());
 		//Test diallowing empty
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, false);
+		$this->settings['empty_ok_setting']->setAllowEmpty(false);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
 		$this->assertTrue($this->settings['normal_setting']->getValue());
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, false);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
 		$this->assertFalse($this->settings['normal_setting']->getValue());
 	}
 	function test_validate() {

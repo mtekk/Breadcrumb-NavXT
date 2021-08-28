@@ -29,17 +29,18 @@ class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, bool $value, string $title, bool $deprecated)
+	public function __construct(string $name, bool $value, string $title, bool $allow_empty = false, bool $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;
 		$this->title = $title;
+		$this->allow_empty = $allow_empty;
 		$this->deprecated = $deprecated;
 	}
 	/**
 	 *
 	 */
-	public function validate($new_value, $allow_empty = false)
+	public function validate($new_value)
 	{
 		return (bool) $new_value;
 	}
@@ -48,8 +49,8 @@ class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit_setting::updateFromFormInput()
 	 */
-	public function maybeUpdateFromFormInput($input, $allow_empty = false)
+	public function maybeUpdateFromFormInput($input)
 	{
-		$this->setValue($this->validate(isset($input[$this->name]), $allow_empty));
+		$this->setValue($this->validate(isset($input[$this->name])));
 	}
 }

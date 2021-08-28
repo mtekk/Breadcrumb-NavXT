@@ -12,12 +12,17 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 		$this->settings['normal_setting'] = new mtekk_adminKit_setting_string(
 				'normal_setting',
 				'A Value',
-				'Normal Setting',
-				false);
+				'Normal Setting');
+		$this->settings['empty_ok_setting'] = new mtekk_adminKit_setting_string(
+				'empty_ok_setting',
+				'A Value',
+				'Empty Ok Setting',
+				true);
 		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_string(
 				'deprecated_setting',
 				'A different Value',
 				'Deprecated Setting',
+				false,
 				true);
 	}
 	public function tearDown() {
@@ -60,32 +65,39 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 	function test_getName() {
 		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');
 	}
+	function test_setAllowEmpty() {
+		$this->assertTrue($this->settings['empty_ok_setting']->getAllowEmpty());
+		$this->settings['empty_ok_setting']->setAllowEmpty(false);
+		$this->assertFalse($this->settings['empty_ok_setting']->getAllowEmpty());
+	}
 	function test_maybeUpdateFromFormInput() {
 		$input = array('normal_setting' => 'Some Value', 'normal_settinga' => 'barf', 'empty_string_setting' => '');
 		$input_notthere = array('normal_settinga' => 'barf', 'empty_string_setting' => '');
 		//Test allowing empty
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, true);
+		$this->settings['normal_setting']->setAllowEmpty(true);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
 		$this->assertSame($this->settings['normal_setting']->getValue(), 'Some Value');
 		//Change the value
 		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''), true);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''));
 		$this->assertSame($this->settings['normal_setting']->getValue(), '');
 		//Change the value
 		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, true);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
 		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
 		//Test diallowing empty
+		$this->settings['normal_setting']->setAllowEmpty(false);
 		//Change the value
 		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input, false);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
 		$this->assertSame($this->settings['normal_setting']->getValue(), 'Some Value');
 		//Change the value
 		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''), false);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''));
 		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
 		//Change the value
 		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere, false);
+		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
 		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
 	}
 	function test_validate() {
@@ -98,8 +110,10 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 		//Test a normal string
 		$this->assertSame($this->settings['normal_setting']->validate('Hello World'), 'Hello World');
 		//Test an empty string
-		$this->assertSame($this->settings['normal_setting']->validate('', true), '');
-		$this->assertSame($this->settings['normal_setting']->validate('', false), 'A Value');
+		$this->settings['normal_setting']->setAllowEmpty(true);
+		$this->assertSame($this->settings['normal_setting']->validate(''), '');
+		$this->settings['normal_setting']->setAllowEmpty(false);
+		$this->assertSame($this->settings['normal_setting']->validate(''), 'A Value');
 		//Test HTML
 		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), '&lt;span&gt;Hello World&lt;/span&gt;');
 	}

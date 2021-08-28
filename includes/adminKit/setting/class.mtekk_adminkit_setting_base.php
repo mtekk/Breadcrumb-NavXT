@@ -28,6 +28,7 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	protected $name = '';
 	protected $value = '';
 	protected $title = '';
+	protected $allow_empty = false;
 	protected $deprecated = false;
 	public function is_deprecated()
 	{
@@ -53,17 +54,25 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	{
 		return $this->name;
 	}
+	public function getAllowEmpty()
+	{
+		return $this->allow_empty;
+	}
+	public function setAllowEmpty($allow_empty)
+	{
+		$this->allow_empty = $allow_empty;
+	}
 	/**
 	 * Basic updateFromFormInput method
 	 * 
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit_setting::updateFromFormInput()
 	 */
-	public function maybeUpdateFromFormInput($input, $allow_empty = false)
+	public function maybeUpdateFromFormInput($input)
 	{
 		if(isset($input[$this->name]))
 		{
-			$this->setValue($this->validate($input[$this->name], $allow_empty));
+			$this->setValue($this->validate($input[$this->name]));
 		}
 	}
 }

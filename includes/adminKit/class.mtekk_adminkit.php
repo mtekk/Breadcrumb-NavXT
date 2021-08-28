@@ -459,12 +459,7 @@ abstract class mtekk_adminKit
 			}
 			else
 			{
-				$allow_empty = true;
-				if(in_array($key[0], array('H', 'S')))
-				{
-					$allow_empty = false;
-				}
-				$setting->maybeUpdateFromFormInput($input, $allow_empty);
+				$setting->maybeUpdateFromFormInput($input);
 			}
 		}
 	}
@@ -473,7 +468,6 @@ abstract class mtekk_adminKit
 	 * 
 	 * @param array $opts good, clean array
 	 * @param array $input unsanitzed input array, not trusted at all
-	 * @todo This function should probably get a filter thrown within it to be more extensible
 	 * 
 	 * @deprecated 7.0.0
 	 */
@@ -614,6 +608,21 @@ abstract class mtekk_adminKit
 		//Just a prototype function
 	}
 	/**
+	 * Extracts settings values to form opts array, for old options compatibility
+	 * 
+	 * @param array $settings The settings array
+	 * @return array
+	 */
+	static function settings_to_opts($settings)
+	{
+		$opts = array();
+		foreach ($settings as $key => $setting)
+		{
+			$opts[$key] = $setting->getValue();
+		}
+		return $opts;
+	}
+	/**
 	 * Updates the database settings from the webform
 	 */
 	function opts_update()
@@ -623,7 +632,7 @@ abstract class mtekk_adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
 		//Update local options from database
-		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = mtekk_adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opts_update_prebk($this->opt);
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
@@ -633,16 +642,18 @@ abstract class mtekk_adminKit
 		//Run the update loop
 		$this->opts_update_loop($this->opt, $input);
 		$this->settings_update_loop($this->settings, $input);
+		//FIXME: This is temorary to maintain compatibility with some legacy code while developing 7.0
+		$this->opt = mtekk_adminKit::parse_args(mtekk_adminKit::settings_to_opts($this->settings), $this->opt);
 		//Commit the option changes
 		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save
-		if($updated && count(array_diff_key($input, $this->opt)) == 0)
+		if($updated && count(array_diff_key($input, $this->settings)) == 0)
 		{
 			//Let the user know everything went ok
 			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully saved.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
-		else if(!$updated && count(array_diff_key($opt_prev, $this->opt)) == 0)
+		else if(!$updated && count(array_diff_key($opt_prev, $this->settings)) == 0)
 		{
 			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings did not change, nothing to save.', $this->identifier), 'info');
 		}
@@ -656,7 +667,7 @@ abstract class mtekk_adminKit
 			$this->messages[] = new mtekk_adminKit_message(esc_html__('Some settings were not saved.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'warning');
 			$temp = esc_html__('The following settings were not saved:', $this->identifier);
-			foreach(array_diff_key($input, $this->opt) as $setting => $value)
+			foreach(array_diff_key($input, $this->settings) as $setting => $value)
 			{
 				$temp .= '<br />' . $setting;
 			}

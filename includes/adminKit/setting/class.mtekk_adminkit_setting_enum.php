@@ -30,12 +30,13 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, bool $deprecated, array $allowed_vals)
+	public function __construct(string $name, string $value, string $title, bool $allow_empty = false, bool $deprecated = false, array $allowed_vals = array())
 	{
 		$this->name = $name;
 		$this->value = $value;
 		$this->title = $title;
 		$this->deprecated = $deprecated;
+		$this->allow_empty = $allow_empty;
 		$this->allowed_vals= $allowed_vals;
 	}
 	/**
@@ -44,7 +45,7 @@ class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit_setting::validate()
 	 */
-	public function validate($new_value, $allow_empty = false)
+	public function validate($new_value)
 	{
 		if(in_array($new_value, $this->allowed_vals))
 		{

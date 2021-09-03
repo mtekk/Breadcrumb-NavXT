@@ -622,8 +622,30 @@ abstract class mtekk_adminKit
 		}
 		return $opts;
 	}
+	function setting_equal_check(mtekk_adminKit_setting $a, mtekk_adminKit_setting $b)
+	{
+		if($a->getName() === $b->getName() && $a->getValue() === $b->getValue())
+		{
+			return 0;
+		}
+		else if($a->getName() === $b->getName() && $a->getValue() > $b->getValue())
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
 	/**
 	 * Updates the database settings from the webform
+	 * 
+	 * The general flow of data is:
+	 * 1) Establish default values
+	 * 2) Merge in current database values
+	 * 3) Merge in updates from webform
+	 * 4) Compute difference between defaults and results of #3
+	 * 5) Save to database the difference generated in #4
 	 */
 	function opts_update()
 	{
@@ -641,9 +663,12 @@ abstract class mtekk_adminKit
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
 		$this->opts_update_loop($this->opt, $input);
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
 		$this->settings_update_loop($this->settings, $input);
+		$new_settings = array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check'));
 		//FIXME: This is temorary to maintain compatibility with some legacy code while developing 7.0
-		$this->opt = mtekk_adminKit::parse_args(mtekk_adminKit::settings_to_opts($this->settings), $this->opt);
+		$this->opt = mtekk_adminKit::settings_to_opts($new_settings); //mtekk_adminKit::parse_args(mtekk_adminKit::settings_to_opts($new_settings), $this->opt);
 		//Commit the option changes
 		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save

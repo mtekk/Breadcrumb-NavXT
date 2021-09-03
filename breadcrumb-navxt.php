@@ -376,7 +376,7 @@ class breadcrumb_navxt
 					//Default to not displaying a taxonomy
 					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = false;
 				}
-				if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
+				if(!isset($opts['Epost_' . $post_type->name . '_hierarchy_type']))
 				{
 					if($post_type->has_archive == true || is_string($post_type->has_archive))
 					{
@@ -400,7 +400,7 @@ class breadcrumb_navxt
 							if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 							{
 								$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
-								$opts['Spost_' . $post_type->name . '_hierarchy_type'] = $taxonomy->name;
+								$opts['Epost_' . $post_type->name . '_hierarchy_type'] = $taxonomy->name;
 								break;
 							}
 						}
@@ -408,16 +408,16 @@ class breadcrumb_navxt
 					else
 					{
 						$opts['bpost_' . $post_type->name . '_hierarchy_display'] = true;
-						$opts['Spost_' . $post_type->name . '_hierarchy_type'] = 'BCN_PARENT';
+						$opts['Epost_' . $post_type->name . '_hierarchy_type'] = 'BCN_PARENT';
 					}
 					//If there are no valid taxonomies for this type, setup our defaults
-					if(!isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
+					if(!isset($opts['Epost_' . $post_type->name . '_hierarchy_type']))
 					{
-						$opts['Spost_' . $post_type->name . '_hierarchy_type'] = 'BCN_DATE';
+						$opts['Epost_' . $post_type->name . '_hierarchy_type'] = 'BCN_DATE';
 					}
 					//Run through some filters, allowing extensions to directly influence the default hierarchy selection/display
-					$opts['Spost_' . $post_type->name . '_hierarchy_type'] = apply_filters('bcn_default_hierarchy_type', $opts['Spost_' . $post_type->name . '_hierarchy_type'], $post_type->name);
-					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = apply_filters('bcn_default_hierarchy_display', $opts['bpost_' . $post_type->name . '_hierarchy_display'], $post_type->name, $opts['Spost_' . $post_type->name . '_hierarchy_type']);
+					$opts['Epost_' . $post_type->name . '_hierarchy_type'] = apply_filters('bcn_default_hierarchy_type', $opts['Epost_' . $post_type->name . '_hierarchy_type'], $post_type->name);
+					$opts['bpost_' . $post_type->name . '_hierarchy_display'] = apply_filters('bcn_default_hierarchy_display', $opts['bpost_' . $post_type->name . '_hierarchy_display'], $post_type->name, $opts['Epost_' . $post_type->name . '_hierarchy_type']);
 				}
 				//New for 6.2
 				if(!isset($opts['bpost_' . $post_type->name . '_hierarchy_parent_first']))
@@ -495,7 +495,7 @@ class breadcrumb_navxt
 		//Currently only support using post_parent for the page hierarchy
 		$this->breadcrumb_trail->opt['bpost_page_hierarchy_display'] = true;
 		$this->breadcrumb_trail->opt['bpost_page_hierarchy_parent_first'] = true;
-		$this->breadcrumb_trail->opt['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
+		$this->breadcrumb_trail->opt['Epost_page_hierarchy_type'] = 'BCN_POST_PARENT';
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
@@ -505,7 +505,7 @@ class breadcrumb_navxt
 		{
 			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']))
 			{
-				$this->opt['Spost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_type'];
+				$this->opt['Epost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_type'];
 				unset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']);
 			}
 			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']))

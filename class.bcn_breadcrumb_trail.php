@@ -70,7 +70,7 @@ class bcn_breadcrumb_trail
 			//Should the post parent be followed first for this type, then fallback to the hierarchy type
 			'bpost_page_hierarchy_parent_first' => false,
 			//What hierarchy should be shown leading to the page
-			'Spost_page_hierarchy_type' => 'BCN_POST_PARENT',
+			'Epost_page_hierarchy_type' => 'BCN_POST_PARENT',
 			//The anchor template for page breadcrumbs
 			'Hpost_page_template' => bcn_breadcrumb::get_default_template(),
 			//The anchor template for page breadcrumbs, used when an anchor is not needed
@@ -96,7 +96,7 @@ class bcn_breadcrumb_trail
 			//Should the trail reflect the referer taxonomy or not
 			'bpost_post_taxonomy_referer' => false,
 			//What hierarchy should be shown leading to the post, tag or category
-			'Spost_post_hierarchy_type' => 'category',
+			'Epost_post_hierarchy_type' => 'category',
 			//Attachment settings
 			'bpost_attachment_archive_display' => false,
 			'bpost_attachment_hierarchy_display' => true,
@@ -105,7 +105,7 @@ class bcn_breadcrumb_trail
 			//Should the trail reflect the referer taxonomy or not
 			'bpost_attachment_taxonomy_referer' => false,
 			//What hierarchy should be shown leading to the attachment
-			'Spost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
+			'Epost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
 			//Give an invlaid page ID for the attachement root
 			'apost_attachment_root' => 0,
 			//The breadcrumb template for attachment breadcrumbs
@@ -144,7 +144,7 @@ class bcn_breadcrumb_trail
 			'Hauthor_template_no_anchor' => sprintf('<span class="%%type%%">%1$s</span>',
 				sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
 			//Which of the various WordPress display types should the author breadcrumb display
-			'Sauthor_name' => 'display_name',
+			'Eauthor_name' => 'display_name',
 			//Give an invlaid page ID for the author root
 			'aauthor_root' => 0,
 			//Category stuff
@@ -208,11 +208,11 @@ class bcn_breadcrumb_trail
 		//Setup array of valid author_name values
 		$valid_author_name = array('display_name', 'nickname', 'first_name', 'last_name');
 		//Make sure user picks only safe values
-		if(in_array($this->opt['Sauthor_name'], $valid_author_name))
+		if(in_array($this->opt['Eauthor_name'], $valid_author_name))
 		{
 			//Place the breadcrumb in the trail, uses the constructor to set the title, prefix, and suffix, get a pointer to it in return
 			$breadcrumb = $this->add(new bcn_breadcrumb(
-					get_the_author_meta($this->opt['Sauthor_name'], $author_data->ID),
+					get_the_author_meta($this->opt['Eauthor_name'], $author_data->ID),
 					$this->opt['Hauthor_template_no_anchor'],
 					array('author', 'current-item'),
 					get_author_posts_url($author_data->ID),
@@ -331,7 +331,7 @@ class bcn_breadcrumb_trail
 		if($this->opt['bpost_' . $type . '_hierarchy_display'])
 		{
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
+			if($this->opt['Epost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
 			{
 				$post = get_post($id);
 				$this->do_day($post, $type, false, false);
@@ -339,7 +339,7 @@ class bcn_breadcrumb_trail
 				$this->do_year($post, $type, false, false);
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Spost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT')
+			else if($this->opt['Epost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT')
 			{
 				if($parent == null)
 				{
@@ -358,7 +358,7 @@ class bcn_breadcrumb_trail
 			}
 			else
 			{
-				$taxonomy = $this->opt['Spost_' . $type . '_hierarchy_type'];
+				$taxonomy = $this->opt['Epost_' . $type . '_hierarchy_type'];
 				//Possibly let the referer influence the taxonomy used
 				if($this->opt['bpost_' . $type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{

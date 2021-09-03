@@ -231,8 +231,7 @@ class bcn_admin extends mtekk_adminKit
 					'post_' . $post_type->name . '_hierarchy_display',
 					$default_hierarchy_display,
 					sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			//FIXME: This is a new type that is masquerading as a legacy type in array key
-			$this->settings['Spost_' . $post_type->name . '_hierarchy_type'] = new mtekk_adminKit_setting_enum(
+			$this->settings['Epost_' . $post_type->name . '_hierarchy_type'] = new mtekk_adminKit_setting_enum(
 					'post_' . $post_type->name . '_hierarchy_type',
 					$hierarchy_type_default,
 					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name),
@@ -295,8 +294,7 @@ class bcn_admin extends mtekk_adminKit
 				'author_root',
 				0,
 				__('Author Root Page', 'breadcrumb-navxt'));
-		//FIXME: This is a new type that is masquerading as a legacy type in array key
-		$this->settings['Sauthor_name'] = new mtekk_adminKit_setting_enum(
+		$this->settings['Eauthor_name'] = new mtekk_adminKit_setting_enum(
 				'author_name',
 				'display_name',
 				__('Author Display Format', 'breadcrumb-navxt'),
@@ -369,7 +367,7 @@ class bcn_admin extends mtekk_adminKit
 	function opts_fix(&$opts)
 	{
 		$opts['bpost_page_hierarchy_display'] = true;
-		$opts['Spost_page_hierarchy_type'] = 'BCN_POST_PARENT';
+		$opts['Epost_page_hierarchy_type'] = 'BCN_POST_PARENT';
 		$opts['apost_page_root'] = get_option('page_on_front');
 	}
 	/**
@@ -710,8 +708,8 @@ class bcn_admin extends mtekk_adminKit
 						<td>
 							<?php
 								//We use the value 'page' but really, this will follow the parent post hierarchy
-								$this->form->input_radio($this->settings['Spost_' . $post_type->name . '_hierarchy_type'], 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
-								$this->form->input_radio($this->settings['Spost_' . $post_type->name . '_hierarchy_type'], 'BCN_DATE', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->form->input_radio($this->settings['Epost_' . $post_type->name . '_hierarchy_type'], 'BCN_POST_PARENT', __('Post Parent', 'breadcrumb-navxt'), false, 'adminkit-enset');
+								$this->form->input_radio($this->settings['Epost_' . $post_type->name . '_hierarchy_type'], 'BCN_DATE', __('Dates', 'breadcrumb-navxt'), false, 'adminkit-enset');
 								//Loop through all of the taxonomies in the array
 								foreach($wp_taxonomies as $taxonomy)
 								{
@@ -723,7 +721,7 @@ class bcn_admin extends mtekk_adminKit
 									//We only want custom taxonomies
 									if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
 									{
-										$this->form->input_radio($this->settings['Spost_' . $post_type->name . '_hierarchy_type'], $taxonomy->name, $taxonomy->labels->singular_name, false, 'adminkit-enset');
+										$this->form->input_radio($this->settings['Epost_' . $post_type->name . '_hierarchy_type'], $taxonomy->name, $taxonomy->labels->singular_name, false, 'adminkit-enset');
 									}
 								}
 							?>
@@ -806,7 +804,7 @@ class bcn_admin extends mtekk_adminKit
 					<?php
 						$this->form->textbox($this->settings['Hauthor_template'], '6', false, __('The template for author breadcrumbs.', 'breadcrumb-navxt'));
 						$this->form->textbox($this->settings['Hauthor_template_no_anchor'], '4', false, __('The template for author breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->form->input_select($this->settings['Sauthor_name'], array("display_name", "nickname", "first_name", "last_name"), false, __('display_name uses the name specified in "Display name publicly as" under the user profile the others correspond to options in the user profile.', 'breadcrumb-navxt'));
+						$this->form->input_select($this->settings['Eauthor_name'], $this->settings['Eauthor_name']->getAllowedVals(), false, __('display_name uses the name specified in "Display name publicly as" under the user profile the others correspond to options in the user profile.', 'breadcrumb-navxt'));
 						$optid = mtekk_adminKit::get_valid_id('aauthor_root');
 					?>
 					<tr valign="top">
@@ -814,7 +812,7 @@ class bcn_admin extends mtekk_adminKit
 							<label for="<?php echo $optid;?>"><?php esc_html_e('Author Root Page', 'breadcrumb-navxt');?></label>
 						</th>
 						<td>
-							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[aauthor_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->opt['aauthor_root']));?>
+							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[aauthor_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['aauthor_root']->getValue()));?>
 						</td>
 					</tr>
 				</table>
@@ -837,14 +835,14 @@ class bcn_admin extends mtekk_adminKit
 						</th>
 						<td>
 							<label>
-								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->opt['blimit_title']); ?> />
+								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->settings['blimit_title']->getValue()); ?> />
 								<?php printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
 							</label><br />
 							<ul>
 								<li>
 									<label for="amax_title_length">
 										<?php esc_html_e('Max Title Length: ','breadcrumb-navxt');?>
-										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->opt['amax_title_length'], ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
+										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->settings['amax_title_length']->getValue(), ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
 									</label>
 								</li>
 							</ul>

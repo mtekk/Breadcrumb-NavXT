@@ -21,15 +21,51 @@ if(class_exists('mtekk_adminKit')) {
 		function setOpts($opts) {
 			$this->opt = $opts;
 		}
+		function setSettings($settings) {
+			$this->settings = $settings;
+		}
 	}
 }
 class adminKitTest extends WP_UnitTestCase {
 	public $admin;
+	protected static $superadmin_id;
+	protected static $editor_id;
+	protected static $author_id;
+	protected static $contributor_id;
 	function setUp() {
 		parent::setUp();
+		self::$superadmin_id  = self::factory()->user->create(
+				array(
+						'role'       => 'administrator',
+						'user_login' => 'superadmin',
+				)
+				);
+		self::$editor_id      = self::factory()->user->create(
+				array(
+						'role' => 'editor',
+				)
+				);
+		self::$author_id      = self::factory()->user->create(
+				array(
+						'role' => 'author',
+				)
+				);
+		self::$contributor_id = self::factory()->user->create(
+				array(
+						'role' => 'contributor',
+				)
+				);
+		if ( is_multisite() ) {
+			update_site_option( 'site_admins', array( 'superadmin' ) );
+		}
 		$this->admin = new adminKitDUT();
 	}
 	public function tearDown() {
+		unset($_REQUEST['_wpnonce']);
+		self::delete_user( self::$superadmin_id );
+		self::delete_user( self::$editor_id );
+		self::delete_user( self::$author_id );
+		self::delete_user( self::$contributor_id );
 		parent::tearDown();
 	}
 	function test_version_check_old_version() {
@@ -56,5 +92,22 @@ class adminKitTest extends WP_UnitTestCase {
 		//Test when the version is greater than current version
 		$this->expectOutputRegex('/.?Your plugin install is incomplete\..?/');
 		$this->assertFalse($this->admin->version_check(''));
+	}
+	function test_opts_update_save_only_non_defaults() {
+		$defaults = array();
+		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$this->admin->setSettings($defaults);
+		//Mockup the update request, change optb
+		$_POST['mak_options'] = array('opta' => 'A Value', 'optb' => 'Hello', 'optc' => 'C Value');
+		//'Logon' for nonce check
+		wp_set_current_user( self::$superadmin_id);
+		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_options-options');
+		$this->admin->opts_update();
+		//Retrieve the saved options
+		$saved_options = $this->admin->get_option('mak_options');
+		//We should only see the one option that changed value
+		$this->assertSame(array('Soptb' => 'Hello'), $saved_options);
 	}
 }

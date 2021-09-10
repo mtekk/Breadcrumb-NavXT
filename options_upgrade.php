@@ -213,6 +213,23 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 			}
 		}
 	}
+	if(version_compare($version, '7.0.0', '<'))
+	{
+		//Loop through all of the post types in the array
+		foreach($wp_post_types as $post_type)
+		{
+			if(isset($this->opt['Spost_' . $post_type->name . '_hierarchy_type']))
+			{
+				$this->opt['Epost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_hierarchy_type'];
+				unset($this->opt['Spost_' . $post_type->name . '_hierarchy_type']);
+			}
+		}
+		if(isset($this->opt['Sauthor_name']))
+		{
+			$this->opt['Eauthor_name'] = $this->opt['Sauthor_name'];
+			unset($this->opt['Sauthor_name']);
+		}
+	}
 	//Set the max title length to 20 if we are not limiting the title and the length was 0
 	if(!$opts['blimit_title'] && $opts['amax_title_length'] == 0)
 	{

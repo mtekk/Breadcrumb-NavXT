@@ -73,6 +73,8 @@ class bcn_admin extends mtekk_adminKit
 	 * 
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit::setup_setting_defaults()
+	 * 
+	 * TODO: Since this re-implements features from the top level breadcrumb navxt class, we should do something about its availability
 	 */
 	function setup_setting_defaults()
 	{
@@ -389,12 +391,6 @@ class bcn_admin extends mtekk_adminKit
 		$this->opt = mtekk_adminKit::parse_args($opts, $this->opt);
 		//End with resetting up the options
 		breadcrumb_navxt::setup_options($this->opt);
-	}
-	function opts_update_prebk(&$opts)
-	{
-		//This may no longer be needed
-		breadcrumb_navxt::setup_options($opts);
-		$opts = apply_filters('bcn_opts_update_prebk', $opts);
 	}
 	/**
 	 * help action hook function

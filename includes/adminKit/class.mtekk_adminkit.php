@@ -598,16 +598,6 @@ abstract class mtekk_adminKit
 		return $arg1;
 	}
 	/**
-	 * An action that fires just before the options backup, use to add in dynamically detected options
-	 * 
-	 * @param array $opts the options array, passed in by reference
-	 * @return null
-	 */
-	function opts_update_prebk(&$opts)
-	{
-		//Just a prototype function
-	}
-	/**
 	 * Extracts settings values to form opts array, for old options compatibility
 	 * 
 	 * @param array $settings The settings array
@@ -655,20 +645,20 @@ abstract class mtekk_adminKit
 		check_admin_referer($this->unique_prefix . '_options-options');
 		//Update local options from database
 		$this->opt = mtekk_adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
-		$this->opts_update_prebk($this->opt);
+		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
-		//Run the update loop
-		$this->opts_update_loop($this->opt, $input);
 		//Must clone the defaults since PHP normally shallow copies
 		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
+		//Run the update loop
 		$this->settings_update_loop($this->settings, $input);
 		$new_settings = array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check'));
-		//FIXME: This is temorary to maintain compatibility with some legacy code while developing 7.0
-		$this->opt = mtekk_adminKit::settings_to_opts($new_settings); //mtekk_adminKit::parse_args(mtekk_adminKit::settings_to_opts($new_settings), $this->opt);
+		//FIXME: Eventually we'll save the object array, but not today
+		//Convert to opts array for saving
+		$this->opt = mtekk_adminKit::settings_to_opts($new_settings);
 		//Commit the option changes
 		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save

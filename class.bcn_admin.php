@@ -43,7 +43,7 @@ if(!class_exists('mtekk_adminKit'))
  */
 class bcn_admin extends mtekk_adminKit
 {
-	const version = '6.6.0';
+	const version = '6.6.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'bcn_manage_options';
@@ -58,11 +58,12 @@ class bcn_admin extends mtekk_adminKit
 	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
 	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename)
+	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename, array &$settings)
 	{
 		$this->breadcrumb_trail =& $breadcrumb_trail;
 		$this->plugin_basename = $basename;
 		$this->full_name = esc_html__('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
+		$this->settings = $settings;
 		//Grab defaults from the breadcrumb_trail object
 		$this->opt =& $this->breadcrumb_trail->opt;
 		//We're going to make sure we load the parent's constructor
@@ -76,249 +77,7 @@ class bcn_admin extends mtekk_adminKit
 	 * 
 	 * TODO: Since this re-implements features from the top level breadcrumb navxt class, we should do something about its availability
 	 */
-	function setup_setting_defaults()
-	{
-		$this->settings['bmainsite_display'] = new mtekk_adminKit_setting_bool(
-				'mainsite_display',
-				true,
-				__('Main Site Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['Hmainsite_template'] = new mtekk_adminKit_setting_html(
-				'mainsite_template',
-				bcn_breadcrumb::get_default_template(),
-				__('Main Site Home Template', 'breadcrumb-navxt'));
-		$this->settings['Hmainsite_template_no_anchor'] = new mtekk_adminKit_setting_html(
-				'mainsite_template_no_anchor',
-				bcn_breadcrumb::default_template_no_anchor,
-				__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['bhome_display'] = new mtekk_adminKit_setting_bool(
-				'home_display',
-				true,
-				__('Home Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['Hhome_template'] = new mtekk_adminKit_setting_html(
-				'home_template',
-				bcn_breadcrumb::get_default_template(),
-				__('Home Template', 'breadcrumb-navxt'));
-		$this->settings['Hhome_template_no_anchor'] = new mtekk_adminKit_setting_html(
-				'home_template_no_anchor',
-				bcn_breadcrumb::default_template_no_anchor,
-				__('Home Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['bblog_display'] = new mtekk_adminKit_setting_bool(
-				'blog_display',
-				true,
-				__('Blog Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['hseparator'] = new mtekk_adminKit_setting_html(
-				'separator',
-				' &gt; ',
-				__('Breadcrumb Separator', 'breadcrumb-navxt'),
-				true);
-		$this->settings['hseparator_higher_dim'] = new mtekk_adminKit_setting_html(
-				'separator_higher_dim',
-				', ',
-				__('Breadcrumb Separator (Higher Dimension)', 'breadcrumb-navxt'),
-				true);
-		$this->settings['bcurrent_item_linked'] = new mtekk_adminKit_setting_bool(
-				'current_item_linked',
-				false,
-				__('Link Current Item', 'breadcrumb-navxt'));
-		$this->settings['Hpaged_template'] = new mtekk_adminKit_setting_html(
-				'paged_template',
-				sprintf('<span class="%%type%%">%1$s</span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
-				_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'));
-		$this->settings['bpaged_display'] = new mtekk_adminKit_setting_bool(
-				'paged_display',
-				false,
-				_x('Paged Breadcrumb', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'));
-		//Post types
-		foreach($GLOBALS['wp_post_types']as $post_type)
-		{
-			$this->settings['Hpost_' . $post_type->name . '_template'] = new mtekk_adminKit_setting_html(
-					'post_' . $post_type->name . '_template',
-					bcn_breadcrumb::get_default_template(),
-					sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['Hpost_' . $post_type->name . '_template_no_anchor'] = new mtekk_adminKit_setting_html(
-					'post_' . $post_type->name . '_template_no_anchor',
-					bcn_breadcrumb::default_template_no_anchor,
-					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			//Root default depends on post type
-			if($post_type->name === 'page')
-			{
-				$default_root = get_option('page_on_front');
-			}
-			else if($post_type->name === 'post')
-			{
-				$default_root = get_option('page_for_posts');
-			}
-			else
-			{
-				$default_root = 0;
-			}
-			$this->settings['apost_' . $post_type->name . '_root'] = new mtekk_adminKit_setting_absint(
-					'post_' . $post_type->name . '_root',
-					$default_root,
-					sprintf(__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			//Archive display default depends on post type
-			if($post_type->has_archive == true || is_string($post_type->has_archive))
-			{
-				$default_archive_display = true;
-			}
-			else
-			{
-				$default_archive_display = false;
-			}
-			$this->settings['bpost_' . $post_type->name . '_archive_display'] = new mtekk_adminKit_setting_bool(
-					'post_' . $post_type->name . '_archive_display',
-					$default_archive_display,
-					sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['bpost_' . $post_type->name . '_taxonomy_referer'] = new mtekk_adminKit_setting_bool(
-					'post_' . $post_type->name . '_taxonomy_referer',
-					false,
-					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			//Hierarchy use parent first depends on post type
-			if(in_array($post_type->name, array('page', 'post')))
-			{
-				$default_parent_first = false;
-			}
-			else if($post_type->name === 'attachment')
-			{
-				$default_parent_first = true;
-			}
-			else
-			{
-				$default_parent_first = apply_filters('bcn_default_hierarchy_parent_first', false, $post_type->name);
-			}
-			$this->settings['bpost_' . $post_type->name . '_hierarchy_parent_first'] = new mtekk_adminKit_setting_bool(
-					'post_' . $post_type->name . '_hierarchy_parent_first',
-					$default_parent_first,
-					sprintf(__('%s Hierarchy Use Parent First', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			//Hierarchy depends on post type
-			if($post_type->name === 'page')
-			{
-				$hierarchy_type_allowed_values = array('BCN_POST_PARENT');
-				$hierarchy_type_default = 'BCN_POST_PARENT';
-				$default_hierarchy_display = true;
-			}
-			else
-			{
-				$hierarchy_type_allowed_values = array('BCN_POST_PARENT', 'BCN_DATE');
-				$hierarchy_type_default = 'BCN_POST_PARENT';
-				$default_hierarchy_display = false;
-				//Loop through all of the possible taxonomies
-				foreach($GLOBALS['wp_taxonomies'] as $taxonomy)
-				{
-					//Check for non-public taxonomies
-					if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
-					{
-						continue;
-					}
-					//Add valid taxonomies to list
-					if($taxonomy->object_type == $post_type->name || in_array($post_type->name, $taxonomy->object_type))
-					{
-						$hierarchy_type_allowed_values[] = $taxonomy->name;
-						$default_hierarchy_display = true;
-						//Only change from default on first valid taxonomy, if not a hierarchcial post type
-						if($hierarchy_type_default === 'BCN_POST_PARENT')
-						{
-							$hierarchy_type_default = $taxonomy->name;
-						}
-					}
-				}
-				//For hierarchical post types and attachments, override whatever we may have done in the taxonomy finding
-				if($post_type->hierarchical === true || $post_type->name === 'attachment')
-				{
-					$default_hierarchy_display = true;
-					$hierarchy_type_default = 'BCN_PARENT';
-				}
-			}
-			$this->settings['bpost_' . $post_type->name . '_hierarchy_display'] = new mtekk_adminKit_setting_bool(
-					'post_' . $post_type->name . '_hierarchy_display',
-					$default_hierarchy_display,
-					sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['Epost_' . $post_type->name . '_hierarchy_type'] = new mtekk_adminKit_setting_enum(
-					'post_' . $post_type->name . '_hierarchy_type',
-					$hierarchy_type_default,
-					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name),
-					false,
-					false,
-					$hierarchy_type_allowed_values);
-		}
-		//Taxonomies
-		foreach($GLOBALS['wp_taxonomies']as $taxonomy)
-		{
-			$this->settings['Htax_' . $taxonomy->name. '_template'] = new mtekk_adminKit_setting_html(
-					'tax_' . $taxonomy->name. '_template',
-					__(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt'),
-					sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
-			$this->settings['Htax_' . $taxonomy->name. '_template_no_anchor'] = new mtekk_adminKit_setting_html(
-					'tax_' . $taxonomy->name. '_template_no_anchor',
-					bcn_breadcrumb::default_template_no_anchor,
-					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
-		}
-		//Miscellaneous
-		$this->settings['H404_template'] = new mtekk_adminKit_setting_html(
-				'404_template',
-				bcn_breadcrumb::get_default_template(),
-				__('404 Template', 'breadcrumb-navxt'));
-		$this->settings['S404_title'] = new mtekk_adminKit_setting_string(
-				'404_title',
-				__('404', 'breadcrumb-navxt'),
-				__('404 Title', 'breadcrumb-navxt'));
-		$this->settings['Hsearch_template'] = new mtekk_adminKit_setting_html(
-				'search_template',
-				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
-						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
-								sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
-				__('Search Template', 'breadcrumb-navxt'));
-		$this->settings['Hsearch_template_no_anchor'] = new mtekk_adminKit_setting_html(
-				'search_template_no_anchor',
-				sprintf('<span class="%%type%%">%1$s</span>',
-						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
-				__('Search Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['Hdate_template'] = new mtekk_adminKit_setting_html(
-				'date_template',
-				sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
-				__('Date Template', 'breadcrumb-navxt'));
-		$this->settings['Hdate_template_no_anchor'] = new mtekk_adminKit_setting_html(
-				'date_template_no_anchor',
-				bcn_breadcrumb::default_template_no_anchor,
-				__('Date Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['Hauthor_template'] = new mtekk_adminKit_setting_html(
-				'author_template',
-				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
-						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'),
-								sprintf('<a title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
-				__('Author Template', 'breadcrumb-navxt'));
-		$this->settings['Hauthor_template_no_anchor'] = new mtekk_adminKit_setting_html(
-				'author_template_no_anchor',
-				sprintf('<span class="%%type%%">%1$s</span>',
-						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
-				__('Author Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['aauthor_root'] = new mtekk_adminKit_setting_absint(
-				'author_root',
-				0,
-				__('Author Root Page', 'breadcrumb-navxt'));
-		$this->settings['Eauthor_name'] = new mtekk_adminKit_setting_enum(
-				'author_name',
-				'display_name',
-				__('Author Display Format', 'breadcrumb-navxt'),
-				false,
-				false,
-				array('display_name', 'nickname', 'first_name', 'last_name'));
-		/**
-		 * Here are some deprecated settings
-		 */
-		$this->settings['blimit_title'] = new mtekk_adminKit_setting_bool(
-				'limit_title',
-				false,
-				__('Limit Title Length', 'breadcrumb-navxt'),
-				false,
-				true);
-		$this->settings['amax_title_length'] = new mtekk_adminKit_setting_absint(
-				'max_title_length',
-				30,
-				__('Maximum Title Length', 'breadcrumb-navxt'),
-				false,
-				true);
-	}
+
 	function setting_merge($opts)
 	{
 		$unknown = array();
@@ -358,8 +117,8 @@ class bcn_admin extends mtekk_adminKit
 	}
 	function wp_loaded()
 	{
+		$this->setting_merge($this->opt);
 		parent::wp_loaded();
-		breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
 	 * Sets hard constants into the options array
@@ -390,7 +149,8 @@ class bcn_admin extends mtekk_adminKit
 		//Save the passed in opts to the object's option array
 		$this->opt = mtekk_adminKit::parse_args($opts, $this->opt);
 		//End with resetting up the options
-		breadcrumb_navxt::setup_options($this->opt);
+		//FIXME
+		//breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
 	 * help action hook function
@@ -528,7 +288,7 @@ class bcn_admin extends mtekk_adminKit
 	function deprecated_settings_warn()
 	{
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
-		if(isset($this->opt['blimit_title']) && $this->opt['blimit_title'])
+		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->getValue())
 		{
 			$this->messages[] = new mtekk_adminKit_message(
 					sprintf(
@@ -536,27 +296,27 @@ class bcn_admin extends mtekk_adminKit
 							'<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
 					'error');
 		}
-		foreach($this->opt as $key => $opt)
+		foreach($this->settings as $key => $setting)
 		{
 			if($key[0] == "H" && substr_count($key, '_template') >= 1)
 			{
 				$deprecated_tags = array();
 				$replacement_tags = array();
 				//Deprecated ftitle check
-				if(substr_count($opt, '%ftitle%') >= 1)
+				if(substr_count($setting->getValue(), '%ftitle%') >= 1)
 				{
 					$deprecated_tags[] = '%ftitle%';
 					$replacement_tags[] = '%title%';
 				}
 				//Deprecated fhtitle check
-				if(substr_count($opt, '%fhtitle%') >= 1)
+				if(substr_count($setting->getValue(), '%fhtitle%') >= 1)
 				{
 					$deprecated_tags[] = '%fhtitle%';
 					$replacement_tags[] = '%htitle%';
 				}
 				if(count($deprecated_tags) > 0)
 				{
-					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $this->settings[$key]->getTitle());
+					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->getTitle());
 					$this->messages[] = new mtekk_adminKit_message(
 							sprintf(
 									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please use %2$s instead.', 'breadcrumb-navxt'),
@@ -597,8 +357,7 @@ class bcn_admin extends mtekk_adminKit
 		$this->deprecated_settings_warn();
 		//Do a check for multisite settings mode
 		$this->multisite_settings_warn();
-		do_action($this->unique_prefix . '_settings_pre_messages', $this->opt);
-		$this->setting_merge($this->opt);
+		do_action($this->unique_prefix . '_settings_pre_messages', $this->settings);
 		//Display our messages
 		$this->messages();
 		?>
@@ -619,7 +378,7 @@ class bcn_admin extends mtekk_adminKit
 				<table class="form-table">
 					<?php
 						$this->form->textbox($this->settings['hseparator'], '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
-						do_action($this->unique_prefix . '_settings_general', $this->opt);
+						do_action($this->unique_prefix . '_settings_general', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Current Item', 'breadcrumb-navxt'); ?></h2>
@@ -628,7 +387,7 @@ class bcn_admin extends mtekk_adminKit
 						$this->form->input_check($this->settings['bcurrent_item_linked'], __('Yes', 'breadcrumb-navxt'));
 						$this->form->input_check($this->settings['bpaged_display'], __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt'), 'adminkit-enset-ctrl adminkit-enset');
 						$this->form->textbox($this->settings['Hpaged_template'], '4', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'), 'adminkit-enset');
-						do_action($this->unique_prefix . '_settings_current_item', $this->opt);
+						do_action($this->unique_prefix . '_settings_current_item', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h2>
@@ -637,14 +396,14 @@ class bcn_admin extends mtekk_adminKit
 						$this->form->input_check($this->settings['bhome_display'], __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
 						$this->form->textbox($this->settings['Hhome_template'], '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'), 'adminkit-enset');
 						$this->form->textbox($this->settings['Hhome_template_no_anchor'], '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
-						do_action($this->unique_prefix . '_settings_home', $this->opt);
+						do_action($this->unique_prefix . '_settings_home', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->form->input_check($this->settings['bblog_display'], __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), '', 'adminkit-enset-ctrl adminkit-enset');
-						do_action($this->unique_prefix . '_settings_blog', $this->opt);
+						do_action($this->unique_prefix . '_settings_blog', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h2>
@@ -653,10 +412,10 @@ class bcn_admin extends mtekk_adminKit
 						$this->form->input_check($this->settings['bmainsite_display'], __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options(), '', 'adminkit-enset-ctrl adminkit-enset');
 						$this->form->textbox($this->settings['Hmainsite_template'], '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'), 'adminkit-enset');
 						$this->form->textbox($this->settings['Hmainsite_template_no_anchor'], '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
-						do_action($this->unique_prefix . '_settings_mainsite', $this->opt);
+						do_action($this->unique_prefix . '_settings_mainsite', $this->settings);
 					?>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_settings_tab_general', $this->opt); ?>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_general', $this->settings); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
 				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Post Types', 'breadcrumb-navxt' ); ?></legend>
@@ -685,7 +444,7 @@ class bcn_admin extends mtekk_adminKit
 							<label for="<?php echo $optid;?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
 						</th>
 						<td>
-							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->opt['apost_' . $post_type->name . '_root']));?>
+							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['apost_' . $post_type->name . '_root']->getValue()));?>
 						</td>
 					</tr>
 					<?php
@@ -741,7 +500,7 @@ class bcn_admin extends mtekk_adminKit
 				</table>
 				<?php
 			}
-			do_action($this->unique_prefix . '_after_settings_tab_post', $this->opt);
+			do_action($this->unique_prefix . '_after_settings_tab_post', $this->settings);
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
@@ -791,7 +550,7 @@ class bcn_admin extends mtekk_adminKit
 				<?php
 				}
 			}
-			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->opt); ?>
+			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->settings); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
 				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Miscellaneous', 'breadcrumb-navxt' ); ?></legend>
@@ -845,9 +604,9 @@ class bcn_admin extends mtekk_adminKit
 						</td>
 					</tr>
 				</table>
-				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous', $this->opt); ?>
+				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous', $this->settings); ?>
 			</fieldset>
-			<?php do_action($this->unique_prefix . '_after_settings_tabs', $this->opt); ?>
+			<?php do_action($this->unique_prefix . '_after_settings_tabs', $this->settings); ?>
 			</div>
 			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>
 		</form>

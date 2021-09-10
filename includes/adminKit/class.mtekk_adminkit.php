@@ -99,14 +99,6 @@ abstract class mtekk_adminKit
 	{
 		//Filter our allowed html tags
 		$this->allowed_html = apply_filters($this->unique_prefix . '_allowed_html', wp_kses_allowed_html('post'));
-		$this->setup_setting_defaults();
-	}
-	/**
-	 * Establishes/setup default settings
-	 */
-	function setup_setting_defaults()
-	{
-		//This should be abstract, but we want compatiblity with things that may be extending under old API
 	}
 	/**
 	 * Returns the internal mtekk_admin_class version
@@ -812,7 +804,7 @@ abstract class mtekk_adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', $this->opt);
+		$this->update_option($this->unique_prefix . '_options', mtekk_adminKit::settings_to_opts($this->settings));
 		//Reset successful, let the user know
 		$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');

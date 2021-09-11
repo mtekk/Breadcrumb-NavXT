@@ -36,10 +36,10 @@ class bcn_network_admin extends bcn_admin
 	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
 	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename)
+	function __construct(array &$opts, $basename, array &$settings)
 	{
 		//We're going to make sure we load the parent's constructor
-		parent::__construct($breadcrumb_trail, $basename);
+		parent::__construct($opts, $basename, $settings);
 		//Change to the proper name
 		$this->full_name = __('Breadcrumb NavXT Network Settings', 'breadcrumb-navxt');
 		//Remove the hook added by the parent as we don't want this classes settings page everywhere

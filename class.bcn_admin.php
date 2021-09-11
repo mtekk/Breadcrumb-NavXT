@@ -51,21 +51,19 @@ class bcn_admin extends mtekk_adminKit
 	protected $unique_prefix = 'bcn';
 	protected $plugin_basename = null;
 	protected $support_url = 'https://wordpress.org/support/plugin/breadcrumb-navxt/';
-	protected $breadcrumb_trail = null;
 	/**
 	 * Administrative interface class default constructor
 	 * 
-	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
+	 * @param array $opts The breadcrumb trail object's settings array
 	 * @param string $basename The basename of the plugin
+	 * @param array $settings The array of settings objects
 	 */
-	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename, array &$settings)
+	function __construct(array &$opts, $basename, array &$settings)
 	{
-		$this->breadcrumb_trail =& $breadcrumb_trail;
 		$this->plugin_basename = $basename;
 		$this->full_name = esc_html__('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
 		$this->settings = $settings;
-		//Grab defaults from the breadcrumb_trail object
-		$this->opt =& $this->breadcrumb_trail->opt;
+		$this->opt =& $opts;
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}
@@ -124,6 +122,7 @@ class bcn_admin extends mtekk_adminKit
 	 * Sets hard constants into the options array
 	 * 
 	 * @param &$opts The options array to set hard constants into
+	 * @deprecated 7.0
 	 */
 	function opts_fix(&$opts)
 	{

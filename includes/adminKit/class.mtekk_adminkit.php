@@ -444,90 +444,6 @@ abstract class mtekk_adminKit
 		}
 	}
 	/**
-	 * Runs recursivly through the opts array, sanitizing and merging in updates from the $input array
-	 * 
-	 * @param array $opts good, clean array
-	 * @param array $input unsanitzed input array, not trusted at all
-	 * 
-	 * @deprecated 7.0.0
-	 */
-	protected function opts_update_loop(&$opts, $input)
-	{
-		//Loop through all of the existing options (avoids random setting injection)
-		foreach($opts as $option => $value)
-		{
-			//If we have an array, dive into another recursive loop
-			if(isset($input[$option]) && is_array($value))
-			{
-				$this->opts_update_loop($opts[$option], $input[$option]);
-			}
-			//We must check for unset settings, but booleans are ok to be unset
-			else if(isset($input[$option]) || $option[0] == 'b')
-			{
-				switch($option[0])
-				{
-					//Handle the boolean options
-					case 'b':
-						$opts[$option] = isset($input[$option]);
-						break;
-					//Handle the integer options
-					case 'i':
-						$opts[$option] = (int) $input[$option];
-						break;
-					//Handle the absolute integer options
-					case 'a':
-						$opts[$option] = (int) abs($input[$option]);
-						break;
-					//Handle the floating point options
-					case 'f':
-						$opts[$option] = (float) $input[$option];
-						break;
-					//Handle the HTML options
-					case 'h':
-						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
-						break;
-					//Handle the HTML options that must not be null
-					case 'H':
-						if(isset($input[$option]))
-						{
-							$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
-						}
-						break;
-					//Handle the text options that must not be null
-					case 'S':
-						if(isset($input[$option]))
-						{
-							$opts[$option] = esc_html($input[$option]);
-						}
-						break;
-					//Deal with strings that can be null
-					case 's':
-						$opts[$option] = esc_html($input[$option]);
-						break;
-					//Deal with enumerated types
-					case 'E':
-						$opts[$option] = $this->opts_sanitize_enum($input[$option], $option);
-						break;
-					//By default we have nothing to do, allows for internal settings
-					default:
-						break;
-				}
-			}
-		}
-	}
-	/**
-	 * Simple sanitization function for enumerated types, end users should overload this
-	 * with something more usefull
-	 * 
-	 * @param string $value The input value from the form
-	 * @param string $option The option name
-	 * @return string The sanitized enumerated string
-	 */
-	private function opts_sanitize_enum($value, $option)
-	{
-		return esc_html($value);
-	}
-	/**
 	 * A better version of parse_args, will recrusivly follow arrays
 	 * 
 	 * @param mixed $args The arguments to be parsed
@@ -592,6 +508,13 @@ abstract class mtekk_adminKit
 		}
 		return $opts;
 	}
+	/**
+	 * Compares two settings by name and value to see if they are equal
+	 * 
+	 * @param mtekk_adminKit_setting $a
+	 * @param mtekk_adminKit_setting $b
+	 * @return number
+	 */
 	function setting_equal_check(mtekk_adminKit_setting $a, mtekk_adminKit_setting $b)
 	{
 		if($a->getName() === $b->getName() && $a->getValue() === $b->getValue())

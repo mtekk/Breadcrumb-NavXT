@@ -358,7 +358,6 @@ abstract class mtekk_adminKit
 	/**
 	 * Compares the supplided version with the internal version, places an upgrade warning if there is a missmatch
 	 * TODO: change this to being auto called in admin_init action
-	 * TODO: Change to using settings instead of opt
 	 */
 	function version_check($version)
 	{
@@ -388,7 +387,7 @@ abstract class mtekk_adminKit
 			$this->messages();
 			return true;
 		}
-		else if(!is_array($this->opt))
+		else if(!is_array($this->settings))
 		{
 			//Throw an error since it appears the options were never registered
 			$this->messages[] = new mtekk_adminKit_message(esc_html__('Your plugin install is incomplete.', $this->identifier)
@@ -397,7 +396,7 @@ abstract class mtekk_adminKit
 			$this->messages();
 			return false;
 		}
-		else if(!$this->opts_validate($this->opt))
+		else if(!$this->settings_validate($this->settings))
 		{
 			//Throw an error since it appears the options contain invalid data
 			$this->messages[] = new mtekk_adminKit_message(esc_html__('One or more of your plugin settings are invalid.', $this->identifier)
@@ -409,10 +408,24 @@ abstract class mtekk_adminKit
 		return true;
 	}
 	/**
-	 * A prototype function. End user should override if they need this feature.
+	 * Run through all of the settings, check if the value matches the validated value
+	 * 
+	 * @param array $settings The settings array
+	 * @return boolean
 	 */
-	function opts_validate(&$opts)
+	function settings_validate(array &$settings)
 	{
+		foreach($settings as $setting)
+		{
+			if(is_array($setting) && !$this->settings_validate($setting))
+			{
+				return false;
+			}
+			else if($setting->getValue() !== $setting->validate($setting->getValue()))
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 	/**

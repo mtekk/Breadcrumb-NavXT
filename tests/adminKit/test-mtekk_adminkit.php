@@ -87,11 +87,34 @@ class adminKitTest extends WP_UnitTestCase {
 		$this->expectOutputRegex('/.?Your settings are for a newer version of this plugin\..?/');
 		$this->assertTrue($this->admin->version_check('1.8.2'));
 	}
-	function test_version_check_no_opts() {
-		$this->admin->setOpts(NULL);
+	function test_version_check_no_settings() {
+		$this->admin->setSettings(NULL);
 		//Test when the version is greater than current version
 		$this->expectOutputRegex('/.?Your plugin install is incomplete\..?/');
 		$this->assertFalse($this->admin->version_check(''));
+	}
+	function test_versopm_check_invalid_settings() {
+		$settings = array();
+		$settings['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$settings['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
+		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '-1', 'An option');
+		//Setup some settings that should not validate
+		$this->admin->setSettings($settings);
+		$this->expectOutputRegex('/.?One or more of your plugin settings are invalid\..?/');
+		$this->assertFalse($this->admin->version_check('1.8.1'));
+	}
+	function test_settings_validate() {
+		$settings = array();
+		$settings['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$settings['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
+		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '-1', 'An option');
+		//Setup some settings that should not validate
+		$this->admin->setSettings($settings);
+		$this->assertFalse($this->admin->settings_validate($settings));
+		//Fix the issue and check that they now validate
+		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '2', 'An option');
+		$this->admin->setSettings($settings);
+		$this->assertTrue($this->admin->settings_validate($settings));
 	}
 	function test_opts_update_save_only_non_defaults() {
 		$defaults = array();

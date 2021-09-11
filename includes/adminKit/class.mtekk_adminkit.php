@@ -242,8 +242,6 @@ abstract class mtekk_adminKit
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
 		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
-		//Run the opts fix filter
-		$this->opts_fix($this->opt);
 		add_action('wp_ajax_mtekk_admin_message_dismiss', array($this, 'dismiss_message'));
 	}
 	/**
@@ -324,11 +322,9 @@ abstract class mtekk_adminKit
 		//If there are no settings, copy over the default settings
 		if(!is_array($opts))
 		{
-			//Grab defaults from the object
-			$opts = $this->opt;
-			//Add the options
-			$this->add_option($this->unique_prefix . '_options', $opts);
-			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
+			//Add the options, we only store differences from defaults now, so start with blank array
+			$this->add_option($this->unique_prefix . '_options', array());
+			$this->add_option($this->unique_prefix . '_options_bk', array(), '', 'no');
 			//Add the version, no need to autoload the db version
 			$this->update_option($this->unique_prefix . '_version', $this::version, 'no');
 		}
@@ -418,14 +414,6 @@ abstract class mtekk_adminKit
 	function opts_validate(&$opts)
 	{
 		return true;
-	}
-	/**
-	 * A prototype function. End user should override if they need this feature.
-	 * 
-	 * @param array $opts
-	 */
-	function opts_fix(&$opts)
-	{
 	}
 	/**
 	 * Synchronizes the backup options entry with the current options entry

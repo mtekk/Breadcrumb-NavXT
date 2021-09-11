@@ -119,18 +119,6 @@ class bcn_admin extends mtekk_adminKit
 		parent::wp_loaded();
 	}
 	/**
-	 * Sets hard constants into the options array
-	 * 
-	 * @param &$opts The options array to set hard constants into
-	 * @deprecated 7.0
-	 */
-	function opts_fix(&$opts)
-	{
-		$opts['bpost_page_hierarchy_display'] = true;
-		$opts['Epost_page_hierarchy_type'] = 'BCN_POST_PARENT';
-		$opts['apost_page_root'] = get_option('page_on_front');
-	}
-	/**
 	 * Upgrades input options array, sets to $this->opt
 	 * 
 	 * @param array $opts

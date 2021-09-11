@@ -133,4 +133,39 @@ class adminKitTest extends WP_UnitTestCase {
 		//We should only see the one option that changed value
 		$this->assertSame(array('Soptb' => 'Hello'), $saved_options);
 	}
+	function test_opts_undo() {
+		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
+		$old_val = array('Sopta' => 'AB Value', 'Soptb' => 'Hello', 'Soptc' => 'CD Value');
+		$this->admin->update_option('mak_options', $current_val);
+		$this->admin->update_option('mak_options_bk', $old_val);
+		//'Logon' for nonce check
+		wp_set_current_user( self::$superadmin_id);
+		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_admin_undo');
+		//Undo the settings (swap _bk with the regular options)
+		$this->admin->opts_undo();
+		do_action('admin_notices');
+		$this->expectOutputRegex('/.?Settings successfully undid the last operation\..?/');
+		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
+		$this->assertSame($old_val, $this->admin->get_option('mak_options'));
+	}
+	function test_opts_reset() {
+		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
+		$old_val = array('Sopta' => 'AB Value', 'Soptb' => 'Hello', 'Soptc' => 'CD Value');
+		$defaults = array();
+		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$this->admin->setSettings($defaults);
+		$this->admin->update_option('mak_options', $current_val);
+		$this->admin->update_option('mak_options_bk', $old_val);
+		//'Logon' for nonce check
+		wp_set_current_user( self::$superadmin_id);
+		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_admin_import_export');
+		//Reset to the defaults
+		$this->admin->opts_reset();
+		do_action('admin_notices');
+		$this->expectOutputRegex('/.?Settings successfully reset to the default values\..?/');
+		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
+		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), $this->admin->get_option('mak_options'));
+	}
 }

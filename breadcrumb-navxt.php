@@ -94,14 +94,14 @@ class breadcrumb_navxt
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
 			//Instantiate our new admin object
-			$this->admin = new bcn_network_admin($this->breadcrumb_trail, $this->plugin_basename, $this->settings);
+			$this->admin = new bcn_network_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
 		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
 		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object
-			$this->admin = new bcn_admin($this->breadcrumb_trail, $this->plugin_basename, $this->settings);
+			$this->admin = new bcn_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
 	}
 	public function init()

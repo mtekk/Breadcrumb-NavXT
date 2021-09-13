@@ -72,6 +72,49 @@ class adminKitTest extends WP_UnitTestCase {
 		self::delete_user( self::$contributor_id );
 		parent::tearDown();
 	}
+	function test_install() {
+		$defaults = array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value');
+		//Check that the settings aren't there
+		$this->assertFalse($this->admin->get_option('mak_options'));
+		$this->assertFalse($this->admin->get_option('mak_options_bk'));
+		$this->assertFalse($this->admin->get_option('mak_version'));
+		//Run install
+		//'Logon' for nonce check
+		wp_set_current_user( self::$superadmin_id);
+		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_admin_undo');
+		//Run the install
+		$this->admin->install();
+		//Check that the expected values are there
+		$this->assertSame(array(), $this->admin->get_option('mak_options'));
+		$this->assertSame(array(), $this->admin->get_option('mak_options_bk'));
+		$this->assertSame('1.8.1', $this->admin->get_option('mak_version'));
+		//Now see that happens on a re-run
+		$this->admin->setOpts($defaults);
+		$this->admin->install();
+		//Nothing should have happened, as the version is current
+		$this->assertSame(array(), $this->admin->get_option('mak_options'));
+		$this->assertSame(array(), $this->admin->get_option('mak_options_bk'));
+		$this->assertSame('1.8.1', $this->admin->get_option('mak_version'));
+		//Change the DB version
+		$this->admin->update_option('mak_options', $defaults);
+		$this->admin->update_option('mak_version', '1.0.0');
+		$this->admin->install();
+		$this->assertSame($defaults, $this->admin->get_option('mak_options'));
+		$this->assertSame(array(), $this->admin->get_option('mak_options_bk'));
+		$this->assertSame('1.8.1', $this->admin->get_option('mak_version'));
+	}
+	function test_uninstall() {
+		//Setup the options
+		$this->admin->update_option('mak_options', array('foo' => 'bar'));
+		$this->admin->update_option('mak_options_bk', array('foo' => 'car'));
+		$this->admin->update_option('mak_version', '1.8.1');
+		//Uninstall
+		$this->admin->uninstall();
+		//Check that they're now gone
+		$this->assertFalse($this->admin->get_option('mak_options'));
+		$this->assertFalse($this->admin->get_option('mak_options_bk'));
+		$this->assertFalse($this->admin->get_option('mak_version'));
+	}
 	function test_version_check_old_version() {
 		//Test when the version is less than the current version
 		$this->expectOutputRegex('/.?Your settings are for an older version of this plugin and need to be migrated\..?/');

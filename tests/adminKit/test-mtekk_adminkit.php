@@ -24,6 +24,10 @@ if(class_exists('mtekk_adminKit')) {
 		function setSettings($settings) {
 			$this->settings = $settings;
 		}
+		//Super evil caller function to get around our private and protected methods in the parent class
+		function call($function, $args = array()) {
+			return call_user_func_array(array($this, $function), $args);
+		}
 	}
 }
 class adminKitTest extends WP_UnitTestCase {
@@ -132,6 +136,30 @@ class adminKitTest extends WP_UnitTestCase {
 		$saved_options = $this->admin->get_option('mak_options');
 		//We should only see the one option that changed value
 		$this->assertSame(array('Soptb' => 'Hello'), $saved_options);
+	}
+	function test_settings_to_opts() {
+		$defaults = array();
+		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), mtekk_adminKit::settings_to_opts($defaults));
+	}
+	function test_setting_equal_check() {
+		$defaults = array();
+		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'A Value', 'An option');
+		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$defaults['Soptd'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$defaults['ioptd'] = new mtekk_adminKit_setting_int('optd', 8, 'An option');
+		$defaults['iopte'] = new mtekk_adminKit_setting_int('optd', 7, 'An option');
+		//Check obviously non-equal
+		$this->assertSame(-1, $this->admin->setting_equal_check($defaults['Sopta'], $defaults['Soptc']));
+		//Check equal value, different name
+		$this->assertSame(-1, $this->admin->setting_equal_check($defaults['Sopta'], $defaults['Soptb']));
+		//Test truely equal
+		$this->assertSame(0, $this->admin->setting_equal_check($defaults['Soptc'], $defaults['Soptd']));
+		//Test greater than
+		$this->assertSame(1, $this->admin->setting_equal_check($defaults['ioptd'], $defaults['iopte']));
 	}
 	function test_opts_undo() {
 		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');

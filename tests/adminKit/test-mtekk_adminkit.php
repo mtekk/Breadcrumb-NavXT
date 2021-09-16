@@ -150,6 +150,15 @@ class adminKitTest extends WP_UnitTestCase {
 		$this->expectOutputRegex('/.?One or more of your plugin settings are invalid\..?/');
 		$this->assertFalse($this->admin->version_check('1.8.1'));
 	}
+	function test_opt_backup() {
+		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
+		$old_val = array('Sopta' => 'AB Value', 'Soptb' => 'Hello', 'Soptc' => 'CD Value');
+		$this->admin->update_option('mak_options', $current_val);
+		$this->admin->update_option('mak_options_bk', $old_val);
+		$this->admin->opts_backup();
+		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
+		$this->assertSame($current_val, $this->admin->get_option('mak_options'));
+	}
 	function test_settings_validate() {
 		$settings = array();
 		$settings['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');

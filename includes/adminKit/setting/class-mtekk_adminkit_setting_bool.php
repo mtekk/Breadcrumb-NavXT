@@ -16,13 +16,14 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+namespace mtekk\adminKit\setting;
 require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
 if(!class_exists('mtekk_adminKit_setting_base'))
 {
-	require_once( __DIR__ . '/class.mtekk_adminkit_setting_base.php');
+	require_once( __DIR__ . '/class-mtekk_adminkit_setting_base.php');
 }
-class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
+class setting_bool extends setting_base
 {
 	/**
 	 * Default constructor function
@@ -49,8 +50,8 @@ class mtekk_adminKit_setting_bool extends mtekk_adminKit_setting_base
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit_setting::updateFromFormInput()
 	 */
-	public function maybeUpdateFromFormInput($input)
+	public function maybe_update_from_form_input($input)
 	{
-		$this->setValue($this->validate(isset($input[$this->name])));
+		$this->set_value($this->validate(isset($input[$this->name])));
 	}
 }

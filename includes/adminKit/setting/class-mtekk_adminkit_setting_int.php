@@ -16,62 +16,33 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+namespace mtekk\adminKit\setting;
 require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
-if(!class_exists('mtekk_adminKit_setting_base'))
+if(!class_exists('setting_base'))
 {
-	require_once( __DIR__ . '/class.mtekk_adminkit_setting_base.php');
+	require_once( __DIR__ . '/class-mtekk_adminkit_setting_base.php');
 }
-class mtekk_adminKit_setting_enum extends mtekk_adminKit_setting_base
+class setting_int extends setting_base
 {
-	protected $allowed_vals = array();
 	/**
 	 * Default constructor function
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, bool $allow_empty = false, bool $deprecated = false, array $allowed_vals = array())
+	public function __construct(string $name, int $value, string $title, bool $allow_empty = false, bool $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;
 		$this->title = $title;
-		$this->deprecated = $deprecated;
 		$this->allow_empty = $allow_empty;
-		$this->allowed_vals= $allowed_vals;
+		$this->deprecated = $deprecated;
 	}
 	/**
-	 * Validates the new value against the allowed values for this setting
-	 * 
-	 * {@inheritDoc}
-	 * @see mtekk_adminKit_setting::validate()
+	 *
 	 */
 	public function validate($new_value)
 	{
-		if(in_array($new_value, $this->allowed_vals))
-		{
-			return $new_value;
-		}
-		else
-		{
-			return $this->value;
-		}
-	}
-	/**
-	 * Setter for the allowed values array
-	 * 
-	 * @param array $allowed_vals Array of allowed values
-	 */
-	public function setAllowedVals(array $allowed_vals)
-	{
-		$this->allowed_vals = $allowed_vals;
-	}
-	/**
-	 * Getter of the allowed values array
-	 * 
-	 * @return array Allowed values used in validation of the setting
-	 */
-	public function getAllowedVals()
-	{
-		return $this->allowed_vals;
+		return (int) $new_value;
 	}
 }

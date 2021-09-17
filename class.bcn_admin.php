@@ -33,15 +33,16 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	return;
 }
 //Include admin base class
-if(!class_exists('mtekk_adminKit'))
+if(!class_exists('\mtekk\adminKit\adminKit'))
 {
-	require_once(dirname(__FILE__) . '/includes/adminKit/class.mtekk_adminkit.php');
+	require_once(dirname(__FILE__) . '/includes/adminKit/class-mtekk_adminkit.php');
 }
+use \mtekk\adminKit\adminKit as adminKit;
 /**
  * The administrative interface class 
  * 
  */
-class bcn_admin extends mtekk_adminKit
+class bcn_admin extends adminKit
 {
 	const version = '6.6.50';
 	protected $full_name = 'Breadcrumb NavXT Settings';
@@ -93,7 +94,7 @@ class bcn_admin extends mtekk_adminKit
 		//Add a message if we found some unknown settings while merging
 		if(count($unknown) > 0)
 		{
-			$this->messages[] = new mtekk_adminKit_message(
+			$this->messages[] = new message(
 					sprintf(__('Found %u unknown legacy settings: %s','breadcrumb-navxt'), count($unknown), implode(', ', $unknown)),
 					'warning',
 					true,
@@ -134,7 +135,7 @@ class bcn_admin extends mtekk_adminKit
 			bcn_options_upgrade_handler($opts, $version, $this->breadcrumb_trail->opt);
 		}
 		//Save the passed in opts to the object's option array
-		$this->opt = mtekk_adminKit::parse_args($opts, $this->opt);
+		$this->opt = adminKit::parse_args($opts, $this->opt);
 		//End with resetting up the options
 		//FIXME
 		//breadcrumb_navxt::setup_options($this->opt);
@@ -252,20 +253,20 @@ class bcn_admin extends mtekk_adminKit
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsiteoveride');
+				$this->messages[] = new message(esc_html__('Warning: Your network settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsiteoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_isitemayoveride');
+				$this->messages[] = new message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_isitemayoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsitemayoveride');
+				$this->messages[] = new message(esc_html__('Warning: Your network settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nsitemayoveride');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nosetting');
+				$this->messages[] = new message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_is_nosetting');
 			}
 		}
 	}
@@ -277,7 +278,7 @@ class bcn_admin extends mtekk_adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->getValue())
 		{
-			$this->messages[] = new mtekk_adminKit_message(
+			$this->messages[] = new message(
 					sprintf(
 							esc_html__('Error: The deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated) has no effect in this version Breadcrumb NavXT. Please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), 
 							'<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
@@ -304,7 +305,7 @@ class bcn_admin extends mtekk_adminKit
 				if(count($deprecated_tags) > 0)
 				{
 					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->getTitle());
-					$this->messages[] = new mtekk_adminKit_message(
+					$this->messages[] = new message(
 							sprintf(
 									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please use %2$s instead.', 'breadcrumb-navxt'),
 									implode(' and ', $deprecated_tags),

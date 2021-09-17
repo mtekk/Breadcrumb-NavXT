@@ -9,16 +9,16 @@ class adminKitSettingHTMLTest extends WP_UnitTestCase {
 	public $settings = array();
 	function setUp() {
 		parent::setUp();
-		$this->settings['normal_setting'] = new mtekk_adminKit_setting_html(
+		$this->settings['normal_setting'] = new \mtekk\adminKit\setting\setting_html(
 				'normal_setting',
 				'A Value',
 				'Normal Setting');
-		$this->settings['empty_ok_setting'] = new mtekk_adminKit_setting_html(
+		$this->settings['empty_ok_setting'] = new \mtekk\adminKit\setting\setting_html(
 				'empty_ok_setting',
 				'A Value',
 				'Empty Ok Setting',
 				true);
-		$this->settings['deprecated_setting'] = new mtekk_adminKit_setting_html(
+		$this->settings['deprecated_setting'] = new \mtekk\adminKit\setting\setting_html(
 				'deprecated_setting',
 				'A different Value',
 				'Deprecated Setting',
@@ -32,8 +32,8 @@ class adminKitSettingHTMLTest extends WP_UnitTestCase {
 		$this->assertFalse($this->settings['normal_setting']->is_deprecated());
 		$this->assertTrue($this->settings['deprecated_setting']->is_deprecated());
 	}
-	function test_setDeprecated() {
-		$new_setting = new mtekk_adminKit_setting_html(
+	function test_set_deprecated() {
+		$new_setting = new \mtekk\adminKit\setting\setting_html(
 				'normal_setting',
 				'A Value',
 				'Normal Setting',
@@ -41,64 +41,68 @@ class adminKitSettingHTMLTest extends WP_UnitTestCase {
 		//Check initial value from the constructed version
 		$this->assertFalse($new_setting->is_deprecated());
 		//Change to being deprecated
-		$new_setting->setDeprecated(true);
+		$new_setting->set_deprecated(true);
 		$this->assertTrue($new_setting->is_deprecated());
 		//Change back
-		$new_setting->setDeprecated(false);
+		$new_setting->set_deprecated(false);
 		$this->assertFalse($new_setting->is_deprecated());
 	}
-	function test_getValue() {
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'A Value');
-		$this->assertSame($this->settings['deprecated_setting']->getValue(), 'A different Value');
+	function test_get_value() {
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'A Value');
+		$this->assertSame($this->settings['deprecated_setting']->get_value(), 'A different Value');
 	}
-	function test_setValue() {
+	function test_set_value() {
 		//Check default value
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'A Value');
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'A Value');
 		//Change the value
-		$this->settings['normal_setting']->setValue('A New Value');
+		$this->settings['normal_setting']->set_value('A New Value');
 		//Check
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'A New Value');
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'A New Value');
 	}
-	function test_getTitile() {
-		$this->assertSame($this->settings['normal_setting']->getTitle(), 'Normal Setting');
+	function test_get_title() {
+		$this->assertSame($this->settings['normal_setting']->get_title(), 'Normal Setting');
 	}
-	function test_getName() {
-		$this->assertSame($this->settings['normal_setting']->getName(), 'normal_setting');
+	function test_get_name() {
+		$this->assertSame($this->settings['normal_setting']->get_name(), 'normal_setting');
 	}
-	function test_setAllowEmpty() {
-		$this->assertTrue($this->settings['empty_ok_setting']->getAllowEmpty());
-		$this->settings['empty_ok_setting']->setAllowEmpty(false);
-		$this->assertFalse($this->settings['empty_ok_setting']->getAllowEmpty());
+	function test_get_allow_empty() {
+		$this->assertFalse($this->settings['normal_setting']->get_allow_empty());
+		$this->assertTrue($this->settings['empty_ok_setting']->get_allow_empty());
 	}
-	function test_maybeUpdateFromFormInput() {
+	function test_set_allow_empty() {
+		$this->assertTrue($this->settings['empty_ok_setting']->get_allow_empty());
+		$this->settings['empty_ok_setting']->set_allow_empty(false);
+		$this->assertFalse($this->settings['empty_ok_setting']->get_allow_empty());
+	}
+	function test_maybe_update_from_form_input() {
 		$input = array('normal_setting' => 'Some Value', 'normal_settinga' => 'barf', 'empty_string_setting' => '');
 		$input_notthere = array('normal_settinga' => 'barf', 'empty_string_setting' => '');
 		//Test allowing empty
-		$this->settings['normal_setting']->setAllowEmpty(true);
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'Some Value');
+		$this->settings['normal_setting']->set_allow_empty(true);
+		$this->settings['normal_setting']->maybe_update_from_form_input($input);
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'Some Value');
 		//Change the value
-		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''));
-		$this->assertSame($this->settings['normal_setting']->getValue(), '');
+		$this->settings['normal_setting']->set_value('Yep');
+		$this->settings['normal_setting']->maybe_update_from_form_input(array('normal_setting' => ''));
+		$this->assertSame($this->settings['normal_setting']->get_value(), '');
 		//Change the value
-		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
+		$this->settings['normal_setting']->set_value('Yep');
+		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere);
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'Yep');
 		//Test diallowing empty
-		$this->settings['normal_setting']->setAllowEmpty(false);
+		$this->settings['normal_setting']->set_allow_empty(false);
 		//Change the value
-		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input);
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'Some Value');
+		$this->settings['normal_setting']->set_value('Yep');
+		$this->settings['normal_setting']->maybe_update_from_form_input($input);
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'Some Value');
 		//Change the value
-		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput(array('normal_setting' => ''));
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
+		$this->settings['normal_setting']->set_value('Yep');
+		$this->settings['normal_setting']->maybe_update_from_form_input(array('normal_setting' => ''));
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'Yep');
 		//Change the value
-		$this->settings['normal_setting']->setValue('Yep');
-		$this->settings['normal_setting']->maybeUpdateFromFormInput($input_notthere);
-		$this->assertSame($this->settings['normal_setting']->getValue(), 'Yep');
+		$this->settings['normal_setting']->set_value('Yep');
+		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere);
+		$this->assertSame($this->settings['normal_setting']->get_value(), 'Yep');
 	}
 	function test_validate() {
 		//Test an integer
@@ -110,9 +114,9 @@ class adminKitSettingHTMLTest extends WP_UnitTestCase {
 		//Test a normal string
 		$this->assertSame($this->settings['normal_setting']->validate('Hello World'), 'Hello World');
 		//Test an empty string
-		$this->settings['normal_setting']->setAllowEmpty(true);
+		$this->settings['normal_setting']->set_allow_empty(true);
 		$this->assertSame($this->settings['normal_setting']->validate(''), '');
-		$this->settings['normal_setting']->setAllowEmpty(false);
+		$this->settings['normal_setting']->set_allow_empty(false);
 		$this->assertSame($this->settings['normal_setting']->validate(''), 'A Value');
 		//Test HTML
 		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), '<span>Hello World</span>');

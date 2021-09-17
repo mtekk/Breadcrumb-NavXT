@@ -16,13 +16,14 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+namespace mtekk\adminKit\setting;
 require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting interface
 if(!interface_exists('mtekk_adminKit_setting'))
 {
-	require_once( __DIR__ . '/interface.mtekk_adminkit_setting.php');
+	require_once( __DIR__ . '/interface-mtekk_adminkit_setting.php');
 }
-abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
+abstract class setting_base implements setting
 {
 	const version = '1.0.0';
 	protected $name = '';
@@ -34,31 +35,31 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	{
 		return $this->deprecated;
 	}
-	public function setDeprecated($deprecated)
+	public function set_deprecated($deprecated)
 	{
 		$this->deprecated = $deprecated;
 	}
-	public function getValue()
+	public function get_value()
 	{
 		return $this->value;
 	}
-	public function setValue($new_value)
+	public function set_value($new_value)
 	{
 		$this->value = $new_value;
 	}
-	public function getTitle()
+	public function get_title()
 	{
 		return $this->title;
 	}
-	public function getName()
+	public function get_name()
 	{
 		return $this->name;
 	}
-	public function getAllowEmpty()
+	public function get_allow_empty()
 	{
 		return $this->allow_empty;
 	}
-	public function setAllowEmpty($allow_empty)
+	public function set_allow_empty($allow_empty)
 	{
 		$this->allow_empty = $allow_empty;
 	}
@@ -66,13 +67,13 @@ abstract class mtekk_adminKit_setting_base implements mtekk_adminKit_setting
 	 * Basic updateFromFormInput method
 	 * 
 	 * {@inheritDoc}
-	 * @see mtekk_adminKit_setting::updateFromFormInput()
+	 * @see mtekk\adminKit\setting::maybe_update_from_form_input()
 	 */
-	public function maybeUpdateFromFormInput($input)
+	public function maybe_update_from_form_input($input)
 	{
 		if(isset($input[$this->name]))
 		{
-			$this->setValue($this->validate($input[$this->name]));
+			$this->set_value($this->validate($input[$this->name]));
 		}
 	}
 }

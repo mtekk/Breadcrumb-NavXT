@@ -5,8 +5,10 @@
  * @group adminKit
  * @group bcn_core
  */
-if(class_exists('mtekk_adminKit')) {
-	class adminKitDUT extends mtekk_adminKit {
+use \mtekk\adminKit\adminKit as adminKit;
+use \mtekk\adminKit\setting;
+if(class_exists('\mtekk\adminKit\adminKit')) {
+	class adminKitDUT extends adminKit{
 		const version = '1.8.1';
 		protected $full_name = 'A Plugin Settings';
 		protected $short_name = 'A Plugin';
@@ -23,6 +25,10 @@ if(class_exists('mtekk_adminKit')) {
 		}
 		function setSettings($settings) {
 			$this->settings = $settings;
+		}
+		//Wrapper for settings_update_loop as have to pass reference
+		function call_settings_update_loop(&$settings, $input) {
+			return $this->settings_update_loop($settings, $input);
 		}
 		//Super evil caller function to get around our private and protected methods in the parent class
 		function call($function, $args = array()) {
@@ -142,9 +148,9 @@ class adminKitTest extends WP_UnitTestCase {
 	}
 	function test_versopm_check_invalid_settings() {
 		$settings = array();
-		$settings['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$settings['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
-		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '-1', 'An option');
+		$settings['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$settings['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$settings['Aoptc'] = new setting\setting_absint('optc', '-1', 'An option');
 		//Setup some settings that should not validate
 		$this->admin->setSettings($settings);
 		$this->expectOutputRegex('/.?One or more of your plugin settings are invalid\..?/');
@@ -161,22 +167,32 @@ class adminKitTest extends WP_UnitTestCase {
 	}
 	function test_settings_validate() {
 		$settings = array();
-		$settings['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$settings['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
-		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '-1', 'An option');
+		$settings['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$settings['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$settings['Aoptc'] = new setting\setting_absint('optc', '-1', 'An option');
 		//Setup some settings that should not validate
 		$this->admin->setSettings($settings);
 		$this->assertFalse($this->admin->settings_validate($settings));
 		//Fix the issue and check that they now validate
-		$settings['Aoptc'] = new mtekk_adminKit_setting_absint('optc', '2', 'An option');
+		$settings['Aoptc'] = new setting\setting_absint('optc', '2', 'An option');
 		$this->admin->setSettings($settings);
 		$this->assertTrue($this->admin->settings_validate($settings));
 	}
+	function test_settings_update_loop() {
+		$defaults = array();
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
+		$input = array('opta' => 'A Value', 'optb' => 'Hello', 'optc' => 'C Value');
+		$this->admin->call_settings_update_loop($defaults, $input);
+		$this->assertSame('optb', $defaults['Soptb']->get_name());
+		$this->assertSame($input['optb'], $defaults['Soptb']->get_value());
+	}
 	function test_opts_update_save_only_non_defaults() {
 		$defaults = array();
-		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
-		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->admin->setSettings($defaults);
 		//Mockup the update request, change optb
 		$_POST['mak_options'] = array('opta' => 'A Value', 'optb' => 'Hello', 'optc' => 'C Value');
@@ -191,19 +207,19 @@ class adminKitTest extends WP_UnitTestCase {
 	}
 	function test_settings_to_opts() {
 		$defaults = array();
-		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
-		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
-		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), mtekk_adminKit::settings_to_opts($defaults));
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
+		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), adminKit::settings_to_opts($defaults));
 	}
 	function test_setting_equal_check() {
 		$defaults = array();
-		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'A Value', 'An option');
-		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
-		$defaults['Soptd'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
-		$defaults['ioptd'] = new mtekk_adminKit_setting_int('optd', 8, 'An option');
-		$defaults['iopte'] = new mtekk_adminKit_setting_int('optd', 7, 'An option');
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'A Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
+		$defaults['Soptd'] = new setting\setting_string('optc', 'C Value', 'An option');
+		$defaults['ioptd'] = new setting\setting_int('optd', 8, 'An option');
+		$defaults['iopte'] = new setting\setting_int('optd', 7, 'An option');
 		//Check obviously non-equal
 		$this->assertSame(-1, $this->admin->setting_equal_check($defaults['Sopta'], $defaults['Soptc']));
 		//Check equal value, different name
@@ -232,9 +248,9 @@ class adminKitTest extends WP_UnitTestCase {
 		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
 		$old_val = array('Sopta' => 'AB Value', 'Soptb' => 'Hello', 'Soptc' => 'CD Value');
 		$defaults = array();
-		$defaults['Sopta'] = new mtekk_adminKit_setting_string('opta', 'A Value', 'An option');
-		$defaults['Soptb'] = new mtekk_adminKit_setting_string('optb', 'B Value', 'An option');
-		$defaults['Soptc'] = new mtekk_adminKit_setting_string('optc', 'C Value', 'An option');
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->admin->setSettings($defaults);
 		$this->admin->update_option('mak_options', $current_val);
 		$this->admin->update_option('mak_options_bk', $old_val);

@@ -16,13 +16,15 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+namespace mtekk\adminKit;
+use mtekk\adminKit\setting\setting as setting;
 require_once( __DIR__ . '/../block_direct_access.php');
 //Include setting interface
-if(!interface_exists('mtekk_adminKit_setting'))
+if(!interface_exists('\mtekk\adminKit\setting\setting'))
 {
-	require_once( __DIR__ . '/interface.mtekk_adminkit_setting.php');
+	require_once( __DIR__ . '/interface-mtekk_adminkit_setting.php');
 }
-class mtekk_adminKit_form
+class form
 {
 	const version = '1.0.0';
 	protected $unique_prefix;
@@ -56,14 +58,14 @@ class mtekk_adminKit_form
 	 *
 	 * @param string $option
 	 */
-	public function input_hidden(mtekk_adminKit_setting $option)
+	public function input_hidden(setting $option)
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
 		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />',
 				esc_attr($opt_name),
 				esc_attr($opt_id),
-				esc_attr($option->getValue()));
+				esc_attr($option->get_value()));
 	}
 	/**
 	 * This will output a well formed option label
@@ -78,18 +80,18 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed table row for a text input
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $class (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	public function input_text(mtekk_adminKit_setting $option, $class = 'regular-text', $disable = false, $description = '')
+	public function input_text(setting $option, $class = 'regular-text', $disable = false, $description = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $option->getTitle());?>
+				<?php $this->label($opt_id, $option->get_title());?>
 			</th>
 			<td>
 				<?php
@@ -101,7 +103,7 @@ class mtekk_adminKit_form
 				printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
-						esc_attr($option->getValue()),
+						esc_attr($option->get_value()),
 						esc_attr($class),
 						disabled($disable, true, false));
 				if($description !== '')
@@ -115,7 +117,7 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed table row for a HTML5 number input
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $class (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
@@ -123,10 +125,10 @@ class mtekk_adminKit_form
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
 	 */
-	public function input_number(mtekk_adminKit_setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
+	public function input_number(setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
 		$extras = '';
 		if($min !== '')
 		{
@@ -142,7 +144,7 @@ class mtekk_adminKit_form
 		}?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $option->getTitle());?>
+				<?php $this->label($opt_id, $option->get_title());?>
 			</th>
 			<td>
 				<?php
@@ -154,7 +156,7 @@ class mtekk_adminKit_form
 				printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
-						esc_attr($option->getValue()),
+						esc_attr($option->get_value()),
 						esc_attr($class),
 						disabled($disable, true, false),
 						$extras);
@@ -169,19 +171,19 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed textbox
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	public function textbox(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '', $class = '')
+	public function textbox(setting $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
 		$class .= ' large-text';?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $option->getTitle());?>
+				<?php $this->label($opt_id, $option->get_title());?>
 			</th>
 			<td>
 				<?php
@@ -193,7 +195,7 @@ class mtekk_adminKit_form
 				printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
-						esc_textarea($option->getValue()),
+						esc_textarea($option->get_value()),
 						esc_attr($class),
 						disabled($disable, true, false),
 						esc_attr($height));
@@ -208,19 +210,19 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed tiny mce ready textbox
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 */
-	public function tinymce(mtekk_adminKit_setting $option, $height = '3', $disable = false, $description = '')
+	public function tinymce(setting $option, $height = '3', $disable = false, $description = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
 		$class = 'mtekk_mce';?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $option->getTitle());?>
+				<?php $this->label($opt_id, $option->get_title());?>
 			</th>
 			<td>
 				<?php
@@ -232,7 +234,7 @@ class mtekk_adminKit_form
 				printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
-						esc_textarea($option->getValue()),
+						esc_textarea($option->get_value()),
 						esc_attr($class),
 						disabled($disable, true, false),
 						esc_attr($height));
@@ -247,19 +249,19 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed table row for a checkbox input
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $instruction
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 * @param string $class (optional)
 	 */
-	public function input_check(mtekk_adminKit_setting $option, $instruction, $disable = false, $description = '', $class = '')
+	public function input_check(setting $option, $instruction, $disable = false, $description = '', $class = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
-				<?php echo esc_html($option->getTitle()); ?>
+				<?php echo esc_html($option->get_title()); ?>
 			</th>
 			<td>
 				<label for="<?php echo esc_attr( $opt_id ); ?>">
@@ -272,10 +274,10 @@ class mtekk_adminKit_form
 					printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
 							esc_attr($opt_name),
 							esc_attr($opt_id),
-							esc_attr($option->getValue()),
+							esc_attr($option->get_value()),
 							esc_attr($class),
 							disabled($disable, true, false),
-							checked($option->getValue(), true, false));
+							checked($option->get_value(), true, false));
 					echo $instruction;?>
 				</label><br />
 				<?php
@@ -290,16 +292,16 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a singular radio type form input field
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param string $value
 	 * @param string $instruction
 	 * @param object $disable (optional)
 	 * @param string $class (optional)
 	 */
-	public function input_radio(mtekk_adminKit_setting $option, $value, $instruction, $disable = false, $class = '')
+	public function input_radio(setting $option, $value, $instruction, $disable = false, $class = '')
 	{
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
 		$class .= ' togx';?>
 		<label>
 			<?php
@@ -314,7 +316,7 @@ class mtekk_adminKit_form
 					esc_attr($value),
 					esc_attr($class),
 					disabled($disable, true, false),
-					checked($value, $option->getValue(), false));
+					checked($value, $option->get_value(), false));
 			echo $instruction; ?>
 		</label><br/>
 	<?php
@@ -322,25 +324,25 @@ class mtekk_adminKit_form
 	/**
 	 * This will output a well formed table row for a select input
 	 *
-	 * @param mtekk_adminKit_setting $option
+	 * @param setting $option
 	 * @param array $values
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 * @param array $titles (optional) The array of titiles for the options, if they should be different from the values
 	 * @param string $class (optional) Extra class to apply to the elements
 	 */
-	public function input_select(mtekk_adminKit_setting $option, $values, $disable = false, $description = '', $titles = false, $class = '')
+	public function input_select(setting $option, $values, $disable = false, $description = '', $titles = false, $class = '')
 	{
 		//If we don't have titles passed in, we'll use option names as values
 		if(!$titles)
 		{
 			$titles = $values;
 		}
-		$opt_id = mtekk_adminKit_form::get_valid_id($option->getName());
-		$opt_name = $this->unique_prefix . '_options[' . $option->getName(). ']';?>
+		$opt_id = form::get_valid_id($option->get_name());
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
-				<?php $this->label($opt_id, $option->getTitle());?>
+				<?php $this->label($opt_id, $option->get_title());?>
 			</th>
 			<td>
 				<?php
@@ -352,7 +354,7 @@ class mtekk_adminKit_form
 				printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />',
 						esc_attr($opt_name),
 						esc_attr($opt_id),
-						$this->select_options($option->getValue(), $titles, $values),
+						$this->select_options($option->get_value(), $titles, $values),
 						esc_attr($class),
 						disabled($disable, true, false));
 				if($description !== '')

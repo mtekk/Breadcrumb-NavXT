@@ -16,20 +16,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+namespace mtekk\adminKit\setting;
 require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
-if(!class_exists('mtekk_adminKit_setting_base'))
+if(!class_exists('setting_base'))
 {
-	require_once( __DIR__ . '/class.mtekk_adminkit_setting_base.php');
+	require_once( __DIR__ . '/class-mtekk_adminkit_setting_base.php');
 }
-class mtekk_adminKit_setting_absint extends mtekk_adminKit_setting_base
+class setting_html extends setting_base
 {
 	/**
 	 * Default constructor function
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, int $value, string $title, bool $allow_empty = false, bool $deprecated = false)
+	public function __construct(string $name, string $value, string $title, bool $allow_empty = false, bool $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;
@@ -38,10 +39,14 @@ class mtekk_adminKit_setting_absint extends mtekk_adminKit_setting_base
 		$this->deprecated = $deprecated;
 	}
 	/**
-	 *
+	 * 
 	 */
 	public function validate($new_value)
 	{
-		return absint($new_value);
+		if(!$this->allow_empty && $new_value === '')
+		{
+			return $this->value;
+		}
+		return wp_kses(stripslashes($new_value), apply_filters('mtekk_adminkit_allowed_html', wp_kses_allowed_html('post')));
 	}
 }

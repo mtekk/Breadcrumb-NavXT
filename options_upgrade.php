@@ -74,7 +74,7 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 			}
 		}
 		//Add in the new settings for CPTs introduced in 4.0
-		foreach($wp_post_types as $post_type)
+		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
 			//We only want custom post types
 			if(!$post_type->_builtin)
@@ -113,7 +113,7 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 	//Upgrading to 5.1.0
 	if(version_compare($version, '5.1.0', '<'))
 	{
-		foreach($wp_taxonomies as $taxonomy)
+		foreach($GLOBALS['wp_taxonomies'] as $taxonomy)
 		{
 			//If we have the old options style for it, update
 			if($taxonomy->name !== 'post_format' && isset($opts['H' . $taxonomy->name . '_template']))
@@ -168,7 +168,7 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 			$this->opt['bpost_post_taxonomy_referer'] = false;
 		}
 		//Loop through all of the post types in the array
-		foreach($wp_post_types as $post_type)
+		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
 			//Check for non-public CPTs
 			if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name))
@@ -199,7 +199,7 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 	if(version_compare($version, '6.0.0', '<'))
 	{
 		//Loop through all of the post types in the array
-		foreach($wp_post_types as $post_type)
+		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
 			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']))
 			{
@@ -216,7 +216,7 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 	if(version_compare($version, '7.0.0', '<'))
 	{
 		//Loop through all of the post types in the array
-		foreach($wp_post_types as $post_type)
+		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
 			if(isset($this->opt['Spost_' . $post_type->name . '_hierarchy_type']))
 			{

@@ -32,6 +32,7 @@ if(version_compare(phpversion(), '5.3.0', '<'))
 	}
 	return;
 }
+//FIXME: this seems to be all sorts of garbage that needs fixing
 function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 {
 	//Upgrading to 3.8.1
@@ -135,23 +136,23 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 		{
 			if($opts['Hpaged_template'] === 'Page %htitle%')
 			{
-				$opts['Hpaged_template'] = $this->opt['Hpaged_template'];
+				$opts['Hpaged_template'] = $defaults['Hpaged_template'];
 			}
 			if($opts['Hsearch_template'] === 'Search results for &#39;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#39;' || $opts['Hsearch_template'] === 'Search results for &#039;<a title="Go to the first page of search results for %title%." href="%link%" class="%type%">%htitle%</a>&#039;')
 			{
-				$opts['Hsearch_template'] = $this->opt['Hsearch_template'];
+				$opts['Hsearch_template'] = $defaults['Hsearch_template'];
 			}
 			if($opts['Hsearch_template_no_anchor'] === 'Search results for &#39;%htitle%&#39;' || $opts['Hsearch_template_no_anchor'] === 'Search results for &#039;%htitle%&#039;')
 			{
-				$opts['Hsearch_template_no_anchor'] = $this->opt['Hsearch_template_no_anchor'];
+				$opts['Hsearch_template_no_anchor'] = $defaults['Hsearch_template_no_anchor'];
 			}
 			if($opts['Hauthor_template'] === 'Articles by: <a title="Go to the first page of posts by %title%." href="%link%" class="%type%">%htitle%</a>')
 			{
-				$opts['Hauthor_template'] = $this->opt['Hauthor_template'];
+				$opts['Hauthor_template'] = $defaults['Hauthor_template'];
 			}
 			if($opts['Hauthor_template_no_anchor'] === 'Articles by: %htitle%')
 			{
-				$opts['Hauthor_template_no_anchor'] = $this->opt['Hauthor_template_no_anchor'];
+				$opts['Hauthor_template_no_anchor'] = $defaults['Hauthor_template_no_anchor'];
 			}
 		}
 	}
@@ -159,13 +160,13 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 	if(version_compare($version, '5.5.0', '<'))
 	{
 		//Translate the old 'page' taxonomy type to BCN_POST_PARENT
-		if($this->opt['Spost_post_taxonomy_type'] === 'page')
+		if($defaults['Spost_post_taxonomy_type'] === 'page')
 		{
-			$this->opt['Spost_post_taxonomy_type'] = 'BCN_POST_PARENT';
+			$opts['Spost_post_taxonomy_type'] = 'BCN_POST_PARENT';
 		}
-		if(!isset($this->opt['Spost_post_taxonomy_referer']))
+		if(!isset($defaults['Spost_post_taxonomy_referer']))
 		{
-			$this->opt['bpost_post_taxonomy_referer'] = false;
+			$opts['bpost_post_taxonomy_referer'] = false;
 		}
 		//Loop through all of the post types in the array
 		foreach($GLOBALS['wp_post_types'] as $post_type)
@@ -179,18 +180,18 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 			if(!$post_type->_builtin)
 			{
 				//Translate the old 'page' taxonomy type to BCN_POST_PARENT
-				if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'page')
+				if($opts['Spost_' . $post_type->name . '_taxonomy_type'] === 'page')
 				{
-					$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
+					$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_POST_PARENT';
 				}
 				//Translate the old 'date' taxonomy type to BCN_DATE
-				if($this->opt['Spost_' . $post_type->name . '_taxonomy_type'] === 'date')
+				if($opts['Spost_' . $post_type->name . '_taxonomy_type'] === 'date')
 				{
-					$this->opt['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
+					$opts['Spost_' . $post_type->name . '_taxonomy_type'] = 'BCN_DATE';
 				}
-				if(!isset($this->opt['Spost_' . $post_type->name . '_taxonomy_referer']))
+				if(!isset($opts['Spost_' . $post_type->name . '_taxonomy_referer']))
 				{
-					$this->opt['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
+					$opts['bpost_' . $post_type->name . '_taxonomy_referer'] = false;
 				}
 			}
 		}
@@ -201,15 +202,15 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 		//Loop through all of the post types in the array
 		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
-			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']))
+			if(isset($opts['Spost_' . $post_type->name . '_taxonomy_type']))
 			{
-				$this->opt['Spost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_type'];
-				unset($this->opt['Spost_' . $post_type->name . '_taxonomy_type']);
+				$opts['Spost_' . $post_type->name . '_hierarchy_type'] = $opts['Spost_' . $post_type->name . '_taxonomy_type'];
+				unset($opts['Spost_' . $post_type->name . '_taxonomy_type']);
 			}
-			if(isset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']))
+			if(isset($opts['Spost_' . $post_type->name . '_taxonomy_display']))
 			{
-				$this->opt['Spost_' . $post_type->name . '_hierarchy_display'] = $this->opt['Spost_' . $post_type->name . '_taxonomy_display'];
-				unset($this->opt['Spost_' . $post_type->name . '_taxonomy_display']);
+				$opts['Spost_' . $post_type->name . '_hierarchy_display'] = $opts['Spost_' . $post_type->name . '_taxonomy_display'];
+				unset($opts['Spost_' . $post_type->name . '_taxonomy_display']);
 			}
 		}
 	}
@@ -218,15 +219,15 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 		//Loop through all of the post types in the array
 		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
-			if(isset($this->opt['Spost_' . $post_type->name . '_hierarchy_type']))
+			if(isset($opts['Spost_' . $post_type->name . '_hierarchy_type']))
 			{
-				$this->opt['Epost_' . $post_type->name . '_hierarchy_type'] = $this->opt['Spost_' . $post_type->name . '_hierarchy_type'];
-				unset($this->opt['Spost_' . $post_type->name . '_hierarchy_type']);
+				$opts['Epost_' . $post_type->name . '_hierarchy_type'] = $opts['Spost_' . $post_type->name . '_hierarchy_type'];
+				unset($opts['Spost_' . $post_type->name . '_hierarchy_type']);
 			}
 		}
-		if(isset($this->opt['Sauthor_name']))
+		if(isset($opts['Sauthor_name']))
 		{
-			$this->opt['Eauthor_name'] = $this->opt['Sauthor_name'];
+			$opts['Eauthor_name'] = $opts['Sauthor_name'];
 			unset($this->opt['Sauthor_name']);
 		}
 	}

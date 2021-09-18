@@ -37,7 +37,7 @@ if(!class_exists('\mtekk\adminKit\adminKit'))
 {
 	require_once(dirname(__FILE__) . '/includes/adminKit/class-mtekk_adminkit.php');
 }
-use \mtekk\adminKit\adminKit as adminKit;
+use mtekk\adminKit\{adminKit, form, message, setting};
 /**
  * The administrative interface class 
  * 
@@ -63,7 +63,7 @@ class bcn_admin extends adminKit
 	{
 		$this->plugin_basename = $basename;
 		$this->full_name = esc_html__('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
-		$this->settings = $settings;
+		$this->settings =& $settings;
 		$this->opt =& $opts;
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
@@ -82,9 +82,9 @@ class bcn_admin extends adminKit
 		$unknown = array();
 		foreach($opts as $key => $value)
 		{
-			if(isset($this->settings[$key]) && $this->settings[$key] instanceof mtekk_adminKit_setting)
+			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting\setting)
 			{
-				$this->settings[$key]->setValue($value);
+				$this->settings[$key]->set_value($value);
 			}
 			else
 			{
@@ -127,14 +127,14 @@ class bcn_admin extends adminKit
 	 */
 	function opts_upgrade($opts, $version)
 	{
-		global $wp_post_types, $wp_taxonomies;
 		//If our version is not the same as in the db, time to update
 		if(version_compare($version, $this::version, '<'))
 		{
 			require_once(dirname(__FILE__) . '/options_upgrade.php');
-			bcn_options_upgrade_handler($opts, $version, $this->breadcrumb_trail->opt);
+			bcn_options_upgrade_handler($opts, $version, $this->opt);
 		}
 		//Save the passed in opts to the object's option array
+		//FIXME: Why do we do this?
 		$this->opt = adminKit::parse_args($opts, $this->opt);
 		//End with resetting up the options
 		//FIXME
@@ -276,7 +276,7 @@ class bcn_admin extends adminKit
 	function deprecated_settings_warn()
 	{
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
-		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->getValue())
+		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->get_value())
 		{
 			$this->messages[] = new message(
 					sprintf(
@@ -291,20 +291,20 @@ class bcn_admin extends adminKit
 				$deprecated_tags = array();
 				$replacement_tags = array();
 				//Deprecated ftitle check
-				if(substr_count($setting->getValue(), '%ftitle%') >= 1)
+				if(substr_count($setting->get_value(), '%ftitle%') >= 1)
 				{
 					$deprecated_tags[] = '%ftitle%';
 					$replacement_tags[] = '%title%';
 				}
 				//Deprecated fhtitle check
-				if(substr_count($setting->getValue(), '%fhtitle%') >= 1)
+				if(substr_count($setting->get_value(), '%fhtitle%') >= 1)
 				{
 					$deprecated_tags[] = '%fhtitle%';
 					$replacement_tags[] = '%htitle%';
 				}
 				if(count($deprecated_tags) > 0)
 				{
-					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->getTitle());
+					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->get_title());
 					$this->messages[] = new message(
 							sprintf(
 									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please use %2$s instead.', 'breadcrumb-navxt'),
@@ -348,6 +348,7 @@ class bcn_admin extends adminKit
 		do_action($this->unique_prefix . '_settings_pre_messages', $this->settings);
 		//Display our messages
 		$this->messages();
+		//FIXME: Looks like after settings migration the settings aren't there?
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php
@@ -425,14 +426,14 @@ class bcn_admin extends adminKit
 						$this->form->textbox($this->settings['Hpost_' . $post_type->name . '_template_no_anchor'], '4', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));
 						if(!in_array($post_type->name, array('page', 'post')))
 						{
-						$optid = mtekk_adminKit::get_valid_id('apost_' . $post_type->name . '_root');
+						$optid = adminKit::get_valid_id('apost_' . $post_type->name . '_root');
 					?>
 					<tr valign="top">
 						<th scope="row">
 							<label for="<?php echo $optid;?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
 						</th>
 						<td>
-							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['apost_' . $post_type->name . '_root']->getValue()));?>
+							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['apost_' . $post_type->name . '_root']->get_value()));?>
 						</td>
 					</tr>
 					<?php
@@ -547,15 +548,15 @@ class bcn_admin extends adminKit
 					<?php
 						$this->form->textbox($this->settings['Hauthor_template'], '6', false, __('The template for author breadcrumbs.', 'breadcrumb-navxt'));
 						$this->form->textbox($this->settings['Hauthor_template_no_anchor'], '4', false, __('The template for author breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
-						$this->form->input_select($this->settings['Eauthor_name'], $this->settings['Eauthor_name']->getAllowedVals(), false, __('display_name uses the name specified in "Display name publicly as" under the user profile the others correspond to options in the user profile.', 'breadcrumb-navxt'));
-						$optid = mtekk_adminKit::get_valid_id('aauthor_root');
+						$this->form->input_select($this->settings['Eauthor_name'], $this->settings['Eauthor_name']->get_allowed_vals(), false, __('display_name uses the name specified in "Display name publicly as" under the user profile the others correspond to options in the user profile.', 'breadcrumb-navxt'));
+						$optid = adminKit::get_valid_id('aauthor_root');
 					?>
 					<tr valign="top">
 						<th scope="row">
 							<label for="<?php echo $optid;?>"><?php esc_html_e('Author Root Page', 'breadcrumb-navxt');?></label>
 						</th>
 						<td>
-							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[aauthor_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['aauthor_root']->getValue()));?>
+							<?php wp_dropdown_pages(array('name' => $this->unique_prefix . '_options[aauthor_root]', 'id' => $optid, 'echo' => 1, 'show_option_none' => __( '&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => $this->settings['aauthor_root']->get_value()));?>
 						</td>
 					</tr>
 				</table>
@@ -578,14 +579,14 @@ class bcn_admin extends adminKit
 						</th>
 						<td>
 							<label>
-								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->settings['blimit_title']->getValue()); ?> />
+								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" <?php checked(true, $this->settings['blimit_title']->get_value()); ?> />
 								<?php printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
 							</label><br />
 							<ul>
 								<li>
 									<label for="amax_title_length">
 										<?php esc_html_e('Max Title Length: ','breadcrumb-navxt');?>
-										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->settings['amax_title_length']->getValue(), ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
+										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->settings['amax_title_length']->get_value(), ENT_COMPAT, 'UTF-8'); ?>" class="small-text" />
 									</label>
 								</li>
 							</ul>

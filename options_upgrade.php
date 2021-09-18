@@ -231,9 +231,4 @@ function bcn_options_upgrade_handler(&$opts, $version, $defaults)
 			unset($this->opt['Sauthor_name']);
 		}
 	}
-	//Set the max title length to 20 if we are not limiting the title and the length was 0
-	if(!$opts['blimit_title'] && $opts['amax_title_length'] == 0)
-	{
-		$opts['amax_title_length'] = 20;
-	}
 }

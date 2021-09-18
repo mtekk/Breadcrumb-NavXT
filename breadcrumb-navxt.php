@@ -109,6 +109,7 @@ class breadcrumb_navxt
 	public function init()
 	{
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
+		add_filter('mtekk_adminkit_allowed_html', array($this, 'allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
 		add_filter('tha_breadcrumb_navigation', array($this, 'tha_compat'), 99);
 		//Only include the REST API if enabled

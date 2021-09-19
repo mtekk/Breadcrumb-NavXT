@@ -84,7 +84,7 @@ class bcn_admin extends adminKit
 		{
 			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting\setting)
 			{
-				$this->settings[$key]->set_value($value);
+				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
 			}
 			else
 			{
@@ -348,7 +348,6 @@ class bcn_admin extends adminKit
 		do_action($this->unique_prefix . '_settings_pre_messages', $this->settings);
 		//Display our messages
 		$this->messages();
-		//FIXME: Looks like after settings migration the settings aren't there?
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php

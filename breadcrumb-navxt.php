@@ -475,7 +475,7 @@ class breadcrumb_navxt
 				if($post_type->hierarchical === true || $post_type->name === 'attachment')
 				{
 					$default_hierarchy_display = true;
-					$hierarchy_type_default = 'BCN_PARENT';
+					$hierarchy_type_default = 'BCN_POST_PARENT';
 				}
 			}
 			$this->settings['bpost_' . $post_type->name . '_hierarchy_display'] = new setting\setting_bool(

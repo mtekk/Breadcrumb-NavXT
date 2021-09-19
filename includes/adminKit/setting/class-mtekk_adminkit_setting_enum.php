@@ -58,6 +58,15 @@ class setting_enum extends setting_base
 		}
 	}
 	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		return 'E' . $this->get_name();
+	}
+	/**
 	 * Setter for the allowed values array
 	 * 
 	 * @param array $allowed_vals Array of allowed values

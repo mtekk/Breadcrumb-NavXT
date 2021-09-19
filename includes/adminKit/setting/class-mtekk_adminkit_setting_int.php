@@ -45,4 +45,13 @@ class setting_int extends setting_base
 	{
 		return (int) $new_value;
 	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		return 'i' . $this->get_name();
+	}
 }

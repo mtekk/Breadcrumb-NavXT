@@ -575,6 +575,7 @@ abstract class adminKit
 		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
 		//Run the update loop
 		$this->settings_update_loop($this->settings, $input);
+		//FIXME: This looks to be proken somehow. From UI it appears we inappropriately don't deal with what's already in the DB (end up nulling it out even though we don't want to)
 		$new_settings = array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check'));
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving

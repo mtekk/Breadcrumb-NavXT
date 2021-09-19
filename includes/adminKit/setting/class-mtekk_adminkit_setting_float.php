@@ -45,4 +45,13 @@ class setting_float extends setting_base
 	{
 		return (float) $new_value;
 	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		return 'f' . $this->get_name();
+	}
 }

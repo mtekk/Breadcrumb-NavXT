@@ -45,4 +45,13 @@ class setting_absint extends setting_base
 	{
 		return absint($new_value);
 	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		return 'a' . $this->get_name();
+	}
 }

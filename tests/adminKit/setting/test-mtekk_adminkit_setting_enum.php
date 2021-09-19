@@ -89,9 +89,12 @@ class adminKitSettingEnumTest extends WP_UnitTestCase {
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->assertFalse($this->settings['empty_ok_setting']->get_allow_empty());
 	}
+	function test_get_opt_name() {
+		$this->assertSame('E' . $this->settings['normal_setting']->get_name(), $this->settings['normal_setting']->get_opt_name());
+	}
 	function test_maybe_update_from_form_input() {
-		$input = array('normal_setting' => 'Some other value', 'normal_settinga' => 'barf', 'empty_string_setting' => '');
-		$input_notthere = array('normal_settinga' => 'barf', 'empty_string_setting' => '');
+		$input = array('Enormal_setting' => 'Some other value', 'Enormal_settinga' => 'barf', 'Eempty_string_setting' => '');
+		$input_notthere = array('Enormal_settinga' => 'barf', 'Eempty_string_setting' => '');
 		$this->settings['normal_setting']->set_allow_empty(true);
 		//Test allowing empty
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);

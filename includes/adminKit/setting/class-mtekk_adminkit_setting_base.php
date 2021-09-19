@@ -71,9 +71,9 @@ abstract class setting_base implements setting
 	 */
 	public function maybe_update_from_form_input($input)
 	{
-		if(isset($input[$this->name]))
+		if(isset($input[$this->get_opt_name()]))
 		{
-			$this->set_value($this->validate($input[$this->name]));
+			$this->set_value($this->validate($input[$this->get_opt_name()]));
 		}
 	}
 }

@@ -61,7 +61,7 @@ class form
 	public function input_hidden(setting $option)
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
 		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />',
 				esc_attr($opt_name),
 				esc_attr($opt_id),
@@ -88,7 +88,7 @@ class form
 	public function input_text(setting $option, $class = 'regular-text', $disable = false, $description = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->get_title());?>
@@ -128,7 +128,7 @@ class form
 	public function input_number(setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
 		$extras = '';
 		if($min !== '')
 		{
@@ -179,7 +179,7 @@ class form
 	public function textbox(setting $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
 		$class .= ' large-text';?>
 		<tr valign="top">
 			<th scope="row">
@@ -218,7 +218,7 @@ class form
 	public function tinymce(setting $option, $height = '3', $disable = false, $description = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
 		$class = 'mtekk_mce';?>
 		<tr valign="top">
 			<th scope="row">
@@ -258,7 +258,7 @@ class form
 	public function input_check(setting $option, $instruction, $disable = false, $description = '', $class = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php echo esc_html($option->get_title()); ?>
@@ -301,7 +301,7 @@ class form
 	public function input_radio(setting $option, $value, $instruction, $disable = false, $class = '')
 	{
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
 		$class .= ' togx';?>
 		<label>
 			<?php
@@ -339,7 +339,7 @@ class form
 			$titles = $values;
 		}
 		$opt_id = form::get_valid_id($option->get_name());
-		$opt_name = $this->unique_prefix . '_options[' . $option->get_name(). ']';?>
+		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';?>
 		<tr valign="top">
 			<th scope="row">
 				<?php $this->label($opt_id, $option->get_title());?>

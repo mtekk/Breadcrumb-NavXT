@@ -74,9 +74,12 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->assertFalse($this->settings['empty_ok_setting']->get_allow_empty());
 	}
+	function test_get_opt_name() {
+		$this->assertSame('b' . $this->settings['normal_setting']->get_name(), $this->settings['normal_setting']->get_opt_name());
+	}
 	function test_maybe_update_from_form_input() {
-		$input = array('normal_setting' => 1, 'normal_settinga' => true);
-		$input_notthere = array('normal_settinga' => true, 'abnormal_setting' => 'sdf');
+		$input = array('bnormal_setting' => 1, 'bnormal_settinga' => true);
+		$input_notthere = array('bnormal_settinga' => true, 'babnormal_setting' => 'sdf');
 		//Test allowing empty
 		$this->settings['normal_setting']->set_allow_empty(true);
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);

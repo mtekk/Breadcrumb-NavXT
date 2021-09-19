@@ -183,10 +183,10 @@ class adminKitTest extends WP_UnitTestCase {
 		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
 		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
-		$input = array('opta' => 'A Value', 'optb' => 'Hello', 'optc' => 'C Value');
+		$input = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
 		$this->admin->call_settings_update_loop($defaults, $input);
 		$this->assertSame('optb', $defaults['Soptb']->get_name());
-		$this->assertSame($input['optb'], $defaults['Soptb']->get_value());
+		$this->assertSame($input['Soptb'], $defaults['Soptb']->get_value());
 	}
 	function test_opts_update_save_only_non_defaults() {
 		$defaults = array();
@@ -195,7 +195,7 @@ class adminKitTest extends WP_UnitTestCase {
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->admin->setSettings($defaults);
 		//Mockup the update request, change optb
-		$_POST['mak_options'] = array('opta' => 'A Value', 'optb' => 'Hello', 'optc' => 'C Value');
+		$_POST['mak_options'] = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
 		//'Logon' for nonce check
 		wp_set_current_user( self::$superadmin_id);
 		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_options-options');

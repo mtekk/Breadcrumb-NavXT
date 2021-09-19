@@ -46,12 +46,21 @@ class setting_bool extends setting_base
 		return (bool) $new_value;
 	}
 	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		return 'b' . $this->get_name();
+	}
+	/**
 	 *
 	 * {@inheritDoc}
 	 * @see mtekk_adminKit_setting::updateFromFormInput()
 	 */
 	public function maybe_update_from_form_input($input)
 	{
-		$this->set_value($this->validate(isset($input[$this->name])));
+		$this->set_value($this->validate(isset($input[$this->get_opt_name()])));
 	}
 }

@@ -74,9 +74,12 @@ class adminKitSettingFloatTest extends WP_UnitTestCase {
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->assertFalse($this->settings['empty_ok_setting']->get_allow_empty());
 	}
+	function test_get_opt_name() {
+		$this->assertSame('f' . $this->settings['normal_setting']->get_name(), $this->settings['normal_setting']->get_opt_name());
+	}
 	function test_maybe_update_from_form_input() {
-		$input = array('normal_setting' => 45.6, 'normal_settinga' => 423);
-		$input_notthere = array('normal_settinga' => 53, 'abnormal_setting' => 33);
+		$input = array('fnormal_setting' => 45.6, 'fnormal_settinga' => 423);
+		$input_notthere = array('fnormal_settinga' => 53, 'fabnormal_setting' => 33);
 		//Test allowing empty
 		$this->settings['normal_setting']->set_allow_empty(true);
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);

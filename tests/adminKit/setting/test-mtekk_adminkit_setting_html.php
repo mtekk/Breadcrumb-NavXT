@@ -74,30 +74,32 @@ class adminKitSettingHTMLTest extends WP_UnitTestCase {
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->assertFalse($this->settings['empty_ok_setting']->get_allow_empty());
 	}
+	function test_get_opt_name() {
+		$this->assertSame('H' . $this->settings['normal_setting']->get_name(), $this->settings['normal_setting']->get_opt_name());
+		$this->assertSame('h' . $this->settings['empty_ok_setting']->get_name(), $this->settings['empty_ok_setting']->get_opt_name());
+	}
 	function test_maybe_update_from_form_input() {
-		$input = array('normal_setting' => 'Some Value', 'normal_settinga' => 'barf', 'empty_string_setting' => '');
-		$input_notthere = array('normal_settinga' => 'barf', 'empty_string_setting' => '');
+		$input = array('Hnormal_setting' => 'Some Value', 'Hnormal_settinga' => 'barf', 'hempty_string_setting' => '', 'hempty_ok_setting' => 'foobar');
+		$input_notthere = array('Hnormal_settinga' => 'barf', 'hempty_string_setting' => '');
 		//Test allowing empty
-		$this->settings['normal_setting']->set_allow_empty(true);
-		$this->settings['normal_setting']->maybe_update_from_form_input($input);
-		$this->assertSame($this->settings['normal_setting']->get_value(), 'Some Value');
+		$this->settings['empty_ok_setting']->maybe_update_from_form_input($input);
+		$this->assertSame($this->settings['empty_ok_setting']->get_value(), 'foobar');
 		//Change the value
-		$this->settings['normal_setting']->set_value('Yep');
-		$this->settings['normal_setting']->maybe_update_from_form_input(array('normal_setting' => ''));
-		$this->assertSame($this->settings['normal_setting']->get_value(), '');
+		$this->settings['empty_ok_setting']->set_value('Yep');
+		$this->settings['empty_ok_setting']->maybe_update_from_form_input(array('hempty_ok_setting' => ''));
+		$this->assertSame($this->settings['empty_ok_setting']->get_value(), '');
 		//Change the value
-		$this->settings['normal_setting']->set_value('Yep');
-		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere);
-		$this->assertSame($this->settings['normal_setting']->get_value(), 'Yep');
+		$this->settings['empty_ok_setting']->set_value('Yep');
+		$this->settings['empty_ok_setting']->maybe_update_from_form_input($input_notthere);
+		$this->assertSame($this->settings['empty_ok_setting']->get_value(), 'Yep');
 		//Test diallowing empty
-		$this->settings['normal_setting']->set_allow_empty(false);
 		//Change the value
 		$this->settings['normal_setting']->set_value('Yep');
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);
 		$this->assertSame($this->settings['normal_setting']->get_value(), 'Some Value');
 		//Change the value
 		$this->settings['normal_setting']->set_value('Yep');
-		$this->settings['normal_setting']->maybe_update_from_form_input(array('normal_setting' => ''));
+		$this->settings['normal_setting']->maybe_update_from_form_input(array('Hnormal_setting' => ''));
 		$this->assertSame($this->settings['normal_setting']->get_value(), 'Yep');
 		//Change the value
 		$this->settings['normal_setting']->set_value('Yep');

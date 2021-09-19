@@ -49,4 +49,21 @@ class setting_string extends setting_base
 		}
 		return esc_html($new_value);
 	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		if($this->allow_empty)
+		{
+			$type = 's';
+		}
+		else
+		{
+			$type = 'S';
+		}
+		return $type . $this->get_name();
+	}
 }

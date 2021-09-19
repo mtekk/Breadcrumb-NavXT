@@ -49,4 +49,21 @@ class setting_html extends setting_base
 		}
 		return wp_kses(stripslashes($new_value), apply_filters('mtekk_adminkit_allowed_html', wp_kses_allowed_html('post')));
 	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
+	 */
+	public function get_opt_name()
+	{
+		if($this->allow_empty)
+		{
+			$type = 'h';
+		}
+		else
+		{
+			$type = 'H';
+		}
+		return $type . $this->get_name();
+	}
 }

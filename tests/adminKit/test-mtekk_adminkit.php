@@ -194,6 +194,8 @@ class adminKitTest extends WP_UnitTestCase {
 		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->admin->setSettings($defaults);
+		//Setup what's in the db
+		$this->admin->update_option('mak_options', array('Sopta' => 'Cool Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value'));
 		//Mockup the update request, change optb
 		$_POST['mak_options'] = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
 		//'Logon' for nonce check
@@ -202,7 +204,7 @@ class adminKitTest extends WP_UnitTestCase {
 		$this->admin->opts_update();
 		//Retrieve the saved options
 		$saved_options = $this->admin->get_option('mak_options');
-		//We should only see the one option that changed value
+		//We should only see the two non-default option values
 		$this->assertSame(array('Soptb' => 'Hello'), $saved_options);
 	}
 	function test_settings_to_opts() {
@@ -211,6 +213,17 @@ class adminKitTest extends WP_UnitTestCase {
 		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), adminKit::settings_to_opts($defaults));
+	}
+	function load_opts_into_settings() {
+		$defaults = array();
+		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
+		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
+		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
+		$opts = array('Sopta' => 'Some Value', 'Soptb' => 'B Value', 'Soptc' => 'Cool Value');
+		$this->admin->load_opts_into_settings($opts);
+		$this->assertSame('Some Value', $defaults['Sopta']->get_value());
+		$this->assertSame('B Value', $defaults['Soptb']->get_value());
+		$this->assertSame('Cool Value', $defaults['Soptc']->get_value());
 	}
 	function test_setting_equal_check() {
 		$defaults = array();

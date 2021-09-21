@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -526,6 +526,21 @@ abstract class adminKit
 		return $opts;
 	}
 	/**
+	 * Loop through the settings and applying opts values if found
+	 * 
+	 * @param array $opts The opts array
+	 */
+	function load_opts_into_settings($opts)
+	{
+		foreach($opts as $key => $value)
+		{
+			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting\setting)
+			{
+				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
+			}
+		}
+	}
+	/**
 	 * Compares two settings by name and value to see if they are equal
 	 * 
 	 * @param \mtekk\adminKit\setting\setting $a
@@ -552,10 +567,9 @@ abstract class adminKit
 	 * 
 	 * The general flow of data is:
 	 * 1) Establish default values
-	 * 2) Merge in current database values
-	 * 3) Merge in updates from webform
-	 * 4) Compute difference between defaults and results of #3
-	 * 5) Save to database the difference generated in #4
+	 * 2) Merge in updates from webform
+	 * 3) Compute difference between defaults and results of #3
+	 * 4) Save to database the difference generated in #4
 	 */
 	function opts_update()
 	{
@@ -563,6 +577,8 @@ abstract class adminKit
 		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
 		//Update local options from database
 		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
@@ -571,11 +587,8 @@ abstract class adminKit
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
-		//Must clone the defaults since PHP normally shallow copies
-		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
 		//Run the update loop
 		$this->settings_update_loop($this->settings, $input);
-		//FIXME: This looks to be proken somehow. From UI it appears we inappropriately don't deal with what's already in the DB (end up nulling it out even though we don't want to)
 		$new_settings = array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check'));
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving

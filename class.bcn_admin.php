@@ -69,14 +69,10 @@ class bcn_admin extends adminKit
 		parent::__construct();
 	}
 	/**
-	 * Establishes default settings for Breadcrumb NavXT
+	 * Loads opts array values into the local settings array
 	 * 
-	 * {@inheritDoc}
-	 * @see mtekk_adminKit::setup_setting_defaults()
-	 * 
-	 * TODO: Since this re-implements features from the top level breadcrumb navxt class, we should do something about its availability
+	 * @param array $opts The opts array
 	 */
-
 	function setting_merge($opts)
 	{
 		$unknown = array();
@@ -132,9 +128,6 @@ class bcn_admin extends adminKit
 		//Save the passed in opts to the object's option array
 		//FIXME: Why do we do this?
 		$this->opt = adminKit::parse_args($opts, $this->opt);
-		//End with resetting up the options
-		//FIXME
-		//breadcrumb_navxt::setup_options($this->opt);
 	}
 	/**
 	 * help action hook function
@@ -155,12 +148,19 @@ class bcn_admin extends adminKit
 		{
 			$general_tab = '<p>' . esc_html__('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
 				'</p><h5>' . esc_html__('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
-				sprintf(esc_html__("%sTutorials and How Tos%s: There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">', '</a>') . '</li><li>' .
-				sprintf(esc_html__('%sOnline Documentation%s: Check out the documentation for more indepth technical information.', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="https://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">', '</a>') . '</li><li>' .
-				sprintf(esc_html__('%sReport a Bug%s: If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="https://wordpress.org/support/plugin/breadcrumb-navxt/">', '</a>') . '</li></ul>' . 
+				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">' . esc_html__('Tutorials and How Tos', 'breadcrumb-navxt') . '</a>: ' .
+				esc_html__("There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt') . '</li><li>' .
+				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT online documentation', 'breadcrumb-navxt') . '" href="https://mtekk.us/code/breadcrumb-navxt/breadcrumb-navxt-doc/">' . esc_html__('Online Documentation', 'breadcrumb-navxt') . '</a>: '.
+				esc_html__('Check out the documentation for more indepth technical information.', 'breadcrumb-navxt')  . '</li><li>' .
+				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT support post for your version.', 'breadcrumb-navxt') . '" href="https://wordpress.org/support/plugin/breadcrumb-navxt/">' . esc_html__('Report a Bug', 'breadcrumb-navxt') . '</a>: ' .
+				esc_html__('If you think you have found a bug, please include your WordPress version and details on how to reproduce the bug.', 'breadcrumb-navxt') . '</li></ul>' . 
+				
 				'<h5>' . esc_html__('Giving Back', 'breadcrumb-navxt') . '</h5><ul><li>' .
-				sprintf(esc_html__('%sDonate%s: Love Breadcrumb NavXT and want to help development? Consider buying the author a beer.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to PayPal to give a donation to Breadcrumb NavXT.', 'breadcrumb-navxt') . '" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">', '</a>') . '</li><li>' .
-				sprintf(esc_html__('%sTranslate%s: Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt'),'<a title="' . esc_attr__('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">', '</a>') . '</li></ul>';
+				'<a title="' . esc_attr__('Go to PayPal to give a donation to Breadcrumb NavXT.', 'breadcrumb-navxt') . '" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">' . 
+				esc_html__('Donate', 'breadcrumb-navxt') . '</a>: ' .
+				esc_html__('Love Breadcrumb NavXT and want to help development? Consider buying the author a beer.', 'breadcrumb-navxt') . '</li><li>' .
+				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">' . esc_html__('Translate', 'breadcrumb-navxt') . '</a>: ' .
+				esc_html__('Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt') . '</li></ul>';
 			
 			$screen->add_help_tab(
 				array(
@@ -421,7 +421,7 @@ class bcn_admin extends adminKit
 						$this->form->textbox($this->settings['Hpost_' . $post_type->name . '_template_no_anchor'], '4', false, sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc));
 						if(!in_array($post_type->name, array('page', 'post')))
 						{
-						$optid = adminKit::get_valid_id('apost_' . $post_type->name . '_root');
+						$optid = form::get_valid_id('apost_' . $post_type->name . '_root');
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -544,7 +544,7 @@ class bcn_admin extends adminKit
 						$this->form->textbox($this->settings['Hauthor_template'], '6', false, __('The template for author breadcrumbs.', 'breadcrumb-navxt'));
 						$this->form->textbox($this->settings['Hauthor_template_no_anchor'], '4', false, __('The template for author breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'));
 						$this->form->input_select($this->settings['Eauthor_name'], $this->settings['Eauthor_name']->get_allowed_vals(), false, __('display_name uses the name specified in "Display name publicly as" under the user profile the others correspond to options in the user profile.', 'breadcrumb-navxt'));
-						$optid = adminKit::get_valid_id('aauthor_root');
+						$optid = form::get_valid_id('aauthor_root');
 					?>
 					<tr valign="top">
 						<th scope="row">

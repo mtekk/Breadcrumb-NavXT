@@ -113,11 +113,7 @@ class bcn_admin extends adminKit
 	{
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
-	}
-	function wp_loaded()
-	{
 		$this->setting_merge($this->opt);
-		parent::wp_loaded();
 	}
 	/**
 	 * Upgrades input options array, sets to $this->opt

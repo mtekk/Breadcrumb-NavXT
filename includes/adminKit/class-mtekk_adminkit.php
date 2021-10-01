@@ -920,10 +920,11 @@ abstract class adminKit
 	 *
 	 * @param object $option
 	 * 
-	 * FIXME: potentially deprecated
+	 * @deprecated 7.0.0
 	 */
 	static public function get_valid_id($option)
 	{
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::get_valid_id');
 		if(is_numeric($option[0]))
 		{
 			return 'p' . $option;

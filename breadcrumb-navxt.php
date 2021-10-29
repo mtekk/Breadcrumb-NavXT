@@ -568,7 +568,7 @@ class breadcrumb_navxt
 				false,
 				true);
 		//Hook for letting others modify our default settings
-		apply_filters('bcn_settings_init', $this->settings);
+		$this->settings = apply_filters('bcn_settings_init', $this->settings);
 	}
 	/**
 	 * Sets up the extended options for any CPTs, taxonomies or extensions

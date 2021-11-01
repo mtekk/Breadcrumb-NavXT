@@ -589,7 +589,7 @@ abstract class adminKit
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
 		$this->settings_update_loop($this->settings, $input);
-		$new_settings = array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check'));
+		$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving
 		$this->opt = adminKit::settings_to_opts($new_settings);

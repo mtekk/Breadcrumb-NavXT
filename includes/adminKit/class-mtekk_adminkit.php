@@ -421,9 +421,12 @@ abstract class adminKit
 	{
 		foreach($settings as $setting)
 		{
-			if(is_array($setting) && !$this->settings_validate($setting))
+			if(is_array($setting))
 			{
-				return false;
+				if(!$this->settings_validate($setting))
+				{
+					return false;
+				}
 			}
 			else if($setting->get_value() !== $setting->validate($setting->get_value()))
 			{
@@ -521,7 +524,14 @@ abstract class adminKit
 		$opts = array();
 		foreach ($settings as $key => $setting)
 		{
-			$opts[$key] = $setting->get_value();
+			if(is_array($setting))
+			{
+				$opts[$key] = adminKit::settings_to_opts($setting);
+			}
+			else
+			{
+				$opts[$key] = $setting->get_value();
+			}
 		}
 		return $opts;
 	}

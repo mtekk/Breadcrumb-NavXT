@@ -82,6 +82,16 @@ class bcn_admin extends adminKit
 			{
 				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
 			}
+			else if(isset($this->settings[$key]) && is_array($this->settings[$key]) && is_array($value))
+			{
+				foreach($value as $subkey => $subvalue)
+				{
+					if(isset($this->settings[$key][$subkey]) && $this->settings[$key][$subkey]instanceof setting\setting)
+					{
+						$this->settings[$key][$subkey]->set_value($this->settings[$key][$subkey]->validate($subvalue));
+					}
+				}
+			}
 			else
 			{
 				$unknown[] = $key;

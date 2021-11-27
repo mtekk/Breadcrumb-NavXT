@@ -17,6 +17,8 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 namespace mtekk\adminKit;
+use mtekk\adminKit\setting\setting;
+
 require_once( __DIR__ . '/../block_direct_access.php');
 //Include message class
 if(!class_exists('message'))
@@ -453,9 +455,12 @@ abstract class adminKit
 	{
 		foreach($settings as $key => $setting)
 		{
-			if(isset($imput[$key]) && is_array($setting))
+			if(is_array($setting))
 			{
-				$this->settings_update_loop($settings[$key], $input[$key]);
+				if(isset($input[$key]))
+				{
+					$this->settings_update_loop($settings[$key], $input[$key]);
+				}
 			}
 			else
 			{
@@ -557,8 +562,23 @@ abstract class adminKit
 	 * @param \mtekk\adminKit\setting\setting $b
 	 * @return number
 	 */
-	function setting_equal_check(setting\setting $a, setting\setting $b)
+	function setting_equal_check($a, $b)
 	{
+		if(is_array($a) || is_array($b))
+		{
+			foreach($a as $key=>$value)
+			{
+				if($value instanceof setting && isset($b[$key]) && $b[$key] instanceof setting)
+				{
+					return $this->setting_equal_check($value, $b[$key]);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			return -1;
+		}
 		if($a->get_name() === $b->get_name() && $a->get_value() === $b->get_value())
 		{
 			return 0;
@@ -571,6 +591,14 @@ abstract class adminKit
 		{
 			return -1;
 		}
+	}
+	static function setting_cloner($setting)
+	{
+		if(is_array($setting))
+		{
+			return array_map('mtekk\adminKit\adminKit::setting_cloner', $setting);
+		}
+		return clone $setting;
 	}
 	/**
 	 * Updates the database settings from the webform
@@ -588,7 +616,7 @@ abstract class adminKit
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
 		//Must clone the defaults since PHP normally shallow copies
-		$default_settings = array_map(function($obj){return clone $obj;}, $this->settings);
+		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 		//Update local options from database
 		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);

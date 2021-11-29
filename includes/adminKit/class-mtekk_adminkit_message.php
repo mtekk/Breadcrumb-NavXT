@@ -16,8 +16,9 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require_once(dirname(__FILE__) . '/block_direct_access.php');
-class mtekk_adminKit_message
+namespace mtekk\adminKit;
+require_once( __DIR__ . '/../block_direct_access.php');
+class message
 {
 	const version = '1.0.0';
 	protected $type = '';

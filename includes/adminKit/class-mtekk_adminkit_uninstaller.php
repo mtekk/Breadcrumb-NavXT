@@ -16,7 +16,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require_once(dirname(__FILE__) . '/block_direct_access.php');
+require_once( __DIR__ . '/../block_direct_access.php');
 /**
  * Breadcrumb NavXT abstract plugin uninstaller class
  * 
@@ -34,7 +34,7 @@ abstract class mtekk_adminKit_uninstaller
 	 */
 	protected function _get_plugin_path()
 	{
-		return sprintf('%s/%s', dirname(dirname(__FILE__)), $this->plugin_basename);		
+		return sprintf('%s/%s', dirname(dirname(__DIR__)), $this->plugin_basename);		
 	}
 
 	/**

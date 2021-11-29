@@ -181,7 +181,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame(array('post', 'post-page') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
 
 		//Test an attachment
-		$attpida = self::factory()->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => $popid));
+		$attpida = self::factory()->post->create(array('post_title' => 'Test Attahementa', 'post_type' => 'attachment', 'post_parent' => self::$pids[0]));
 		$attpidb = self::factory()->post->create(array('post_title' => 'Test Attahementb', 'post_type' => 'attachment', 'post_parent' => $papid));
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -189,13 +189,24 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$post = get_post($attpida);
 		//Call do_post on the post attachement
 		$this->breadcrumb_trail->call('do_post', array($post));
-		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 		$this->assertSame(array('post', 'post-attachment', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
-		$this->assertSame('Test Post' , $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_the_title(self::$pids[0]), $this->breadcrumb_trail->breadcrumbs[1]->get_title());
 		$this->assertSame(array('post', 'post-post') , $this->breadcrumb_trail->breadcrumbs[1]->get_types());
-		$this->assertSame('Uncategorized' , $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[5])->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term_link(self::$tids[5]), $this->breadcrumb_trail->breadcrumbs[2]->get_url());
 		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[2]->get_types());
+		$this->assertSame(get_term(self::$tids[7])->name, $this->breadcrumb_trail->breadcrumbs[3]->get_title());
+		$this->assertSame(get_term_link(self::$tids[7]), $this->breadcrumb_trail->breadcrumbs[3]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[3]->get_types());
+		$this->assertSame(get_term(self::$tids[8])->name, $this->breadcrumb_trail->breadcrumbs[4]->get_title());
+		$this->assertSame(get_term_link(self::$tids[8]), $this->breadcrumb_trail->breadcrumbs[4]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[4]->get_types());
+		$this->assertSame(get_term(self::$tids[6])->name, $this->breadcrumb_trail->breadcrumbs[5]->get_title());
+		$this->assertSame(get_term_link(self::$tids[6]), $this->breadcrumb_trail->breadcrumbs[5]->get_url());
+		$this->assertSame(array('taxonomy', 'category') , $this->breadcrumb_trail->breadcrumbs[5]->get_types());
+		
 		$this->breadcrumb_trail->breadcrumbs = array();
 		$post = get_post($attpidb);
 		//Ensure we have 0 breadcrumbs from the do_root portion
@@ -460,17 +471,164 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			)
 		);
 	}
+	function test_do_archive_by_post_type()
+	{
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		////
+		//Nominal test
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Nominal test with bcurrent_item_linked set true
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = true;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with forced link
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with is_paged
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = false;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with is_paged and bpaged_display set true
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->opt['bcurrent_item_linked'] = false;
+		$this->breadcrumb_trail->opt['bpaged_display'] = true;
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, true));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive', 'current-item') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertTrue($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+		////
+		//Test with all optional parameters set false
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$cpt_inst = get_post($pidb);
+		$this->breadcrumb_trail->call('do_archive_by_post_type', array('bureaucrat', false, false, false));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertFalse($this->breadcrumb_trail->breadcrumbs[0]->is_linked());
+	}
+	function test_maybe_do_archive_by_post_type()
+	{
+		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
+		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
+		$tidd = self::factory()->term->create(array('name' => 'Test House', 'taxonomy' => 'family'));
+		//Assign the terms to their posts
+		wp_set_object_terms($pida, array($tidd), 'family');
+		////
+		//Test CPT post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Check to ensure we got the breadcrumbs we wanted
+		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		////
+		//Test CPT post with archive display disabled
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = false;
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('bureaucrat'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test "Post" post
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$post_inst = get_post(self::$pids[0]);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('post'));
+		//Ensure we have 0 breadcrumbs
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		////
+		//Test CPT post w/o archive
+		////
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+		$this->breadcrumb_trail->call('maybe_do_archive_by_post_type', array('autocrat'));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
+	}
 	function test_type_archive()
 	{
 		$pidc = self::factory()->post->create(array('post_title' => 'Test Czar', 'post_type' => 'czar'));
 		$this->breadcrumb_trail->opt['bpost_czar_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_czar_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_czar_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$pidb = self::factory()->post->create(array('post_title' => 'Test Bureaucrat', 'post_type' => 'bureaucrat'));
 		$this->breadcrumb_trail->opt['bpost_bureaucrat_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_bureaucrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$pida = self::factory()->post->create(array('post_title' => 'Test Autocrat', 'post_type' => 'autocrat'));
 		$this->breadcrumb_trail->opt['bpost_autocrat_archive_display'] = true;
 		$this->breadcrumb_trail->opt['Hpost_autocrat_template'] = bcn_breadcrumb::get_default_template();
+		$this->breadcrumb_trail->opt['Hpost_autocrat_template_no_anchor'] = bcn_breadcrumb::default_template_no_anchor;
 		$tidb = self::factory()->term->create(array('name' => 'Test Party', 'taxonomy' => 'party'));
 		$tidc = self::factory()->term->create(array('name' => 'Test Non Associated', 'taxonomy' => 'nonassociated'));
 		$tidd = self::factory()->term->create(array('name' => 'Test House', 'taxonomy' => 'family'));
@@ -488,7 +646,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test CPT post
 		////
@@ -500,7 +658,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Bureaucrats', 'bureaucrat'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-bureaucrat-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test CPT post with archive display disabled
 		////
@@ -543,7 +701,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
 		//Check to ensure we got the breadcrumbs we wanted
 		$this->assertSame(apply_filters('post_type_archive_title', 'Czars', 'czar'), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
-		$this->assertSame(array('post', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
+		$this->assertSame(array('archive', 'post-czar-archive') , $this->breadcrumb_trail->breadcrumbs[0]->get_types());
 		////
 		//Test with taxonomy that is unaffiliated with a post type
 		////
@@ -980,6 +1138,38 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertEquals($paid[1], $this->breadcrumb_trail->breadcrumbs[0]->get_id());
 		$this->assertSame(get_the_title($paid[1]), $this->breadcrumb_trail->breadcrumbs[0]->get_title());
 	}
+	function test_term_parents()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('term_parents', array(get_term(self::$tids[7], 'category')));
+		//Ensure we have 3 breadcrumbs
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+	}
+	function test_do_archive_by_term()
+	{
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('do_archive_by_term', array(get_term(self::$tids[7], 'category')));
+		//Ensure we have 3 breadcrumbs
+		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[2]->get_title());
+		$this->assertSame(get_term(self::$tids[8], 'category')->name, $this->breadcrumb_trail->breadcrumbs[1]->get_title());
+		$this->assertSame(get_term(self::$tids[7], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		
+		//A test with a term w/o parents
+		$this->breadcrumb_trail->breadcrumbs = array();
+		$this->breadcrumb_trail->call('do_archive_by_term', array(get_term(self::$tids[6], 'category')));
+		//Ensure we have 1 breadcrumb
+		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);
+		//Look at each breadcrumb
+		$this->assertSame(get_term(self::$tids[6], 'category')->name, $this->breadcrumb_trail->breadcrumbs[0]->get_title());
+		
+		//TODO add tests for the is_paged parameter
+	}
 	/**
 	 * Test for when the CPT root setting is a non-integer see #148
 	 */
@@ -1183,6 +1373,12 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertJsonStringEqualsJsonString(
 			'[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
 			json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
+		//Now test the JSON-LD loop in reverse
+		$breadcrumbs = $this->breadcrumb_trail->call('json_ld_loop', array(true));
+		//Now check our work
+		$this->assertJsonStringEqualsJsonString(
+				'[{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]',
+				json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display_json_ld()
 	{
@@ -1203,7 +1399,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_json_ld', array(true));
 		//Now check our work
 		$this->assertJsonStringEqualsJsonString(
-			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
+			'{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"item":{"@id":"http://flowissues.com/test/a-prepost-post","name":"A Preposterous Post"}},{"@type":"ListItem","position":1,"item":{"@id":"http://flowissues.com/test","name":"A Test"}}]}',
 			json_encode($breadcrumb_string, JSON_UNESCAPED_SLASHES));
 	}
 	function test_display()
@@ -1221,6 +1417,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Check the resulting trail
 		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false));
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
+		//Now try reversing
+		$breadcrumb_string = $this->breadcrumb_trail->call('display', array(false, true));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span>', $breadcrumb_string);
 		//Now remove a breadcrumb
 		unset($this->breadcrumb_trail->breadcrumbs[1]);
 		//Check that we still have separators where we expect them
@@ -1237,11 +1436,11 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->breadcrumb_trail->call('add', array($breadcrumba));
 		$breadcrumbb = new bcn_breadcrumb("A Test", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test', 102, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbb));
-		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 102, true);
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 104, true);
 		$this->breadcrumb_trail->call('add', array($breadcrumbc));
 		$this->breadcrumb_trail->call('order', array(false));
 		//Test without a filter
-		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<ul>%1$s</ul>', ' &gt; '));
 		$this->assertSame('<li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
 		//Add our filter
 		add_filter('bcn_display_attribute_array', function($attrib_array, $types, $id){
@@ -1250,7 +1449,30 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			return $attrib_array;
 		}, 10, 3);
 		//Test with filtered result
-		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array(false, false, '<li%3$s>%1$s</li>'));
+			$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
 		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
+	}
+	/**
+	 * display_loop second dimension testing, gets its own test
+	 */
+	function test_display_loop_2nddim()
+	{
+		//Clear any breadcrumbs that may be lingering
+		$this->breadcrumb_trail->breadcrumbs = array();
+		//Add some breadcrumbs to the trail
+		//Setup our three breadcrumbs and add them to the breadcrumbs array
+		$breadcrumba = new bcn_breadcrumb("A Preposterous Post", bcn_breadcrumb::default_template_no_anchor, array('post', 'post-post', 'current-item'), 'http://flowissues.com/test/a-prepost-post', 101);
+		$this->breadcrumb_trail->call('add', array($breadcrumba));
+		$breadcrumbb1 = new bcn_breadcrumb("A Test Sibbling 1", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test1', 102, true);
+		$breadcrumbb2 = new bcn_breadcrumb("A Test Sibbling 2", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com/test2', 103, true);
+		$this->breadcrumb_trail->breadcrumbs[] = array($breadcrumbb1, $breadcrumbb2);
+		$breadcrumbc = new bcn_breadcrumb("Home", bcn_breadcrumb::get_default_template(), array('post', 'post-post'), 'http://flowissues.com', 104, true);
+		$this->breadcrumb_trail->call('add', array($breadcrumbc));
+		$this->breadcrumb_trail->call('order', array(false));
+		//Test using list elements/no separators
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
+		$this->assertSame('<li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li><ul><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span></li><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></li></ul></li><li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '%1$s%2$s', '<span>%1$s</span>%2$s', ' &gt; '));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span>, <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
 	}
 }

@@ -141,6 +141,12 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we have the expected URL in the output
 		$this->assertContains('http://flowissues.com/testurl1', $breadcrumb_string_linked1);
 	}
+	function test_get_url() {
+		$this->breadcrumb->set_url('http://flowissues.com/code');
+		$this->assertSame('http://flowissues.com/code', $this->breadcrumb->get_url());
+		$this->breadcrumb->set_url('http://flowissues.com/food');
+		$this->assertSame('http://flowissues.com/food', $this->breadcrumb->get_url());
+	}
 	function test_set_template() {
 		//Ensure the raw setup is as expected
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);
@@ -161,6 +167,12 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Ensure the raw setup is as expected
 		$breadcrumb_string_unlinked = $this->breadcrumb->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><span property="name" class="%s">%s</span><meta property="url" content="%s"><meta property="position" content="%d"></span>', $breadcrumb_string_unlinked);
+	}
+	function test_is_linked() {
+		$this->breadcrumb->set_linked(false);
+		$this->assertFalse($this->breadcrumb->is_linked());
+		$this->breadcrumb->set_linked(true);
+		$this->assertTrue($this->breadcrumb->is_linked());
 	}
 	function test_set_linked_filter() {
 		$breadcrumb_linked1 = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);

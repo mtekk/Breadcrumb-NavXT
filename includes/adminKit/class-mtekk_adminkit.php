@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,15 +16,58 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-require_once(dirname(__FILE__) . '/block_direct_access.php');
-//Include admin base class
-if(!class_exists('mtekk_adminKit_message'))
+namespace mtekk\adminKit;
+use mtekk\adminKit\setting\setting;
+
+require_once( __DIR__ . '/../block_direct_access.php');
+//Include message class
+if(!class_exists('message'))
 {
-	require_once(dirname(__FILE__) . '/class.mtekk_adminkit_message.php');
+	require_once(__DIR__ . '/class-mtekk_adminkit_message.php');
 }
-abstract class mtekk_adminKit
+//Include setting class
+if(!class_exists('setting\setting_absint'))
 {
-	const version = '2.1.1';
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_absint.php');
+}
+//Include setting class
+if(!class_exists('setting\setting_bool'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_bool.php');
+}
+//Include setting class
+if(!class_exists('setting\setting_enum'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_enum.php');
+}
+//Include setting class
+if(!class_exists('setting\setting_float'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_float.php');
+}
+//Include setting class
+if(!class_exists('settingsetting_\html'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_html.php');
+}
+//Include setting class
+if(!class_exists('setting\setting_int'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_int.php');
+}
+//Include setting class
+if(!class_exists('setting\setting_string'))
+{
+	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_string.php');
+}
+//Include from class
+if(!class_exists('form'))
+{
+	require_once(__DIR__ . '/class-mtekk_adminkit_form.php');
+}
+abstract class adminKit
+{
+	const version = '2.9.50';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -36,6 +79,8 @@ abstract class mtekk_adminKit
 	protected $message;
 	protected $support_url;
 	protected $allowed_html;
+	protected $settings = array();
+	protected $form;
 	function __construct()
 	{
 		$this->message = array();
@@ -49,6 +94,7 @@ abstract class mtekk_adminKit
 		//Initilizes l10n domain
 		$this->local();
 		add_action('wp_loaded', array($this, 'wp_loaded'));
+		$this->form = new form($this->unique_prefix);
 		//Register Help Output
 		//add_action('add_screen_help_and_options', array($this, 'help'));
 	}
@@ -62,7 +108,7 @@ abstract class mtekk_adminKit
 	 */
 	function get_admin_class_version()
 	{
-		return mtekk_adminKit::version;
+		return adminKit::version;
 	}
 	/**
 	 * Checks if the administrator has the access capability, and adds it if they don't
@@ -188,19 +234,17 @@ abstract class mtekk_adminKit
 			$suffix = '.min';
 		}
 		//Register JS for more permanently dismissing messages
-		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
+		wp_register_script('mtekk_adminkit_messages', plugins_url('/mtekk_adminkit_messages' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_messages' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for enable/disable settings groups
-		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
+		wp_register_script('mtekk_adminkit_engroups', plugins_url('/mtekk_adminkit_engroups' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_engroups' . $suffix . '.js'), array('jquery'), self::version, true);
 		//Register JS for tabs
-		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
+		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
 		//Register CSS for tabs
-		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/mtekk_adminkit_tabs' . $suffix . '.css'));
+		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.css'));
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
 		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
-		//Run the opts fix filter
-		$this->opts_fix($this->opt);
 		add_action('wp_ajax_mtekk_admin_message_dismiss', array($this, 'dismiss_message'));
 	}
 	/**
@@ -267,10 +311,13 @@ abstract class mtekk_adminKit
 	 */
 	function is_installed()
 	{
-		
+		$opts = $this->get_option($this->unique_prefix . '_options');
+		return is_array($opts);
 	}
 	/** 
 	 * This sets up and upgrades the database settings, runs on every activation
+	 * 
+	 * FIXME: seems there is a lot of very similar code in opts_upgrade_wrapper
 	 */
 	function install()
 	{
@@ -281,11 +328,9 @@ abstract class mtekk_adminKit
 		//If there are no settings, copy over the default settings
 		if(!is_array($opts))
 		{
-			//Grab defaults from the object
-			$opts = $this->opt;
-			//Add the options
-			$this->add_option($this->unique_prefix . '_options', $opts);
-			$this->add_option($this->unique_prefix . '_options_bk', $opts, '', 'no');
+			//Add the options, we only store differences from defaults now, so start with blank array
+			$this->add_option($this->unique_prefix . '_options', array());
+			$this->add_option($this->unique_prefix . '_options_bk', array(), '', 'no');
 			//Add the version, no need to autoload the db version
 			$this->update_option($this->unique_prefix . '_version', $this::version, 'no');
 		}
@@ -332,7 +377,7 @@ abstract class mtekk_adminKit
 		if($version && version_compare($version, $this::version, '<') && is_array($this->opt))
 		{
 			//Throw an error since the DB version is out of date
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Your settings are for an older version of this plugin and need to be migrated.', $this->identifier)
 				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Migrate now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
@@ -342,25 +387,25 @@ abstract class mtekk_adminKit
 		else if($version && version_compare($version, $this::version, '>') && is_array($this->opt))
 		{
 			//Let the user know that their settings are for a newer version
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Your settings are for a newer version of this plugin.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Your settings are for a newer version of this plugin.', $this->identifier)
 				. $this->admin_anchor('upgrade', __('Migrate the settings now.', $this->identifier), __('Attempt back migration now.', $this->identifier)), 'warning');
 			//Output any messages that there may be
 			$this->messages();
 			return true;
 		}
-		else if(!is_array($this->opt))
+		else if(!is_array($this->settings))
 		{
 			//Throw an error since it appears the options were never registered
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Your plugin install is incomplete.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Your plugin install is incomplete.', $this->identifier)
 				. $this->admin_anchor('upgrade', __('Load default settings now.', $this->identifier), __('Complete now.', $this->identifier)), 'error');
 			//Output any messages that there may be
 			$this->messages();
 			return false;
 		}
-		else if(!$this->opts_validate($this->opt))
+		else if(!$this->settings_validate($this->settings))
 		{
 			//Throw an error since it appears the options contain invalid data
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('One or more of your plugin settings are invalid.', $this->identifier)
+			$this->messages[] = new message(esc_html__('One or more of your plugin settings are invalid.', $this->identifier)
 				. $this->admin_anchor('fix', __('Attempt to fix settings now.', $this->identifier), __('Fix now.', $this->identifier)), 'error');
 			//Output any messages that there may be
 			$this->messages();
@@ -369,19 +414,28 @@ abstract class mtekk_adminKit
 		return true;
 	}
 	/**
-	 * A prototype function. End user should override if they need this feature.
-	 */
-	function opts_validate(&$opts)
-	{
-		return true;
-	}
-	/**
-	 * A prototype function. End user should override if they need this feature.
+	 * Run through all of the settings, check if the value matches the validated value
 	 * 
-	 * @param array $opts
+	 * @param array $settings The settings array
+	 * @return boolean
 	 */
-	function opts_fix(&$opts)
+	function settings_validate(array &$settings)
 	{
+		foreach($settings as $setting)
+		{
+			if(is_array($setting))
+			{
+				if(!$this->settings_validate($setting))
+				{
+					return false;
+				}
+			}
+			else if($setting->get_value() !== $setting->validate($setting->get_value()))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	/**
 	 * Synchronizes the backup options entry with the current options entry
@@ -392,87 +446,27 @@ abstract class mtekk_adminKit
 		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'));
 	}
 	/**
-	 * Runs recursivly through the opts array, sanitizing and merging in updates from the $input array
+	 * The new, simpler settings update loop, handles the new settings array and replaces the old opts_update_loop
 	 * 
-	 * @param array $opts good, clean array
-	 * @param array $input unsanitzed input array, not trusted at all
-	 * @todo This function should probably get a filter thrown within it to be more extensible
+	 * @param array $settings
+	 * @param array $input
 	 */
-	protected function opts_update_loop(&$opts, $input)
+	protected function settings_update_loop(&$settings, $input)
 	{
-		//Loop through all of the existing options (avoids random setting injection)
-		foreach($opts as $option => $value)
+		foreach($settings as $key => $setting)
 		{
-			//If we have an array, dive into another recursive loop
-			if(isset($input[$option]) && is_array($value))
+			if(is_array($setting))
 			{
-				$this->opts_update_loop($opts[$option], $input[$option]);
-			}
-			//We must check for unset settings, but booleans are ok to be unset
-			else if(isset($input[$option]) || $option[0] == 'b')
-			{
-				switch($option[0])
+				if(isset($input[$key]))
 				{
-					//Handle the boolean options
-					case 'b':
-						$opts[$option] = isset($input[$option]);
-						break;
-					//Handle the integer options
-					case 'i':
-						$opts[$option] = (int) $input[$option];
-						break;
-					//Handle the absolute integer options
-					case 'a':
-						$opts[$option] = (int) abs($input[$option]);
-						break;
-					//Handle the floating point options
-					case 'f':
-						$opts[$option] = (float) $input[$option];
-						break;
-					//Handle the HTML options
-					case 'h':
-						$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
-						break;
-					//Handle the HTML options that must not be null
-					case 'H':
-						if(isset($input[$option]))
-						{
-							$opts[$option] = wp_kses(stripslashes($input[$option]), $this->allowed_html);
-						}
-						break;
-					//Handle the text options that must not be null
-					case 'S':
-						if(isset($input[$option]))
-						{
-							$opts[$option] = esc_html($input[$option]);
-						}
-						break;
-					//Deal with strings that can be null
-					case 's':
-						$opts[$option] = esc_html($input[$option]);
-						break;
-					//Deal with enumerated types
-					case 'E':
-						$opts[$option] = $this->opts_sanitize_enum($input[$option], $option);
-						break;
-					//By default we have nothing to do, allows for internal settings
-					default:
-						break;
+					$this->settings_update_loop($settings[$key], $input[$key]);
 				}
 			}
+			else
+			{
+				$setting->maybe_update_from_form_input($input);
+			}
 		}
-	}
-	/**
-	 * Simple sanitization function for enumerated types, end users should overload this
-	 * with something more usefull
-	 * 
-	 * @param string $value The input value from the form
-	 * @param string $option The option name
-	 * @return string The sanitized enumerated string
-	 */
-	private function opts_sanitize_enum($value, $option)
-	{
-		return esc_html($value);
 	}
 	/**
 	 * A better version of parse_args, will recrusivly follow arrays
@@ -497,7 +491,7 @@ abstract class mtekk_adminKit
 		}
 		if(is_array($defaults))
 		{
-			return mtekk_adminKit::array_merge_recursive($defaults, $r);
+			return adminKit::array_merge_recursive($defaults, $r);
 		}
 		return $r;
 	}
@@ -515,7 +509,7 @@ abstract class mtekk_adminKit
 		{
 			if(array_key_exists($key, $arg1) && is_array($value))
 			{
-				$arg1[$key] = mtekk_adminKit::array_merge_recursive($arg1[$key], $value);
+				$arg1[$key] = adminKit::array_merge_recursive($arg1[$key], $value);
 			}
 			else
 			{
@@ -525,17 +519,95 @@ abstract class mtekk_adminKit
 		return $arg1;
 	}
 	/**
-	 * An action that fires just before the options backup, use to add in dynamically detected options
+	 * Extracts settings values to form opts array, for old options compatibility
 	 * 
-	 * @param array $opts the options array, passed in by reference
-	 * @return null
+	 * @param array $settings The settings array
+	 * @return array
 	 */
-	function opts_update_prebk(&$opts)
+	static function settings_to_opts($settings)
 	{
-		//Just a prototype function
+		$opts = array();
+		foreach ($settings as $key => $setting)
+		{
+			if(is_array($setting))
+			{
+				$opts[$key] = adminKit::settings_to_opts($setting);
+			}
+			else
+			{
+				$opts[$key] = $setting->get_value();
+			}
+		}
+		return $opts;
+	}
+	/**
+	 * Loop through the settings and applying opts values if found
+	 * 
+	 * @param array $opts The opts array
+	 */
+	function load_opts_into_settings($opts)
+	{
+		foreach($opts as $key => $value)
+		{
+			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting\setting)
+			{
+				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
+			}
+		}
+	}
+	/**
+	 * Compares two settings by name and value to see if they are equal
+	 * 
+	 * @param \mtekk\adminKit\setting\setting $a
+	 * @param \mtekk\adminKit\setting\setting $b
+	 * @return number
+	 */
+	function setting_equal_check($a, $b)
+	{
+		if(is_array($a) || is_array($b))
+		{
+			foreach($a as $key=>$value)
+			{
+				if($value instanceof setting && isset($b[$key]) && $b[$key] instanceof setting)
+				{
+					return $this->setting_equal_check($value, $b[$key]);
+				}
+				else
+				{
+					return -1;
+				}
+			}
+			return -1;
+		}
+		if($a->get_name() === $b->get_name() && $a->get_value() === $b->get_value())
+		{
+			return 0;
+		}
+		else if($a->get_name() === $b->get_name() && $a->get_value() > $b->get_value())
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	static function setting_cloner($setting)
+	{
+		if(is_array($setting))
+		{
+			return array_map('mtekk\adminKit\adminKit::setting_cloner', $setting);
+		}
+		return clone $setting;
 	}
 	/**
 	 * Updates the database settings from the webform
+	 * 
+	 * The general flow of data is:
+	 * 1) Establish default values
+	 * 2) Merge in updates from webform
+	 * 3) Compute difference between defaults and results of #3
+	 * 4) Save to database the difference generated in #4
 	 */
 	function opts_update()
 	{
@@ -543,46 +615,66 @@ abstract class mtekk_adminKit
 		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 		//Update local options from database
-		$this->opt = $this::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
-		$this->opts_update_prebk($this->opt);
+		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
+		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run the update loop
-		$this->opts_update_loop($this->opt, $input);
+		$this->settings_update_loop($this->settings, $input);
+		$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+		//FIXME: Eventually we'll save the object array, but not today
+		//Convert to opts array for saving
+		$this->opt = adminKit::settings_to_opts($new_settings);
 		//Commit the option changes
 		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
 		//Check if known settings match attempted save
-		if($updated && count(array_diff_key($input, $this->opt)) == 0)
+		if($updated && count(array_diff_key($input, $this->settings)) == 0)
 		{
 			//Let the user know everything went ok
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully saved.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Settings successfully saved.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
-		else if(!$updated && count(array_diff_key($opt_prev, $this->opt)) == 0)
+		else if(!$updated && count(array_diff_key($opt_prev, $this->settings)) == 0)
 		{
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings did not change, nothing to save.', $this->identifier), 'info');
+			$this->messages[] = new message(esc_html__('Settings did not change, nothing to save.', $this->identifier), 'info');
 		}
 		else if(!$updated)
 		{
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings were not saved.', $this->identifier), 'error');
+			$this->messages[] = new message(esc_html__('Settings were not saved.', $this->identifier), 'error');
 		}
 		else
 		{
 			//Let the user know the following were not saved
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Some settings were not saved.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Some settings were not saved.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options save.', $this->identifier), __('Undo', $this->identifier)), 'warning');
 			$temp = esc_html__('The following settings were not saved:', $this->identifier);
-			foreach(array_diff_key($input, $this->opt) as $setting => $value)
+			foreach(array_diff_key($input, $this->settings) as $setting => $value)
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->messages[] = new mtekk_adminKit_message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support forum.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . '">', '</a>'), 'info');
+			$this->messages[] = new message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support forum.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . '">', '</a>'), 'info');
 		}
 		add_action('admin_notices', array($this, 'messages'));
+	}
+	/**
+	 * Retrieves the settings from database and exports as JSON
+	 */
+	function settings_export()
+	{
+		//TODO: implement this, see #239
+	}
+	/**
+	 * Imports JSON settings into database
+	 */
+	function settings_inport()
+	{
+		//TODO: implement this, see #239
 	}
 	/**
 	 * Exports a XML options document
@@ -683,13 +775,13 @@ abstract class mtekk_adminKit
 			//Commit the loaded options to the database
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Everything was successful, let the user know
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
+			$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		}
 		else
 		{
 			//Throw an error since we could not load the file for various reasons
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
+			$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
 		}
 		//Reset to the default error handler after we're done
 		restore_error_handler();
@@ -706,9 +798,9 @@ abstract class mtekk_adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', $this->opt);
+		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings));
 		//Reset successful, let the user know
-		$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
+		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -726,7 +818,7 @@ abstract class mtekk_adminKit
 		//Set the backup options to the undone options
 		$this->update_option($this->unique_prefix . '_options_bk', $opt);
 		//Send the success/undo message
-		$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
+		$this->messages[] = new message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -746,6 +838,8 @@ abstract class mtekk_adminKit
 	}
 	/**
 	 * Forces a database settings upgrade
+	 * 
+	 * FIXME: seems there is a lot of very similar code in install
 	 */
 	function opts_upgrade_wrapper()
 	{
@@ -762,14 +856,14 @@ abstract class mtekk_adminKit
 			//Store the options
 			$this->update_option($this->unique_prefix . '_options', $this->opt);
 			//Send the success message
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
+			$this->messages[] = new message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
 		}
 		else
 		{
 			//Run the install script
 			$this->install();
 			//Send the success message
-			$this->messages[] = new mtekk_adminKit_message(esc_html__('Default settings successfully installed.', $this->identifier), 'success');
+			$this->messages[] = new message(esc_html__('Default settings successfully installed.', $this->identifier), 'success');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -793,7 +887,7 @@ abstract class mtekk_adminKit
 		//Grab the submitted UID
 		$uid = esc_attr($_POST['uid']);
 		//Create a dummy message, with the discovered UID
-		$message = new mtekk_adminKit_message('', '', true, $uid);
+		$message = new message('', '', true, $uid);
 		//Dismiss the message
 		$message->dismiss();
 		wp_die();
@@ -863,9 +957,12 @@ abstract class mtekk_adminKit
 	 * Returns a valid xHTML element ID
 	 *
 	 * @param object $option
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	static public function get_valid_id($option)
 	{
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::get_valid_id');
 		if(is_numeric($option[0]))
 		{
 			return 'p' . $option;
@@ -900,10 +997,13 @@ abstract class mtekk_adminKit
 	 * This will output a well formed hidden option
 	 *
 	 * @param string $option
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_hidden($option)
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_hidden');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		printf('<input type="hidden" name="%1$s" id="%2$s" value="%3$s" />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]));
 	}
@@ -912,9 +1012,12 @@ abstract class mtekk_adminKit
 	 *
 	 * @param string $opt_id
 	 * @param string $label
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function label($opt_id, $label)
 	{
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::label');
 		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), $label);
 	}
 	/**
@@ -925,10 +1028,13 @@ abstract class mtekk_adminKit
 	 * @param string $class (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_text');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		if($disable)
 		{
@@ -957,10 +1063,13 @@ abstract class mtekk_adminKit
 	 * @param int|string $min (optional) 
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_number');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$extras = '';
 		if($min !== '')
@@ -999,10 +1108,13 @@ abstract class mtekk_adminKit
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::textbox');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$class .= ' large-text';
 		if($disable)
@@ -1029,10 +1141,13 @@ abstract class mtekk_adminKit
 	 * @param string $rows (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::tinymce');
+		$opt_id = adminKit::get_valid_id($option);
 		$class = 'mtekk_mce';
 		if($disable)
 		{
@@ -1059,10 +1174,13 @@ abstract class mtekk_adminKit
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 * @param string $class (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_check');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		if($disable)
 		{
@@ -1091,10 +1209,13 @@ abstract class mtekk_adminKit
 	 * @param string $instruction
 	 * @param object $disable (optional)
 	 * @param string $class (optional)
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_radio($option, $value, $instruction, $disable = false, $class = '')
 	{
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_radio');
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		$class .= ' togx';
 		if($disable)
@@ -1118,15 +1239,18 @@ abstract class mtekk_adminKit
 	 * @param string $description (optional)
 	 * @param array $titles (optional) The array of titiles for the options, if they should be different from the values
 	 * @param string $class (optional) Extra class to apply to the elements
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function input_select($label, $option, $values, $disable = false, $description = '', $titles = false, $class = '')
 	{
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_select');
 		//If we don't have titles passed in, we'll use option names as values
 		if(!$titles)
 		{
 			$titles = $values;
 		}
-		$opt_id = mtekk_adminKit::get_valid_id($option);
+		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
 		if($disable)
 		{
@@ -1153,9 +1277,12 @@ abstract class mtekk_adminKit
 	 * @param array $exclude(optional) array of names in $options array to be excluded
 	 * 
 	 * @return string The assembled HTML for the select options
+	 * 
+	 * @deprecated 7.0.0
 	 */
 	function select_options($optionname, $options, $values, $exclude = array())
 	{
+		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::select_options');
 		$options_html = '';
 		$value = $this->opt[$optionname];
 		//Now do the rest

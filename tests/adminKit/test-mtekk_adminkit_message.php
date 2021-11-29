@@ -5,9 +5,10 @@
  * @group adminKit
  * @group bcn_core
  */
-if(class_exists('mtekk_adminKit_message'))
+use \mtekk\adminKit\message as message;
+if(class_exists('\mtekk\adminKit\message'))
 {
-	class mtekk_adminKit_message_DUT extends mtekk_adminKit_message {
+	class mtekk_adminKit_message_DUT extends message{
 		//Super evil caller function to get around our private and protected methods in the parent class
 		function call($function, $args = array()) {
 			return call_user_func_array(array($this, $function), $args);
@@ -65,7 +66,7 @@ class adminKitMessageTest extends WP_UnitTestCase {
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 3', 'info', true, 'uida');
 		$this->assertTrue(end($this->messages)->get('dismissible'));
 		//Now try our invalid uids
-		$this->setExpectedIncorrectUsage('mtekk_adminKit_message::__construct');
+		$this->setExpectedIncorrectUsage('mtekk\adminKit\message::__construct');
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 4', 'info', true, '');
 		$this->assertFalse(end($this->messages)->get('dismissible'));
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg 5', 'info', true, ' ');

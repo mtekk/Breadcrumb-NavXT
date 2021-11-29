@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 6.9.40
+Version: 6.9.80
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -11,7 +11,7 @@ Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
 /*
-	Copyright 2007-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2021  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends \mtekk\plugKit
 class breadcrumb_navxt
 {
-	const version = '6.9.60';
+	const version = '6.9.80';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -87,7 +87,7 @@ class breadcrumb_navxt
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
 		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
-		//Run a little later than everyone else
+		//Run a little later than everyone else to give other plugins a chance to hook into the filters and actions in this
 		add_action('init', array($this, 'init'), 11);
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', array($this, 'register_widget'));
@@ -325,7 +325,7 @@ class breadcrumb_navxt
 	{
 		$this->admin->uninstall();
 	}
-	function setup_setting_defaults()
+	public function setup_setting_defaults()
 	{
 		$this->settings['bmainsite_display'] = new setting\setting_bool(
 				'mainsite_display',

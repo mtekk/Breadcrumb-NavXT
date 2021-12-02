@@ -221,7 +221,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		$this->assertEmpty( $response->get_data() );
 		$this->assertEquals( 200, $response->get_status() );
 	}
-	public function test_rest_register_rest_endpoint() {
+/*	public function test_rest_register_rest_endpoint() {
 		
 	}
 	/**

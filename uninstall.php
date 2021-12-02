@@ -47,7 +47,7 @@ if(!defined('WP_UNINSTALL_PLUGIN'))
 	header("Status: 404 Not Found");
 	die();
 }
-require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_uninstaller.php');
+require_once(dirname(__FILE__) . '/includes/adminKit/class-mtekk_adminkit_uninstaller.php');
 
 /**
  * Breadcrumb NavXT uninstaller class

@@ -129,7 +129,7 @@ class bcn_breadcrumb
 		return $this->url;
 	}
 	/**
-	 * Function to se tthe internal breadcrumb linked status
+	 * Function to set the internal breadcrumb linked status
 	 * 
 	 * @param bool $linked whether or not the breadcrumb uses the linked or unlinked template
 	 */

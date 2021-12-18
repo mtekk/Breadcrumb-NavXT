@@ -533,7 +533,7 @@ abstract class adminKit
 			{
 				$opts[$key] = adminKit::settings_to_opts($setting);
 			}
-			else
+			else if($setting instanceof setting\setting)
 			{
 				$opts[$key] = $setting->get_value();
 			}

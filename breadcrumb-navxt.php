@@ -394,11 +394,11 @@ class breadcrumb_navxt
 			//Root default depends on post type
 			if($post_type->name === 'page')
 			{
-				$default_root = get_option('page_on_front');
+				$default_root = absint(get_option('page_on_front'));
 			}
 			else if($post_type->name === 'post')
 			{
-				$default_root = get_option('page_for_posts');
+				$default_root = absint(get_option('page_for_posts'));
 			}
 			else
 			{

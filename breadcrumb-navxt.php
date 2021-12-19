@@ -87,8 +87,8 @@ class breadcrumb_navxt
 		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
 		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
 		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
-		//Run a little later than everyone else to give other plugins a chance to hook into the filters and actions in this
-		add_action('init', array($this, 'init'), 11);
+		//Run much later than everyone else to give other plugins a chance to hook into the filters and actions in this
+		add_action('init', array($this, 'init'), 9000);
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', array($this, 'register_widget'));
 		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)

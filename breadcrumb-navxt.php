@@ -327,6 +327,9 @@ class breadcrumb_navxt
 	}
 	public function setup_setting_defaults()
 	{
+		//Hook for letting other plugins add in their default settings (has to go first to prevent other from overriding base settings)
+		$this->settings = apply_filters('bcn_settings_init', $this->settings);
+		//Now on to our settings
 		$this->settings['bmainsite_display'] = new setting\setting_bool(
 				'mainsite_display',
 				true,
@@ -567,8 +570,6 @@ class breadcrumb_navxt
 				__('Maximum Title Length', 'breadcrumb-navxt'),
 				false,
 				true);
-		//Hook for letting others modify our default settings
-		$this->settings = apply_filters('bcn_settings_init', $this->settings);
 	}
 	/**
 	 * Sets up the extended options for any CPTs, taxonomies or extensions

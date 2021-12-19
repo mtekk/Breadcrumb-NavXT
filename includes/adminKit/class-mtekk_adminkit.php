@@ -533,7 +533,7 @@ abstract class adminKit
 			{
 				$opts[$key] = adminKit::settings_to_opts($setting);
 			}
-			else if($setting instanceof setting\setting)
+			else if($setting instanceof setting)
 			{
 				$opts[$key] = $setting->get_value();
 			}
@@ -549,7 +549,7 @@ abstract class adminKit
 	{
 		foreach($opts as $key => $value)
 		{
-			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting\setting)
+			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting)
 			{
 				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
 			}

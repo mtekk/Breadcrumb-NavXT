@@ -30,7 +30,7 @@ class setting_float extends setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, float $value, string $title, bool $allow_empty = false, bool $deprecated = false)
+	public function __construct(string $name, float $value, string $title, $allow_empty = false, $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;

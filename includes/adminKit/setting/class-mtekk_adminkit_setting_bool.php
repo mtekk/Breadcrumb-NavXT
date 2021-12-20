@@ -30,7 +30,7 @@ class setting_bool extends setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, bool $value, string $title, bool $allow_empty = false, bool $deprecated = false)
+	public function __construct(string $name, bool $value, string $title, $allow_empty = false, $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;

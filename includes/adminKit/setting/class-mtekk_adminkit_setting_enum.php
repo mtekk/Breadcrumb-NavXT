@@ -31,7 +31,7 @@ class setting_enum extends setting_base
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, bool $allow_empty = false, bool $deprecated = false, array $allowed_vals = array())
+	public function __construct(string $name, string $value, string $title, $allow_empty = false, $deprecated = false, $allowed_vals = array())
 	{
 		$this->name = $name;
 		$this->value = $value;

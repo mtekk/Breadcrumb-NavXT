@@ -135,9 +135,8 @@ class bcn_admin extends adminKit
 			require_once(dirname(__FILE__) . '/options_upgrade.php');
 			bcn_options_upgrade_handler($opts, $version, $this->opt);
 		}
-		//Save the passed in opts to the object's option array
-		//FIXME: Why do we do this?
-		$this->opt = adminKit::parse_args($opts, $this->opt);
+		//Merge in the defaults
+		$this->opt = adminKit::parse_args($opts, adminKit::settings_to_opts($this->settings));
 	}
 	/**
 	 * help action hook function

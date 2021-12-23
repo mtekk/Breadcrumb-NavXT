@@ -118,7 +118,7 @@ class breadcrumb_navxt
 			require_once(dirname(__FILE__) . '/class.bcn_rest_controller.php');
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
 		}
-		$this->setup_setting_defaults();
+		breadcrumb_navxt::setup_setting_defaults($this->settings);
 		if(!is_admin() || (!isset($_POST[$this->unique_prefix . '_admin_reset']) && !isset($_POST[$this->unique_prefix . '_admin_options'])))
 		{
 			$this->get_settings(); //This breaks the reset options script, so only do it if we're not trying to reset the settings
@@ -325,69 +325,69 @@ class breadcrumb_navxt
 	{
 		$this->admin->uninstall();
 	}
-	public function setup_setting_defaults()
+	static function setup_setting_defaults(array &$settings)
 	{
 		//Hook for letting other plugins add in their default settings (has to go first to prevent other from overriding base settings)
-		$this->settings = apply_filters('bcn_settings_init', $this->settings);
+		$settings= apply_filters('bcn_settings_init', $settings);
 		//Now on to our settings
-		$this->settings['bmainsite_display'] = new setting\setting_bool(
+		$settings['bmainsite_display'] = new setting\setting_bool(
 				'mainsite_display',
 				true,
 				__('Main Site Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['Hmainsite_template'] = new setting\setting_html(
+		$settings['Hmainsite_template'] = new setting\setting_html(
 				'mainsite_template',
 				bcn_breadcrumb::get_default_template(),
 				__('Main Site Home Template', 'breadcrumb-navxt'));
-		$this->settings['Hmainsite_template_no_anchor'] = new setting\setting_html(
+		$settings['Hmainsite_template_no_anchor'] = new setting\setting_html(
 				'mainsite_template_no_anchor',
 				bcn_breadcrumb::default_template_no_anchor,
 				__('Main Site Home Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['bhome_display'] = new setting\setting_bool(
+		$settings['bhome_display'] = new setting\setting_bool(
 				'home_display',
 				true,
 				__('Home Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['Hhome_template'] = new setting\setting_html(
+		$settings['Hhome_template'] = new setting\setting_html(
 				'home_template',
 				bcn_breadcrumb::get_default_template(),
 				__('Home Template', 'breadcrumb-navxt'));
-		$this->settings['Hhome_template_no_anchor'] = new setting\setting_html(
+		$settings['Hhome_template_no_anchor'] = new setting\setting_html(
 				'home_template_no_anchor',
 				bcn_breadcrumb::default_template_no_anchor,
 				__('Home Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['bblog_display'] = new setting\setting_bool(
+		$settings['bblog_display'] = new setting\setting_bool(
 				'blog_display',
 				true,
 				__('Blog Breadcrumb', 'breadcrumb-navxt'));
-		$this->settings['hseparator'] = new setting\setting_html(
+		$settings['hseparator'] = new setting\setting_html(
 				'separator',
 				' &gt; ',
 				__('Breadcrumb Separator', 'breadcrumb-navxt'),
 				true);
-		$this->settings['hseparator_higher_dim'] = new setting\setting_html(
+		$settings['hseparator_higher_dim'] = new setting\setting_html(
 				'separator_higher_dim',
 				', ',
 				__('Breadcrumb Separator (Higher Dimension)', 'breadcrumb-navxt'),
 				true);
-		$this->settings['bcurrent_item_linked'] = new setting\setting_bool(
+		$settings['bcurrent_item_linked'] = new setting\setting_bool(
 				'current_item_linked',
 				false,
 				__('Link Current Item', 'breadcrumb-navxt'));
-		$this->settings['Hpaged_template'] = new setting\setting_html(
+		$settings['Hpaged_template'] = new setting\setting_html(
 				'paged_template',
 				sprintf('<span class="%%type%%">%1$s</span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
 				_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'));
-		$this->settings['bpaged_display'] = new setting\setting_bool(
+		$settings['bpaged_display'] = new setting\setting_bool(
 				'paged_display',
 				false,
 				_x('Paged Breadcrumb', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'));
 		//Post types
 		foreach($GLOBALS['wp_post_types']as $post_type)
 		{
-			$this->settings['Hpost_' . $post_type->name . '_template'] = new setting\setting_html(
+			$settings['Hpost_' . $post_type->name . '_template'] = new setting\setting_html(
 					'post_' . $post_type->name . '_template',
 					bcn_breadcrumb::get_default_template(),
 					sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['Hpost_' . $post_type->name . '_template_no_anchor'] = new setting\setting_html(
+			$settings['Hpost_' . $post_type->name . '_template_no_anchor'] = new setting\setting_html(
 					'post_' . $post_type->name . '_template_no_anchor',
 					bcn_breadcrumb::default_template_no_anchor,
 					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name));
@@ -404,7 +404,7 @@ class breadcrumb_navxt
 			{
 				$default_root = 0;
 			}
-			$this->settings['apost_' . $post_type->name . '_root'] = new setting\setting_absint(
+			$settings['apost_' . $post_type->name . '_root'] = new setting\setting_absint(
 					'post_' . $post_type->name . '_root',
 					$default_root,
 					sprintf(__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name));
@@ -417,11 +417,11 @@ class breadcrumb_navxt
 			{
 				$default_archive_display = false;
 			}
-			$this->settings['bpost_' . $post_type->name . '_archive_display'] = new setting\setting_bool(
+			$settings['bpost_' . $post_type->name . '_archive_display'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_archive_display',
 					$default_archive_display,
 					sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['bpost_' . $post_type->name . '_taxonomy_referer'] = new setting\setting_bool(
+			$settings['bpost_' . $post_type->name . '_taxonomy_referer'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_taxonomy_referer',
 					false,
 					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name));
@@ -438,7 +438,7 @@ class breadcrumb_navxt
 			{
 				$default_parent_first = apply_filters('bcn_default_hierarchy_parent_first', false, $post_type->name);
 			}
-			$this->settings['bpost_' . $post_type->name . '_hierarchy_parent_first'] = new setting\setting_bool(
+			$settings['bpost_' . $post_type->name . '_hierarchy_parent_first'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_hierarchy_parent_first',
 					$default_parent_first,
 					sprintf(__('%s Hierarchy Use Parent First', 'breadcrumb-navxt'), $post_type->labels->singular_name));
@@ -481,11 +481,11 @@ class breadcrumb_navxt
 					$hierarchy_type_default = 'BCN_POST_PARENT';
 				}
 			}
-			$this->settings['bpost_' . $post_type->name . '_hierarchy_display'] = new setting\setting_bool(
+			$settings['bpost_' . $post_type->name . '_hierarchy_display'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_hierarchy_display',
 					$default_hierarchy_display,
 					sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
-			$this->settings['Epost_' . $post_type->name . '_hierarchy_type'] = new setting\setting_enum(
+			$settings['Epost_' . $post_type->name . '_hierarchy_type'] = new setting\setting_enum(
 					'post_' . $post_type->name . '_hierarchy_type',
 					$hierarchy_type_default,
 					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name),
@@ -496,59 +496,59 @@ class breadcrumb_navxt
 		//Taxonomies
 		foreach($GLOBALS['wp_taxonomies']as $taxonomy)
 		{
-			$this->settings['Htax_' . $taxonomy->name. '_template'] = new setting\setting_html(
+			$settings['Htax_' . $taxonomy->name. '_template'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template',
 					__(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt'),
 					sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
-			$this->settings['Htax_' . $taxonomy->name. '_template_no_anchor'] = new setting\setting_html(
+			$settings['Htax_' . $taxonomy->name. '_template_no_anchor'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template_no_anchor',
 					bcn_breadcrumb::default_template_no_anchor,
 					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
 		}
 		//Miscellaneous
-		$this->settings['H404_template'] = new setting\setting_html(
+		$settings['H404_template'] = new setting\setting_html(
 				'404_template',
 				bcn_breadcrumb::get_default_template(),
 				__('404 Template', 'breadcrumb-navxt'));
-		$this->settings['S404_title'] = new setting\setting_string(
+		$settings['S404_title'] = new setting\setting_string(
 				'404_title',
 				__('404', 'breadcrumb-navxt'),
 				__('404 Title', 'breadcrumb-navxt'));
-		$this->settings['Hsearch_template'] = new setting\setting_html(
+		$settings['Hsearch_template'] = new setting\setting_html(
 				'search_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
 						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
 								sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 				__('Search Template', 'breadcrumb-navxt'));
-		$this->settings['Hsearch_template_no_anchor'] = new setting\setting_html(
+		$settings['Hsearch_template_no_anchor'] = new setting\setting_html(
 				'search_template_no_anchor',
 				sprintf('<span class="%%type%%">%1$s</span>',
 						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
 				__('Search Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['Hdate_template'] = new setting\setting_html(
+		$settings['Hdate_template'] = new setting\setting_html(
 				'date_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', esc_attr__('Go to the %title% archives.', 'breadcrumb-navxt')),
 				__('Date Template', 'breadcrumb-navxt'));
-		$this->settings['Hdate_template_no_anchor'] = new setting\setting_html(
+		$settings['Hdate_template_no_anchor'] = new setting\setting_html(
 				'date_template_no_anchor',
 				bcn_breadcrumb::default_template_no_anchor,
 				__('Date Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['Hauthor_template'] = new setting\setting_html(
+		$settings['Hauthor_template'] = new setting\setting_html(
 				'author_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
 						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'),
 								sprintf('<a title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 				__('Author Template', 'breadcrumb-navxt'));
-		$this->settings['Hauthor_template_no_anchor'] = new setting\setting_html(
+		$settings['Hauthor_template_no_anchor'] = new setting\setting_html(
 				'author_template_no_anchor',
 				sprintf('<span class="%%type%%">%1$s</span>',
 						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
 				__('Author Template (Unlinked)', 'breadcrumb-navxt'));
-		$this->settings['aauthor_root'] = new setting\setting_absint(
+		$settings['aauthor_root'] = new setting\setting_absint(
 				'author_root',
 				0,
 				__('Author Root Page', 'breadcrumb-navxt'));
-		$this->settings['Eauthor_name'] = new setting\setting_enum(
+		$settings['Eauthor_name'] = new setting\setting_enum(
 				'author_name',
 				'display_name',
 				__('Author Display Format', 'breadcrumb-navxt'),
@@ -558,13 +558,13 @@ class breadcrumb_navxt
 		/**
 		 * Here are some deprecated settings
 		 */
-		$this->settings['blimit_title'] = new setting\setting_bool(
+		$settings['blimit_title'] = new setting\setting_bool(
 				'limit_title',
 				false,
 				__('Limit Title Length', 'breadcrumb-navxt'),
 				false,
 				true);
-		$this->settings['amax_title_length'] = new setting\setting_absint(
+		$settings['amax_title_length'] = new setting\setting_absint(
 				'max_title_length',
 				30,
 				__('Maximum Title Length', 'breadcrumb-navxt'),

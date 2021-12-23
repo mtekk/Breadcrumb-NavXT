@@ -430,7 +430,7 @@ abstract class adminKit
 					return false;
 				}
 			}
-			else if($setting->get_value() !== $setting->validate($setting->get_value()))
+			else if($setting instanceof setting && $setting->get_value() !== $setting->validate($setting->get_value()))
 			{
 				return false;
 			}

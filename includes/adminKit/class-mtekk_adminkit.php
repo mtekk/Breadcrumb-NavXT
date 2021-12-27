@@ -462,7 +462,7 @@ abstract class adminKit
 					$this->settings_update_loop($settings[$key], $input[$key]);
 				}
 			}
-			else
+			else if($setting instanceof setting)
 			{
 				$setting->maybe_update_from_form_input($input);
 			}
@@ -579,18 +579,18 @@ abstract class adminKit
 			}
 			return -1;
 		}
-		if($a->get_name() === $b->get_name() && $a->get_value() === $b->get_value())
+		if($a instanceof setting && $b instanceof setting)
 		{
-			return 0;
+			if($a->get_name() === $b->get_name() && $a->get_value() === $b->get_value())
+			{
+				return 0;
+			}
+			else if($a->get_name() === $b->get_name() && $a->get_value() > $b->get_value())
+			{
+				return 1;
+			}
 		}
-		else if($a->get_name() === $b->get_name() && $a->get_value() > $b->get_value())
-		{
-			return 1;
-		}
-		else
-		{
-			return -1;
-		}
+		return -1;
 	}
 	static function setting_cloner($setting)
 	{
@@ -598,7 +598,10 @@ abstract class adminKit
 		{
 			return array_map('mtekk\adminKit\adminKit::setting_cloner', $setting);
 		}
-		return clone $setting;
+		if($setting instanceof setting)
+		{
+			return clone $setting;
+		}
 	}
 	/**
 	 * Updates the database settings from the webform

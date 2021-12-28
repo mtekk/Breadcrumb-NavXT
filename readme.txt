@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.9
 Tested up to: 5.8
-Stable tag: 7.0.0
-Requires PHP: 5.6
+Stable tag: 7.0.1
+Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
@@ -14,7 +14,7 @@ Adds breadcrumb navigation showing the visitor's path to their current location.
 Breadcrumb NavXT, the successor to the popular WordPress plugin Breadcrumb Navigation XT, was written from the ground up to be better than its ancestor. This plugin generates locational breadcrumb trails for your WordPress powered blog or website. These breadcrumb trails are highly customizable to suit the needs of just about any website running WordPress. The Administrative interface makes setting options easy, while a direct class access is available for theme developers and more adventurous users.
 
 = PHP Requirements =
-Breadcrumb NavXT 7.0 and newer require PHP5.6
+Breadcrumb NavXT 7.0 and newer require PHP7.0
 Breadcrumb NavXT 5.2 and newer require PHP5.3
 Breadcrumb NavXT 5.1.1 and older require PHP5.2
 
@@ -49,6 +49,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+
+= 7.0.1 =
+Release date: December, 27th 2021
+
+* Behavior change: Moved `bcn_settings_init` filter to before establishing default setting values. This filter is no longer capable of changing the default values of settings.
+* Behavior change: Moved setup of defaults to 9000 priority, intending to cover the majority of plugins that add CPTs.
+* Bug fix: Fixed compatibility issues with PHP5.6.
+* Bug fix: Fixed PHP error caused by some return value of page_ settings.
+* Bug fix: Fixed PHP error caused by non settings settings in array passed into `adminKit::settings_to_opts`.
+* Bug fix: Fixed issue with `bcn_allowed_html` not covering admin interface elements (mapped `bcn_allowed_html` to `mtekk_adminkit_allowed_html`).
 
 = 7.0.0 =
 Release date: December, 17th 2021

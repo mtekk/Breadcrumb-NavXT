@@ -67,7 +67,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '2.9.50';
+	const version = '3.0.2';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -116,7 +116,7 @@ abstract class adminKit
 	function add_cap()
 	{
 		$role = get_role('administrator');
-		if($role instanceof WP_Role && !$role->has_cap($this->access_level))
+		if($role instanceof \WP_Role && !$role->has_cap($this->access_level))
 		{
 			$role->add_cap($this->access_level);
 		}

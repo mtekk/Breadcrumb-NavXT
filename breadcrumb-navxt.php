@@ -333,7 +333,7 @@ class breadcrumb_navxt
 	static function setup_setting_defaults(array &$settings)
 	{
 		//Hook for letting other plugins add in their default settings (has to go first to prevent other from overriding base settings)
-		$settings= apply_filters('bcn_settings_init', $settings);
+		$settings = apply_filters('bcn_settings_init', $settings);
 		//Now on to our settings
 		$settings['bmainsite_display'] = new setting\setting_bool(
 				'mainsite_display',
@@ -353,11 +353,11 @@ class breadcrumb_navxt
 				__('Home Breadcrumb', 'breadcrumb-navxt'));
 		$settings['Hhome_template'] = new setting\setting_html(
 				'home_template',
-				bcn_breadcrumb::get_default_template(),
+				(isset($settings['Hhome_template']) && is_string($settings['Hhome_template'])) ? $settings['Hhome_template'] : bcn_breadcrumb::get_default_template(),
 				__('Home Template', 'breadcrumb-navxt'));
 		$settings['Hhome_template_no_anchor'] = new setting\setting_html(
 				'home_template_no_anchor',
-				bcn_breadcrumb::default_template_no_anchor,
+				(isset($settings['Hhome_template_no_anchor']) && is_string($settings['Hhome_template_no_anchor'])) ? $settings['Hhome_template_no_anchor'] : bcn_breadcrumb::default_template_no_anchor,
 				__('Home Template (Unlinked)', 'breadcrumb-navxt'));
 		$settings['bblog_display'] = new setting\setting_bool(
 				'blog_display',
@@ -365,12 +365,12 @@ class breadcrumb_navxt
 				__('Blog Breadcrumb', 'breadcrumb-navxt'));
 		$settings['hseparator'] = new setting\setting_html(
 				'separator',
-				' &gt; ',
+				(isset($settings['hseparator']) && is_string($settings['hseparator'])) ? $settings['hseparator'] : ' &gt; ',
 				__('Breadcrumb Separator', 'breadcrumb-navxt'),
 				true);
 		$settings['hseparator_higher_dim'] = new setting\setting_html(
 				'separator_higher_dim',
-				', ',
+				(isset($settings['hseparator_higher_dim']) && is_string($settings['hseparator_higher_dim'])) ? $settings['hseparator_higher_dim'] : ', ',
 				__('Breadcrumb Separator (Higher Dimension)', 'breadcrumb-navxt'),
 				true);
 		$settings['bcurrent_item_linked'] = new setting\setting_bool(

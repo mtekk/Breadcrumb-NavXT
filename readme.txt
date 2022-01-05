@@ -50,6 +50,12 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 
+= 7.0.2 =
+Release date: January, 4th 2022
+
+Behavior change: Allow value of `Hhome_template`, `Hhome_template_unlinked`, `hseparator`, and `hseparator_higher_dim` to be overridden via `bcn_settings_init`.
+Bug fix: Fixed cause of “Sorry, you are not allowed to access this page.” message when attempting to visit the settings page.
+
 = 7.0.1 =
 Release date: December, 27th 2021
 

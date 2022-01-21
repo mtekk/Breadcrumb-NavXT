@@ -576,6 +576,11 @@ class bcn_breadcrumb_trail
 	 */
 	protected function do_archive_by_term($term, $is_paged = false)
 	{
+		if(!($term instanceof WP_Term))
+		{
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$term global is not of type WP_Term', 'breadcrumb-navxt'), '7.0.3');
+			return;
+		}
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return
 		$breadcrumb = $this->add(new bcn_breadcrumb(
 				$term->name,

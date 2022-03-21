@@ -1105,7 +1105,7 @@ class bcn_breadcrumb_trail
 				$this->do_archive_by_post_type($this->get_type_string_query_var(), false, is_paged(), true);
 			}
 			//For taxonomy based archives
-			else if(is_category() || is_tag() || is_tax())
+			else if((is_category() || is_tag() || is_tax()) && $type instanceof WP_Term)
 			{
 				$this->do_archive_by_term($type, is_paged());
 				$type_str = $this->type_archive($type);

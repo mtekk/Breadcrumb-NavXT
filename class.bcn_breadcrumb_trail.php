@@ -1231,6 +1231,7 @@ class bcn_breadcrumb_trail
 	protected function display_loop($breadcrumbs, $linked, $reverse, $template, $outer_template, $separator)
 	{
 		$position = 1;
+		$breadcrumbs = apply_filters('bcn_before_loop', $breadcrumbs);
 		$last_position = count($breadcrumbs);
 		if($reverse)
 		{

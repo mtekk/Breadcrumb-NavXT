@@ -119,7 +119,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we changed automatically to a linked template, though the link should be empty
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
 		//Make sure we do not have the bad URL items in the output
-		$this->assertRegExp('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
+		$this->assertMatchesRegularExpression('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
 	}
 	function test_set_url_filter() {
 		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);

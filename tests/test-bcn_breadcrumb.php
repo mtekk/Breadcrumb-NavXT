@@ -7,12 +7,12 @@
  */
 class BreadcrumbTest extends WP_UnitTestCase {
 	public $breadcrumb;
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		$this->breadcrumb = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/test', 101, true);
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_assemble_linked() {
 		//First test a linked breadcrumb

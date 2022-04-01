@@ -11,8 +11,8 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 	public $blog;
 	public $terms;
 	public $posts;
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		//Register some types to use for various tests
 		register_post_type('czar', array(
 			'label' => 'Czars',
@@ -81,8 +81,8 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 				return $opts;
 		}, 2, 10);
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_bcn_display_cache()
 	{

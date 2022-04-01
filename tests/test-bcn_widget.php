@@ -6,11 +6,11 @@
  * @group bcn_core
  */
 class WidgetTest extends WP_UnitTestCase {
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_update() {
 		$widget = new bcn_widget();

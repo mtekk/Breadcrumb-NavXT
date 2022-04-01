@@ -7,8 +7,8 @@
  */
 class adminKitSettingEnumTest extends WP_UnitTestCase {
 	public $settings = array();
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		$this->settings['normal_setting'] = new \mtekk\adminKit\setting\setting_enum(
 				'normal_setting',
 				'A Value',
@@ -31,8 +31,8 @@ class adminKitSettingEnumTest extends WP_UnitTestCase {
 				true,
 				array('A different Value', 'Something Else'));
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_is_deprecated() {
 		$this->assertFalse($this->settings['normal_setting']->is_deprecated());

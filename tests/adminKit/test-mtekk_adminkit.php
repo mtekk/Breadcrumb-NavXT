@@ -42,8 +42,8 @@ class adminKitTest extends WP_UnitTestCase {
 	protected static $editor_id;
 	protected static $author_id;
 	protected static $contributor_id;
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		self::$superadmin_id  = self::factory()->user->create(
 				array(
 						'role'       => 'administrator',
@@ -70,13 +70,13 @@ class adminKitTest extends WP_UnitTestCase {
 		}
 		$this->admin = new adminKitDUT();
 	}
-	public function tearDown() {
+	public function tear_down() {
 		unset($_REQUEST['_wpnonce']);
 		self::delete_user( self::$superadmin_id );
 		self::delete_user( self::$editor_id );
 		self::delete_user( self::$author_id );
 		self::delete_user( self::$contributor_id );
-		parent::tearDown();
+		parent::tear_down();
 	}
 	function test_install() {
 		$defaults = array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value');

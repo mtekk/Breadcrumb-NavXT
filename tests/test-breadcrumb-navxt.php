@@ -5,14 +5,32 @@
  * @group breadcrumb-navxt
  * @group bcn_core
  */
+if(class_exists('bcn_breadcrumb_trail'))
+{
+	class breadcrumb_navxt_DUT extends breadcrumb_navxt{
+		function __construct(bcn_breadcrumb_trail $breadcrumb_trail) {
+			parent::__construct($breadcrumb_trail);
+		}
+		//Super evil caller function to get around our private and protected methods in the parent class
+		function call($function, $args = array()) {
+			return call_user_func_array(array($this, $function), $args);
+		}
+		function get_opt($key)
+		{
+			return $this->breadcrumb_trail->opt[$key];
+		}
+	}
+}
 class BreadcrumbNavXTTest extends WP_UnitTestCase {
 	public $pages;
 	public $home;
 	public $blog;
 	public $terms;
 	public $posts;
+	public $breadcrumb_navxt;
 	function set_up() {
 		parent::set_up();
+		$this->breadcrumb_navxt = new breadcrumb_navxt_DUT(new bcn_breadcrumb_trail());
 		//Register some types to use for various tests
 		register_post_type('czar', array(
 			'label' => 'Czars',
@@ -84,8 +102,62 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 	public function tear_down() {
 		parent::tear_down();
 	}
-	function test_bcn_display_cache()
-	{
+	function test_get_settings() {
+		//Setup network site settings
+		update_site_option('bcn_options', array(
+				'bmainsite_display' => true,
+				'S404_title' => 'Oopse'
+		));
+		//Setup single site settings
+		update_option('bcn_options', array(
+				'bmainsite_display' => false,
+				'bcurrent_item_linked' => true,
+				'Eauthor_name' => 'display_name'
+		));
+		var_dump(get_option('bcn_options'));
+		//Test default (use local)
+		$this->breadcrumb_navxt->call('init');
+		//Check for the opts for expected values
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), '404');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
+		//Test use local explicit
+		define('BCN_SETTINGS_USE_LOCAL', true);
+		$this->breadcrumb_navxt->call('init');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), '404');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
+		//These are only valid in a multisite test enviornment
+		//Test use network
+/*		define('BCN_SETTINGS_USE_NETWORK', true);
+		$this->breadcrumb_navxt->call('init');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), false);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), 'Oopse');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
+		//Test prefer local
+		define('BCN_SETTINGS_FAVOR_LOCAL', true);
+		$this->breadcrumb_navxt->call('init');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), 'Oopse');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
+		//Test prefer network
+		define('BCN_SETTINGS_FAVOR_NETWORK', true);
+		$this->breadcrumb_navxt->call('init');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), 'Oopse');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);*/
+	}
+	function test_bcn_display_cache() {
 		//Create a test post
 		$pid1 = self::factory()->post->create(array('post_title' => 'Test Post 1', 'post_type' => 'post'));
 		//Create another test post

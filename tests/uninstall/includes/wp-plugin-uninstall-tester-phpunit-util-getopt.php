@@ -45,8 +45,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Util_Getopt extends PHPUnit_Util_Getopt
 
 		$options = array();
 
-		while ( list( $i, $arg ) = each( $argv ) ) {
-
+		foreach ( $argv as $i => $arg ) {
 			try {
 
 				if ( strlen( $arg ) > 1 && $arg[0] === '-' && $arg[1] === '-' ) {

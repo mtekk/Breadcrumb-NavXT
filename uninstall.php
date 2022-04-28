@@ -22,7 +22,7 @@
  * @author Tom Klingenberg
  */
 /*  
-	Copyright 2010-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2010-2022  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ if(!defined('WP_UNINSTALL_PLUGIN'))
 	header("Status: 404 Not Found");
 	die();
 }
-require_once(dirname(__FILE__) . '/includes/class.mtekk_adminkit_uninstaller.php');
+require_once(dirname(__FILE__) . '/includes/adminKit/class-mtekk_adminkit_uninstaller.php');
 
 /**
  * Breadcrumb NavXT uninstaller class

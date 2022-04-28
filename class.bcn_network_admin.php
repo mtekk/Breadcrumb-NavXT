@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2022  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,13 +22,14 @@ if(!class_exists('bcn_admin'))
 {
 	require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 }
+use mtekk\adminKit\{adminKit, form, message, setting};
 /**
  * The administrative interface class 
  * 
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '6.6.0';
+	const version = '7.0.2';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**
@@ -36,10 +37,10 @@ class bcn_network_admin extends bcn_admin
 	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
 	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(bcn_breadcrumb_trail &$breadcrumb_trail, $basename)
+	function __construct(array &$opts, $basename, array &$settings)
 	{
 		//We're going to make sure we load the parent's constructor
-		parent::__construct($breadcrumb_trail, $basename);
+		parent::__construct($opts, $basename, $settings);
 		//Change to the proper name
 		$this->full_name = __('Breadcrumb NavXT Network Settings', 'breadcrumb-navxt');
 		//Remove the hook added by the parent as we don't want this classes settings page everywhere
@@ -143,7 +144,7 @@ class bcn_network_admin extends bcn_admin
 		{
 			if(defined('BCN_SETTINGS_USE_LOCAL') && BCN_SETTINGS_USE_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
+				$this->messages[] = new message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 			else if(defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK)
 			{
@@ -151,17 +152,17 @@ class bcn_network_admin extends bcn_admin
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_LOCAL') && BCN_SETTINGS_FAVOR_LOCAL)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isitemayoveride');
+				$this->messages[] = new message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isitemayoveride');
 			}
 			else if(defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nsmayoveride');
+				$this->messages[] = new message(esc_html__('Warning: Individual site settings may override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nsmayoveride');
 			}
 			//Fall through if no settings mode was set
 			else
 			{
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nosetting');
-				$this->messages[] = new mtekk_adminKit_message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
+				$this->messages[] = new message(esc_html__('Warning: No BCN_SETTINGS_* define statement found, defaulting to BCN_SETTINGS_USE_LOCAL.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_nosetting');
+				$this->messages[] = new message(esc_html__('Warning: Individual site settings will override any settings set in this page.', 'breadcrumb-navxt'), 'warning', true, $this->unique_prefix . '_msg_ns_isiteoveride');
 			}
 		}
 	}

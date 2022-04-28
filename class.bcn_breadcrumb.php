@@ -1,6 +1,6 @@
 <?php
 /*  
-	Copyright 2007-2020  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2022  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '6.6.0';
+	const version = '7.0.2';
 	//The main text that will be shown
 	protected $title;
 	//The breadcrumb's template, used durring assembly
@@ -37,7 +37,6 @@ class bcn_breadcrumb
 	private $_title = null;
 	//The type of this breadcrumb
 	protected $type;
-	protected $allowed_html = array();
 	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name" class="%type%">%htitle%</span><meta property="url" content="%link%"><meta property="position" content="%position%"></span>';
 	/**
 	 * The enhanced default constructor, ends up setting all parameters via the set_ functions
@@ -50,8 +49,6 @@ class bcn_breadcrumb
 	 */
 	public function __construct($title = '', $template = '', array $type = array(), $url = '', $id = null, $linked = false)
 	{
-		//Filter allowed_html array to allow others to add acceptable tags
-		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
 		//The breadcrumb type
 		$this->type = $type;
 		//Set the resource id
@@ -74,7 +71,7 @@ class bcn_breadcrumb
 			}
 			else
 			{
-				$this->template_no_anchor = wp_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id), $this->allowed_html);
+				$this->template_no_anchor =  $this->run_template_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id));
 				$this->set_template(bcn_breadcrumb::get_default_template());
 			}
 		}
@@ -115,7 +112,7 @@ class bcn_breadcrumb
 	/**
 	 * Function to set the internal URL variable
 	 *
-	 * @param string $url the url to link to
+	 * @param string $url the URL to link to
 	 */
 	public function set_url($url)
 	{
@@ -123,13 +120,41 @@ class bcn_breadcrumb
 		$this->url = apply_filters('bcn_breadcrumb_url', $url, $this->type, $this->id);
 	}
 	/**
-	 * Function to se tthe internal breadcrumb linked status
+	 * Function to get the internal URL variable
+	 * 
+	 * @return string the URL that the breadcrumb links to
+	 */
+	public function get_url()
+	{
+		return $this->url;
+	}
+	/**
+	 * Function to set the internal breadcrumb linked status
 	 * 
 	 * @param bool $linked whether or not the breadcrumb uses the linked or unlinked template
 	 */
 	public function set_linked($linked)
 	{
 		$this->linked = apply_filters('bcn_breadcrumb_linked', $linked, $this->type, $this->id);
+	}
+	/**
+	 * Function to check if this breadcrumb will be linked
+	 * 
+	 * @return boolean whether or not this breadcrumb is linked
+	 */
+	public function is_linked()
+	{
+		return $this->linked;
+	}
+	/**
+	 * A wrapper for wp_kses which handles getting the allowed html
+	 * 
+	 * @param string $template_str The tempalte string to run through kses
+	 * @return string The template string post cleaning
+	 */
+	protected function run_template_kses($template_str)
+	{
+		return wp_kses($template_str, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post')));
 	}
 	/**
 	 * Function to set the internal breadcrumb template
@@ -139,7 +164,7 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = wp_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id), $this->allowed_html);
+		$this->template = $this->run_template_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id));
 	}
 	/**
 	 * Function to set the internal breadcrumb ID

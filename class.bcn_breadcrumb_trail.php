@@ -1050,15 +1050,18 @@ class bcn_breadcrumb_trail
 		//For posts
 		else if(is_singular())
 		{
-			$this->do_post(get_post(), false, (get_query_var('page') > 1));
+			//Could use the $post global, but we can't really trust it
+			$type = get_post();
+			$this->do_post($type, false, (get_query_var('page') > 1));
 			//If this is an attachment then we need to change the queried object to the parent post
 			if(is_attachment())
 			{
-				//Could use the $post global, but we can't really trust it
-				$post = get_post();
-				$type = get_post($post->post_parent); //TODO check for WP_Error?
+				$type = get_post($type->post_parent); //TODO check for WP_Error?
 			}
-			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
+			if($type instanceof WP_Post)
+			{
+				$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
+			}
 		}
 		//For searches
 		else if(is_search())

@@ -1449,8 +1449,16 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			return $attrib_array;
 		}, 10, 3);
 		//Test with filtered result
-			$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
 		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
+		//Test with filtered start
+		add_filter('bcn_before_loop', function($breadcrumbs){
+			//Remove the first breadcrumb in the trail
+			unset($breadcrumbs[0]);
+			return $breadcrumbs;
+		});
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<ul>%1$s</ul>', ' &gt; '));
+		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li>', $breadcrumb_string);
 	}
 	/**
 	 * display_loop second dimension testing, gets its own test

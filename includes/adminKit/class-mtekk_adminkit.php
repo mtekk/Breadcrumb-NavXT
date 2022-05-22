@@ -689,7 +689,7 @@ abstract class adminKit
 		//Update our internal settings
 		$this->opt = $this->get_option($this->unique_prefix . '_options');
 		//Create a DOM document
-		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom = new \DOMDocument('1.0', 'UTF-8');
 		//Adds in newlines and tabs to the output
 		$dom->formatOutput = true;
 		//We're not using a DTD therefore we need to specify it as a standalone document
@@ -746,7 +746,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Create a DOM document
-		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom = new \DOMDocument('1.0', 'UTF-8');
 		//We want to catch errors ourselves
 		set_error_handler('error');
 		//Load the user uploaded file, handle failure gracefully
@@ -755,7 +755,7 @@ abstract class adminKit
 			$opts_temp = array();
 			$version = '';
 			//Have to use an xpath query otherwise we run into problems
-			$xpath = new DOMXPath($dom);  
+			$xpath = new \DOMXPath($dom);  
 			$option_sets = $xpath->query('plugin');
 			//Loop through all of the xpath query results
 			foreach($option_sets as $options)

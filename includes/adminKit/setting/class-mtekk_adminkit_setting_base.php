@@ -23,7 +23,7 @@ if(!interface_exists('mtekk_adminKit_setting'))
 {
 	require_once( __DIR__ . '/interface-mtekk_adminkit_setting.php');
 }
-abstract class setting_base implements setting
+abstract class setting_base implements setting,\JsonSerializable
 {
 	const version = '1.0.0';
 	protected $name = '';
@@ -62,6 +62,10 @@ abstract class setting_base implements setting
 	public function set_allow_empty($allow_empty)
 	{
 		$this->allow_empty = $allow_empty;
+	}
+	public function jsonSerialize()
+	{
+		return $this->value;
 	}
 	/**
 	 * Basic updateFromFormInput method

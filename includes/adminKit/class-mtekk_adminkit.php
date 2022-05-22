@@ -67,7 +67,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.0.2';
+	const version = '3.0.3';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -330,9 +330,9 @@ abstract class adminKit
 		{
 			//Add the options, we only store differences from defaults now, so start with blank array
 			$this->add_option($this->unique_prefix . '_options', array());
-			$this->add_option($this->unique_prefix . '_options_bk', array(), '', 'no');
+			$this->add_option($this->unique_prefix . '_options_bk', array(), '', false);
 			//Add the version, no need to autoload the db version
-			$this->update_option($this->unique_prefix . '_version', $this::version, 'no');
+			$this->update_option($this->unique_prefix . '_version', $this::version, false);
 		}
 		else
 		{
@@ -343,9 +343,9 @@ abstract class adminKit
 				//Run the settings update script
 				$this->opts_upgrade($opts, $db_version);
 				//Always have to update the version
-				$this->update_option($this->unique_prefix . '_version', $this::version);
+				$this->update_option($this->unique_prefix . '_version', $this::version, false);
 				//Store the options
-				$this->update_option($this->unique_prefix . '_options', $this->opt);
+				$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			}
 		}
 	}
@@ -443,7 +443,7 @@ abstract class adminKit
 	function opts_backup()
 	{
 		//Set the backup options in the DB to the current options
-		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'));
+		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'), false);
 	}
 	/**
 	 * The new, simpler settings update loop, handles the new settings array and replaces the old opts_update_loop
@@ -624,7 +624,7 @@ abstract class adminKit
 		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
 		//Update our backup options
-		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
@@ -635,7 +635,7 @@ abstract class adminKit
 		//Convert to opts array for saving
 		$this->opt = adminKit::settings_to_opts($new_settings);
 		//Commit the option changes
-		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
+		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
 		//Check if known settings match attempted save
 		if($updated && count(array_diff_key($input, $this->settings)) == 0)
 		{
@@ -776,7 +776,7 @@ abstract class adminKit
 			//Make sure we safely import and upgrade settings if needed
 			$this->opts_upgrade($opts_temp, $version);
 			//Commit the loaded options to the database
-			$this->update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			//Everything was successful, let the user know
 			$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -801,7 +801,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings));
+		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings), true);
 		//Reset successful, let the user know
 		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -817,9 +817,9 @@ abstract class adminKit
 		//Set the options array to the current options
 		$opt = $this->get_option($this->unique_prefix . '_options');
 		//Set the options in the DB to the backup options
-		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'));
+		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'), true);
 		//Set the backup options to the undone options
-		$this->update_option($this->unique_prefix . '_options_bk', $opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $opt, false);
 		//Send the success/undo message
 		$this->messages[] = new message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -855,9 +855,9 @@ abstract class adminKit
 			//Feed the just read options into the upgrade function
 			$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
 			//Always have to update the version
-			$this->update_option($this->unique_prefix . '_version', $this::version);
+			$this->update_option($this->unique_prefix . '_version', $this::version, false);
 			//Store the options
-			$this->update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			//Send the success message
 			$this->messages[] = new message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
 		}
@@ -1314,9 +1314,9 @@ abstract class adminKit
 	 * @param string $option The name of the option to update
 	 * @param mixed $newvalue The new value to set the option to
 	 */
-	function update_option($option, $newvalue)
+	function update_option($option, $newvalue, $autoload = null)
 	{
-		return update_option($option, $newvalue);
+		return update_option($option, $newvalue, $autoload);
 	}
 	/**
 	 * A local pass through for add_option so that we can hook in and pick the correct method if needed

@@ -109,7 +109,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param mixed $newvalue The new value to set the option to
 	 * 
 	 */
-	function update_option($option, $newvalue)
+	function update_option($option, $newvalue, $autoload = null)
 	{
 		return update_site_option($option, $newvalue);
 	}

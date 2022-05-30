@@ -193,11 +193,23 @@ abstract class adminKit
 			//Run the export function on init if export form has been submitted
 			$this->opts_export();
 		}
+		//Admin Settings export hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_settings_export']))
+		{
+			//Run the export function on init if export form has been submitted
+			$this->settings_export();
+		}
 		//Admin Options import hook
 		else if(isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
 		{
 			//Run the import function on init if import form has been submitted
 			$this->opts_import();
+		}
+		//Admin Settings import hook
+		else if(isset($_FILES[$this->unique_prefix . '_admin_settings_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_settings_import_file']['name']))
+		{
+			//Run the import function on init if import form has been submitted
+			$this->settings_import();
 		}
 		//Admin Options rollback hook
 		else if(isset($_GET[$this->unique_prefix . '_admin_undo']))
@@ -553,6 +565,16 @@ abstract class adminKit
 			{
 				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
 			}
+			else if(isset($this->settings[$key]) && is_array($this->settings[$key]) && is_array($value))
+			{
+				foreach($value as $subkey => $subvalue)
+				{
+					if(isset($this->settings[$key][$subkey]) && $this->settings[$key][$subkey]instanceof setting)
+					{
+						$this->settings[$key][$subkey]->set_value($this->settings[$key][$subkey]->validate($subvalue));
+					}
+				}
+			}
 		}
 	}
 	/**
@@ -670,13 +692,39 @@ abstract class adminKit
 	 */
 	function settings_export()
 	{
-		//TODO: implement this, see #239
+		//Do a nonce check, prevent malicious link/form problems
+		check_admin_referer($this->unique_prefix . '_admin_import_export');
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+		//Get the database options, and load
+		//FIXME: This changes once we save settings to the db instead of opts
+		$this->load_opts_into_settings($this->get_option($this->unique_prefix . '_options'));
+		//Get the unique settings
+		$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+		//Change our headder to application/json for direct save
+		header('Cache-Control: public');
+		//The next two will cause good browsers to download instead of displaying the file
+		header('Content-Description: File Transfer');
+		header('Content-disposition: attachemnt; filename=' . $this->unique_prefix . '_settings.json');
+		header('Content-Type: application/json');
+		//JSON encode our settings array
+		$output = json_encode($export_settings, JSON_UNESCAPED_SLASHES, 32);
+		//Let the browser know how long the file is
+		header('Content-Length: ' . strlen($output)); // binary length
+		//Output the file
+		echo $output;
+		//Prevent WordPress from continuing on
+		die();
 	}
 	/**
 	 * Imports JSON settings into database
 	 */
 	function settings_inport()
 	{
+		//Do a nonce check, prevent malicious link/form problems
+		check_admin_referer($this->unique_prefix . '_admin_import_export');
+		//Set the backup options in the DB to the current options
+		$this->opts_backup();
 		//TODO: implement this, see #239
 	}
 	/**
@@ -991,7 +1039,8 @@ abstract class adminKit
 		$form .= esc_html__('Select a XML settings file to upload and import settings from.', 'breadcrumb_navxt');
 		$form .= '</p></td></tr></table><p class="submit">';
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (XML)', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (JSON)', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', $this->unique_prefix, esc_attr__('Reset', $this->identifier));
 		$form .= '</p></fieldset></form></div>';
 		return $form;

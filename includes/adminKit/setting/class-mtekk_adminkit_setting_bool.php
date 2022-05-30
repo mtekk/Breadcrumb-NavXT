@@ -61,6 +61,14 @@ class setting_bool extends setting_base
 	 */
 	public function maybe_update_from_form_input($input)
 	{
-		$this->set_value($this->validate(isset($input[$this->get_opt_name()])));
+		if(isset($input[$this->get_opt_name()]) && ($input[$this->get_opt_name()] === true || $input[$this->get_opt_name()] === '1'))
+		{
+			$newval = true;
+		}
+		else
+		{
+			$newval = false;
+		}
+		$this->set_value($this->validate($newval));
 	}
 }

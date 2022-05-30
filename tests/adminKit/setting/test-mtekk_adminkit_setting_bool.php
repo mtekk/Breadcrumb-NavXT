@@ -13,6 +13,10 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 				'normal_setting',
 				true,
 				'Normal Setting');
+		$this->settings['normal_settingb'] = new \mtekk\adminKit\setting\setting_bool(
+				'normal_settingb',
+				true,
+				'Normal Setting');
 		$this->settings['empty_ok_setting'] = new \mtekk\adminKit\setting\setting_bool(
 				'empty_ok_setting',
 				true,
@@ -78,7 +82,7 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->assertSame('b' . $this->settings['normal_setting']->get_name(), $this->settings['normal_setting']->get_opt_name());
 	}
 	function test_maybe_update_from_form_input() {
-		$input = array('bnormal_setting' => 1, 'bnormal_settinga' => true);
+		$input = array('bnormal_setting' => '1', 'bnormal_settinga' => true, 'bnormal_settingb' => '0');
 		$input_notthere = array('bnormal_settinga' => true, 'babnormal_setting' => 'sdf');
 		//Test allowing empty
 		$this->settings['normal_setting']->set_allow_empty(true);
@@ -86,12 +90,16 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->assertTrue($this->settings['normal_setting']->get_value());
 		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere);
 		$this->assertFalse($this->settings['normal_setting']->get_value());
+		$this->settings['normal_settingb']->maybe_update_from_form_input($input);
+		$this->assertFalse($this->settings['normal_settingb']->get_value());
 		//Test diallowing empty
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);
 		$this->assertTrue($this->settings['normal_setting']->get_value());
 		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere);
 		$this->assertFalse($this->settings['normal_setting']->get_value());
+		$this->settings['normal_settingb']->maybe_update_from_form_input($input);
+		$this->assertFalse($this->settings['normal_settingb']->get_value());
 	}
 	function test_validate() {
 		//Test a normal/expected condition

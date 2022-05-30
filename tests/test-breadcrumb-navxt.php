@@ -114,7 +114,6 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 				'bcurrent_item_linked' => true,
 				'Eauthor_name' => 'display_name'
 		));
-		var_dump(get_option('bcn_options'));
 		//Test default (use local)
 		$this->breadcrumb_navxt->call('init');
 		//Check for the opts for expected values

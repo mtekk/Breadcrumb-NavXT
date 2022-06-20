@@ -199,17 +199,17 @@ abstract class adminKit
 			//Run the export function on init if export form has been submitted
 			$this->settings_export();
 		}
+		//Admin Settings import hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_settings_import']) && isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
+		{
+			//Run the import function on init if import form has been submitted
+			$this->settings_import();
+		}
 		//Admin Options import hook
 		else if(isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
 		{
 			//Run the import function on init if import form has been submitted
 			$this->opts_import();
-		}
-		//Admin Settings import hook
-		else if(isset($_FILES[$this->unique_prefix . '_admin_settings_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_settings_import_file']['name']))
-		{
-			//Run the import function on init if import form has been submitted
-			$this->settings_import();
 		}
 		//Admin Options rollback hook
 		else if(isset($_GET[$this->unique_prefix . '_admin_undo']))
@@ -708,7 +708,12 @@ abstract class adminKit
 		header('Content-disposition: attachemnt; filename=' . $this->unique_prefix . '_settings.json');
 		header('Content-Type: application/json');
 		//JSON encode our settings array
-		$output = json_encode($export_settings, JSON_UNESCAPED_SLASHES, 32);
+		$output = json_encode(
+				(object)array(
+						'plugin' => $this->short_name,
+						'version' => $this::version,
+						'settings' => $export_settings)
+				, JSON_UNESCAPED_SLASHES, 32);
 		//Let the browser know how long the file is
 		header('Content-Length: ' . strlen($output)); // binary length
 		//Output the file
@@ -719,13 +724,53 @@ abstract class adminKit
 	/**
 	 * Imports JSON settings into database
 	 */
-	function settings_inport()
+	function settings_import()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
-		//TODO: implement this, see #239
+		//Load the user uploaded file, handle failure gracefully
+		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		{
+			//Grab the json settings from the temp file, treat as associative array so we can just throw the settings subfield at the update loop
+			$settings_upload = json_decode(file_get_contents($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']), true);
+			//Only continue if we have a JSON object that is for this plugin (the the WP rest_is_object() function is handy here as the REST API passes JSON)
+			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
+			{
+				//FIXME: Much of the innards of this are the same as ops_update, probably an opportunity for refactoring simplification
+				//Must clone the defaults since PHP normally shallow copies
+				$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+				//Act as if the JSON file was just a bunch of POST entries for a settings save
+				$this->settings_update_loop($this->settings, $settings_upload['settings']);
+				$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+				//FIXME: Eventually we'll save the object array, but not today
+				//Convert to opts array for saving
+				$this->opt = adminKit::settings_to_opts($new_settings);
+				//Run opts through update script
+				//Make sure we safely import and upgrade settings if needed
+				$this->opts_upgrade($this->opt, $settings_upload['version']);
+				//Commit the option changes
+				$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
+				//Check if known settings match attempted save
+				if($updated && count(array_diff_key($settings_upload['settings'], $this->settings)) == 0)
+				{
+					//Let the user know everything went ok
+					$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
+							. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
+				}
+				else
+				{
+					$this->messages[] = new message(esc_html__('No settings were imported. Settings from uploaded file matched existing settings.', $this->identifier), 'info');
+				}
+				//Output any messages that there may be
+				add_action('admin_notices', array($this, 'messages'));
+				//And return as we're successful
+				return;
+			}
+		}
+		//Throw an error since we could not load the file for various reasons
+		$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
 	}
 	/**
 	 * Exports a XML options document
@@ -1039,6 +1084,7 @@ abstract class adminKit
 		$form .= esc_html__('Select a XML settings file to upload and import settings from.', 'breadcrumb_navxt');
 		$form .= '</p></td></tr></table><p class="submit">';
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import (JSON)', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (XML)', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (JSON)', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', $this->unique_prefix, esc_attr__('Reset', $this->identifier));

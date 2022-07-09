@@ -187,12 +187,6 @@ abstract class adminKit
 			//Run the reset function on init if reset form has been submitted
 			$this->opts_reset();
 		}
-		//Admin Options export hook
-		else if(isset($_POST[$this->unique_prefix . '_admin_export']))
-		{
-			//Run the export function on init if export form has been submitted
-			$this->opts_export();
-		}
 		//Admin Settings export hook
 		else if(isset($_POST[$this->unique_prefix . '_admin_settings_export']))
 		{
@@ -204,12 +198,6 @@ abstract class adminKit
 		{
 			//Run the import function on init if import form has been submitted
 			$this->settings_import();
-		}
-		//Admin Options import hook
-		else if(isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
-		{
-			//Run the import function on init if import form has been submitted
-			$this->opts_import();
 		}
 		//Admin Options rollback hook
 		else if(isset($_GET[$this->unique_prefix . '_admin_undo']))
@@ -1080,18 +1068,16 @@ abstract class adminKit
 		$form .= wp_nonce_field($this->unique_prefix . '_admin_import_export', '_wpnonce', true, false);
 		$form .= sprintf('<fieldset id="import_export" class="%s_options">', esc_attr($this->unique_prefix));
 		$form .= '<legend class="screen-reader-text">' . esc_html__( 'Import settings', $this->identifier ) . '</legend>';
-		$form .= '<p>' . esc_html__('Import settings from a XML file, export the current settings to a XML file, or reset to the default settings.', $this->identifier) . '</p>';
+		$form .= '<p>' . esc_html__('Import settings from a JSON or XML file, export the current settings to a JSON file, or reset to the default settings.', $this->identifier) . '</p>';
 		$form .= '<table class="form-table"><tr valign="top"><th scope="row">';
 		$form .= sprintf('<label for="%s_admin_import_file">', esc_attr($this->unique_prefix));
 		$form .= esc_html__('Settings File', $this->identifier);
 		$form .= '</label></th><td>';
 		$form .= sprintf('<input type="file" name="%1$s_admin_import_file" id="%1$s_admin_import_file" size="32" /><p class="description">', esc_attr($this->unique_prefix));
-		$form .= esc_html__('Select a XML settings file to upload and import settings from.', 'breadcrumb_navxt');
+		$form .= esc_html__('Select a JSON or XML settings file to upload and import settings from.', 'breadcrumb_navxt');
 		$form .= '</p></td></tr></table><p class="submit">';
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import (JSON)', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (XML)', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export (JSON)', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', $this->unique_prefix, esc_attr__('Reset', $this->identifier));
 		$form .= '</p></fieldset></form></div>';
 		return $form;

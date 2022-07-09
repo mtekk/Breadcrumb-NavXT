@@ -768,6 +768,11 @@ abstract class adminKit
 				//And return as we're successful
 				return;
 			}
+			//If it wasn't JSON, try XML
+			else
+			{
+				return $this->opts_import();
+			}
 		}
 		//Throw an error since we could not load the file for various reasons
 		$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
@@ -830,10 +835,10 @@ abstract class adminKit
 	function opts_import()
 	{
 		//Our quick and dirty error supressor
-		function error($errno, $errstr, $eerfile, $errline)
+		$error_handler = function($errno, $errstr, $eerfile, $errline, $errcontext)
 		{
 			return true;
-		}
+		};
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
 		//Set the backup options in the DB to the current options
@@ -841,7 +846,7 @@ abstract class adminKit
 		//Create a DOM document
 		$dom = new \DOMDocument('1.0', 'UTF-8');
 		//We want to catch errors ourselves
-		set_error_handler('error');
+		set_error_handler($error_handler);
 		//Load the user uploaded file, handle failure gracefully
 		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 		{

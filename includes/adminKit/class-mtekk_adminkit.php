@@ -67,7 +67,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.0.3';
+	const version = '3.1.0';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;

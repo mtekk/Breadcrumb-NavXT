@@ -44,7 +44,7 @@ use mtekk\adminKit\{adminKit, form, message, setting};
  */
 class bcn_admin extends adminKit
 {
-	const version = '7.0.2';
+	const version = '7.0.90';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'bcn_manage_options';
@@ -481,7 +481,13 @@ class bcn_admin extends adminKit
 					<?php
 							$this->form->input_check($this->settings['bpost_' . $post_type->name . '_archive_display'], sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), !$post_type->has_archive);
 						}
-						if(!in_array($post_type->name, array('page')))
+						if(in_array($post_type->name, array('page')))
+						{
+							$this->form->input_hidden($this->settings['bpost_' . $post_type->name . '_hierarchy_display']);
+							$this->form->input_hidden($this->settings['bpost_' . $post_type->name . '_hierarchy_parent_first']);
+							$this->form->input_hidden($this->settings['bpost_' . $post_type->name . '_taxonomy_referer']);
+						}
+						else
 						{
 							$this->form->input_check($this->settings['bpost_' . $post_type->name . '_hierarchy_display'], sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset-ctrl adminkit-enset');
 							$this->form->input_check($this->settings['bpost_' . $post_type->name . '_hierarchy_parent_first'], sprintf(__('Use the parent of the %s as the primary hierarchy, falling back to the hierarchy selected below when the parent hierarchy is exhausted.', 'breadcrumb-navxt'), $singular_name_lc), false, '', 'adminkit-enset');

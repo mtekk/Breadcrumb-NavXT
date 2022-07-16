@@ -67,7 +67,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.0.2';
+	const version = '3.1.0';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -187,17 +187,17 @@ abstract class adminKit
 			//Run the reset function on init if reset form has been submitted
 			$this->opts_reset();
 		}
-		//Admin Options export hook
-		else if(isset($_POST[$this->unique_prefix . '_admin_export']))
+		//Admin Settings export hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_settings_export']))
 		{
 			//Run the export function on init if export form has been submitted
-			$this->opts_export();
+			$this->settings_export();
 		}
-		//Admin Options import hook
-		else if(isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
+		//Admin Settings import hook
+		else if(isset($_POST[$this->unique_prefix . '_admin_settings_import']) && isset($_FILES[$this->unique_prefix . '_admin_import_file']) && !empty($_FILES[$this->unique_prefix . '_admin_import_file']['name']))
 		{
 			//Run the import function on init if import form has been submitted
-			$this->opts_import();
+			$this->settings_import();
 		}
 		//Admin Options rollback hook
 		else if(isset($_GET[$this->unique_prefix . '_admin_undo']))
@@ -330,9 +330,9 @@ abstract class adminKit
 		{
 			//Add the options, we only store differences from defaults now, so start with blank array
 			$this->add_option($this->unique_prefix . '_options', array());
-			$this->add_option($this->unique_prefix . '_options_bk', array(), '', 'no');
+			$this->add_option($this->unique_prefix . '_options_bk', array(), '', false);
 			//Add the version, no need to autoload the db version
-			$this->update_option($this->unique_prefix . '_version', $this::version, 'no');
+			$this->update_option($this->unique_prefix . '_version', $this::version, false);
 		}
 		else
 		{
@@ -343,9 +343,9 @@ abstract class adminKit
 				//Run the settings update script
 				$this->opts_upgrade($opts, $db_version);
 				//Always have to update the version
-				$this->update_option($this->unique_prefix . '_version', $this::version);
+				$this->update_option($this->unique_prefix . '_version', $this::version, false);
 				//Store the options
-				$this->update_option($this->unique_prefix . '_options', $this->opt);
+				$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			}
 		}
 	}
@@ -443,7 +443,7 @@ abstract class adminKit
 	function opts_backup()
 	{
 		//Set the backup options in the DB to the current options
-		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'));
+		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'), false);
 	}
 	/**
 	 * The new, simpler settings update loop, handles the new settings array and replaces the old opts_update_loop
@@ -553,6 +553,16 @@ abstract class adminKit
 			{
 				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
 			}
+			else if(isset($this->settings[$key]) && is_array($this->settings[$key]) && is_array($value))
+			{
+				foreach($value as $subkey => $subvalue)
+				{
+					if(isset($this->settings[$key][$subkey]) && $this->settings[$key][$subkey]instanceof setting)
+					{
+						$this->settings[$key][$subkey]->set_value($this->settings[$key][$subkey]->validate($subvalue));
+					}
+				}
+			}
 		}
 	}
 	/**
@@ -624,7 +634,7 @@ abstract class adminKit
 		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
 		//Update our backup options
-		$this->update_option($this->unique_prefix . '_options_bk', $this->opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
@@ -635,7 +645,7 @@ abstract class adminKit
 		//Convert to opts array for saving
 		$this->opt = adminKit::settings_to_opts($new_settings);
 		//Commit the option changes
-		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt);
+		$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
 		//Check if known settings match attempted save
 		if($updated && count(array_diff_key($input, $this->settings)) == 0)
 		{
@@ -670,14 +680,90 @@ abstract class adminKit
 	 */
 	function settings_export()
 	{
-		//TODO: implement this, see #239
+		//Do a nonce check, prevent malicious link/form problems
+		check_admin_referer($this->unique_prefix . '_admin_import_export');
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+		//Get the database options, and load
+		//FIXME: This changes once we save settings to the db instead of opts
+		$this->load_opts_into_settings($this->get_option($this->unique_prefix . '_options'));
+		//Get the unique settings
+		$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+		//Change our headder to application/json for direct save
+		header('Cache-Control: public');
+		//The next two will cause good browsers to download instead of displaying the file
+		header('Content-Description: File Transfer');
+		header('Content-disposition: attachemnt; filename=' . $this->unique_prefix . '_settings.json');
+		header('Content-Type: application/json');
+		//JSON encode our settings array
+		$output = json_encode(
+				(object)array(
+						'plugin' => $this->short_name,
+						'version' => $this::version,
+						'settings' => $export_settings)
+				, JSON_UNESCAPED_SLASHES, 32);
+		//Let the browser know how long the file is
+		header('Content-Length: ' . strlen($output)); // binary length
+		//Output the file
+		echo $output;
+		//Prevent WordPress from continuing on
+		die();
 	}
 	/**
 	 * Imports JSON settings into database
 	 */
-	function settings_inport()
+	function settings_import()
 	{
-		//TODO: implement this, see #239
+		//Do a nonce check, prevent malicious link/form problems
+		check_admin_referer($this->unique_prefix . '_admin_import_export');
+		//Set the backup options in the DB to the current options
+		$this->opts_backup();
+		//Load the user uploaded file, handle failure gracefully
+		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		{
+			//Grab the json settings from the temp file, treat as associative array so we can just throw the settings subfield at the update loop
+			$settings_upload = json_decode(file_get_contents($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']), true);
+			//Only continue if we have a JSON object that is for this plugin (the the WP rest_is_object() function is handy here as the REST API passes JSON)
+			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
+			{
+				//FIXME: Much of the innards of this are the same as ops_update, probably an opportunity for refactoring simplification
+				//Must clone the defaults since PHP normally shallow copies
+				$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+				//Act as if the JSON file was just a bunch of POST entries for a settings save
+				$this->settings_update_loop($this->settings, $settings_upload['settings']);
+				$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+				//FIXME: Eventually we'll save the object array, but not today
+				//Convert to opts array for saving
+				$this->opt = adminKit::settings_to_opts($new_settings);
+				//Run opts through update script
+				//Make sure we safely import and upgrade settings if needed
+				$this->opts_upgrade($this->opt, $settings_upload['version']);
+				//Commit the option changes
+				$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
+				//Check if known settings match attempted save
+				if($updated && count(array_diff_key($settings_upload['settings'], $this->settings)) == 0)
+				{
+					//Let the user know everything went ok
+					$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
+							. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
+				}
+				else
+				{
+					$this->messages[] = new message(esc_html__('No settings were imported. Settings from uploaded file matched existing settings.', $this->identifier), 'info');
+				}
+				//Output any messages that there may be
+				add_action('admin_notices', array($this, 'messages'));
+				//And return as we're successful
+				return;
+			}
+			//If it wasn't JSON, try XML
+			else
+			{
+				return $this->opts_import();
+			}
+		}
+		//Throw an error since we could not load the file for various reasons
+		$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
 	}
 	/**
 	 * Exports a XML options document
@@ -689,7 +775,7 @@ abstract class adminKit
 		//Update our internal settings
 		$this->opt = $this->get_option($this->unique_prefix . '_options');
 		//Create a DOM document
-		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom = new \DOMDocument('1.0', 'UTF-8');
 		//Adds in newlines and tabs to the output
 		$dom->formatOutput = true;
 		//We're not using a DTD therefore we need to specify it as a standalone document
@@ -737,25 +823,25 @@ abstract class adminKit
 	function opts_import()
 	{
 		//Our quick and dirty error supressor
-		function error($errno, $errstr, $eerfile, $errline)
+		$error_handler = function($errno, $errstr, $eerfile, $errline, $errcontext)
 		{
 			return true;
-		}
+		};
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Create a DOM document
-		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom = new \DOMDocument('1.0', 'UTF-8');
 		//We want to catch errors ourselves
-		set_error_handler('error');
+		set_error_handler($error_handler);
 		//Load the user uploaded file, handle failure gracefully
 		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 		{
 			$opts_temp = array();
 			$version = '';
 			//Have to use an xpath query otherwise we run into problems
-			$xpath = new DOMXPath($dom);  
+			$xpath = new \DOMXPath($dom);  
 			$option_sets = $xpath->query('plugin');
 			//Loop through all of the xpath query results
 			foreach($option_sets as $options)
@@ -776,7 +862,7 @@ abstract class adminKit
 			//Make sure we safely import and upgrade settings if needed
 			$this->opts_upgrade($opts_temp, $version);
 			//Commit the loaded options to the database
-			$this->update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			//Everything was successful, let the user know
 			$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
 				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -801,7 +887,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings));
+		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings), true);
 		//Reset successful, let the user know
 		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -817,9 +903,9 @@ abstract class adminKit
 		//Set the options array to the current options
 		$opt = $this->get_option($this->unique_prefix . '_options');
 		//Set the options in the DB to the backup options
-		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'));
+		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'), true);
 		//Set the backup options to the undone options
-		$this->update_option($this->unique_prefix . '_options_bk', $opt);
+		$this->update_option($this->unique_prefix . '_options_bk', $opt, false);
 		//Send the success/undo message
 		$this->messages[] = new message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -855,9 +941,9 @@ abstract class adminKit
 			//Feed the just read options into the upgrade function
 			$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
 			//Always have to update the version
-			$this->update_option($this->unique_prefix . '_version', $this::version);
+			$this->update_option($this->unique_prefix . '_version', $this::version, false);
 			//Store the options
-			$this->update_option($this->unique_prefix . '_options', $this->opt);
+			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 			//Send the success message
 			$this->messages[] = new message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
 		}
@@ -982,16 +1068,16 @@ abstract class adminKit
 		$form .= wp_nonce_field($this->unique_prefix . '_admin_import_export', '_wpnonce', true, false);
 		$form .= sprintf('<fieldset id="import_export" class="%s_options">', esc_attr($this->unique_prefix));
 		$form .= '<legend class="screen-reader-text">' . esc_html__( 'Import settings', $this->identifier ) . '</legend>';
-		$form .= '<p>' . esc_html__('Import settings from a XML file, export the current settings to a XML file, or reset to the default settings.', $this->identifier) . '</p>';
+		$form .= '<p>' . esc_html__('Import settings from a JSON or XML file, export the current settings to a JSON file, or reset to the default settings.', $this->identifier) . '</p>';
 		$form .= '<table class="form-table"><tr valign="top"><th scope="row">';
 		$form .= sprintf('<label for="%s_admin_import_file">', esc_attr($this->unique_prefix));
 		$form .= esc_html__('Settings File', $this->identifier);
 		$form .= '</label></th><td>';
 		$form .= sprintf('<input type="file" name="%1$s_admin_import_file" id="%1$s_admin_import_file" size="32" /><p class="description">', esc_attr($this->unique_prefix));
-		$form .= esc_html__('Select a XML settings file to upload and import settings from.', 'breadcrumb_navxt');
+		$form .= esc_html__('Select a JSON or XML settings file to upload and import settings from.', 'breadcrumb_navxt');
 		$form .= '</p></td></tr></table><p class="submit">';
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', $this->unique_prefix, esc_attr__('Reset', $this->identifier));
 		$form .= '</p></fieldset></form></div>';
 		return $form;
@@ -1314,9 +1400,9 @@ abstract class adminKit
 	 * @param string $option The name of the option to update
 	 * @param mixed $newvalue The new value to set the option to
 	 */
-	function update_option($option, $newvalue)
+	function update_option($option, $newvalue, $autoload = null)
 	{
-		return update_option($option, $newvalue);
+		return update_option($option, $newvalue, $autoload);
 	}
 	/**
 	 * A local pass through for add_option so that we can hook in and pick the correct method if needed

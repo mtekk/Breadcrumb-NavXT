@@ -21,15 +21,15 @@ if(class_exists('\mtekk\adminKit\message'))
 }
 class adminKitMessageTest extends WP_UnitTestCase {
 	public $messages = array();
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		$this->messages[] = new mtekk_adminKit_message_DUT('test dismissible msg', 'warning', true, 'test_msga');
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg', 'warning', false, 'test_msgb');
 		$this->messages[] = new mtekk_adminKit_message_DUT('another test dismissible msg', 'warning', true, 'test_msgc');
 		$this->messages[] = new mtekk_adminKit_message_DUT('test msg', 'info');
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_was_dismissed() {
 		//Ensure we start with messages that were not dismissed

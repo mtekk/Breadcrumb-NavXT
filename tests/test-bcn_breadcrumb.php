@@ -7,19 +7,19 @@
  */
 class BreadcrumbTest extends WP_UnitTestCase {
 	public $breadcrumb;
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		$this->breadcrumb = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/test', 101, true);
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_assemble_linked() {
 		//First test a linked breadcrumb
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 81);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Check that our position was populated
-		$this->assertContains('content="81"', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('content="81"', $breadcrumb_string_linked1);
 		
 		//Now test a breadcrumb that didn't have a template passed in
 		$breadcrumb2 = new bcn_breadcrumb('test', '', array('page', 'current-item'), 'http://flowissues.com/test', 101, true);
@@ -31,7 +31,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 81, true);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" aria-current="page"><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Check that our position was populated
-		$this->assertContains('content="81"', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('content="81"', $breadcrumb_string_linked1);
 	}
 	function test_assemble_unlinked() {
 		//Test a breadcrumb that can be linked, but is unlinked from the assemble function
@@ -68,8 +68,8 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Check that our titles are escaped as expected
-		$this->assertContains('title="Go to ' . $resa . '."', $breadcrumb_string_linked1);
-		$this->assertContains('<span property="name">' . $source . '</span>', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('title="Go to ' . $resa . '."', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('<span property="name">' . $source . '</span>', $breadcrumb_string_linked1);
 	}
 	function test_set_url() {
 		//Start with an unlinked breadcrumb trail assembly
@@ -84,7 +84,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we changed automatically to a linked template
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Make sure we have the expected URL in the output
-		$this->assertContains('http://flowissues.com/code', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('http://flowissues.com/code', $breadcrumb_string_linked1);
 
 		//Now change the URL
 		$breadcrumb_unlinked->set_url('http://flowissues.com/food');
@@ -92,7 +92,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we changed automatically to a linked template
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
 		//Make sure we have the expected URL in the output
-		$this->assertContains('http://flowissues.com/food', $breadcrumb_string_linked2);
+		$this->assertStringContainsString('http://flowissues.com/food', $breadcrumb_string_linked2);
 
 		//Now pass in a blank URL
 		$breadcrumb_unlinked->set_url('');
@@ -119,13 +119,13 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//Make sure we changed automatically to a linked template, though the link should be empty
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
 		//Make sure we do not have the bad URL items in the output
-		$this->assertRegExp('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
+		$this->assertMatchesRegularExpression('/^((?!feed\:javascript\:alert\(1\)).)*$/s', $breadcrumb_string_linked2);
 	}
 	function test_set_url_filter() {
 		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked->assemble(true, 1);
 		//Make sure we have the expected URL in the output
-		$this->assertContains('http://flowissues.com/testurl/gdg', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('http://flowissues.com/testurl/gdg', $breadcrumb_string_linked1);
 		//Now register our filter
 		add_filter('bcn_breadcrumb_url',
 				function($url, $type, $id) {
@@ -139,7 +139,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$breadcrumb_linked = new bcn_breadcrumb('test', bcn_breadcrumb::get_default_template(), array('page', 'current-item'), 'http://flowissues.com/testurl/gdg', 101, true);
 		$breadcrumb_string_linked1 = $breadcrumb_linked->assemble(true, 1);
 		//Make sure we have the expected URL in the output
-		$this->assertContains('http://flowissues.com/testurl1', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('http://flowissues.com/testurl1', $breadcrumb_string_linked1);
 	}
 	function test_get_url() {
 		$this->breadcrumb->set_url('http://flowissues.com/code');
@@ -213,16 +213,16 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		//First test a linked breadcrumb
 		$breadcrumb_string_linked1 = $this->breadcrumb->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
-		$this->assertContains('page', $breadcrumb_string_linked1);
-		$this->assertContains('current-item', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('page', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('current-item', $breadcrumb_string_linked1);
 		
 		//Now add another type to the mix
 		$this->breadcrumb->add_type('somethingelse');
 		$breadcrumb_string_linked2 = $this->breadcrumb->assemble(true, 1);
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked2);
-		$this->assertContains('page', $breadcrumb_string_linked2);
-		$this->assertContains('current-item', $breadcrumb_string_linked2);
-		$this->assertContains('somethingelse', $breadcrumb_string_linked2);
+		$this->assertStringContainsString('page', $breadcrumb_string_linked2);
+		$this->assertStringContainsString('current-item', $breadcrumb_string_linked2);
+		$this->assertStringContainsString('somethingelse', $breadcrumb_string_linked2);
 	}
 	function test_get_type() {
 		$this->assertSame(array('page', 'current-item'), $this->breadcrumb->get_types());

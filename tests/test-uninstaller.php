@@ -6,10 +6,10 @@
  */
 class UninstallerTests extends WP_Plugin_Uninstall_UnitTestCase
 {
-	public function setUp()
+	public function set_up()
 	{
 		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/breadcrumb-navxt.php';
-		parent::setUp();
+		parent::set_up();
 		global $current_user;
 		// This code will run before each test!
 		$current_user = new WP_User(1);
@@ -22,9 +22,9 @@ class UninstallerTests extends WP_Plugin_Uninstall_UnitTestCase
 		$bcn_breadcrumb_admin->install();
 	}
 	
-	public function tearDown()
+	public function tear_down()
 	{
-		parent::tearDown();
+		parent::tear_down();
 		// This code will run after each test
 	}
 	function test_uninstall()

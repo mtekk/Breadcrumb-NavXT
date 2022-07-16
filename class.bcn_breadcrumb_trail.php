@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '7.0.2';
+	const version = '7.0.90';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -1050,15 +1050,18 @@ class bcn_breadcrumb_trail
 		//For posts
 		else if(is_singular())
 		{
-			$this->do_post(get_post(), false, (get_query_var('page') > 1));
+			//Could use the $post global, but we can't really trust it
+			$type = get_post();
+			$this->do_post($type, false, (get_query_var('page') > 1));
 			//If this is an attachment then we need to change the queried object to the parent post
 			if(is_attachment())
 			{
-				//Could use the $post global, but we can't really trust it
-				$post = get_post();
-				$type = get_post($post->post_parent); //TODO check for WP_Error?
+				$type = get_post($type->post_parent); //TODO check for WP_Error?
 			}
-			$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
+			if($type instanceof WP_Post)
+			{
+				$this->do_root($type->post_type, $this->opt['apost_' . $type->post_type . '_root'], is_paged(), false);
+			}
 		}
 		//For searches
 		else if(is_search())
@@ -1105,7 +1108,7 @@ class bcn_breadcrumb_trail
 				$this->do_archive_by_post_type($this->get_type_string_query_var(), false, is_paged(), true);
 			}
 			//For taxonomy based archives
-			else if(is_category() || is_tag() || is_tax())
+			else if((is_category() || is_tag() || is_tax()) && $type instanceof WP_Term)
 			{
 				$this->do_archive_by_term($type, is_paged());
 				$type_str = $this->type_archive($type);
@@ -1231,6 +1234,7 @@ class bcn_breadcrumb_trail
 	protected function display_loop($breadcrumbs, $linked, $reverse, $template, $outer_template, $separator)
 	{
 		$position = 1;
+		$breadcrumbs = apply_filters('bcn_before_loop', $breadcrumbs);
 		$last_position = count($breadcrumbs);
 		if($reverse)
 		{

@@ -29,7 +29,7 @@ use mtekk\adminKit\{adminKit, form, message, setting};
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '7.0.2';
+	const version = '7.0.90';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**
@@ -109,7 +109,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param mixed $newvalue The new value to set the option to
 	 * 
 	 */
-	function update_option($option, $newvalue)
+	function update_option($option, $newvalue, $autoload = null)
 	{
 		return update_site_option($option, $newvalue);
 	}

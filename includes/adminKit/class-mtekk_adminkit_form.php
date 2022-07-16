@@ -274,7 +274,7 @@ class form
 					printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>',
 							esc_attr($opt_name),
 							esc_attr($opt_id),
-							esc_attr($option->get_value()),
+							1,
 							esc_attr($class),
 							disabled($disable, true, false),
 							checked($option->get_value(), true, false));

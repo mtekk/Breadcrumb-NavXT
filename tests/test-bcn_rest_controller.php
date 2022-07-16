@@ -21,8 +21,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 		self::delete_user( self::$author_id );
 		self::delete_user( self::$contributor_id );
 	}
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		//Register some types to use for various tests
 		register_post_type('czar', array(
 			'label' => 'Czars',
@@ -138,8 +138,8 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 	{
 		$GLOBALS['wp_rest_server'] = null;
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 		$this->reset_rest_server();
 	}
 	public function test_register_routes() {

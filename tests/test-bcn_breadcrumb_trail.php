@@ -104,12 +104,12 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		wp_update_post(array('ID' => self::$paids[5], 'post_parent' => self::$paids[0]));
 		wp_update_post(array('ID' => self::$paids[9], 'post_parent' => self::$paids[1]));
 	}
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->breadcrumb_trail = new bcn_breadcrumb_trail_DUT();
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_add() {
 		$post = get_post(self::$pids[0]);
@@ -375,7 +375,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we do not have double wrapped items
 		foreach($title_exploded as $title_under_test)
 		{
-			$this->assertRegExp('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*" ><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
+			$this->assertMatchesRegularExpression('@^<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the [^"]* archives\." href="[^"]*" class="[^"]*" ><span property="name">[^<]*</span></a><meta property="position" content="[^"]*"></span>$@', $title_under_test);
 		}
 	}
 	/**
@@ -1449,8 +1449,16 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 			return $attrib_array;
 		}, 10, 3);
 		//Test with filtered result
-			$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<li><ul>%1$s</ul></li>', ' &gt; '));
 		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li><li class="post post-post current-item dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
+		//Test with filtered start
+		add_filter('bcn_before_loop', function($breadcrumbs){
+			//Remove the first breadcrumb in the trail
+			unset($breadcrumbs[0]);
+			return $breadcrumbs;
+		});
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<ul>%1$s</ul>', ' &gt; '));
+		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li>', $breadcrumb_string);
 	}
 	/**
 	 * display_loop second dimension testing, gets its own test

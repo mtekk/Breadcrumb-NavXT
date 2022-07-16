@@ -7,8 +7,8 @@
  */
 class adminKitSettingFloatTest extends WP_UnitTestCase {
 	public $settings = array();
-	function setUp() {
-		parent::setUp();
+	function set_up() {
+		parent::set_up();
 		$this->settings['normal_setting'] = new \mtekk\adminKit\setting\setting_float(
 				'normal_setting',
 				42.1,
@@ -25,8 +25,8 @@ class adminKitSettingFloatTest extends WP_UnitTestCase {
 				false,
 				true);
 	}
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 	}
 	function test_is_deprecated() {
 		$this->assertFalse($this->settings['normal_setting']->is_deprecated());

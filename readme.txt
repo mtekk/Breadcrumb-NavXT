@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 4.9
-Tested up to: 5.8
-Stable tag: 7.0.2
+Tested up to: 6.0
+Stable tag: 7.1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.1.0 =
+Release date: July, 18th 2022
+
+* Behavior change: BCN_SETTINGS_FAVOR_* constant behavior changed to take advantage of settings changes in 7.0.
+* Behavior change: Settings page now warns if it detected CPTs that were added too late.
+* New feature: Added bcn_before_loop filter which runs at the top of bcn_breadcrumb_trail::display_loop().
+* New feature: Added JSON formatted settings import and export (successor to the old XML settings import/export format).
+* Bug fix: Fixed PHP error caused by term archives that don’t know the active term.
+* Bug fix: Fixed PHP error caused by introduction of namespacing in the legacy XML settings importer and exporter.
+* Bug fix: Explicitly set option autoload values, avoiding inappropriate default autoload values being used.
 
 = 7.0.2 =
 Release date: January, 4th 2022
@@ -191,8 +201,5 @@ Release date: December, 26th 2017
 * Bug fix: Removed use of `create_function` in registering the widget as it was deprecated in PHP 7.2.
 
 == Upgrade Notice ==
-= 6.3.0 =
-This version requires PHP5.5 or newer. This version introduces a Gutenberg Breadcrumb Trail block.
-
-= 6.0.0 =
-This version requires PHP5.3 or newer. This version introduces three new filters and deprecates a filter.
+= 7.1.0 =
+This version requires PHP7.0 or newer. This version introduces a new JSON settings import/export feature.

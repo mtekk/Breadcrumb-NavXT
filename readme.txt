@@ -50,7 +50,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 7.1.0 =
-Release date: July, 18th 2022
+Release date: July, 17th 2022
 
 * Behavior change: BCN_SETTINGS_FAVOR_* constant behavior changed to take advantage of settings changes in 7.0.
 * Behavior change: Settings page now warns if it detected CPTs that were added too late.

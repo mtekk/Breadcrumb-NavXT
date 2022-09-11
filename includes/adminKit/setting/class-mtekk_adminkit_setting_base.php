@@ -63,7 +63,7 @@ abstract class setting_base implements setting,\JsonSerializable
 	{
 		$this->allow_empty = $allow_empty;
 	}
-	public function jsonSerialize()
+	public function jsonSerialize(): mixed
 	{
 		return $this->value;
 	}

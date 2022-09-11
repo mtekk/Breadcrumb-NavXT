@@ -21,23 +21,10 @@ require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
 if(!class_exists('setting_base'))
 {
-	require_once( __DIR__ . '/class-mtekk_adminkit_setting_base.php');
+	require_once( __DIR__ . '/class-mtekk_adminkit_setting_int.php');
 }
-class setting_absint extends setting_base
+class setting_absint extends setting_int
 {
-	/**
-	 * Default constructor function
-	 * 
-	 * @param string $title The display title of the setting
-	 */
-	public function __construct(string $name, int $value, string $title, $allow_empty = false, $deprecated = false)
-	{
-		$this->name = $name;
-		$this->value = $value;
-		$this->title = $title;
-		$this->allow_empty = $allow_empty;
-		$this->deprecated = $deprecated;
-	}
 	/**
 	 *
 	 */

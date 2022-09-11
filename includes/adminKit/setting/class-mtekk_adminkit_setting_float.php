@@ -48,6 +48,15 @@ class setting_float extends setting_base
 	/**
 	 * 
 	 * {@inheritDoc}
+	 * @see \mtekk\adminKit\setting\setting_base::jsonSerialize()
+	 */
+	public function jsonSerialize(): float
+	{
+		return $this->value;
+	}
+	/**
+	 * 
+	 * {@inheritDoc}
 	 * @see \mtekk\adminKit\setting\setting::get_opt_name()
 	 */
 	public function get_opt_name()

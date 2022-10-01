@@ -388,6 +388,11 @@ class breadcrumb_navxt
 		//Post types
 		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
+			//If we somehow end up with the WP_Post_Types array having a non-WP_Post_Type object, we should skip it
+			if(!($post_type instanceof WP_Post_Type))
+			{
+				continue;
+			}
 			$settings['Hpost_' . $post_type->name . '_template'] = new setting\setting_html(
 					'post_' . $post_type->name . '_template',
 					bcn_breadcrumb::get_default_template(),

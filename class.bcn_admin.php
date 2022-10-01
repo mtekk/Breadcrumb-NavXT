@@ -328,6 +328,15 @@ class bcn_admin extends adminKit
 	{
 		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
+			if(!($post_type instanceof WP_Post_Type))
+			{
+				$this->messages[] = new message(
+						esc_html__('Warning: WP_Post_Types global contains non WP_Post_Type object.', 'breadcrumb-navxt'),
+						'warning',
+						true,
+						'badtypeWP_Post_Types');
+				continue;
+			}
 			//If we haven't seen this post type before, warn the user
 			if(!isset($this->settings['Hpost_' . $post_type->name . '_template']))
 			{

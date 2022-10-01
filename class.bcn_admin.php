@@ -463,8 +463,8 @@ class bcn_admin extends adminKit
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
 			{
-				//Check for non-public CPTs and if the CPT wasn't known when defaults were generated
-				if(!apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name) || !isset($this->settings['Hpost_' . $post_type->name . '_template']))
+				//Check for bad post type objects, for non-public CPTs, and if the CPT wasn't known when defaults were generated
+				if(!($post_type instanceof WP_Post_Type) || !apply_filters('bcn_show_cpt_private', $post_type->public, $post_type->name) || !isset($this->settings['Hpost_' . $post_type->name . '_template']))
 				{
 					continue;
 				}

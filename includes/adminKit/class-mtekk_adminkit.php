@@ -25,15 +25,46 @@ if(!class_exists('message'))
 {
 	require_once(__DIR__ . '/class-mtekk_adminkit_message.php');
 }
+if(version_compare(phpversion(), '8.0.0', '<'))
+{
+	//Include setting class
+	if(!class_exists('setting\setting_bool'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_bool.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_float'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_float.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_int'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_int.php');
+	}
+}
+else
+{
+	//Include setting class
+	if(!class_exists('setting\setting_bool'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_bool.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_float'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_float.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_int'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_int.php');
+	}
+}
 //Include setting class
 if(!class_exists('setting\setting_absint'))
 {
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_absint.php');
-}
-//Include setting class
-if(!class_exists('setting\setting_bool'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_bool.php');
 }
 //Include setting class
 if(!class_exists('setting\setting_enum'))
@@ -41,19 +72,9 @@ if(!class_exists('setting\setting_enum'))
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_enum.php');
 }
 //Include setting class
-if(!class_exists('setting\setting_float'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_float.php');
-}
-//Include setting class
 if(!class_exists('settingsetting_\html'))
 {
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_html.php');
-}
-//Include setting class
-if(!class_exists('setting\setting_int'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_int.php');
 }
 //Include setting class
 if(!class_exists('setting\setting_string'))

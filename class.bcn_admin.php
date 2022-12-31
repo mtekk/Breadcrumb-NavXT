@@ -139,23 +139,13 @@ class bcn_admin extends adminKit
 		$this->opt = adminKit::parse_args($opts, adminKit::settings_to_opts($this->settings));
 	}
 	/**
-	 * help action hook function
+	 * Fills in the help tab contents
 	 * 
-	 * @return string
-	 * 
+	 * @param WP_Screen $screen The screen to add the help tab items to
 	 */
-	function help()
+	function help_contents(\WP_Screen &$screen)
 	{
-		$screen = get_current_screen();
-		//Exit early if the add_help_tab function doesn't exist
-		if(!method_exists($screen, 'add_help_tab'))
-		{
-			return;
-		}
-		//Add contextual help on current screen
-		if($screen->id == 'settings_page_' . $this->identifier)
-		{
-			$general_tab = '<p>' . esc_html__('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
+		$general_tab = '<p>' . esc_html__('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
 				'</p><h5>' . esc_html__('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
 				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT tag archive.', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/tag/breadcrumb-navxt">' . esc_html__('Tutorials and How Tos', 'breadcrumb-navxt') . '</a>: ' .
 				esc_html__("There are several guides, tutorials, and how tos available on the author's website.", 'breadcrumb-navxt') . '</li><li>' .
@@ -171,13 +161,13 @@ class bcn_admin extends adminKit
 				'<a title="' . esc_attr__('Go to the Breadcrumb NavXT translation project.', 'breadcrumb-navxt') . '" href="https://translate.wordpress.org/projects/wp-plugins/breadcrumb-navxt">' . esc_html__('Translate', 'breadcrumb-navxt') . '</a>: ' .
 				esc_html__('Is your language not available? Visit the Breadcrumb NavXT translation project on WordPress.org to start translating.', 'breadcrumb-navxt') . '</li></ul>';
 			
-			$screen->add_help_tab(
+		$screen->add_help_tab(
 				array(
 				'id' => $this->identifier . '-base',
 				'title' => __('General', 'breadcrumb-navxt'),
 				'content' => $general_tab
 				));
-			$quickstart_tab = '<p>' . esc_html__('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
+		$quickstart_tab = '<p>' . esc_html__('For the settings on this page to take effect, you must either use the included Breadcrumb NavXT widget, or place either of the code sections below into your theme.', 'breadcrumb-navxt') .
 				'</p><h5>' . esc_html__('Breadcrumb trail with separators', 'breadcrumb-navxt') . '</h5><pre><code>&lt;div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/"&gt;' . "
 	&lt;?php if(function_exists('bcn_display'))
 	{
@@ -190,13 +180,13 @@ class bcn_admin extends adminKit
 		bcn_display_list();
 	}?&gt;
 &lt;/ol&gt;</code></pre>";
-			$screen->add_help_tab(
+		$screen->add_help_tab(
 				array(
 				'id' => $this->identifier . '-quick-start',
 				'title' => __('Quick Start', 'breadcrumb-navxt'),
 				'content' => $quickstart_tab
 				));
-			$styling_tab = '<p>' . esc_html__('Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail.', 'breadcrumb-navxt') . '</p>' .
+		$styling_tab = '<p>' . esc_html__('Using the code from the Quick Start section above, the following CSS can be used as base for styling your breadcrumb trail.', 'breadcrumb-navxt') . '</p>' .
 				'<pre><code>.breadcrumbs
 {
 	font-size: 1.1em;
@@ -205,19 +195,18 @@ class bcn_admin extends adminKit
 	position: relative;
 	float: left;
 }</code></pre>';
-			$screen->add_help_tab(
+		$screen->add_help_tab(
 				array(
 				'id' => $this->identifier . '-styling',
 				'title' => __('Styling', 'breadcrumb-navxt'),
 				'content' => $styling_tab
 				));
-			$screen->add_help_tab(
+		$screen->add_help_tab(
 				array(
 				'id' => $this->identifier . '-import-export-reset',
 				'title' => __('Import/Export/Reset', 'breadcrumb-navxt'),
 				'content' => $this->import_form()
 				));
-		}
 	}
 	/**
 	 * enqueue's the tab style sheet on the settings page
@@ -400,6 +389,31 @@ class bcn_admin extends adminKit
 		do_action($this->unique_prefix . '_settings_pre_messages', $this->settings);
 		//Display our messages
 		$this->messages();
+		//Grab the network options, if multisite
+		$network_opts = array();
+		$local_opts = array();
+		$overriden = array();
+		if(is_multisite())
+		{
+			$network_opts = get_site_option('bcn_options');
+			var_dump($network_opts);
+			$local_opts = get_option('bcn_options');
+			foreach($this->settings as $key => $setting)
+			{
+				if(isset($network_opts[$key]))
+				{
+					$overriden[$key] = ' ' . __('Value has been set via network wide setting.', 'breadcrumb-navxt');
+				}
+				else
+				{
+					$overriden[$key] = '';
+				}
+				/*if(isset($local_opts[$key]))
+				{
+					
+				}*/
+			}
+		}
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
 		<?php
@@ -417,16 +431,16 @@ class bcn_admin extends adminKit
 				<h2><?php _e('General', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
-						$this->form->textbox($this->settings['hseparator'], '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt'));
+					$this->form->textbox($this->settings['hseparator'], '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt') . $overriden['hseparator']);
 						do_action($this->unique_prefix . '_settings_general', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Current Item', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->form->input_check($this->settings['bcurrent_item_linked'], __('Yes', 'breadcrumb-navxt'));
-						$this->form->input_check($this->settings['bpaged_display'], __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt'), 'adminkit-enset-ctrl adminkit-enset');
-						$this->form->textbox($this->settings['Hpaged_template'], '4', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->form->input_check($this->settings['bcurrent_item_linked'], __('Yes', 'breadcrumb-navxt'), false, $overriden['bcurrent_item_linked']);
+						$this->form->input_check($this->settings['bpaged_display'], __('Place the page number breadcrumb in the trail.', 'breadcrumb-navxt'), false, __('Indicates that the user is on a page other than the first of a paginated archive or post.', 'breadcrumb-navxt') . $overriden['bpaged_display'], 'adminkit-enset-ctrl adminkit-enset');
+						$this->form->textbox($this->settings['Hpaged_template'], '4', false, __('The template for paged breadcrumbs.', 'breadcrumb-navxt') . $overriden['Hpaged_template'], 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_current_item', $this->settings);
 					?>
 				</table>

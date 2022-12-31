@@ -93,6 +93,26 @@ class bcn_network_admin extends bcn_admin
 		}
 	}
 	/**
+	 * help action hook function
+	 *
+	 * @return string
+	 *
+	 */
+	function help()
+	{
+		$screen = get_current_screen();
+		//Exit early if the add_help_tab function doesn't exist
+		if(!method_exists($screen, 'add_help_tab'))
+		{
+			return;
+		}
+		//Add contextual help on current screen
+		if($screen->id == 'settings_page_' . $this->identifier . '-network')
+		{
+			$this->help_contents($screen);
+		}
+	}
+	/**
 	 * Have to hook into get_option and replace with network wide alternate
 	 * 
 	 * @param string $option The name of the option to retrieve

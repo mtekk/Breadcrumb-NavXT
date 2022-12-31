@@ -978,19 +978,28 @@ abstract class adminKit
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
-	 * help action hook function, meant to be overridden
-	 * 
+	 * help action hook function
+	 *
 	 * @return string
-	 * 
+	 *
 	 */
 	function help()
 	{
 		$screen = get_current_screen();
+		//Exit early if the add_help_tab function doesn't exist
+		if(!method_exists($screen, 'add_help_tab'))
+		{
+			return;
+		}
 		//Add contextual help on current screen
 		if($screen->id == 'settings_page_' . $this->identifier)
 		{
-			
+			$this->help_contents($screen);
 		}
+	}
+	function help_contents(\WP_Screen &$screen)
+	{
+		
 	}
 	function dismiss_message()
 	{

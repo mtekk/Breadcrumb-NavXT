@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.1.0';
+	const version = '3.1.1';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -1094,7 +1094,7 @@ abstract class adminKit
 	function import_form()
 	{
 		$form = '<div id="mtekk_admin_import_export_relocate">';
-		$form .= sprintf('<form action="options-general.php?page=%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->identifier), esc_attr($this->unique_prefix));
+		$form .= sprintf('<form action="%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->admin_url()), esc_attr($this->unique_prefix));
 		$form .= wp_nonce_field($this->unique_prefix . '_admin_import_export', '_wpnonce', true, false);
 		$form .= sprintf('<fieldset id="import_export" class="%s_options">', esc_attr($this->unique_prefix));
 		$form .= '<legend class="screen-reader-text">' . esc_html__( 'Import settings', $this->identifier ) . '</legend>';

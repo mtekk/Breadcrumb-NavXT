@@ -320,8 +320,10 @@ class bcn_admin extends adminKit
 			if(!($post_type instanceof WP_Post_Type))
 			{
 				$this->messages[] = new message(
-						esc_html__('Warning: WP_Post_Types global contains non WP_Post_Type object.', 'breadcrumb-navxt'),
-						'warning',
+						sprintf(
+							esc_html__('Error: WP_Post_Types global contains non WP_Post_Type object. Debug information: %1$s', 'breadcrumb-navxt'),
+							var_export($post_type, true)),
+						'error',
 						true,
 						'badtypeWP_Post_Types');
 				continue;
@@ -341,6 +343,18 @@ class bcn_admin extends adminKit
 		}
 		foreach($GLOBALS['wp_taxonomies'] as $taxonomy)
 		{
+			if(!($taxonomy instanceof WP_Taxonomy))
+			{
+				//If we haven't seen this taxonomy before, warn the user
+				$this->messages[] = new message(
+						sprintf(
+								esc_html__('Error: WP_Taxonomies global contains non WP_Taxonomy object. Debug information: %1$s', 'breadcrumb-navxt'),
+								var_export($taxonomy, true)),
+						'error',
+						true,
+						'badtypeWP_Taxonomies');
+				continue;
+			}
 			if(!isset($this->settings['Htax_' . $taxonomy->name . '_template']))
 			{
 				//If we haven't seen this taxonomy before, warn the user
@@ -396,23 +410,23 @@ class bcn_admin extends adminKit
 		if(is_multisite())
 		{
 			$network_opts = get_site_option('bcn_options');
-			var_dump($network_opts);
 			$local_opts = get_option('bcn_options');
-			foreach($this->settings as $key => $setting)
+			var_dump(array_diff_assoc($network_opts, $local_opts), $network_opts, $local_opts);
+		}
+		foreach($this->settings as $key => $setting)
+		{
+			if(isset($network_opts[$key]))
 			{
-				if(isset($network_opts[$key]))
-				{
-					$overriden[$key] = ' ' . __('Value has been set via network wide setting.', 'breadcrumb-navxt');
-				}
-				else
-				{
-					$overriden[$key] = '';
-				}
-				/*if(isset($local_opts[$key]))
-				{
-					
-				}*/
+				$overriden[$key] = ' ' . __('Value has been set via network wide setting.', 'breadcrumb-navxt');
 			}
+			else
+			{
+				$overriden[$key] = '';
+			}
+			/*if(isset($local_opts[$key]))
+			 {
+			 
+			 }*/
 		}
 		?>
 		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
@@ -447,25 +461,25 @@ class bcn_admin extends adminKit
 				<h2><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->form->input_check($this->settings['bhome_display'], __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'), false, '', 'adminkit-enset-ctrl adminkit-enset');
-						$this->form->textbox($this->settings['Hhome_template'], '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt'), 'adminkit-enset');
-						$this->form->textbox($this->settings['Hhome_template_no_anchor'], '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->form->input_check($this->settings['bhome_display'], __('Place the home breadcrumb in the trail.', 'breadcrumb-navxt'), false, $overriden['bhome_display'], 'adminkit-enset-ctrl adminkit-enset');
+						$this->form->textbox($this->settings['Hhome_template'], '6', false, __('The template for the home breadcrumb.', 'breadcrumb-navxt') . $overriden['Hhome_template'], 'adminkit-enset');
+						$this->form->textbox($this->settings['Hhome_template_no_anchor'], '4', false, __('The template for the home breadcrumb, used when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overriden['Hhome_template_no_anchor'], 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_home', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->form->input_check($this->settings['bblog_display'], __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), '', 'adminkit-enset-ctrl adminkit-enset');
+						$this->form->input_check($this->settings['bblog_display'], __('Place the blog breadcrumb in the trail.', 'breadcrumb-navxt'), $this->maybe_disable_blog_options(), $overriden['bblog_display'], 'adminkit-enset-ctrl adminkit-enset');
 						do_action($this->unique_prefix . '_settings_blog', $this->settings);
 					?>
 				</table>
 				<h2><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
-						$this->form->input_check($this->settings['bmainsite_display'], __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options(), '', 'adminkit-enset-ctrl adminkit-enset');
-						$this->form->textbox($this->settings['Hmainsite_template'], '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt'), 'adminkit-enset');
-						$this->form->textbox($this->settings['Hmainsite_template_no_anchor'], '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt'), 'adminkit-enset');
+						$this->form->input_check($this->settings['bmainsite_display'], __('Place the main site home breadcrumb in the trail in an multisite setup.', 'breadcrumb-navxt'), $this->maybe_disable_mainsite_options(), $overriden['bmainsite_display'], 'adminkit-enset-ctrl adminkit-enset');
+						$this->form->textbox($this->settings['Hmainsite_template'], '6', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments.', 'breadcrumb-navxt') . $overriden['Hmainsite_template'], 'adminkit-enset');
+						$this->form->textbox($this->settings['Hmainsite_template_no_anchor'], '4', $this->maybe_disable_mainsite_options(), __('The template for the main site home breadcrumb, used only in multisite environments and when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overriden['Hmainsite_template_no_anchor'], 'adminkit-enset');
 						do_action($this->unique_prefix . '_settings_mainsite', $this->settings);
 					?>
 				</table>
@@ -529,7 +543,7 @@ class bcn_admin extends adminKit
 								foreach($wp_taxonomies as $taxonomy)
 								{
 									//Check for non-public taxonomies
-									if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
+									if(!($taxonomy instanceof WP_Taxonomy) || !apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, $post_type->name))
 									{
 										continue;
 									}
@@ -592,7 +606,7 @@ class bcn_admin extends adminKit
 			foreach($wp_taxonomies as $taxonomy)
 			{
 				//Check for non-public taxonomies and if the taxonomy wasn't known when defaults were generated
-				if(!apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, null) || !isset($this->settings['Htax_' . $taxonomy->name . '_template']))
+				if(!($taxonomy instanceof WP_Taxonomy) || !apply_filters('bcn_show_tax_private', $taxonomy->public, $taxonomy->name, null) || !isset($this->settings['Htax_' . $taxonomy->name . '_template']))
 				{
 					continue;
 				}

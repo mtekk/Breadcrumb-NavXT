@@ -908,7 +908,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings), true);
+		$this->update_option($this->unique_prefix . '_options', array(), true);
 		//Reset successful, let the user know
 		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');

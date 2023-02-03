@@ -48,6 +48,10 @@ class bcn_network_admin extends bcn_admin
 		//Replace with the network_admin hook
 		add_action('network_admin_menu', array($this, 'add_page'));
 	}
+	function is_network_admin()
+	{
+		return true;
+	}
 	/**
 	 * admin initialization callback function
 	 * 

@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -84,6 +84,8 @@ class form
 	 * @param string $class (optional)
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
+	 * 
+	 * FIXME: Parameter list non-consistant with others
 	 */
 	public function input_text(setting $option, $class = 'regular-text', $disable = false, $description = '')
 	{
@@ -124,6 +126,8 @@ class form
 	 * @param int|string $min (optional) 
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
+	 * 
+	 * FIXME: Parameter list non-consistant with others
 	 */
 	public function input_number(setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{

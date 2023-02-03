@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 7.1.50
+Version: 7.1.90
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -11,7 +11,7 @@ Text Domain: breadcrumb-navxt
 Domain Path: /languages
 */
 /*
-	Copyright 2007-2022  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2007-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends \mtekk\plugKit
 class breadcrumb_navxt
 {
-	const version = '7.1.50';
+	const version = '7.1.90';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';

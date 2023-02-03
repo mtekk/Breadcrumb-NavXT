@@ -291,7 +291,9 @@ class adminKitTest extends WP_UnitTestCase {
 		do_action('admin_notices');
 		$this->expectOutputRegex('/.?Settings successfully reset to the default values\..?/');
 		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
-		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), $this->admin->get_option('mak_options'));
+		//While we would expect the settings to end up being the defaults, if we do a get_option, it should be an empty array
+		$this->assertSame(array(), $this->admin->get_option('mak_options'));
+		//$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), $this->admin->get_option('mak_options'));
 	}
 	function test_init_opts_reset() {
 		$current_val = array('Sopta' => 'A Value', 'Soptb' => 'Hello', 'Soptc' => 'C Value');
@@ -312,6 +314,8 @@ class adminKitTest extends WP_UnitTestCase {
 		do_action('admin_notices');
 		$this->expectOutputRegex('/.?Settings successfully reset to the default values\..?/');
 		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
-		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), $this->admin->get_option('mak_options'));
+		//While we would expect the settings to end up being the defaults, if we do a get_option, it should be an empty array
+		$this->assertSame(array(), $this->admin->get_option('mak_options'));
+		//$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), $this->admin->get_option('mak_options'));
 	}
 }

@@ -17,20 +17,20 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 namespace mtekk\adminKit\setting;
-require_once( __DIR__ . '/../../block_direct_access.php');
+require_once( __DIR__ . '/../../../block_direct_access.php');
 //Include setting base class
-if(!class_exists('\mtekk\adminKit\setting\setting_base'))
+if(!class_exists('setting_base'))
 {
 	require_once( __DIR__ . '/class-mtekk_adminkit_setting_base.php');
 }
-class setting_html extends setting_base
+class setting_int extends setting_base
 {
 	/**
 	 * Default constructor function
 	 * 
 	 * @param string $title The display title of the setting
 	 */
-	public function __construct(string $name, string $value, string $title, $allow_empty = false, $deprecated = false)
+	public function __construct(string $name, int $value, string $title, $allow_empty = false, $deprecated = false)
 	{
 		$this->name = $name;
 		$this->value = $value;
@@ -39,15 +39,11 @@ class setting_html extends setting_base
 		$this->deprecated = $deprecated;
 	}
 	/**
-	 * 
+	 *
 	 */
 	public function validate($new_value)
 	{
-		if(!$this->allow_empty && $new_value === '')
-		{
-			return $this->value;
-		}
-		return wp_kses(stripslashes($new_value), apply_filters('mtekk_adminkit_allowed_html', wp_kses_allowed_html('post')));
+		return (int) $new_value;
 	}
 	/**
 	 * 
@@ -56,14 +52,6 @@ class setting_html extends setting_base
 	 */
 	public function get_opt_name()
 	{
-		if($this->allow_empty)
-		{
-			$type = 'h';
-		}
-		else
-		{
-			$type = 'H';
-		}
-		return $type . $this->get_name();
+		return 'i' . $this->get_name();
 	}
 }

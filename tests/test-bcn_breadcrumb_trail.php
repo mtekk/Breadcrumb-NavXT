@@ -1459,6 +1459,16 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		});
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<ul>%1$s</ul>', ' &gt; '));
 		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li>', $breadcrumb_string);
+		//Test the bcn_display_separator filter
+		add_filter('bcn_display_separator', function($separator, $postion, $last_postion, $depth){
+			if($postion >= $last_postion)
+			{
+				return $separator;
+			}
+			return ' &lt; ';
+		}, 10, 4);
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '%1$s%2$s', '<span>%1$s</span>%2$s', ' &gt; '));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &lt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span>', $breadcrumb_string);
 	}
 	/**
 	 * display_loop second dimension testing, gets its own test
@@ -1482,5 +1492,22 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertSame('<li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li><ul><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span></li><li class="post post-post"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></li></ul></li><li class="post post-post current-item"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span></li>', $breadcrumb_string);
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '%1$s%2$s', '<span>%1$s</span>%2$s', ' &gt; '));
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span>, <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
+		//Test the bcn_display_separator filter
+		add_filter('bcn_display_separator', function($separator, $postion, $last_postion, $depth){
+			if($depth > 1)
+			{
+				if($postion == $last_postion - 1)
+				{
+					return ' &amp; ';
+				}
+			}
+			if($postion < $last_postion)
+			{
+				return ' &lt; ';
+			}
+			return $separator;
+		}, 10, 4);
+		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '%1$s%2$s', '<span>%1$s</span>%2$s', ' &gt; '));
+		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &lt; <span><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span> &amp; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></span> &lt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
 	}
 }

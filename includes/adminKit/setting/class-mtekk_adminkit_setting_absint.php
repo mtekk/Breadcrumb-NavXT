@@ -19,7 +19,7 @@
 namespace mtekk\adminKit\setting;
 require_once( __DIR__ . '/../../block_direct_access.php');
 //Include setting base class
-if(!class_exists('setting_base'))
+if(!class_exists('\mtekk\adminKit\setting\setting_int'))
 {
 	require_once( __DIR__ . '/class-mtekk_adminkit_setting_int.php');
 }

@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2021  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,15 +25,46 @@ if(!class_exists('message'))
 {
 	require_once(__DIR__ . '/class-mtekk_adminkit_message.php');
 }
+if(version_compare(phpversion(), '8.0.0', '<'))
+{
+	//Include setting class
+	if(!class_exists('setting\setting_bool'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_bool.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_float'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_float.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_int'))
+	{
+		require_once(__DIR__ . '/setting/php7/class-mtekk_adminkit_setting_int.php');
+	}
+}
+else
+{
+	//Include setting class
+	if(!class_exists('setting\setting_bool'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_bool.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_float'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_float.php');
+	}
+	//Include setting class
+	if(!class_exists('setting\setting_int'))
+	{
+		require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_int.php');
+	}
+}
 //Include setting class
 if(!class_exists('setting\setting_absint'))
 {
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_absint.php');
-}
-//Include setting class
-if(!class_exists('setting\setting_bool'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_bool.php');
 }
 //Include setting class
 if(!class_exists('setting\setting_enum'))
@@ -41,19 +72,9 @@ if(!class_exists('setting\setting_enum'))
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_enum.php');
 }
 //Include setting class
-if(!class_exists('setting\setting_float'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_float.php');
-}
-//Include setting class
 if(!class_exists('settingsetting_\html'))
 {
 	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_html.php');
-}
-//Include setting class
-if(!class_exists('setting\setting_int'))
-{
-	require_once(__DIR__ . '/setting/class-mtekk_adminkit_setting_int.php');
 }
 //Include setting class
 if(!class_exists('setting\setting_string'))
@@ -67,7 +88,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.1.0';
+	const version = '3.1.1';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -887,7 +908,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', adminKit::settings_to_opts($this->settings), true);
+		$this->update_option($this->unique_prefix . '_options', array(), true);
 		//Reset successful, let the user know
 		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
 			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
@@ -957,19 +978,28 @@ abstract class adminKit
 		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
-	 * help action hook function, meant to be overridden
-	 * 
+	 * help action hook function
+	 *
 	 * @return string
-	 * 
+	 *
 	 */
 	function help()
 	{
 		$screen = get_current_screen();
+		//Exit early if the add_help_tab function doesn't exist
+		if(!method_exists($screen, 'add_help_tab'))
+		{
+			return;
+		}
 		//Add contextual help on current screen
 		if($screen->id == 'settings_page_' . $this->identifier)
 		{
-			
+			$this->help_contents($screen);
 		}
+	}
+	function help_contents(\WP_Screen &$screen)
+	{
+		
 	}
 	function dismiss_message()
 	{
@@ -1064,7 +1094,7 @@ abstract class adminKit
 	function import_form()
 	{
 		$form = '<div id="mtekk_admin_import_export_relocate">';
-		$form .= sprintf('<form action="options-general.php?page=%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->identifier), esc_attr($this->unique_prefix));
+		$form .= sprintf('<form action="%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->admin_url()), esc_attr($this->unique_prefix));
 		$form .= wp_nonce_field($this->unique_prefix . '_admin_import_export', '_wpnonce', true, false);
 		$form .= sprintf('<fieldset id="import_export" class="%s_options">', esc_attr($this->unique_prefix));
 		$form .= '<legend class="screen-reader-text">' . esc_html__( 'Import settings', $this->identifier ) . '</legend>';

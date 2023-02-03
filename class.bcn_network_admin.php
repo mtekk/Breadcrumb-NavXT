@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2022  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ use mtekk\adminKit\{adminKit, form, message, setting};
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '7.1.0';
+	const version = '7.2.0';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**
@@ -47,6 +47,10 @@ class bcn_network_admin extends bcn_admin
 		remove_action('admin_menu', array($this, 'add_page'));
 		//Replace with the network_admin hook
 		add_action('network_admin_menu', array($this, 'add_page'));
+	}
+	function is_network_admin()
+	{
+		return true;
 	}
 	/**
 	 * admin initialization callback function
@@ -90,6 +94,26 @@ class bcn_network_admin extends bcn_admin
 			add_action('admin_print_scripts-' . $hookname, array($this, 'admin_scripts'));
 			//Register Help Output
 			add_action('load-' . $hookname, array($this, 'help'));
+		}
+	}
+	/**
+	 * help action hook function
+	 *
+	 * @return string
+	 *
+	 */
+	function help()
+	{
+		$screen = get_current_screen();
+		//Exit early if the add_help_tab function doesn't exist
+		if(!method_exists($screen, 'add_help_tab'))
+		{
+			return;
+		}
+		//Add contextual help on current screen
+		if($screen->id == 'settings_page_' . $this->identifier . '-network')
+		{
+			$this->help_contents($screen);
 		}
 	}
 	/**

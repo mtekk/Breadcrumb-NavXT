@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 4.9
-Tested up to: 6.0
-Stable tag: 7.1.0
+Requires at least: 5.0
+Tested up to: 6.1
+Stable tag: 7.2.0
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.2.0 =
+Release date: February, 9th 2023
+* Behavior change: Settings reset sets option entry to blank array, consistent with the change to only storing non-default values in the database.
+* New feature: Added `bcn_display_separator` filter.
+* New feature: Add per setting indication if Network wide settings are overriding the local setting.
+* Bug fix: Improved compatibility with PHP8.1.
+* Bug fix: Fixed PHP errors caused by unexpected entries in WP Post Types array.
+* Bug fix: Settings help menu now shows up in the network settings page.
+* Bug fix: Fixed cause of "file not found" error on the import/export/reset form in the network settings page.
+
 = 7.1.0 =
 Release date: July, 17th 2022
 

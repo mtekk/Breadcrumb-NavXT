@@ -667,7 +667,7 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		$trail_string = $this->breadcrumb_trail->display($linked, $reverse, $template);
+		$trail_string = $this->breadcrumb_trail->display($linked, $reverse, $template, $outer_template);
 		if($return)
 		{
 			return $trail_string;

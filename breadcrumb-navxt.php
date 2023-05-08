@@ -316,6 +316,10 @@ class breadcrumb_navxt
 						'itemprop' => true
 					)
 		);
+		if(!is_array($tags))
+		{
+			$tags = array();
+		}
 		return adminKit::array_merge_recursive($tags, $allowed_html);
 	}
 	public function get_version()
@@ -716,7 +720,7 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill();
-		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES);
+		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		if($return)
 		{
 			return $trail_string;

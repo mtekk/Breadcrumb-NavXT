@@ -635,6 +635,24 @@ abstract class adminKit
 		}
 	}
 	/**
+	 * Generates array of the new non-default settings based off of form input
+	 * 
+	 * @param array $input The form input array of setting values
+	 * @return array The diff array of adminkit settings
+	 */
+	private function get_settings_diff($input)
+	{
+		//Backup default settings
+		//Must clone the defaults since PHP normally shallow copies
+		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+		//Run the update loop
+		$this->settings_update_loop($this->settings, $input);
+		//Calculate diff
+		$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+		//Return the new settings
+		return $new_settings;
+	}
+	/**
 	 * Updates the database settings from the webform
 	 * 
 	 * The general flow of data is:
@@ -649,8 +667,6 @@ abstract class adminKit
 		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
-		//Must clone the defaults since PHP normally shallow copies
-		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 		//Update local options from database
 		$this->opt = adminKit::parse_args($this->get_option($this->unique_prefix . '_options'), $this->opt);
 		$this->opt = apply_filters($this->unique_prefix . '_opts_update_prebk', $this->opt);
@@ -658,10 +674,8 @@ abstract class adminKit
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
-		$input = $_POST[$this->unique_prefix . '_options'];
-		//Run the update loop
-		$this->settings_update_loop($this->settings, $input);
-		$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+		//Run through the loop and get the diff from detauls
+		$new_settings = $this->get_settings_diff($_POST[$this->unique_prefix . '_options']);
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving
 		$this->opt = adminKit::settings_to_opts($new_settings);
@@ -747,12 +761,9 @@ abstract class adminKit
 			//Only continue if we have a JSON object that is for this plugin (the the WP rest_is_object() function is handy here as the REST API passes JSON)
 			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
 			{
-				//FIXME: Much of the innards of this are the same as ops_update, probably an opportunity for refactoring simplification
-				//Must clone the defaults since PHP normally shallow copies
-				$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 				//Act as if the JSON file was just a bunch of POST entries for a settings save
-				$this->settings_update_loop($this->settings, $settings_upload['settings']);
-				$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+				//Run through the loop and get the diff from detauls
+				$new_settings = $this->get_settings_diff($settings_upload['settings']);
 				//FIXME: Eventually we'll save the object array, but not today
 				//Convert to opts array for saving
 				$this->opt = adminKit::settings_to_opts($new_settings);

@@ -674,8 +674,9 @@ abstract class adminKit
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
 		//Grab our incomming array (the data is dirty)
+		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run through the loop and get the diff from detauls
-		$new_settings = $this->get_settings_diff($_POST[$this->unique_prefix . '_options']);
+		$new_settings = $this->get_settings_diff($input);
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving
 		$this->opt = adminKit::settings_to_opts($new_settings);

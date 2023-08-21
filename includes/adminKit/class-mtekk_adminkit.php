@@ -471,8 +471,9 @@ abstract class adminKit
 	 * 
 	 * @param array $settings
 	 * @param array $input
+	 * @param bool $bool_ignore_missing
 	 */
-	protected function settings_update_loop(&$settings, $input)
+	protected function settings_update_loop(&$settings, $input, $bool_ignore_missing = false)
 	{
 		foreach($settings as $key => $setting)
 		{
@@ -485,7 +486,7 @@ abstract class adminKit
 			}
 			else if($setting instanceof setting)
 			{
-				$setting->maybe_update_from_form_input($input);
+				$setting->maybe_update_from_form_input($input, $bool_ignore_missing);
 			}
 		}
 	}
@@ -638,15 +639,16 @@ abstract class adminKit
 	 * Generates array of the new non-default settings based off of form input
 	 * 
 	 * @param array $input The form input array of setting values
+	 * @param bool $bool_ignore_missing Tell maybe_update_from_form_input to not treat missing bool setting entries as setting to false
 	 * @return array The diff array of adminkit settings
 	 */
-	private function get_settings_diff($input)
+	private function get_settings_diff($input, $bool_ignore_missing = false)
 	{
 		//Backup default settings
 		//Must clone the defaults since PHP normally shallow copies
 		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 		//Run the update loop
-		$this->settings_update_loop($this->settings, $input);
+		$this->settings_update_loop($this->settings, $input, $bool_ignore_missing);
 		//Calculate diff
 		$new_settings = apply_filters($this->unique_prefix . '_opts_update_to_save', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
 		//Return the new settings
@@ -764,7 +766,7 @@ abstract class adminKit
 			{
 				//Act as if the JSON file was just a bunch of POST entries for a settings save
 				//Run through the loop and get the diff from detauls
-				$new_settings = $this->get_settings_diff($settings_upload['settings']);
+				$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
 				//FIXME: Eventually we'll save the object array, but not today
 				//Convert to opts array for saving
 				$this->opt = adminKit::settings_to_opts($new_settings);

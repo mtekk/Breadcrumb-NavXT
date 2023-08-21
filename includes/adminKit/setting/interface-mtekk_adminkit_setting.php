@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2020-2021  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2020-2023  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,6 +44,6 @@ interface setting
 	 * 
 	 * @param array $input Array of new values from well formatted form POST request
 	 */
-	public function maybe_update_from_form_input($input);
+	public function maybe_update_from_form_input($input, $bool_ignore_missing = false);
 	//public function render(); //This is a future item we'll add, maybe
 }

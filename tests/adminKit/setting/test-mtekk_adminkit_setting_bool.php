@@ -92,6 +92,13 @@ class adminKitSettingBoolTest extends WP_UnitTestCase {
 		$this->assertFalse($this->settings['normal_setting']->get_value());
 		$this->settings['normal_settingb']->maybe_update_from_form_input($input);
 		$this->assertFalse($this->settings['normal_settingb']->get_value());
+		//Test ignore missing param
+		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere, true);
+		$this->assertFalse($this->settings['normal_setting']->get_value());
+		$this->settings['normal_setting']->maybe_update_from_form_input($input, true);
+		$this->assertTrue($this->settings['normal_setting']->get_value());
+		$this->settings['normal_setting']->maybe_update_from_form_input($input_notthere, true);
+		$this->assertTrue($this->settings['normal_setting']->get_value());
 		//Test diallowing empty
 		$this->settings['empty_ok_setting']->set_allow_empty(false);
 		$this->settings['normal_setting']->maybe_update_from_form_input($input);

@@ -75,7 +75,6 @@ class bcn_breadcrumb
 				$this->set_template(bcn_breadcrumb::get_default_template());
 			}
 		}
-		//Always null if unlinked
 		$this->set_url($url);
 		$this->set_linked($linked);
 	}

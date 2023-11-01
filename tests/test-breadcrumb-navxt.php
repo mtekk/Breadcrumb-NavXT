@@ -102,7 +102,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 	public function tear_down() {
 		parent::tear_down();
 	}
-	function test_get_settings() {
+	function test_get_settings_base() {
 		//Setup network site settings
 		update_site_option('bcn_options', array(
 				'bmainsite_display' => true,
@@ -117,14 +117,6 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		//Test default (use local)
 		$this->breadcrumb_navxt->call('init');
 		//Check for the opts for expected values
-		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
-		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
-		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
-		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), '404');
-		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
-		//Test use local explicit
-		define('BCN_SETTINGS_USE_LOCAL', true);
-		$this->breadcrumb_navxt->call('init');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
 		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
@@ -155,6 +147,27 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), 'Oopse');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);*/
+	}
+	function test_get_settings_use_local() {
+		//Setup network site settings
+		update_site_option('bcn_options', array(
+				'bmainsite_display' => true,
+				'S404_title' => 'Oopse'
+		));
+		//Setup single site settings
+		update_option('bcn_options', array(
+				'bmainsite_display' => false,
+				'bcurrent_item_linked' => true,
+				'Eauthor_name' => 'display_name'
+		));
+		//Test use local explicit
+		define('BCN_SETTINGS_USE_LOCAL', true);
+		$this->breadcrumb_navxt->call('init');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
+		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), '404');
+		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
 	}
 	function test_bcn_display_cache() {
 		//Create a test post

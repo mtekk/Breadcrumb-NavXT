@@ -847,8 +847,14 @@ class bcn_breadcrumb_trail
 		{
 			$type = $this->get_type_string_query_var();
 		}
+		$add_query_arg = false;
 		//Add a query arg if we are not on the default post type for the archive in question and the post type is not post
-		$add_query_arg = (!($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0]) && $type !== 'post');
+		if($type !== 'post' && !($taxonomy
+				&& isset($wp_taxonomies[$taxonomy]->object_type[0])
+				&& $type === $wp_taxonomies[$taxonomy]->object_type[0]))
+		{
+			$add_query_arg = true;
+		}
 		//Filter the add_query_arg logic, only add the query arg if necessary
 		if(apply_filters('bcn_add_post_type_arg', $add_query_arg, $type, $taxonomy))
 		{
@@ -860,7 +866,6 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 *
 	 * This functions fills a breadcrumb for a post type archive (WP 3.1 feature)
-	 *
 	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1

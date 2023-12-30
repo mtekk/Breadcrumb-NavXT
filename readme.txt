@@ -2,8 +2,8 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 5.0
-Tested up to: 6.1
+Requires at least: 5.8
+Tested up to: 6.4
 Stable tag: 7.2.0
 Requires PHP: 7.0
 License: GPLv2 or later

@@ -9,17 +9,77 @@
  *
  * @package breadcrumb-navxt
  */
-
-/*$extra_classs = '';
-if(isset($attributes['className']))
+if($attributes['hideonHome'] === true && is_front_page() && !is_paged())
 {
-	$extra_classs = esc_attr($attributes['className']);
+	return;
 }
-return sprintf('<div class="breadcrumbs %2$s" typeof="BreadcrumbList" vocab="https://schema.org/">%1$s</div>', bcn_display(true), $extra_classs);
-*/
-
-//TODO: most of our attributes from the block will factor into this
+if($attributes['format'] === 'list')
+{
 ?>
-<div <?php echo wp_kses_data( get_block_wrapper_attributes( array('class' => 'breadcrumbs', 'typeof' => 'BreadcrumbList', 'vocab' => 'https://schema.org/') ) );?>>
+<span><?php echo wp_kses_post($attributes['pretext']);?></span>
+<ol <?php echo wp_kses_data( get_block_wrapper_attributes( array('class' => 'breadcrumbs') ) );?>>
+	<?php bcn_display_list(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+</ol>	
+<?php 
+}
+else if($attributes['format'] === 'breadcrumblist_rdfa_wai_aria')
+{
+?>
+<nav <?php echo wp_kses_data( get_block_wrapper_attributes( array(
+		'class' => 'breadcrumbs',
+		'aria-label' => 'Breadcrumb',
+		'vocab' => 'https://schema.org/',
+		'typeof' => 'BreadcrumbList'
+		)
+	)
+);?>>
+	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
+	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+</nav>
+<?php
+}
+else
+{
+	if($attributes['format'] === 'breadcrumblist_rdfa')
+	{
+?>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( array(
+		'class' => 'breadcrumbs',
+		'vocab' => 'https://schema.org/',
+		'typeof' => 'BreadcrumbList'
+		)
+	)
+);?>>
+	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
 	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
 </div>
+<?php
+	}
+	else if($attributes['format'] === 'breadcrumblist_microdata')
+	{
+?>
+<div itemscope <?php echo wp_kses_data( get_block_wrapper_attributes( array(
+		'class' => 'breadcrumbs',
+		'itemtype' => 'https://schema.org/BreadcrumbList'
+		)
+	)
+);?>>
+	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
+	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+</div>
+<?php
+	}
+	else
+	{
+?>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( array(
+		'class' => 'breadcrumbs'
+		)
+	)
+);?>>
+	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
+	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+</div>
+<?php
+	}
+}

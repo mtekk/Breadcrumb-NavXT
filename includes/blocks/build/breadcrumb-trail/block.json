@@ -18,6 +18,7 @@
       "default": ""
     },
     "format": {
+      "type": "string",
       "enum": [
         "list",
         "breadcrumblist_rdfa",
@@ -46,10 +47,27 @@
     "className": {
       "type": "string",
       "default": ""
+    },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "align": {
+      "type": "string",
+      "default": ""
+    },
+    "typography": {
+      "type": "string",
+      "default": ""
+    },
+    "fontSize": {
+      "type": "string",
+      "default": ""
     }
-  },
-  "providesContext": {
-    "my-plugin/message": "message"
   },
   "usesContext": [
     "groupId"
@@ -58,19 +76,16 @@
     "root": ".wp-block-breadcrumb-trail"
   },
   "supports": {
-    "align": true
-  },
-  "styles": [
-    {
-      "name": "default",
-      "label": "Default",
-      "isDefault": true
+    "align": true,
+    "color": {
+      "text": true,
+      "link": true,
+      "background": true
     },
-    {
-      "name": "other",
-      "label": "Other"
+    "typography": {
+      "fontSize": true
     }
-  ],
+  },
   "example": {
     "attributes": {
       "pretext": "You are here:"

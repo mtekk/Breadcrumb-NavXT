@@ -677,7 +677,7 @@ class breadcrumb_navxt
 			$this->breadcrumb_trail->breadcrumbs = array();
 		}
 		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill();
+		$this->breadcrumb_trail->fill($force);
 		$trail_string = $this->breadcrumb_trail->display($linked, $reverse, $template);
 		if($return)
 		{
@@ -726,7 +726,7 @@ class breadcrumb_navxt
 			$this->breadcrumb_trail->breadcrumbs = array();
 		}
 		//Generate the breadcrumb trail
-		$this->breadcrumb_trail->fill();
+		$this->breadcrumb_trail->fill($force);
 		$trail_string = json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		if($return)
 		{

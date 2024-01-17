@@ -1005,9 +1005,11 @@ class bcn_breadcrumb_trail
 	/**
 	 * Breadcrumb Trail Filling Function
 	 * 
+	 * @param bool $force Whether or not to force the fill function to run in the loop.
+	 * 
 	 * This functions fills the breadcrumb trail.
 	 */
-	public function fill()
+	public function fill($force = false)
 	{
 		global $wpdb, $wp_query, $wp, $wp_taxonomies;
 		//Check to see if the trail is already populated
@@ -1044,7 +1046,7 @@ class bcn_breadcrumb_trail
 			$this->do_paged($page_number);
 		}
 		//For the front page, as it may also validate as a page, do it first
-		if(is_front_page())
+		if(is_front_page() && !$force && !in_the_loop())
 		{
 			//Must have two seperate branches so that we don't evaluate it as a page
 			if($this->opt['bhome_display'])
@@ -1053,7 +1055,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//For posts
-		else if(is_singular())
+		else if(is_singular() || ($force && in_the_loop()))
 		{
 			//Could use the $post global, but we can't really trust it
 			$type = get_post();

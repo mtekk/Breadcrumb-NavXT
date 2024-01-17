@@ -610,6 +610,10 @@ class breadcrumb_navxt
 		//Return our breadcrumb trail
 		return $this->display(true);
 	}
+	public function show_paged()
+	{
+		return $this->settings['bpaged_display']->get_value();
+	}
 	/**
 	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
 	 * 

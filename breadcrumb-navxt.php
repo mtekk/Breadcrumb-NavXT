@@ -614,6 +614,30 @@ class breadcrumb_navxt
 	{
 		return $this->settings['bpaged_display']->get_value();
 	}
+	public function display_post($post, $return = false, $linked = true, $reverse = false, $force = false, $template = '%1$s%2$s', $outer_template = '%1$s')
+	{
+		if($post instanceof WP_Post)
+		{
+			//If we're being forced to fill the trail, clear it before calling fill
+			if($force)
+			{
+				$this->breadcrumb_trail->breadcrumbs = array();
+			}
+			//Generate the breadcrumb trail
+			$this->breadcrumb_trail->fill_REST($post);
+			$trail_string = $this->breadcrumb_trail->display($linked, $reverse, $template);
+			if($return)
+			{
+				return $trail_string;
+			}
+			else
+			{
+				//Helps track issues, please don't remove it
+				$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
+				echo $credits . $trail_string;
+			}
+		}
+	}
 	/**
 	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
 	 * 

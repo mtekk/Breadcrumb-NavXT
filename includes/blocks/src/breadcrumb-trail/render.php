@@ -28,7 +28,7 @@ if(isset($_REQUEST['post_id']))
 		$template = '%1$s%2$s';
 		$outer_template = '%1$s';
 	}
-	$trail_string = $GLOBALS['breadcrumb_navxt']->display_post($preview_post, true, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache'], $template, $outer_template);
+	$trail_string = $GLOBALS['breadcrumb_navxt']->_display_post($preview_post, true, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache'], $template, $outer_template);
 }
 else if($attributes['format'] === 'list')
 {

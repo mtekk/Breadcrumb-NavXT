@@ -9,16 +9,41 @@
  *
  * @package breadcrumb-navxt
  */
-if($attributes['hideonHome'] === true && is_front_page() && !is_paged())
+if($attributes['hideonHome'] === true && is_front_page() && (!is_paged() && $GLOBALS['breadcrumb_navxt']->show_paged()))
 {
 	return;
+}
+//Handle previews
+if(isset($_REQUEST['post_id']))
+{
+	$post_id = $_REQUEST['post_id'];
+	$preview_post = get_post($post_id);
+	if($attributes['format'] === 'list')
+	{
+		$template = "<li%3\$s>%1\$s</li>\n";
+		$outer_template = "<ul>%1\$s</ul>\n";
+	}
+	else
+	{
+		$template = '%1$s%2$s';
+		$outer_template = '%1$s';
+	}
+	$trail_string = $GLOBALS['breadcrumb_navxt']->_display_post($preview_post, true, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache'], $template, $outer_template);
+}
+else if($attributes['format'] === 'list')
+{
+	$trail_string = bcn_display_list(true, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']);
+}
+else
+{
+	$trail_string = bcn_display(true, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']);
 }
 if($attributes['format'] === 'list')
 {
 ?>
 <span><?php echo wp_kses_post($attributes['pretext']);?></span>
 <ol <?php echo wp_kses_data( get_block_wrapper_attributes( array('class' => 'breadcrumbs') ) );?>>
-	<?php bcn_display_list(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+	<?php echo $trail_string; ?>
 </ol>	
 <?php 
 }
@@ -34,7 +59,7 @@ else if($attributes['format'] === 'breadcrumblist_rdfa_wai_aria')
 	)
 );?>>
 	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
-	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+	<?php echo $trail_string;?>
 </nav>
 <?php
 }
@@ -51,7 +76,7 @@ else
 	)
 );?>>
 	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
-	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+	<?php echo $trail_string;?>
 </div>
 <?php
 	}
@@ -65,7 +90,7 @@ else
 	)
 );?>>
 	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
-	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+	<?php echo $trail_string; ?>
 </div>
 <?php
 	}
@@ -78,7 +103,7 @@ else
 	)
 );?>>
 	<span><?php echo wp_kses_post($attributes['pretext']);?></span>
-	<?php bcn_display(false, $attributes['link'], $attributes['reverseOrder'], $attributes['ignoreCache']) ?>
+	<?php echo $trail_string; ?>
 </div>
 <?php
 	}

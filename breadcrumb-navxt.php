@@ -135,51 +135,13 @@ class breadcrumb_navxt
 		return register_widget($this->unique_prefix . '_widget');
 	}
 	/**
-	 * Server-side rendering for front-end block display
-	 * 
-	 * @param array $attributes Array of attributes set by the Gutenberg sidebar
-	 * @return string The Breadcrumb Trail string
-	 * 
-	 * FIXME: new block does not use this
-	 */
-	public function render_block($attributes)
-	{
-		$extra_classs = '';
-		if(isset($attributes['className']))
-		{
-			$extra_classs = esc_attr($attributes['className']);
-		}
-		return sprintf('<div class="breadcrumbs %2$s" typeof="BreadcrumbList" vocab="https://schema.org/">%1$s</div>', bcn_display(true), $extra_classs);
-	}
-	/**
 	 * Handles registering the Breadcrumb Trail Gutenberg block
 	 */
 	public function register_block()
 	{
-		//wp_register_script($this->unique_prefix . '-breadcrumb-trail-block-script', plugins_url('bcn_gutenberg_block.js', __FILE__), array('wp-blocks', 'wp-element', 'wp-i18n', 'wp-api'));
 		if(function_exists('register_block_type'))
 		{
-			/*register_block_type( $this->unique_prefix . '/breadcrumb-trail', array(
-				'editor_script' => $this->unique_prefix . '-breadcrumb-trail-block-script',
-				'render_callback' => array($this, 'render_block')
-			));*/
 			register_block_type( dirname(__FILE__) . '/includes/blocks/build/breadcrumb-trail');
-			//I don't think the below is needed anymore as well with the new block
-			/*if(function_exists('wp_set_script_translations'))
-			{
-				//Setup our translation strings
-				wp_set_script_translations($this->unique_prefix . '-breadcrumb-trail-block-script', 'breadcrumb-navxt');
-			}*/
-			//This isn't needed anylonger as we do complete server side rendering in the block editor with the new block
-			//Setup some bcn settings
-			//TODO: 3rd gen settings arch should make this easier
-			/*wp_add_inline_script($this->unique_prefix . '-breadcrumb-trail-block-script',
-					$this->unique_prefix . 'Opts = ' . json_encode(
-							array(
-									'bcurrent_item_linked' => $this->settings['bcurrent_item_linked']->get_value(),
-									'hseparator' => $this->settings['hseparator']->get_value()
-							)) . ';',
-					'before');*/
 		}
 	}
 	public function api_enable_for_block($register_rest_endpoint, $endpoint, $version, $methods)

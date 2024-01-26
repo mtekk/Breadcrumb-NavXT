@@ -77,7 +77,7 @@ export default function Edit ( { attributes, setAttributes } ) {
 			</InspectorControls>
 			<Disabled>
 				<ServerSideRender
-					block="bnc/breadcrumb-trail"
+					block="bcn/breadcrumb-trail"
 					attributes={{ ...attributes }}
 					urlQueryArgs={queryArgs}
 				/>

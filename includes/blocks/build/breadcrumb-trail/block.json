@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "bnc/breadcrumb-trail",
+  "name": "bcn/breadcrumb-trail",
   "title": "Breadcrumb Trail",
   "category": "theme",
   "description": "Displays a breadcrumb trail",

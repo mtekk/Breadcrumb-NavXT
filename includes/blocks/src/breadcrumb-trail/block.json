@@ -57,6 +57,10 @@
 		"fontSize": {
 			"type": "string",
  			"default": ""
+		},
+		"style": {
+			"type": "object",
+ 			"default": {}
 		}
 	},
 	"usesContext": [ "groupId" ],

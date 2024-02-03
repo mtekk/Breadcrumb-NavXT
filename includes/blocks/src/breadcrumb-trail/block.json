@@ -1,0 +1,88 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bcn/breadcrumb-trail",
+	"title": "Breadcrumb Trail",
+	"category": "theme",
+	"description": "Displays a breadcrumb trail",
+	"keywords": [ "breadcrumbs", "navigation" , "breadcrumb trail" ],
+	"version": "2.0.0",
+	"textdomain": "breadcrumb-navxt",
+	"attributes": {
+		"pretext": {
+			"type": "string",
+			"default": ""
+		},
+		"format": {
+			"type": "string",
+			"enum": ["list", "breadcrumblist_rdfa", "breadcrumblist_rdfa_wai_aria", "breadcrumblist_microdata", "plain"],
+			"default": "breadcrumblist_rdfa"
+		},
+		"link": {
+			"type": "boolean",
+			"default": true
+		},
+		"reverseOrder": {
+			"type": "boolean",
+			"default": false
+		},
+		"hideonHome": {
+			"type": "boolean",
+			"default": false
+		},
+		"ignoreCache": {
+			"type": "boolean",
+			"default": true
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"textColor": {
+			"type": "string",
+ 			"default": ""
+		},
+		"backgroundColor": {
+			"type": "string",
+ 			"default": ""
+		},
+		"align": {
+			"type": "string",
+ 			"default": ""
+		},
+		"typography": {
+			"type": "string",
+ 			"default": ""
+		},
+		"fontSize": {
+			"type": "string",
+ 			"default": ""
+		},
+		"style": {
+			"type": "object",
+ 			"default": {}
+		}
+	},
+	"usesContext": [ "groupId" ],
+	"selectors": {
+		"root": ".wp-block-breadcrumb-trail"
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"link": true,
+			"background": true
+		},
+		"typography": {
+			"fontSize" : true
+		}
+	},
+	"example": {
+		"attributes": {
+			"pretext": "You are here:"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

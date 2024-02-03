@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 7.2.0
+Requires at least: 5.8
+Tested up to: 6.4
+Stable tag: 7.3.0
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,17 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.3.0 =
+Release date: February, ? 2024
+* Behavior change: `bcn_display_json_ld()` now returns unescaped Unicode characters.
+* Behavior change: `$force` parameter in `bcn_display*()` functions is now passed to `bcn_breadcrumb_trail::fill()` allowing generation of trails within the loop for the current loop item instead of the parent page/resource.
+* New feature: Breadcrumb Trail block rewritten to have feature parity with Breadcrumb NavXT Widget.
+* New feature: Breadcrumb Trail block supports basic styling within block editor.
+* Bug fix: Fixed error where $outer_template argument was dropped within `breadcrumb_navxt::display()`.
+* Bug fix: Fixed issue where boolean settings were not exported/imported properly.
+* Bug fix: Fixed cause of PHP error in `bcn_breadcrumb_trail::maybe_add_post_type_arg()` when 3rd party code breaks the WP API.
+* Bug fix: Added check for proper queried object type for author archives.
+
 = 7.2.0 =
 Release date: February, 9th 2023
 * Behavior change: Settings reset sets option entry to blank array, consistent with the change to only storing non-default values in the database.

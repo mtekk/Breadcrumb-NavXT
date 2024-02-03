@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2024  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '7.2.0';
+	const version = '7.2.90';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -847,8 +847,14 @@ class bcn_breadcrumb_trail
 		{
 			$type = $this->get_type_string_query_var();
 		}
+		$add_query_arg = false;
 		//Add a query arg if we are not on the default post type for the archive in question and the post type is not post
-		$add_query_arg = (!($taxonomy && $type === $wp_taxonomies[$taxonomy]->object_type[0]) && $type !== 'post');
+		if($type !== 'post' && !($taxonomy
+				&& isset($wp_taxonomies[$taxonomy]->object_type[0])
+				&& $type === $wp_taxonomies[$taxonomy]->object_type[0]))
+		{
+			$add_query_arg = true;
+		}
 		//Filter the add_query_arg logic, only add the query arg if necessary
 		if(apply_filters('bcn_add_post_type_arg', $add_query_arg, $type, $taxonomy))
 		{
@@ -860,7 +866,6 @@ class bcn_breadcrumb_trail
 	 * A Breadcrumb Trail Filling Function
 	 *
 	 * This functions fills a breadcrumb for a post type archive (WP 3.1 feature)
-	 *
 	 * @param string type_str The name of the CPT to generate the archive breadcrumb for
 	 * @param bool $force_link Whether or not to force this breadcrumb to be linked
 	 * @param bool $is_paged Whether or not the current resource is on a page other than page 1
@@ -1000,9 +1005,11 @@ class bcn_breadcrumb_trail
 	/**
 	 * Breadcrumb Trail Filling Function
 	 * 
+	 * @param bool $force Whether or not to force the fill function to run in the loop.
+	 * 
 	 * This functions fills the breadcrumb trail.
 	 */
-	public function fill()
+	public function fill($force = false)
 	{
 		global $wpdb, $wp_query, $wp, $wp_taxonomies;
 		//Check to see if the trail is already populated
@@ -1039,7 +1046,7 @@ class bcn_breadcrumb_trail
 			$this->do_paged($page_number);
 		}
 		//For the front page, as it may also validate as a page, do it first
-		if(is_front_page())
+		if(is_front_page() && !$force && !in_the_loop())
 		{
 			//Must have two seperate branches so that we don't evaluate it as a page
 			if($this->opt['bhome_display'])
@@ -1048,7 +1055,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//For posts
-		else if(is_singular())
+		else if(is_singular() || ($force && in_the_loop()))
 		{
 			//Could use the $post global, but we can't really trust it
 			$type = get_post();
@@ -1069,7 +1076,7 @@ class bcn_breadcrumb_trail
 			$this->do_search(get_search_query(), is_paged());
 		}
 		//For author pages
-		else if(is_author())
+		else if(is_author() && $type instanceof WP_User)
 		{
 			$this->do_author($type, is_paged());
 			$this->do_root('post', $this->opt['aauthor_root'], is_paged(), false);

@@ -1076,7 +1076,7 @@ class bcn_breadcrumb_trail
 			$this->do_search(get_search_query(), is_paged());
 		}
 		//For author pages
-		else if(is_author())
+		else if(is_author() && $type instanceof WP_User)
 		{
 			$this->do_author($type, is_paged());
 			$this->do_root('post', $this->opt['aauthor_root'], is_paged(), false);

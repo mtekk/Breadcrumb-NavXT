@@ -76,7 +76,8 @@
 		},
 		"typography": {
 			"fontSize" : true
-		}
+		},
+		"html" : false
 	},
 	"example": {
 		"attributes": {

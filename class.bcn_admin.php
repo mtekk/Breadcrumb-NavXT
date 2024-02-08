@@ -675,57 +675,6 @@ class bcn_admin extends adminKit
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
 				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Taxonomies', 'breadcrumb-navxt' ); ?></legend>
-				<h2><?php _e('Categories', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<?php
-						$this->form->textbox(
-								$this->settings['Htax_category_template'],
-								'6',
-								false,
-								__('The template for category breadcrumbs.', 'breadcrumb-navxt') . $overriden['Htax_category_template'],
-								$overriden_style['Htax_category_template']);
-						$this->form->textbox(
-								$this->settings['Htax_category_template_no_anchor'],
-								'4',
-								false,
-								__('The template for category breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overriden['Htax_category_template_no_anchor'],
-								$overriden_style['Htax_category_template_no_anchor']);
-					?>
-				</table>
-				<h2><?php _e('Tags', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<?php
-						$this->form->textbox(
-								$this->settings['Htax_post_tag_template'],
-								'6',
-								false,
-								__('The template for tag breadcrumbs.', 'breadcrumb-navxt') . $overriden['Htax_post_tag_template'],
-								$overriden_style['Htax_post_tag_template']);
-						$this->form->textbox(
-								$this->settings['Htax_post_tag_template_no_anchor'],
-								'4',
-								false,
-								__('The template for tag breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overriden['Htax_post_tag_template_no_anchor'],
-								$overriden_style['Htax_post_tag_template_no_anchor']);
-					?>
-				</table>
-				<h2><?php _e('Post Formats', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<?php
-						$this->form->textbox(
-								$this->settings['Htax_post_format_template'],
-								'6',
-								false,
-								__('The template for post format breadcrumbs.', 'breadcrumb-navxt') . $overriden['Htax_post_format_template'],
-								$overriden_style['Htax_post_format_template']);
-						$this->form->textbox(
-								$this->settings['Htax_post_format_template_no_anchor'],
-								'4',
-								false,
-								__('The template for post_format breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overriden['Htax_post_format_template_no_anchor'],
-								$overriden_style['Htax_post_format_template_no_anchor']);
-					?>
-				</table>
 			<?php
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)
@@ -735,12 +684,9 @@ class bcn_admin extends adminKit
 				{
 					continue;
 				}
-				//We only want custom taxonomies
-				if(!$taxonomy->_builtin)
-				{
-					$label_lc = mb_strtolower($taxonomy->label, 'UTF-8');
+				$label_lc = mb_strtolower($taxonomy->label, 'UTF-8');
 				?>
-				<h3><?php echo mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'); ?></h3>
+				<h2><?php echo mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->form->textbox(
@@ -758,7 +704,6 @@ class bcn_admin extends adminKit
 					?>
 				</table>
 				<?php
-				}
 			}
 			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->settings); ?>
 			</fieldset>

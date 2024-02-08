@@ -670,7 +670,6 @@ class bcn_admin extends adminKit
 				<?php
 			}
 			do_action($this->unique_prefix . '_after_settings_tab_post', $this->settings);
-			//FIXME: Why don't we use the taxonomy loop for all taxonomies? We do it with posts now
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">

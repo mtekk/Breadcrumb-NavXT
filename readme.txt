@@ -50,7 +50,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 7.3.0 =
-Release date: February, ? 2024
+Release date: February, 9th 2024
 * Behavior change: `bcn_display_json_ld()` now returns unescaped Unicode characters.
 * Behavior change: `$force` parameter in `bcn_display*()` functions is now passed to `bcn_breadcrumb_trail::fill()` allowing generation of trails within the loop for the current loop item instead of the parent page/resource.
 * New feature: Breadcrumb Trail block rewritten to have feature parity with Breadcrumb NavXT Widget.

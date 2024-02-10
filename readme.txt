@@ -51,6 +51,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 == Changelog ==
 = 7.3.0 =
 Release date: February, 9th 2024
+
 * Behavior change: `bcn_display_json_ld()` now returns unescaped Unicode characters.
 * Behavior change: `$force` parameter in `bcn_display*()` functions is now passed to `bcn_breadcrumb_trail::fill()` allowing generation of trails within the loop for the current loop item instead of the parent page/resource.
 * New feature: Breadcrumb Trail block rewritten to have feature parity with Breadcrumb NavXT Widget.
@@ -62,6 +63,7 @@ Release date: February, 9th 2024
 
 = 7.2.0 =
 Release date: February, 9th 2023
+
 * Behavior change: Settings reset sets option entry to blank array, consistent with the change to only storing non-default values in the database.
 * New feature: Added `bcn_display_separator` filter.
 * New feature: Add per setting indication if Network wide settings are overriding the local setting.

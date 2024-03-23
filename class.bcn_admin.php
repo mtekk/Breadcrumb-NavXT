@@ -419,7 +419,7 @@ class bcn_admin extends adminKit
 		}
 		foreach($this->settings as $key => $setting)
 		{
-			if(isset($network_opts[$key]))
+			if(isset($network_opts[$key]) && ((defined('BCN_SETTINGS_USE_NETWORK') && BCN_SETTINGS_USE_NETWORK) || (defined('BCN_SETTINGS_FAVOR_NETWORK') && BCN_SETTINGS_FAVOR_NETWORK)))
 			{
 				$overriden[$key] = ' ' . __('Value has been set via network wide setting.', 'breadcrumb-navxt');
 				$overriden_style[$key] = ' disabled';

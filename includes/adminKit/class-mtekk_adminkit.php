@@ -1118,7 +1118,7 @@ abstract class adminKit
 		$form .= esc_html__('Settings File', $this->identifier);
 		$form .= '</label></th><td>';
 		$form .= sprintf('<input type="file" name="%1$s_admin_import_file" id="%1$s_admin_import_file" size="32" /><p class="description">', esc_attr($this->unique_prefix));
-		$form .= esc_html__('Select a JSON or XML settings file to upload and import settings from.', 'breadcrumb_navxt');
+		$form .= esc_html__('Select a JSON or XML settings file to upload and import settings from.', $this->identifier);
 		$form .= '</p></td></tr></table><p class="submit">';
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
 		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));

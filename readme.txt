@@ -1,10 +1,10 @@
 ﻿=== Breadcrumb NavXT ===
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
-Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
+Tags: breadcrumb, breadcrumbs, trail, navigation, block
 Requires at least: 5.8
-Tested up to: 6.4
-Stable tag: 7.3.0
+Tested up to: 6.5
+Stable tag: 7.3.1
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,13 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.3.1 =
+Release date: June, 27th 2024
+
+* Bug fix: Fixed issue where $force parameter wasn’t passed into `bcn_breadcrumb_trail::fill()` within `bcn_display*()` functions.
+* Bug fix: Fixed improper textdomain existing within `adminKit`.
+* Bug fix: Fixed issue with `$force` parameter where when it is not set the homepage breadcrumb would use the wrong template when calling the breadcrumb trail within the loop.
+
 = 7.3.0 =
 Release date: February, 9th 2024
 

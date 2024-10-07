@@ -37,7 +37,7 @@ export default function Edit ( { attributes, setAttributes } ) {
 				>
 					<p className="description">{__( 'Adjust the breadcrumb trail.', 'breadcrumb-navxt' )}</p>
 					<TextControl
-						label={__( 'Tesxt to show before the trail', 'breadcrumb-navxt' )}
+						label={__( 'Text to show before the trail', 'breadcrumb-navxt' )}
 						value={attributes.pretext}
 						onChange={toggleAttribute( 'pretext' )}
 					/>

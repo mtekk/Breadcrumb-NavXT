@@ -325,6 +325,7 @@ class bcn_breadcrumb_trail
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
 	 */
+	//TODO/FIXME Move to passing in WP_POST instead of id, type and parent
 	protected function post_hierarchy($id, $type, $parent = null)
 	{
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
@@ -392,6 +393,10 @@ class bcn_breadcrumb_trail
 		if(!($parent instanceof WP_Post))
 		{
 			$parent = get_post($id);
+			if(!($parent instanceof WP_Post))
+			{
+				return;
+			}
 		}
 		//Finish off with trying to find the type archive
 		$this->maybe_do_archive_by_post_type($parent->post_type);

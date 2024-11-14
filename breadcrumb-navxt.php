@@ -725,7 +725,7 @@ class breadcrumb_navxt
 	}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
-add_action('plugins_loaded', 'bcn_init', 15);
+add_action('init', 'bcn_init', 5);
 function bcn_init()
 {
 	global $breadcrumb_navxt;

@@ -1066,9 +1066,9 @@ class bcn_breadcrumb_trail
 			$type = get_post();
 			$this->do_post($type, false, (get_query_var('page') > 1));
 			//If this is an attachment then we need to change the queried object to the parent post
-			if(is_attachment())
+			if(is_attachment() && $type instanceof WP_Post)
 			{
-				$type = get_post($type->post_parent); //TODO check for WP_Error?
+				$type = get_post($type->post_parent);
 			}
 			if($type instanceof WP_Post)
 			{

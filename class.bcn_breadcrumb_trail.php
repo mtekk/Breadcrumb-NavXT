@@ -1159,7 +1159,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We always do the home link last, unless on the frontpage
-		if(!is_front_page())
+		if(!is_front_page() || ($use_loop_post && in_the_loop()))
 		{
 			$this->do_home(true, false, false);
 		}

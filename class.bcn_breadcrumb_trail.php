@@ -846,7 +846,7 @@ class bcn_breadcrumb_trail
 	 */
 	protected function maybe_add_post_type_arg($url, $type = null, $taxonomy = null)
 	{
-		global $wp_taxonomies;
+		global $wp_taxonomies, $wp_rewrite;
 		//Rather than default to post, we should try to find the type
 		if($type == null)
 		{
@@ -863,7 +863,16 @@ class bcn_breadcrumb_trail
 		//Filter the add_query_arg logic, only add the query arg if necessary
 		if(apply_filters('bcn_add_post_type_arg', $add_query_arg, $type, $taxonomy))
 		{
-			$url = add_query_arg(array('post_type' => $type), $url);
+			//If the site has prettypermalinks and an endpoint for post_type, trailinslashit
+			if($wp_rewrite->using_permalinks() && in_array($type, $wp_rewrite->endpoints))
+			{
+				$url = user_trailingslashit($url . $type);
+			}
+			//Otherwise add the query arg
+			else
+			{
+				$url = add_query_arg(array('post_type' => $type), $url);
+			}
 		}
 		return $url;
 	}

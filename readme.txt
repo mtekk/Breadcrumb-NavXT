@@ -50,7 +50,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 7.4.0 =
-Release date: December, 28th 2024
+Release date: December, 30th 2024
 
 * New feature: Added `bcn_admin_post_root_args` filter.
 * Bug fix: Fixed issue where the ignore the breadcrumb cache option within the Breadcrumb Trail block resulted in the breadcrumb trail not getting generated on the home page.

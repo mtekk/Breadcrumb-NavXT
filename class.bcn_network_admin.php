@@ -29,7 +29,7 @@ use mtekk\adminKit\{adminKit, form, message, setting};
  */
 class bcn_network_admin extends bcn_admin
 {
-	const version = '7.3.50';
+	const version = '7.3.80';
 	protected $full_name = 'Breadcrumb NavXT Network Settings';
 	protected $access_level = 'manage_network_options';
 	/**

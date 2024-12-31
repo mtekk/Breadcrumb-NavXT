@@ -44,7 +44,7 @@ if($attributes['format'] === 'list')
 <span><?php echo wp_kses_post($attributes['pretext']);?></span>
 <ol <?php echo wp_kses_data( get_block_wrapper_attributes( array('class' => 'breadcrumbs') ) );?>>
 	<?php echo $trail_string; ?>
-</ol>	
+</ol>
 <?php 
 }
 else if($attributes['format'] === 'breadcrumblist_rdfa_wai_aria')

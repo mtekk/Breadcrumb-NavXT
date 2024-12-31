@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb_trail
 {
 	//Our member variables
-	const version = '7.3.1';
+	const version = '7.4.0';
 	//An array of breadcrumbs
 	public $breadcrumbs = array();
 	public $trail = array();
@@ -325,6 +325,7 @@ class bcn_breadcrumb_trail
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
 	 */
+	//TODO/FIXME Move to passing in WP_POST instead of id, type and parent
 	protected function post_hierarchy($id, $type, $parent = null)
 	{
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
@@ -392,6 +393,10 @@ class bcn_breadcrumb_trail
 		if(!($parent instanceof WP_Post))
 		{
 			$parent = get_post($id);
+			if(!($parent instanceof WP_Post))
+			{
+				return;
+			}
 		}
 		//Finish off with trying to find the type archive
 		$this->maybe_do_archive_by_post_type($parent->post_type);
@@ -1005,11 +1010,11 @@ class bcn_breadcrumb_trail
 	/**
 	 * Breadcrumb Trail Filling Function
 	 * 
-	 * @param bool $force Whether or not to force the fill function to run in the loop.
+	 * @param bool $use_loop_post Whether or not to generate for the post within the loop or the page containing the loop (usually an archive of some sort)
 	 * 
 	 * This functions fills the breadcrumb trail.
 	 */
-	public function fill($force = false)
+	public function fill($use_loop_post = false)
 	{
 		global $wpdb, $wp_query, $wp, $wp_taxonomies;
 		//Check to see if the trail is already populated
@@ -1046,7 +1051,7 @@ class bcn_breadcrumb_trail
 			$this->do_paged($page_number);
 		}
 		//For the front page, as it may also validate as a page, do it first
-		if(is_front_page() && !$force)
+		if(is_front_page() && (!$use_loop_post || !in_the_loop()))
 		{
 			//Must have two seperate branches so that we don't evaluate it as a page
 			if($this->opt['bhome_display'])
@@ -1055,15 +1060,15 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//For posts
-		else if(is_singular() || ($force && in_the_loop()))
+		else if(is_singular() || ($use_loop_post && in_the_loop()))
 		{
 			//Could use the $post global, but we can't really trust it
 			$type = get_post();
 			$this->do_post($type, false, (get_query_var('page') > 1));
 			//If this is an attachment then we need to change the queried object to the parent post
-			if(is_attachment())
+			if(is_attachment() && $type instanceof WP_Post)
 			{
-				$type = get_post($type->post_parent); //TODO check for WP_Error?
+				$type = get_post($type->post_parent);
 			}
 			if($type instanceof WP_Post)
 			{
@@ -1154,7 +1159,7 @@ class bcn_breadcrumb_trail
 			}
 		}
 		//We always do the home link last, unless on the frontpage
-		if(!is_front_page())
+		if(!is_front_page() || ($use_loop_post && in_the_loop()))
 		{
 			$this->do_home(true, false, false);
 		}

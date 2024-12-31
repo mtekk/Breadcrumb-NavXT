@@ -44,7 +44,7 @@ use mtekk\adminKit\{adminKit, form, message, setting};
  */
 class bcn_admin extends adminKit
 {
-	const version = '7.3.1';
+	const version = '7.4.0';
 	protected $full_name = 'Breadcrumb NavXT Settings';
 	protected $short_name = 'Breadcrumb NavXT';
 	protected $access_level = 'bcn_manage_options';
@@ -574,14 +574,17 @@ class bcn_admin extends adminKit
 							<label for="<?php echo $optid;?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
 						</th>
 						<td>
-							<?php wp_dropdown_pages(
-									array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]',
+							<?php wp_dropdown_pages( apply_filters(
+									'bcn_admin_post_root_args',
+										array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]',
 											'id' => $optid,
 											'echo' => 1,
 											'show_option_none' => __( '&mdash; Select &mdash;' ),
 											'option_none_value' => '0',
 											'selected' => $this->settings['apost_' . $post_type->name . '_root']->get_value(),
-											'class' => $overriden_style['apost_' . $post_type->name . '_root']));
+											'class' => $overriden_style['apost_' . $post_type->name . '_root']),
+									$post_type->name
+									));
 							if(isset($overriden['apost_' . $post_type->name . '_root']) && $overriden['apost_' . $post_type->name . '_root'] !== '')
 							{
 								printf('<p class="description">%s</p>', $overriden['apost_' . $post_type->name . '_root']);

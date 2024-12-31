@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, block
 Requires at least: 5.8
-Tested up to: 6.5
-Stable tag: 7.3.1
+Tested up to: 6.7
+Stable tag: 7.4.0
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,16 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.4.0 =
+Release date: December, 30th 2024
+
+* New feature: Added `bcn_admin_post_root_args` filter.
+* Bug fix: Fixed issue where the ignore the breadcrumb cache option within the Breadcrumb Trail block resulted in the breadcrumb trail not getting generated on the home page.
+* Bug fix: Fixed issue where breadcrumb trails generated within the loop were improperly missing the home breadcrumb when on the home page.
+* Bug fix: Fixed issue breadcrumb-navxt textdomain is loaded too early (improved WordPress 6.7 support).
+* Bug fix: Improved `bcn_breadcrumb_trail::post_hierarchy()` resiliency to unexpected returns from `get_post()`.
+* Bug fix: Fixed translation text typos in Breadcrumb Trail block.
+
 = 7.3.1 =
 Release date: June, 27th 2024
 

@@ -105,6 +105,7 @@ class breadcrumb_navxt
 			//Instantiate our new admin object
 			$this->admin = new bcn_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
+		add_filter( 'pll_home_url_white_list', array( $this, 'breadcrumb_navxt_home_url_filter' ) );
 	}
 	public function init()
 	{
@@ -723,6 +724,20 @@ class breadcrumb_navxt
 			echo $trail_string;
 		}
 	}
+	
+	/**
+	* Allow Polylang to translate the home url
+	* @param array $args array with function to allow.
+	* @return array $args list of allowed URL.
+	*/
+	public function breadcrumb_navxt_home_url_filter( $args ) {
+	return array_merge(
+		$args,
+		array(
+			array( 'function' => 'do_home' )
+		)
+	);
+}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
 add_action('init', 'bcn_init', 5);

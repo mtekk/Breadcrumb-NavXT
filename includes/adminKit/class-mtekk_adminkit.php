@@ -383,7 +383,7 @@ abstract class adminKit
 		$this->delete_option($this->unique_prefix . '_version');
 	}
 	/**
-	 * Compares the supplided version with the internal version, places an upgrade warning if there is a mismatch
+	 * Compares the supplied version with the internal version, places an upgrade warning if there is a mismatch
 	 * TODO: change this to being auto called in admin_init action
 	 */
 	function version_check($version)

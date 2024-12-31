@@ -105,6 +105,7 @@ class breadcrumb_navxt
 			//Instantiate our new admin object
 			$this->admin = new bcn_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
+		add_filter( 'pll_home_url_white_list', array( $this, 'breadcrumb_navxt_home_url_filter' ) );
 	}
 	public function init()
 	{
@@ -496,13 +497,13 @@ class breadcrumb_navxt
 		$settings['Hsearch_template'] = new setting\setting_html(
 				'search_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
-						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
+						sprintf(esc_attr__('Search results for %1$s;', 'breadcrumb-navxt'),
 								sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 				__('Search Template', 'breadcrumb-navxt'));
 		$settings['Hsearch_template_no_anchor'] = new setting\setting_html(
 				'search_template_no_anchor',
 				sprintf('<span class="%%type%%">%1$s</span>',
-						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
+						sprintf(esc_attr__('Search results for %1$s', 'breadcrumb-navxt'), '%htitle%')),
 				__('Search Template (Unlinked)', 'breadcrumb-navxt'));
 		$settings['Hdate_template'] = new setting\setting_html(
 				'date_template',
@@ -723,6 +724,20 @@ class breadcrumb_navxt
 			echo $trail_string;
 		}
 	}
+	
+	/**
+	* Allow Polylang to translate the home url
+	* @param array $args array with function to allow.
+	* @return array $args list of allowed URL.
+	*/
+	public function breadcrumb_navxt_home_url_filter( $args ) {
+	return array_merge(
+		$args,
+		array(
+			array( 'function' => 'do_home' )
+		)
+	);
+}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
 add_action('init', 'bcn_init', 5);

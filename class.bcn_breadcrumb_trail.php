@@ -36,7 +36,7 @@ class bcn_breadcrumb_trail
 			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
 		}
 		$this->trail = &$this->breadcrumbs;
-		//Initilize with default option values
+		//Initialize with default option values
 		$this->opt = array(
 			//Should the mainsite be shown
 			'bmainsite_display' => true,
@@ -106,7 +106,7 @@ class bcn_breadcrumb_trail
 			'bpost_attachment_taxonomy_referer' => false,
 			//What hierarchy should be shown leading to the attachment
 			'Epost_attachment_hierarchy_type' => 'BCN_POST_PARENT',
-			//Give an invlaid page ID for the attachement root
+			//Give an invalid page ID for the attachment root
 			'apost_attachment_root' => 0,
 			//The breadcrumb template for attachment breadcrumbs
 			'Hpost_attachment_template' => bcn_breadcrumb::get_default_template(),
@@ -145,7 +145,7 @@ class bcn_breadcrumb_trail
 				sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
 			//Which of the various WordPress display types should the author breadcrumb display
 			'Eauthor_name' => 'display_name',
-			//Give an invlaid page ID for the author root
+			//Give an invalid page ID for the author root
 			'aauthor_root' => 0,
 			//Category stuff
 			//The breadcrumb template for category breadcrumbs
@@ -378,7 +378,7 @@ class bcn_breadcrumb_trail
 					//Only do something if we found a term
 					if($term instanceof WP_Term)
 					{
-						//Fill out the term hiearchy
+						//Fill out the term hierarchy
 						$parent = $this->term_parents($term, $type);
 					}
 				}
@@ -468,7 +468,7 @@ class bcn_breadcrumb_trail
 			//Make sure the id is valid, and that we won't end up spinning in a loop
 			if($term->parent && $term->parent != $term->term_id)
 			{
-				//Figure out the rest of the term hiearchy via recursion
+				//Figure out the rest of the term hierarchy via recursion
 				$ret_term = $this->term_parents(get_term($term->parent, $term->taxonomy), $type);
 				//May end up with WP_Error, don't update the term if that's the case
 				if($ret_term instanceof WP_Term)
@@ -564,10 +564,10 @@ class bcn_breadcrumb_trail
 			//Take care of the parent's breadcrumb
 			$this->do_post($parent, true, false, false);
 		}
-		//Otherwise we need the follow the hiearchy tree
+		//Otherwise we need the follow the hierarchy tree
 		else
 		{
-			//Handle the post's hiearchy
+			//Handle the post's hierarchy
 			$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);
 		}
 	}
@@ -753,7 +753,7 @@ class bcn_breadcrumb_trail
 		if(isset($object->labels->name))
 		{
 			//Core filter use here is ok for time being
-			//TODO: Recheck validitiy prior to each release
+			//TODO: Recheck validity prior to each release
 			return apply_filters('post_type_archive_title', $object->labels->name, $object->name);
 		}
 	}
@@ -783,7 +783,7 @@ class bcn_breadcrumb_trail
 	 * @param string $post_type the name of the post type
 	 * @return bool
 	 * 
-	 * TODO: Remove dependancies to current state (state should be passed in)
+	 * TODO: Remove dependencies to current state (state should be passed in)
 	 */
 	protected function treat_as_root_page($post_type)
 	{
@@ -1034,7 +1034,7 @@ class bcn_breadcrumb_trail
 		//Do any actions if necessary, we past through the current object instance to keep life simple
 		do_action('bcn_before_fill', $this);
 		$type = $wp_query->get_queried_object();
-		//Do specific opperations for the various page types
+		//Do specific operations for the various page types
 		//Check if this isn't the first of a multi paged item
 		if($this->opt['bpaged_display'] && (is_paged() || is_singular() && get_query_var('page') > 1))
 		{
@@ -1053,7 +1053,7 @@ class bcn_breadcrumb_trail
 		//For the front page, as it may also validate as a page, do it first
 		if(is_front_page() && (!$use_loop_post || !in_the_loop()))
 		{
-			//Must have two seperate branches so that we don't evaluate it as a page
+			//Must have two separate branches so that we don't evaluate it as a page
 			if($this->opt['bhome_display'])
 			{
 				$this->do_home(false, is_paged());
@@ -1208,7 +1208,7 @@ class bcn_breadcrumb_trail
 		}
 		else
 		{
-			//For normal opperation we must reverse the array by key
+			//For normal operation we must reverse the array by key
 			krsort($this->breadcrumbs);
 		}
 	}
@@ -1253,7 +1253,7 @@ class bcn_breadcrumb_trail
 		{
 			$position = $last_position;
 		}
-		//Initilize the string which will hold the assembled trail
+		//Initialize the string which will hold the assembled trail
 		$trail_str = '';
 		foreach($breadcrumbs as $key => $breadcrumb)
 		{
@@ -1353,7 +1353,7 @@ class bcn_breadcrumb_trail
 	/**
 	 * This returns the internal version
 	 *
-	 * @deprecated 5.2.0 No longer needed, superceeded bcn_breadcrumb_trail::version
+	 * @deprecated 5.2.0 No longer needed, superseded bcn_breadcrumb_trail::version
 	 *
 	 * @return string internal version of the Breadcrumb trail
 	 */
@@ -1365,7 +1365,7 @@ class bcn_breadcrumb_trail
 	/**
 	 * A Breadcrumb Trail Filling Function
 	 *
-	 * @deprecated 6.0.0 No longer needed, superceeded by do_post
+	 * @deprecated 6.0.0 No longer needed, superseded by do_post
 	 *
 	 * This functions fills a breadcrumb for an attachment page.
 	 */
@@ -1381,7 +1381,7 @@ class bcn_breadcrumb_trail
 	 *
 	 * @param string $type The type to restrict the date archives to
 	 *
-	 * @deprecated 6.0.0 No longer needed, superceeded by do_day, do_month, and/or do_year
+	 * @deprecated 6.0.0 No longer needed, superseded by do_day, do_month, and/or do_year
 	 */
 	protected function do_archive_by_date($type)
 	{
@@ -1401,7 +1401,7 @@ class bcn_breadcrumb_trail
 	/**
 	 * This functions outputs or returns the breadcrumb trail in list form.
 	 *
-	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 * @deprecated 6.0.0 No longer needed, superseded by $template parameter in display
 	 *
 	 * @param bool $linked[optional] Whether to allow hyperlinks in the trail or not.
 	 * @param bool $reverse[optional] Whether to reverse the output or not.

@@ -125,7 +125,7 @@ class bcn_rest_controller
 	 * 
 	 * @param mixed $param The parameter to validate
 	 * @param WP_REST_Request $request REST API request data
-	 * @param string $key The paramter key
+	 * @param string $key The parameter key
 	 * @return bool Whether or not the ID is valid (or atleast looks valid)
 	 */
 	public function validate_id($param, $request, $key)
@@ -137,7 +137,7 @@ class bcn_rest_controller
 	 * 
 	 * @param mixed $param The parameter to validate
 	 * @param WP_REST_Request $request REST API request data
-	 * @param string $key The paramter key
+	 * @param string $key The parameter key
 	 * @return bool Whether or not the ID is valid (or atleast looks valid)
 	 */
 	public function validate_taxonomy($param, $request, $key)

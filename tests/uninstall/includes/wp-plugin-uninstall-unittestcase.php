@@ -152,7 +152,7 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	 *
 	 * Called by the setUp() method.
 	 *
-	 * Installation is run seperately, so the plugin is never actually loaded in this
+	 * Installation is run separately, so the plugin is never actually loaded in this
 	 * process. This provides more realistic testing of the uninstall process, since
 	 * it is run while the plugin is inactive, just like in "real life".
 	 *
@@ -277,7 +277,7 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Asserts that a database table exsists.
+	 * Asserts that a database table exists.
 	 *
 	 * @since 0.1.0
 	 *
@@ -395,15 +395,15 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Database table not existant constraint.
+	 * Database table not existent constraint.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistant
+	 * @return WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistent
 	 */
 	public static function isNotInDatabase() {
 
-		return new WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistant;
+		return new WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistent;
 	}
 
 	/**
@@ -411,11 +411,11 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistant
+	 * @return WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistent
 	 */
 	public static function isInDatabase() {
 
-		return new WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistant;
+		return new WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistent;
 	}
 
 	/**

@@ -5,7 +5,7 @@
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
-	>
+>
 	<testsuites>
 		<testsuite name="Breadcrumb NavXT Tests">
 			<directory prefix="test-" suffix=".php">./tests/</directory>
@@ -16,4 +16,17 @@
 			<group>uninstall</group>
 		</exclude>
 	</groups>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<file>breadcrumb-navxt.php</file>
+			<file>class.bcn_admin.php</file>
+			<file>class.bcn_breadcrumb.php</file>
+			<file>class.bcn_breadcrumb_trail.php</file>
+			<file>class.bcn_network_admin.php</file>
+			<file>class.bcn_rest_controller.php</file>
+			<file>class.bcn_widget.php</file>
+			<file>options_upgrade.php</file>
+			<file>uninstall.php</file>
+		</whitelist>
+	</filter>
 </phpunit>

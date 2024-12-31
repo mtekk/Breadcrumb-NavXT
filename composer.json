@@ -1,0 +1,19 @@
+{
+    "name": "mtekk/breadcrumb-navxt",
+    "description": "The longest maintained Breadcrumb plugin for WordPress",
+    "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "John Havlik",
+            "email": "john.havlik@mtekk.us"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "yoast/phpunit-polyfills": "^1.0"
+    }
+}

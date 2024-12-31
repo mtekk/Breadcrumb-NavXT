@@ -17,7 +17,7 @@
 		</exclude>
 	</groups>
 	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
+		<whitelist>
 			<file>breadcrumb-navxt.php</file>
 			<file>class.bcn_admin.php</file>
 			<file>class.bcn_breadcrumb.php</file>

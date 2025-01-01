@@ -116,6 +116,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		));
 		//Test default (use local)
 		$this->breadcrumb_navxt->call('init');
+		$this->setExpectedIncorrectUsage('WP_Block_Type_Registry::register');
 		//Check for the opts for expected values
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
@@ -163,6 +164,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		//Test use local explicit
 		define('BCN_SETTINGS_USE_LOCAL', true);
 		$this->breadcrumb_navxt->call('init');
+		$this->setExpectedIncorrectUsage('WP_Block_Type_Registry::register');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bmainsite_display'), false);
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bcurrent_item_linked'), true);
 		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');

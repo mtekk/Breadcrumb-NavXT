@@ -17,8 +17,9 @@ class UninstallerTests extends WP_Plugin_Uninstall_UnitTestCase
 		require dirname( dirname( __FILE__ ) ) . '/class.bcn_breadcrumb.php';
 		require dirname( dirname( __FILE__ ) ) . '/class.bcn_breadcrumb_trail.php';
 		require dirname( dirname( __FILE__ ) ) . '/class.bcn_admin.php';
+		$settings = array();
 		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-		$bcn_breadcrumb_admin = new bcn_admin($bcn_breadcrumb_trail, 'breadcrumb-navxt');
+		$bcn_breadcrumb_admin = new bcn_admin($bcn_breadcrumb_trail->opt, 'breadcrumb-navxt', $settings);
 		$bcn_breadcrumb_admin->install();
 	}
 	

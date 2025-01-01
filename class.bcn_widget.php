@@ -50,7 +50,7 @@ class bcn_widget extends WP_Widget
 		{
 			return;
 		}
-		//Manditory before widget junk
+		//Mandatory before widget junk
 		echo $args['before_widget'];
 		if(!empty($title))
 		{
@@ -94,10 +94,10 @@ class bcn_widget extends WP_Widget
 		}
 		else
 		{
-			//If we recieved a type that is not of the built in displays, it must be relegated to an extension plugin
+			//If we received a type that is not of the built in displays, it must be relegated to an extension plugin
 			do_action('bcn_widget_display_trail', $instance);
 		}
-		//Manditory after widget junk
+		//Mandatory after widget junk
 		echo $args['after_widget'];
 	}
 	function update($new_instance, $old_instance)

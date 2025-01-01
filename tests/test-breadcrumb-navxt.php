@@ -37,7 +37,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			'public' => true,
 			'hierarchical' => false,
 			'has_archive' => true,
-			'publicaly_queryable' => true,
+			'publicly_queryable' => true,
 			'taxonomies' => array('post_tag', 'category')
 			)
 		);
@@ -46,23 +46,23 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 			'public' => true,
 			'hierarchical' => true,
 			'has_archive' => true,
-			'publicaly_queryable' => true
+			'publicly_queryable' => true
 			)
 		);
 		register_taxonomy('ring', 'czar', array(
-			'lable' => 'Rings',
+			'label' => 'Rings',
 			'public' => true,
 			'hierarchical' => false,
 			)
 		);
 		register_taxonomy('party', 'czar', array(
-			'lable' => 'Parties',
+			'label' => 'Parties',
 			'public' => true,
 			'hierarchical' => true,
 			)
 		);
 		register_taxonomy('job_title', 'bureaucrat', array(
-			'lable' => 'Job Title',
+			'label' => 'Job Title',
 			'public' => true,
 			'hierarchical' => true,
 			)
@@ -122,7 +122,7 @@ class BreadcrumbNavXTTest extends WP_UnitTestCase {
 		$this->assertSame($this->breadcrumb_navxt->get_opt('Eauthor_name'), 'display_name');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('S404_title'), '404');
 		$this->assertSame($this->breadcrumb_navxt->get_opt('bhome_display'), true);
-		//These are only valid in a multisite test enviornment
+		//These are only valid in a multisite test environment
 		//Test use network
 /*		define('BCN_SETTINGS_USE_NETWORK', true);
 		$this->breadcrumb_navxt->call('init');

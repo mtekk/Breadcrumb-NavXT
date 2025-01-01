@@ -601,7 +601,7 @@ class breadcrumb_navxt
 		}
 	}
 	/**
-	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
+	 * Function updates the breadcrumb_trail options array from the database in a semi intelligent manner
 	 * 
 	 * @since  5.0.0
 	 */
@@ -609,7 +609,7 @@ class breadcrumb_navxt
 	{
 		//Convert our settings to opts
 		$opts = adminKit::settings_to_opts($this->settings);
-		//Run setup_options for compatibilty reasons
+		//Run setup_options for compatibility reasons
 		breadcrumb_navxt::setup_options($opts);
 		//TODO: Unit tests needed to ensure the expected behavior exists
 		//Grab the current settings for the current local site from the db
@@ -679,7 +679,7 @@ class breadcrumb_navxt
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags
 	 * 
-	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 * @deprecated 6.0.0 No longer needed, superseded by $template parameter in display
 	 * 
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.

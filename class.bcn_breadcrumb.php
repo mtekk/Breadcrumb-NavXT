@@ -24,9 +24,9 @@ class bcn_breadcrumb
 	const version = '7.4.0';
 	//The main text that will be shown
 	protected $title;
-	//The breadcrumb's template, used durring assembly
+	//The breadcrumb's template, used during assembly
 	protected $template;
-	//The breadcrumb's no anchor template, used durring assembly when there won't be an anchor
+	//The breadcrumb's no anchor template, used during assembly when there won't be an anchor
 	protected $template_no_anchor;
 	//Boolean, is this element linked
 	protected $linked = false;
@@ -148,7 +148,7 @@ class bcn_breadcrumb
 	/**
 	 * A wrapper for wp_kses which handles getting the allowed html
 	 * 
-	 * @param string $template_str The tempalte string to run through kses
+	 * @param string $template_str The template string to run through kses
 	 * @return string The template string post cleaning
 	 */
 	protected function run_template_kses($template_str)
@@ -158,7 +158,7 @@ class bcn_breadcrumb
 	/**
 	 * Function to set the internal breadcrumb template
 	 *
-	 * @param string $template the template to use durring assebly
+	 * @param string $template the template to use during assembly
 	 */
 	public function set_template($template)
 	{

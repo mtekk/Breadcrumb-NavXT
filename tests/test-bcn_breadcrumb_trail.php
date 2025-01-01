@@ -30,7 +30,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'public' => true,
 				'hierarchical' => false,
 				'has_archive' => true,
-				'publicaly_queryable' => true,
+				'publicly_queryable' => true,
 				'taxonomies' => array('post_tag', 'category')
 		)
 				);
@@ -39,7 +39,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'public' => true,
 				'hierarchical' => true,
 				'has_archive' => true,
-				'publicaly_queryable' => true
+				'publicly_queryable' => true
 		)
 				);
 		register_post_type('autocrat', array(
@@ -47,7 +47,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				'public' => true,
 				'hierarchical' => true,
 				'has_archive' => false,
-				'publicaly_queryable' => true
+				'publicly_queryable' => true
 		)
 				);
 		register_taxonomy('ring', 'czar', array(
@@ -76,7 +76,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 				);
 		//Can we really do this?
 		register_taxonomy('nonassociated', null, array(
-				'label' => 'Non Assoicated',
+				'label' => 'Non Associated',
 				'public' => true,
 				'hierarchical' => false,
 		)
@@ -187,7 +187,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		$post = get_post($attpida);
-		//Call do_post on the post attachement
+		//Call do_post on the post attachment
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(6, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementa' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
@@ -211,7 +211,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$post = get_post($attpidb);
 		//Ensure we have 0 breadcrumbs from the do_root portion
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
-		//Call do_post on the post attachement
+		//Call do_post on the post attachment
 		$this->breadcrumb_trail->call('do_post', array($post));
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
 		$this->assertSame('Test Attahementb' , $this->breadcrumb_trail->breadcrumbs[0]->get_title());
@@ -297,9 +297,9 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		register_taxonomy('custom_tax0', 'post', array('query_var' => 'custom_tax_0'));
 		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_1'));
 		register_taxonomy('custom_tax1', 'post', array('query_var' => 'custom_tax_2'));
-		//Check matching of an existant taxonomy
+		//Check matching of an existent taxonomy
 		$this->assertSame('custom_tax0', $this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_0')));
-		//Check return false of non-existant taxonomy
+		//Check return false of non-existent taxonomy
 		$this->assertFalse($this->breadcrumb_trail->call('query_var_to_taxonomy', array('custom_tax_326375')));
 	}
 	function test_determine_taxonomy() {
@@ -337,7 +337,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$this->assertFalse($this->breadcrumb_trail->call('determine_taxonomy'));
 		//Let the custom taxonomy be our referer
 		$_SERVER['HTTP_REFERER'] = get_term_link($ttid2);
-		//Check matching of an existant taxonomy
+		//Check matching of an existent taxonomy
 		$this->assertSame('wptests_tax2', $this->breadcrumb_trail->call('determine_taxonomy'));
 	}
 	/**
@@ -724,7 +724,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Ensure we have 0 breadcrumbs
 		$this->assertCount(0, $this->breadcrumb_trail->breadcrumbs);
 		////
-		//Test with affiliaed postype with dissabled archive via setting
+		//Test with affiliaed postype with disabled archive via setting
 		////
 		//"Go to" our term archive
 		$this->go_to(get_term_link($tidb));
@@ -1207,7 +1207,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Try some built in types
 		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('post')));
 		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('page')));
-		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachement')));
+		$this->assertTrue($this->breadcrumb_trail->call('is_builtin', array('attachment')));
 		//And now our CPT
 		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('czar')));
 		$this->assertFalse($this->breadcrumb_trail->call('is_builtin', array('bureaucrat')));
@@ -1460,8 +1460,8 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '<li%3$s>%1$s</li>', '<ul>%1$s</ul>', ' &gt; '));
 		$this->assertSame('<li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span></li><li class="post post-post dynamico" arria-current="page"><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test</span><meta property="url" content="http://flowissues.com/test"><meta property="position" content="2"></span></li>', $breadcrumb_string);
 		//Test the bcn_display_separator filter
-		add_filter('bcn_display_separator', function($separator, $postion, $last_postion, $depth){
-			if($postion >= $last_postion)
+		add_filter('bcn_display_separator', function($separator, $position, $last_position, $depth){
+			if($position >= $last_position)
 			{
 				return $separator;
 			}
@@ -1493,15 +1493,15 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		$breadcrumb_string = $this->breadcrumb_trail->call('display_loop', array($this->breadcrumb_trail->breadcrumbs, false, false, '%1$s%2$s', '<span>%1$s</span>%2$s', ' &gt; '));
 		$this->assertSame('<span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">Home</span><meta property="url" content="http://flowissues.com"><meta property="position" content="1"></span> &gt; <span><span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 1</span><meta property="url" content="http://flowissues.com/test1"><meta property="position" content="1"></span>, <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post">A Test Sibbling 2</span><meta property="url" content="http://flowissues.com/test2"><meta property="position" content="2"></span></span> &gt; <span property="itemListElement" typeof="ListItem"><span property="name" class="post post-post current-item">A Preposterous Post</span><meta property="url" content="http://flowissues.com/test/a-prepost-post"><meta property="position" content="3"></span>', $breadcrumb_string);
 		//Test the bcn_display_separator filter
-		add_filter('bcn_display_separator', function($separator, $postion, $last_postion, $depth){
+		add_filter('bcn_display_separator', function($separator, $position, $last_position, $depth){
 			if($depth > 1)
 			{
-				if($postion == $last_postion - 1)
+				if($position == $last_position - 1)
 				{
 					return ' &amp; ';
 				}
 			}
-			if($postion < $last_postion)
+			if($position < $last_position)
 			{
 				return ' &lt; ';
 			}

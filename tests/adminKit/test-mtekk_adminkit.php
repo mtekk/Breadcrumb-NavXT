@@ -237,7 +237,7 @@ class adminKitTest extends WP_UnitTestCase {
 		$this->assertSame(-1, $this->admin->setting_equal_check($defaults['Sopta'], $defaults['Soptc']));
 		//Check equal value, different name
 		$this->assertSame(-1, $this->admin->setting_equal_check($defaults['Sopta'], $defaults['Soptb']));
-		//Test truely equal
+		//Test truly equal
 		$this->assertSame(0, $this->admin->setting_equal_check($defaults['Soptc'], $defaults['Soptd']));
 		//Test greater than
 		$this->assertSame(1, $this->admin->setting_equal_check($defaults['ioptd'], $defaults['iopte']));

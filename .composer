@@ -1,0 +1,11 @@
+{
+	"Name": "mtekk/breadcrumb-navxt",
+	"type": "wordpress-plugin",
+	"require": {
+		"php": ">=7.0.0"
+	{
+	"require-dev": {
+		"yoast/phpunit-polyfills": "1.x-dev"
+	}
+	"minimum-stability": "dev"
+}

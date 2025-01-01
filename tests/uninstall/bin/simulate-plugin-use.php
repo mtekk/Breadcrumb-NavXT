@@ -39,7 +39,7 @@ require dirname( __FILE__ ) . '/bootstrap.php';
  * Load the WP unit test factories.
  *
  * Use the $wp_test_factory global to create users, posts, etc., the same way that
- * you use the $factory propety in WP unit test case classes.
+ * you use the $factory property in WP unit test case classes.
  *
  * @since 0.2.0
  */

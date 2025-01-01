@@ -29,7 +29,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 			'public' => true,
 			'hierarchical' => false,
 			'has_archive' => true,
-			'publicaly_queryable' => true,
+			'publicly_queryable' => true,
 			'taxonomies' => array('post_tag', 'category')
 			)
 		);
@@ -38,7 +38,7 @@ class BreadcrumbRESTControllerTest extends WP_UnitTestCase {
 			'public' => true,
 			'hierarchical' => true,
 			'has_archive' => true,
-			'publicaly_queryable' => true
+			'publicly_queryable' => true
 			)
 		);
 		register_taxonomy('ring', 'czar', array(

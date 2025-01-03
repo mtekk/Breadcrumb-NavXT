@@ -84,8 +84,6 @@ class breadcrumb_navxt
 		$this->breadcrumb_trail = $breadcrumb_trail;
 		//We set the plugin basename here
 		$this->plugin_basename = plugin_basename(__FILE__);
-		//We need to add in the defaults for CPTs and custom taxonomies after all other plugins are loaded
-		add_action('wp_loaded', array($this, 'wp_loaded'), 15);
 		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
 		//Run much later than everyone else to give other plugins a chance to hook into the filters and actions in this
 		add_action('init', array($this, 'init'), 9000);
@@ -290,10 +288,6 @@ class breadcrumb_navxt
 	public function get_version()
 	{
 		return self::version;
-	}
-	public function wp_loaded()
-	{
-		
 	}
 	public function uninstall()
 	{

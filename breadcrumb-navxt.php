@@ -75,13 +75,10 @@ class breadcrumb_navxt
 	protected $rest_controller = null;
 	/**
 	 * Constructor for a new breadcrumb_navxt object
-	 * 
-	 * @param bcn_breadcrumb_trail $breadcrumb_trail An instance of a bcn_breadcrumb_trail object to use for everything
+	 *
 	 */
-	public function __construct(bcn_breadcrumb_trail $breadcrumb_trail)
+	public function __construct()
 	{
-		//We get our breadcrumb trail object from our constructor
-		$this->breadcrumb_trail = $breadcrumb_trail;
 		//We set the plugin basename here
 		$this->plugin_basename = plugin_basename(__FILE__);
 		add_action('rest_api_init', array($this, 'rest_api_init'), 10);
@@ -89,23 +86,13 @@ class breadcrumb_navxt
 		add_action('init', array($this, 'init'), 9000);
 		//Register the WordPress 2.8 Widget
 		add_action('widgets_init', array($this, 'register_widget'));
-		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)
-		if(defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN)
-		{
-			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
-			//Instantiate our new admin object
-			$this->admin = new bcn_network_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
-		}
-		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
-		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
-		{
-			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
-			//Instantiate our new admin object
-			$this->admin = new bcn_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
-		}
 	}
 	public function init()
 	{
+		//Create an instance of bcn_breadcrumb_trail
+		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
+		//Allow others to swap out the breadcrumb trail object
+		$this->breadcrumb_trail = apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail);
 		add_filter('bcn_allowed_html', array($this, 'allowed_html'), 1, 1);
 		add_filter('mtekk_adminkit_allowed_html', array($this, 'adminkit_allowed_html'), 1, 1);
 		//We want to run late for using our breadcrumbs
@@ -123,6 +110,20 @@ class breadcrumb_navxt
 		}
 		//Register Guternberg Block
 		$this->register_block();
+		//Load our network admin if in the network dashboard (yes is_network_admin() doesn't exist)
+		if(defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN)
+		{
+			require_once(dirname(__FILE__) . '/class.bcn_network_admin.php');
+			//Instantiate our new admin object
+			$this->admin = new bcn_network_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
+		}
+		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
+		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
+		{
+			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
+			//Instantiate our new admin object
+			$this->admin = new bcn_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
+		}
 	}
 	public function rest_api_init()
 	{
@@ -719,14 +720,11 @@ class breadcrumb_navxt
 	}
 }
 //Have to bootstrap our startup so that other plugins can replace the bcn_breadcrumb_trail object if they need to
-add_action('init', 'bcn_init', 5);
+add_action('plugins_loaded', 'bcn_init', 15);
 function bcn_init()
 {
 	global $breadcrumb_navxt;
-	//Create an instance of bcn_breadcrumb_trail
-	$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
-	//Let's make an instance of our object that takes care of everything
-	$breadcrumb_navxt = new breadcrumb_navxt(apply_filters('bcn_breadcrumb_trail_object', $bcn_breadcrumb_trail));
+	$breadcrumb_navxt = new breadcrumb_navxt();
 }
 /**
  * Outputs the breadcrumb trail

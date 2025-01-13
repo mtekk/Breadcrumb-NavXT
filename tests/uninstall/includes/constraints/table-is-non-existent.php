@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Is table exists constraint.
+ * Is table not existent constraint.
  *
  * @package WP_Plugin_Uninstall_Tester
  * @since 0.1.0
  */
 
 /**
- * Database table exists constraint matcher.
+ * Database table not existent constraint matcher.
  *
  * @since 0.1.0
  */
-class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistant extends PHPUnit_Framework_Constraint {
+class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistent extends PHPUnit_Framework_Constraint {
 
 	/**
 	 * Checks if $table exists in the database.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param string $table The name of the table that should exist.
+	 * @param string $table The name of the table that shouldn't exist.
 	 *
-	 * @return bool Whether the table exists.
+	 * @return bool Whether the table is non existent.
 	 */
 	public function matches( $table ) {
 
@@ -29,7 +29,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistant extends PHPU
 
 		$_table = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
 
-		return ( $table == $_table );
+		return ( $table != $_table );
 	}
 
 	/**
@@ -41,6 +41,6 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableExistant extends PHPU
 	 */
 	public function toString() {
 
-		return 'is a table in the database';
+		return 'is not a table in the database';
 	}
 }

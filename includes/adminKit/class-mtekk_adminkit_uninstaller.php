@@ -51,7 +51,7 @@ abstract class mtekk_adminKit_uninstaller
 	/**
 	 * Result Getter
 	 * 
-	 * @return bool wether or not uninstall did run successfull.
+	 * @return bool whether or not uninstall did run successful.
 	 */
 	public function get_result()
 	{

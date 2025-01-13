@@ -1,7 +1,7 @@
 <?php
 /*
 	A small library that adds in fallbacks for some of the PHP multibyte string
-	functions. Mainly inteneded to be used with Breadcrumb NavXT
+	functions. Mainly intended to be used with Breadcrumb NavXT
 
 	Copyright 2009-2020  John Havlik  (email : john.havlik@mtekk.us)
 
@@ -25,7 +25,7 @@ if(!function_exists('mb_strlen'))
 	/**
 	 * Fallback for mb_strlen for users without multibyte support
 	 * 
-	 * @param string $string the string to determine the lenght of
+	 * @param string $string the string to determine the length of
 	 * @return int the number of characters in the string
 	 */
 	function mb_strlen($string)

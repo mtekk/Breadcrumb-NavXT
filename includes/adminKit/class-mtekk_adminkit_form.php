@@ -85,7 +85,7 @@ class form
 	 * @param bool $disable (optional)
 	 * @param string $description (optional)
 	 * 
-	 * FIXME: Parameter list non-consistant with others
+	 * FIXME: Parameter list non-consistent with others
 	 */
 	public function input_text(setting $option, $class = 'regular-text', $disable = false, $description = '')
 	{
@@ -127,7 +127,7 @@ class form
 	 * @param int|string $max (optional)
 	 * @param int|string $step (optional)
 	 * 
-	 * FIXME: Parameter list non-consistant with others
+	 * FIXME: Parameter list non-consistent with others
 	 */
 	public function input_number(setting $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{

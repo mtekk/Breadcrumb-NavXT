@@ -112,7 +112,7 @@ abstract class adminKit
 		add_action('admin_menu', array($this, 'add_page'));
 		//Installation Script hook
 		add_action('activate_' . $this->plugin_basename, array($this, 'install'));
-		//Initilizes l10n domain
+		//Initializes l10n domain
 		$this->local();
 		add_action('wp_loaded', array($this, 'wp_loaded'));
 		$this->form = new form($this->unique_prefix);
@@ -169,7 +169,7 @@ abstract class adminKit
 	 * @param mixed $value (optional) The value to place in the query string 
 	 * @param string $title (optional) The text to use in the title portion of the anchor
 	 * @param string $text (optional) The text that will be surrounded by the anchor tags
-	 * @param string $anchor_extras (optional) This text is placed within the opening anchor tag, good for adding id, classe, rel field
+	 * @param string $anchor_extras (optional) This text is placed within the opening anchor tag, good for adding id, classes, rel field
 	 * @return string the assembled anchor
 	 */
 	function nonced_anchor($uri, $mode, $value = 'true', $title = '', $text = '', $anchor_extras = '')
@@ -290,7 +290,7 @@ abstract class adminKit
 		}
 	}
 	/**
-	 * Initilizes localization textdomain for translations (if applicable)
+	 * Initializes localization textdomain for translations (if applicable)
 	 * 
 	 * Will conditionally load the textdomain for translations. This is here for
 	 * plugins that span multiple files and have localization in more than one file
@@ -383,7 +383,7 @@ abstract class adminKit
 		$this->delete_option($this->unique_prefix . '_version');
 	}
 	/**
-	 * Compares the supplided version with the internal version, places an upgrade warning if there is a missmatch
+	 * Compares the supplied version with the internal version, places an upgrade warning if there is a mismatch
 	 * TODO: change this to being auto called in admin_init action
 	 */
 	function version_check($version)
@@ -665,7 +665,7 @@ abstract class adminKit
 	 */
 	function opts_update()
 	{
-		//Do some security related thigns as we are not using the normal WP settings API
+		//Do some security related things as we are not using the normal WP settings API
 		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_options-options');
@@ -675,9 +675,9 @@ abstract class adminKit
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
-		//Grab our incomming array (the data is dirty)
+		//Grab our incoming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
-		//Run through the loop and get the diff from detauls
+		//Run through the loop and get the diff from details
 		$new_settings = $this->get_settings_diff($input);
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving
@@ -727,11 +727,11 @@ abstract class adminKit
 		$this->load_opts_into_settings($this->get_option($this->unique_prefix . '_options'));
 		//Get the unique settings
 		$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
-		//Change our headder to application/json for direct save
+		//Change our header to application/json for direct save
 		header('Cache-Control: public');
 		//The next two will cause good browsers to download instead of displaying the file
 		header('Content-Description: File Transfer');
-		header('Content-disposition: attachemnt; filename=' . $this->unique_prefix . '_settings.json');
+		header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.json');
 		header('Content-Type: application/json');
 		//JSON encode our settings array
 		$output = json_encode(
@@ -765,7 +765,7 @@ abstract class adminKit
 			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
 			{
 				//Act as if the JSON file was just a bunch of POST entries for a settings save
-				//Run through the loop and get the diff from detauls
+				//Run through the loop and get the diff from details
 				$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
 				//FIXME: Eventually we'll save the object array, but not today
 				//Convert to opts array for saving
@@ -824,11 +824,11 @@ abstract class adminKit
 		//Add some attributes that identify the plugin and version for the options export
 		$plugnode->setAttribute('name', $this->short_name);
 		$plugnode->setAttribute('version', $this::version);
-		//Change our headder to text/xml for direct save
+		//Change our header to text/xml for direct save
 		header('Cache-Control: public');
 		//The next two will cause good browsers to download instead of displaying the file
 		header('Content-Description: File Transfer');
-		header('Content-disposition: attachemnt; filename=' . $this->unique_prefix . '_settings.xml');
+		header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.xml');
 		header('Content-Type: text/xml');
 		//Loop through the options array
 		foreach($this->opt as $key=>$option)
@@ -843,7 +843,7 @@ abstract class adminKit
 			//Change the tag's name to that of the stored option
 			$newnode->setAttribute('name', $key);
 		}
-		//Prepair the XML for output
+		//Prepare the XML for output
 		$output = $dom->saveXML();
 		//Let the browser know how long the file is
 		header('Content-Length: ' . strlen($output)); // binary length
@@ -857,7 +857,7 @@ abstract class adminKit
 	 */
 	function opts_import()
 	{
-		//Our quick and dirty error supressor
+		//Our quick and dirty error suppressor
 		$error_handler = function($errno, $errstr, $eerfile, $errline, $errcontext)
 		{
 			return true;

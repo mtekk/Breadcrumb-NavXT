@@ -202,38 +202,6 @@ class bcn_breadcrumb
 		return $this->type;
 	}
 	/**
-	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
-	 *
-	 * @param int $max_length of the title.
-	 * @deprecated since 5.2.0
-	 */
-	public function title_trim($max_length)
-	{
-		_deprecated_function(__FUNCTION__, '5.2.0');
-		//To preserve HTML entities, must decode before splitting
-		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
-		$title_length = mb_strlen($this->title);
-		//Make sure that we are not making it longer with that ellipse
-		if($title_length > $max_length && ($title_length + 2) > $max_length)
-		{
-			//Trim the title
-			$this->title = mb_substr($this->title, 0, $max_length - 1);
-			//Make sure we can split, but we want to limmit to cutting at max an additional 25%
-			if(mb_strpos($this->title, ' ', .75 * $max_length) > 0)
-			{
-				//Don't split mid word
-				while(mb_substr($this->title,-1) != ' ')
-				{
-					$this->title = mb_substr($this->title, 0, -1);
-				}
-			}
-			//Remove the whitespace at the end and add the hellip
-			$this->title = rtrim($this->title) . html_entity_decode('&hellip;', ENT_COMPAT, 'UTF-8');
-		}
-		//Return to the encoded version of all HTML entities (keep standards complance)
-		$this->title = force_balance_tags(htmlentities($this->title, ENT_COMPAT, 'UTF-8'));
-	}
-	/**
 	 * Assembles the parts of the breadcrumb into a html string
 	 *
 	 * @param bool $linked Allow the output to contain anchors?

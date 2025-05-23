@@ -567,21 +567,25 @@ abstract class adminKit
 	 * 
 	 * @param array $opts The opts array
 	 */
-	function load_opts_into_settings($opts)
+	static public function load_opts_into_settings($opts, array &$settings)
 	{
+		if(!is_array($opts))
+		{
+			return false;
+		}
 		foreach($opts as $key => $value)
 		{
-			if(isset($this->settings[$key]) && $this->settings[$key] instanceof setting)
+			if(isset($settings[$key]) && $settings[$key] instanceof setting)
 			{
-				$this->settings[$key]->set_value($this->settings[$key]->validate($value));
+				$settings[$key]->set_value($settings[$key]->validate($value));
 			}
-			else if(isset($this->settings[$key]) && is_array($this->settings[$key]) && is_array($value))
+			else if(isset($settings[$key]) && is_array($settings[$key]) && is_array($value))
 			{
 				foreach($value as $subkey => $subvalue)
 				{
-					if(isset($this->settings[$key][$subkey]) && $this->settings[$key][$subkey]instanceof setting)
+					if(isset($settings[$key][$subkey]) && $settings[$key][$subkey]instanceof setting)
 					{
-						$this->settings[$key][$subkey]->set_value($this->settings[$key][$subkey]->validate($subvalue));
+						$settings[$key][$subkey]->set_value($settings[$key][$subkey]->validate($subvalue));
 					}
 				}
 			}
@@ -724,7 +728,7 @@ abstract class adminKit
 		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
 		//Get the database options, and load
 		//FIXME: This changes once we save settings to the db instead of opts
-		$this->load_opts_into_settings($this->get_option($this->unique_prefix . '_options'));
+		adminKit::load_opts_into_settings($this->get_option($this->unique_prefix . '_options'), $this->settings);
 		//Get the unique settings
 		$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
 		//Change our header to application/json for direct save

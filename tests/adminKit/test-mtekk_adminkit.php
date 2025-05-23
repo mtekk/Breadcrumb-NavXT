@@ -214,13 +214,13 @@ class adminKitTest extends WP_UnitTestCase {
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$this->assertSame(array('Sopta' => 'A Value', 'Soptb' => 'B Value', 'Soptc' => 'C Value'), adminKit::settings_to_opts($defaults));
 	}
-	function load_opts_into_settings() {
+	function test_load_opts_into_settings() {
 		$defaults = array();
 		$defaults['Sopta'] = new setting\setting_string('opta', 'A Value', 'An option');
 		$defaults['Soptb'] = new setting\setting_string('optb', 'B Value', 'An option');
 		$defaults['Soptc'] = new setting\setting_string('optc', 'C Value', 'An option');
 		$opts = array('Sopta' => 'Some Value', 'Soptb' => 'B Value', 'Soptc' => 'Cool Value');
-		$this->admin->load_opts_into_settings($opts);
+		adminKit::load_opts_into_settings($opts, $defaults);
 		$this->assertSame('Some Value', $defaults['Sopta']->get_value());
 		$this->assertSame('B Value', $defaults['Soptb']->get_value());
 		$this->assertSame('Cool Value', $defaults['Soptc']->get_value());

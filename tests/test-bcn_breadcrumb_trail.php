@@ -410,7 +410,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Assign the terms to the post
 		wp_set_object_terms($pid, $tids, 'category');
 		//Call post_hierarchy
-		$this->breadcrumb_trail->call('post_hierarchy', array($pid, 'post'));
+		$this->breadcrumb_trail->call('post_hierarchy', array(get_post($pid)));
 		//Inspect the resulting breadcrumb
 		//Ensure we have 3 breadcrumbs
 		$this->assertCount(3, $this->breadcrumb_trail->breadcrumbs);
@@ -435,7 +435,7 @@ class BreadcrumbTrailTest extends WP_UnitTestCase {
 		//Reset the breadcrumb trail
 		$this->breadcrumb_trail->breadcrumbs = array();
 		//Call post_hierarchy
-		$this->breadcrumb_trail->call('post_hierarchy', array($pid, 'post'));
+		$this->breadcrumb_trail->call('post_hierarchy', array(get_post($pid)));
 		//Inspect the resulting breadcrumb
 		//Ensure we have 1 breadcrumb
 		$this->assertCount(1, $this->breadcrumb_trail->breadcrumbs);

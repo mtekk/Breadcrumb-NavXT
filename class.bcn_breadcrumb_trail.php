@@ -325,46 +325,38 @@ class bcn_breadcrumb_trail
 	 * @param string $type The post type of the post to figure out the taxonomy for
 	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
 	 */
-	//TODO/FIXME Move to passing in WP_POST instead of id, type and parent
-	protected function post_hierarchy($id, $type, $parent = null)
+	protected function post_hierarchy(WP_Post $post)
 	{
+		$parent = null;
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
-		if($this->opt['bpost_' . $type . '_hierarchy_display'])
+		if($this->opt['bpost_' . $post->post_type. '_hierarchy_display'])
 		{
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Epost_' . $type . '_hierarchy_type'] === 'BCN_DATE')
+			if($this->opt['Epost_' . $post->post_type. '_hierarchy_type'] === 'BCN_DATE')
 			{
-				$post = get_post($id);
-				$this->do_day($post, $type, false, false);
-				$this->do_month($post, $type, false, false);
-				$this->do_year($post, $type, false, false);
+				$this->do_day($post, $post->post_type, false, false);
+				$this->do_month($post, $post->post_type, false, false);
+				$this->do_year($post, $post->post_type, false, false);
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Epost_' . $type . '_hierarchy_type'] === 'BCN_POST_PARENT')
+			else if($this->opt['Epost_' . $post->post_type. '_hierarchy_type'] === 'BCN_POST_PARENT')
 			{
-				if($parent == null)
-				{
-					//We have to grab the post to find its parent, can't use $post for this one
-					$parent = get_post($id);
-					//TODO should we check that we have a WP_Post object here?
-					$parent = $parent->post_parent;
-				}
 				//Grab the frontpage, we'll need it shortly
 				$frontpage = get_option('page_on_front');
 				//If there is a parent page let's find it
-				if($parent > 0 && $id != $parent && $frontpage != $parent)
+				if($post->post_parent > 0 && $post->ID != $post->post_parent && $frontpage != $post->post_parent)
 				{
-					$parent = $this->post_parents($parent, $frontpage);
+					$parent = $this->post_parents($post->post_parent, $frontpage);
 				}
 			}
 			else
 			{
-				$taxonomy = $this->opt['Epost_' . $type . '_hierarchy_type'];
+				$taxonomy = $this->opt['Epost_' . $post->post_type. '_hierarchy_type'];
 				//Possibly let the referer influence the taxonomy used
-				if($this->opt['bpost_' . $type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
+				if($this->opt['bpost_' . $post->post_type. '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{
 					//See if there were any terms, if so, we can use the referrer influenced taxonomy
-					$terms = get_the_terms($id, $referrer_taxonomy);
+					$terms = get_the_terms($post->ID, $referrer_taxonomy);
 					if(is_array($terms))
 					{
 						$taxonomy = $referrer_taxonomy;
@@ -374,25 +366,25 @@ class bcn_breadcrumb_trail
 				if(is_taxonomy_hierarchical($taxonomy))
 				{
 					//Filter the results of post_pick_term
-					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($id, $type, $taxonomy), $id, $type, $taxonomy);
+					$term = apply_filters('bcn_pick_post_term', $this->pick_post_term($post->ID, $post->post_type, $taxonomy), $post->ID, $post->post_type, $taxonomy);
 					//Only do something if we found a term
 					if($term instanceof WP_Term)
 					{
 						//Fill out the term hierarchy
-						$parent = $this->term_parents($term, $type);
+						$parent = $this->term_parents($term, $post->post_type);
 					}
 				}
 				//Handle the rest of the taxonomies, including tags
 				else
 				{
-					$this->post_terms($id, $taxonomy);
+					$this->post_terms($post->ID, $taxonomy);
 				}
 			}
 		}
 		//If we never got a good parent for the type_archive, make it now
 		if(!($parent instanceof WP_Post))
 		{
-			$parent = get_post($id);
+			$parent = $post;
 			if(!($parent instanceof WP_Post))
 			{
 				return;
@@ -568,7 +560,7 @@ class bcn_breadcrumb_trail
 		else
 		{
 			//Handle the post's hierarchy
-			$this->post_hierarchy($post->ID, $post->post_type, $post->post_parent);
+			$this->post_hierarchy($post);
 		}
 	}
 	/**

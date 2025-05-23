@@ -636,6 +636,8 @@ class breadcrumb_navxt
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
+		//Now load opts into settings
+		adminKit::load_opts_into_settings($this->breadcrumb_trail->opt, $this->settings);
 	}
 	/**
 	 * Outputs the breadcrumb trail

@@ -802,9 +802,11 @@ abstract class adminKit
 	}
 	/**
 	 * Exports a XML options document
+	 * @deprecated 7.5.0
 	 */
 	function opts_export()
 	{
+		_deprecated_function( __FUNCTION__, '7.5.0', '\mtekk\adminKit::settings_export');
 		//Do a nonce check, prevent malicious link/form problems 
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
 		//Update our internal settings

@@ -497,7 +497,7 @@ abstract class adminKit
 	 * @param mixed $defaults (optional) The default values to validate against
 	 * @return mixed
 	 */
-	static function parse_args($args, $defaults = '')
+	static public function parse_args($args, $defaults = '')
 	{
 		if(is_object($args))
 		{
@@ -525,7 +525,7 @@ abstract class adminKit
 	 * @param array $arg2 second array to merge into $arg1
 	 * @return array
 	 */
-	static function array_merge_recursive($arg1, $arg2)
+	static public function array_merge_recursive($arg1, $arg2)
 	{
 		foreach($arg2 as $key => $value)
 		{
@@ -546,7 +546,7 @@ abstract class adminKit
 	 * @param array $settings The settings array
 	 * @return array
 	 */
-	static function settings_to_opts($settings)
+	static public function settings_to_opts($settings)
 	{
 		$opts = array();
 		foreach ($settings as $key => $setting)
@@ -624,7 +624,7 @@ abstract class adminKit
 		}
 		return -1;
 	}
-	static function setting_cloner($setting)
+	static public function setting_cloner($setting)
 	{
 		if(is_array($setting))
 		{

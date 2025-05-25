@@ -27,9 +27,9 @@ function running_wp_plugin_uninstall_tests() {
 
 		global $argv;
 
-		$option_parser = new WP_Plugin_Uninstall_Tester_PHPUnit_Util_Getopt( $argv );
+		//$option_parser = new WP_Plugin_Uninstall_Tester_PHPUnit_Util_Getopt( $argv );
 
-		$uninstall_tests = $option_parser->running_uninstall_group();
+		$uninstall_tests = true;
 	}
 
 	return $uninstall_tests;

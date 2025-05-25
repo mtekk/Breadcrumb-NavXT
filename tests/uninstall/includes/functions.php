@@ -10,7 +10,7 @@
 /**
  * Pull in the option parser if we haven't already.
  */
-require_once dirname( __FILE__ ) . '/wp-plugin-uninstall-tester-phpunit-util-getopt.php';
+//require_once dirname( __FILE__ ) . '/wp-plugin-uninstall-tester-phpunit-util-getopt.php';
 
 /**
  * Check if the plugin uninstall unit tests are being run.

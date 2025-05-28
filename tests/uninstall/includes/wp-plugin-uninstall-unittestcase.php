@@ -80,12 +80,12 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	 * Set up for the tests.
 	 *
 	 * If you need to set any of the class properties (like $plugin_file), you'll
-	 * need to have a setUp() method in your child class. Don't forget to call
+	 * need to have a set_up() method in your child class. Don't forget to call
 	 * parent::setUp() at the end of it.
 	 *
 	 * @since 0.1.0
 	 */
-	public function setUp() {
+	public function set_up() {
 
 		// Create another site on multisite.
 		if ( is_multisite() ) {
@@ -97,7 +97,7 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 
 		//$this->install();
 
-		parent::setUp();
+		parent::set_up();
 	}
 
 	/**
@@ -105,9 +105,9 @@ abstract class WP_Plugin_Uninstall_UnitTestCase extends WP_UnitTestCase {
 	 *
 	 * @since 0.2.0
 	 */
-	public function tearDown() {
+	public function tear_down() {
 
-		parent::tearDown();
+		parent::tear_down();
 
 		if ( is_multisite() ) {
 			wpmu_delete_blog( $this->_blog_id, true );

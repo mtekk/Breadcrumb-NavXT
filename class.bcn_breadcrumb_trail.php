@@ -1287,7 +1287,12 @@ class bcn_breadcrumb_trail
 				$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
 				$separator = apply_filters('bcn_display_separator', $separator, $position, $last_position, $depth);
 				//Assemble the breadcrumb
-				$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
+				$assembled_breadcrumb = $breadcrumb->assemble($linked, $position, ($key === 0));
+				//If the breadcrumb is not empty, add it to the trail string
+				if($assembled_breadcrumb !== '')
+				{
+					$trail_str .= sprintf($template, $assembled_breadcrumb, $separator, $attribs);
+				}
 			}
 			if($reverse)
 			{

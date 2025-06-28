@@ -94,10 +94,8 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 		{
 			require_once($this->_get_plugin_path());
 		}
-		//Initialize $breadcrumb_navxt so we can use it
-		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
 		//Let's make an instance of our object takes care of everything
-		$breadcrumb_navxt = new breadcrumb_navxt($bcn_breadcrumb_trail);
+		$breadcrumb_navxt = new breadcrumb_navxt();
 		//Uninstall
 		return $breadcrumb_navxt->uninstall();
 	}	

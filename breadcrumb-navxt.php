@@ -118,7 +118,7 @@ class breadcrumb_navxt
 			$this->admin = new bcn_network_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
 		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
-		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
+		else if(is_admin())
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object
@@ -292,7 +292,14 @@ class breadcrumb_navxt
 	}
 	public function uninstall()
 	{
-		$this->admin->uninstall();
+		if(defined('WP_UNINSTALL_PLUGIN'))
+		{
+			$breadcrumb_trail = new bcn_breadcrumb_trail();
+			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
+			//Instantiate our new admin object
+			$this->admin = new bcn_admin($breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
+			$this->admin->uninstall();
+		}
 	}
 	static function setup_setting_defaults(array &$settings)
 	{

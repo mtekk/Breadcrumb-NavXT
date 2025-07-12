@@ -321,25 +321,23 @@ class bcn_breadcrumb_trail
 	 * 
 	 * This function fills breadcrumbs for any post taxonomy
 	 * 
-	 * @param int $id The id of the post to figure out the taxonomy for
-	 * @param string $type The post type of the post to figure out the taxonomy for
-	 * @param int $parent (optional) The id of the parent of the current post, used if hiearchal posts will be the "taxonomy" for the current post
+	 * @param WP_Post $post The post to figure out the taxonomy for
 	 */
 	protected function post_hierarchy(WP_Post $post)
 	{
 		$parent = null;
 		//Check to see if breadcrumbs for the hierarchy of the post needs to be generated
-		if($this->opt['bpost_' . $post->post_type. '_hierarchy_display'])
+		if($this->opt['bpost_' . $post->post_type . '_hierarchy_display'])
 		{
 			//Check if we have a date 'taxonomy' request
-			if($this->opt['Epost_' . $post->post_type. '_hierarchy_type'] === 'BCN_DATE')
+			if($this->opt['Epost_' . $post->post_type . '_hierarchy_type'] === 'BCN_DATE')
 			{
 				$this->do_day($post, $post->post_type, false, false);
 				$this->do_month($post, $post->post_type, false, false);
 				$this->do_year($post, $post->post_type, false, false);
 			}
 			//Handle the use of hierarchical posts as the 'taxonomy'
-			else if($this->opt['Epost_' . $post->post_type. '_hierarchy_type'] === 'BCN_POST_PARENT')
+			else if($this->opt['Epost_' . $post->post_type . '_hierarchy_type'] === 'BCN_POST_PARENT')
 			{
 				//Grab the frontpage, we'll need it shortly
 				$frontpage = get_option('page_on_front');
@@ -351,9 +349,9 @@ class bcn_breadcrumb_trail
 			}
 			else
 			{
-				$taxonomy = $this->opt['Epost_' . $post->post_type. '_hierarchy_type'];
+				$taxonomy = $this->opt['Epost_' . $post->post_type . '_hierarchy_type'];
 				//Possibly let the referer influence the taxonomy used
-				if($this->opt['bpost_' . $post->post_type. '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
+				if($this->opt['bpost_' . $post->post_type . '_taxonomy_referer'] && $referrer_taxonomy = $this->determine_taxonomy())
 				{
 					//See if there were any terms, if so, we can use the referrer influenced taxonomy
 					$terms = get_the_terms($post->ID, $referrer_taxonomy);

@@ -681,7 +681,7 @@ abstract class adminKit
 		$opt_prev = $this->opt;
 		//Grab our incoming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
-		//Run through the loop and get the diff from details
+		//Run through the loop and get the diff from defaults
 		$new_settings = $this->get_settings_diff($input);
 		//FIXME: Eventually we'll save the object array, but not today
 		//Convert to opts array for saving
@@ -769,7 +769,7 @@ abstract class adminKit
 			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
 			{
 				//Act as if the JSON file was just a bunch of POST entries for a settings save
-				//Run through the loop and get the diff from details
+				//Run through the loop and get the diff from defaults
 				$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
 				//FIXME: Eventually we'll save the object array, but not today
 				//Convert to opts array for saving

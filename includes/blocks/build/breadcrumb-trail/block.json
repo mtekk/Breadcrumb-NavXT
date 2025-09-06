@@ -94,7 +94,9 @@
     "typography": {
       "fontSize": true,
       "fontWeight": true,
-      "fontStyle": true
+      "fontStyle": true,
+      "textAlign": true,
+      "lineHeight": true
     },
     "html": false
   },

@@ -104,7 +104,11 @@ class breadcrumb_navxt
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
 		}
 		breadcrumb_navxt::setup_setting_defaults($this->settings);
-		if(!is_admin() || (!isset($_POST[$this->unique_prefix . '_admin_reset']) && !isset($_POST[$this->unique_prefix . '_admin_options'])))
+		if(!is_admin() || (
+				!isset($_POST[$this->unique_prefix . '_admin_reset']) && 
+				!isset($_POST[$this->unique_prefix . '_admin_options']) && 
+				!isset($_POST[$this->unique_prefix . '_admin_settings_export']) &&
+				!isset($_POST[$this->unique_prefix . '_admin_settings_import'])))
 		{
 			$this->get_settings(); //This breaks the reset options script, so only do it if we're not trying to reset the settings
 		}

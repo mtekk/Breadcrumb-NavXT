@@ -509,7 +509,7 @@ abstract class adminKit
 		}
 		else
 		{
-			wp_parse_str($args, $r);	
+			wp_parse_str($args, $r);
 		}
 		if(is_array($defaults))
 		{

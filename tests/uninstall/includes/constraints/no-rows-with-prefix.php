@@ -12,7 +12,8 @@
  *
  * @since 0.1.0
  */
-class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_NoRowsWithPrefix extends PHPUnit_Framework_Constraint {
+use PHPUnit\Framework\Constraint\Constraint;
+class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_NoRowsWithPrefix extends Constraint {
 
 	/**
 	 * The table to check in.
@@ -75,7 +76,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_NoRowsWithPrefix extends PHP
 	 *
 	 * @return bool Whether the prefix is absent.
 	 */
-	public function matches( $prefix ) {
+	public function matches( $prefix ):bool {
 
 		global $wpdb;
 
@@ -115,7 +116,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_NoRowsWithPrefix extends PHP
 	 *
 	 * @return string
 	 */
-	public function toString() {
+	public function toString():string {
 
 		return "prefix does not exist in `{$this->table}`.`{$this->column}`.\n"
 			. "The following rows were found:\n\t" . implode( "\n\t", $this->prefixed_rows ) . "\n";

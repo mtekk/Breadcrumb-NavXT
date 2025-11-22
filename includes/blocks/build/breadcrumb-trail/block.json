@@ -77,17 +77,26 @@
     "groupId"
   ],
   "selectors": {
-    "root": ".wp-block-breadcrumb-trail"
+    "root": ".wp-block-bcn-breadcrumb-trail"
   },
   "supports": {
     "align": true,
     "color": {
       "text": true,
       "link": true,
-      "background": true
+      "background": true,
+      "gradients": true,
+      "enableContrastChecker": true
+    },
+    "background": {
+      "backgroundImage": true
     },
     "typography": {
-      "fontSize": true
+      "fontSize": true,
+      "fontWeight": true,
+      "fontStyle": true,
+      "textAlign": true,
+      "lineHeight": true
     },
     "html": false
   },

@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 7.4.1
+Version: 7.4.90
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -63,7 +63,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends \mtekk\plugKit
 class breadcrumb_navxt
 {
-	const version = '7.4.1';
+	const version = '7.4.90';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -104,7 +104,11 @@ class breadcrumb_navxt
 			$this->rest_controller = new bcn_rest_controller($this->breadcrumb_trail, $this->unique_prefix);
 		}
 		breadcrumb_navxt::setup_setting_defaults($this->settings);
-		if(!is_admin() || (!isset($_POST[$this->unique_prefix . '_admin_reset']) && !isset($_POST[$this->unique_prefix . '_admin_options'])))
+		if(!is_admin() || (
+				!isset($_POST[$this->unique_prefix . '_admin_reset']) && 
+				!isset($_POST[$this->unique_prefix . '_admin_options']) && 
+				!isset($_POST[$this->unique_prefix . '_admin_settings_export']) &&
+				!isset($_POST[$this->unique_prefix . '_admin_settings_import'])))
 		{
 			$this->get_settings(); //This breaks the reset options script, so only do it if we're not trying to reset the settings
 		}
@@ -118,7 +122,7 @@ class breadcrumb_navxt
 			$this->admin = new bcn_network_admin($this->breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
 		}
 		//Load our main admin if in the dashboard, but only if we're not in the network dashboard (prevents goofy bugs)
-		else if(is_admin() || defined('WP_UNINSTALL_PLUGIN'))
+		else if(is_admin())
 		{
 			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
 			//Instantiate our new admin object
@@ -292,7 +296,14 @@ class breadcrumb_navxt
 	}
 	public function uninstall()
 	{
-		$this->admin->uninstall();
+		if(defined('WP_UNINSTALL_PLUGIN'))
+		{
+			$breadcrumb_trail = new bcn_breadcrumb_trail();
+			require_once(dirname(__FILE__) . '/class.bcn_admin.php');
+			//Instantiate our new admin object
+			$this->admin = new bcn_admin($breadcrumb_trail->opt, $this->plugin_basename, $this->settings);
+			$this->admin->uninstall();
+		}
 	}
 	static function setup_setting_defaults(array &$settings)
 	{
@@ -596,7 +607,7 @@ class breadcrumb_navxt
 		}
 	}
 	/**
-	 * Function updates the breadcrumb_trail options array from the database in a semi intellegent manner
+	 * Function updates the breadcrumb_trail options array from the database in a semi intelligent manner
 	 * 
 	 * @since  5.0.0
 	 */
@@ -604,7 +615,7 @@ class breadcrumb_navxt
 	{
 		//Convert our settings to opts
 		$opts = adminKit::settings_to_opts($this->settings);
-		//Run setup_options for compatibilty reasons
+		//Run setup_options for compatibility reasons
 		breadcrumb_navxt::setup_options($opts);
 		//TODO: Unit tests needed to ensure the expected behavior exists
 		//Grab the current settings for the current local site from the db
@@ -636,6 +647,8 @@ class breadcrumb_navxt
 		$this->breadcrumb_trail->opt['apost_page_root'] = get_option('page_on_front');
 		//This one isn't needed as it is performed in bcn_breadcrumb_trail::fill(), it's here for completeness only
 		$this->breadcrumb_trail->opt['apost_post_root'] = get_option('page_for_posts');
+		//Now load opts into settings
+		adminKit::load_opts_into_settings($this->breadcrumb_trail->opt, $this->settings);
 	}
 	/**
 	 * Outputs the breadcrumb trail
@@ -674,7 +687,7 @@ class breadcrumb_navxt
 	/**
 	 * Outputs the breadcrumb trail with each element encapsulated with li tags
 	 * 
-	 * @deprecated 6.0.0 No longer needed, superceeded by $template parameter in display
+	 * @deprecated 6.0.0 No longer needed, superseded by $template parameter in display
 	 * 
 	 * @param bool $return Whether to return or echo the trail.
 	 * @param bool $linked Whether to allow hyperlinks in the trail or not.

@@ -21,12 +21,12 @@ require_once(dirname(__FILE__) . '/includes/block_direct_access.php');
 class bcn_breadcrumb
 {
 	//Our member variables
-	const version = '7.4.1';
+	const version = breadcrumb_navxt::version;
 	//The main text that will be shown
 	protected $title;
-	//The breadcrumb's template, used durring assembly
+	//The breadcrumb's template, used during assembly
 	protected $template;
-	//The breadcrumb's no anchor template, used durring assembly when there won't be an anchor
+	//The breadcrumb's no anchor template, used during assembly when there won't be an anchor
 	protected $template_no_anchor;
 	//Boolean, is this element linked
 	protected $linked = false;
@@ -148,7 +148,7 @@ class bcn_breadcrumb
 	/**
 	 * A wrapper for wp_kses which handles getting the allowed html
 	 * 
-	 * @param string $template_str The tempalte string to run through kses
+	 * @param string $template_str The template string to run through kses
 	 * @return string The template string post cleaning
 	 */
 	protected function run_template_kses($template_str)
@@ -158,7 +158,7 @@ class bcn_breadcrumb
 	/**
 	 * Function to set the internal breadcrumb template
 	 *
-	 * @param string $template the template to use durring assebly
+	 * @param string $template the template to use during assembly
 	 */
 	public function set_template($template)
 	{
@@ -200,38 +200,6 @@ class bcn_breadcrumb
 	public function get_types()
 	{
 		return $this->type;
-	}
-	/**
-	 * This function will intelligently trim the title to the value passed in through $max_length. This function is deprecated, do not call.
-	 *
-	 * @param int $max_length of the title.
-	 * @deprecated since 5.2.0
-	 */
-	public function title_trim($max_length)
-	{
-		_deprecated_function(__FUNCTION__, '5.2.0');
-		//To preserve HTML entities, must decode before splitting
-		$this->title = html_entity_decode($this->title, ENT_COMPAT, 'UTF-8');
-		$title_length = mb_strlen($this->title);
-		//Make sure that we are not making it longer with that ellipse
-		if($title_length > $max_length && ($title_length + 2) > $max_length)
-		{
-			//Trim the title
-			$this->title = mb_substr($this->title, 0, $max_length - 1);
-			//Make sure we can split, but we want to limmit to cutting at max an additional 25%
-			if(mb_strpos($this->title, ' ', .75 * $max_length) > 0)
-			{
-				//Don't split mid word
-				while(mb_substr($this->title,-1) != ' ')
-				{
-					$this->title = mb_substr($this->title, 0, -1);
-				}
-			}
-			//Remove the whitespace at the end and add the hellip
-			$this->title = rtrim($this->title) . html_entity_decode('&hellip;', ENT_COMPAT, 'UTF-8');
-		}
-		//Return to the encoded version of all HTML entities (keep standards complance)
-		$this->title = force_balance_tags(htmlentities($this->title, ENT_COMPAT, 'UTF-8'));
 	}
 	/**
 	 * Assembles the parts of the breadcrumb into a html string

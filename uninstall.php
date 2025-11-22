@@ -17,7 +17,7 @@
  * breadcrumb navxt (until 3.3) constsisted of two plugins:
  *
  *	1.) breadcrumb_navxt_class.php / Core
- *  2.) breadcrumb_navxt_admin.php / Adminstration Interface
+ *  2.) breadcrumb_navxt_admin.php / Administration Interface
  *  
  * @author Tom Klingenberg
  */
@@ -94,10 +94,8 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 		{
 			require_once($this->_get_plugin_path());
 		}
-		//Initalize $breadcrumb_navxt so we can use it
-		$bcn_breadcrumb_trail = new bcn_breadcrumb_trail();
 		//Let's make an instance of our object takes care of everything
-		$breadcrumb_navxt = new breadcrumb_navxt($bcn_breadcrumb_trail);
+		$breadcrumb_navxt = new breadcrumb_navxt();
 		//Uninstall
 		return $breadcrumb_navxt->uninstall();
 	}	
@@ -105,7 +103,7 @@ class bcn_uninstaller extends mtekk_adminKit_uninstaller
 	/**
 	 * uninstall method
 	 * 
-	 * @return bool wether or not uninstall did run successfull.
+	 * @return bool whether or not uninstall did run successful.
 	 */
 	public function uninstall()
 	{

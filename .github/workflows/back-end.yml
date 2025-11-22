@@ -1,0 +1,162 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+
+name: "Back-end"
+
+on:
+    pull_request: null
+    push:
+        branches:
+        - "master"
+# Add [skip ci] to commit message to skip CI.
+
+permissions: {}
+
+concurrency:
+    group: "${{ github.workflow }}-${{ github.ref }}"
+    cancel-in-progress: true
+
+jobs:
+    syntax_errors:
+        name: "1️⃣ Syntax errors"
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version:
+                - "7.0"
+                - "7.1"
+                - "7.2"
+                - "7.3"
+                - "7.4"
+                - "8.0"
+                - "8.1"
+                - "8.3"
+                - "8.4"
+        runs-on: "ubuntu-24.04"
+        steps:
+        -
+            name: "Set up PHP"
+            uses: "shivammathur/setup-php@v2"
+            with:
+                php-version: "${{ matrix.php-version }}"
+                coverage: "none"
+                tools: "parallel-lint"
+        -
+            name: "Checkout repository"
+            uses: "actions/checkout@v4"
+        -
+            name: "Check source code for syntax errors"
+            run: "composer exec --no-interaction -- parallel-lint *.php includes/ tests/"
+
+    unit_tests:
+        name: "2️⃣ Unit and functional tests"
+        needs:
+        - "syntax_errors"
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version:
+                - "7.3"
+                - "7.4"
+                wordpress-version:
+                - "5.8"
+                - "6.0"
+                - "latest"
+                wordpress-multisite:
+                - "0"
+                - "1"
+                include:
+                -
+                    php-version: "7.4"
+                    wordpress-version: "latest"
+                    wordpress-multisite: "0"
+                    phpunit-test-group: "uninstall"
+                    coverage: true
+                -
+                    php-version: "7.4"
+                    wordpress-version: "latest"
+                    wordpress-multisite: "1"
+                    phpunit-test-group: "uninstall"
+                -
+                    php-version: "8.0"
+                    wordpress-version: "latest"
+                    wordpress-multisite: "0"
+                -
+                    php-version: "8.0"
+                    wordpress-version: "latest"
+                    wordpress-multisite: "0"
+                    phpunit-test-group: "uninstall"
+        runs-on: "ubuntu-24.04"
+        services:
+            database:
+                image: "mariadb:latest"
+                ports:
+                - "3306/tcp"
+                env:
+                    MYSQL_DATABASE: "plugindb"
+                    MYSQL_USER: "pluginuser"
+                    MYSQL_PASSWORD: "plaintextoffender"
+                    MYSQL_RANDOM_ROOT_PASSWORD: "1"
+                options: >-
+                    --health-cmd "healthcheck.sh --connect --innodb_initialized"
+                    --health-interval 1s
+                    --health-timeout 10s
+                    --health-retries 30
+        steps:
+        -
+            name: "Install Subversion"
+            run: |
+                sudo apt-get install -qq subversion
+                svn --version
+        -
+            name: "Set up PHP"
+            uses: "shivammathur/setup-php@v2"
+            with:
+                php-version: "${{ matrix.php-version }}"
+                coverage: "${{ matrix.coverage && 'xdebug' || 'none' }}"
+        -
+            name: "Setup problem matcher for PHPUnit"
+            run: |
+                echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+        -
+            name: "Checkout repository"
+            uses: "actions/checkout@v4"
+        -
+            name: "Install dependencies"
+            uses: "ramsey/composer-install@v3"
+            with:
+                dependency-versions: "${{ matrix.dependencies }}"
+        -
+            name: "Install WordPress"
+            env:
+                DB_HOST: "127.0.0.1:${{ job.services.database.ports['3306'] }}"
+                SKIP_DB_CREATE: "true"
+            run: |
+                bash bin/install-wp-tests.sh plugindb pluginuser plaintextoffender "${DB_HOST}" "${{ matrix.wordpress-version }}" "${SKIP_DB_CREATE}"
+        -
+            name: "Execute unit tests"
+            if: ${{ ! matrix.phpunit-test-group }}
+            env:
+                WP_MULTISITE: "${{ matrix.wordpress-multisite }}"
+            run: "composer exec -- phpunit"
+        -
+            name: "Execute unit tests with test groups"
+            if: ${{ matrix.phpunit-test-group && ! matrix.coverage }}
+            env:
+                WP_MULTISITE: "${{ matrix.wordpress-multisite }}"
+            run: "composer exec -- phpunit --group=${{ matrix.phpunit-test-group }}"
+        -
+            name: "Execute unit tests generating code coverage"
+            if: ${{ matrix.phpunit-test-group && matrix.coverage }}
+            env:
+                WP_MULTISITE: "${{ matrix.wordpress-multisite }}"
+            run: "composer exec -- phpunit --coverage-clover clover.xml"
+        -
+            name: "Send coverage to Coveralls"
+            env:
+                COVERALLS_REPO_TOKEN: "${{ github.token }}"
+            if: "${{ env.COVERALLS_REPO_TOKEN && matrix.coverage }}"
+            uses: "coverallsapp/github-action@v2"
+            with:
+                github-token: "${{ env.COVERALLS_REPO_TOKEN }}"
+                flag-name: "Unit"
+                allow-empty: false

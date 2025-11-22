@@ -1,18 +1,19 @@
 <?php
 
 /**
- * Is table not existant constraint.
+ * Is table not existent constraint.
  *
  * @package WP_Plugin_Uninstall_Tester
  * @since 0.1.0
  */
 
 /**
- * Database table not existant constraint matcher.
+ * Database table not existent constraint matcher.
  *
  * @since 0.1.0
  */
-class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistant extends PHPUnit_Framework_Constraint {
+use PHPUnit\Framework\Constraint\Constraint;
+class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistent extends Constraint {
 
 	/**
 	 * Checks if $table exists in the database.
@@ -21,9 +22,9 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistant extends P
 	 *
 	 * @param string $table The name of the table that shouldn't exist.
 	 *
-	 * @return bool Whether the table is non existant.
+	 * @return bool Whether the table is non existent.
 	 */
-	public function matches( $table ) {
+	public function matches( $table ):bool {
 
 		global $wpdb;
 
@@ -39,7 +40,7 @@ class WP_Plugin_Uninstall_Tester_PHPUnit_Constraint_IsTableNonExistant extends P
 	 *
 	 * @return string
 	 */
-	public function toString() {
+	public function toString():string {
 
 		return 'is not a table in the database';
 	}

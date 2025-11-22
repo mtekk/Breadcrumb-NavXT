@@ -9,7 +9,7 @@
  *
  * @package breadcrumb-navxt
  */
-if($attributes['hideonHome'] === true && is_front_page() && (!is_paged() && $GLOBALS['breadcrumb_navxt']->show_paged()))
+if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLOBALS['breadcrumb_navxt']->show_paged()))
 {
 	return;
 }

@@ -21,7 +21,7 @@ define( 'WP_PLUGIN_UNINSTALL_TESTER_DIR', dirname( __FILE__ ) );
 /**
  * The commandline options parser.
  */
-require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/wp-plugin-uninstall-tester-phpunit-util-getopt.php';
+//require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/wp-plugin-uninstall-tester-phpunit-util-getopt.php';
 
 /**
  * General functions.
@@ -36,12 +36,12 @@ require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/wp-plugin-uninstall-uni
 /**
  * Table exists constraint.
  */
-require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/constraints/is-table-existant.php';
+require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/constraints/is-table-existent.php';
 
 /**
- * Table non-existant constraint.
+ * Table non-existent constraint.
  */
-require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/constraints/table-is-non-existant.php';
+require_once WP_PLUGIN_UNINSTALL_TESTER_DIR . '/includes/constraints/table-is-non-existent.php';
 
 /**
  * No rows with prefix constraint.

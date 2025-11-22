@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2020-2023  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2020-2025  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,10 +70,12 @@ class setting_bool extends setting_base
 	 */
 	public function maybe_update_from_form_input($input, $bool_ignore_missing = false)
 	{
-		if(isset($input[$this->get_opt_name()]) && ($input[$this->get_opt_name()] === true || $input[$this->get_opt_name()] === '1'))
+		//If the setting was in the input array, check if it is true or false
+		if(isset($input[$this->get_opt_name()]))
 		{
-			$newval = true;
+			$newval =  $input[$this->get_opt_name()] === true || $input[$this->get_opt_name()] === '1';
 		}
+		//Normally checkbox inputs will be missing the setting if uncecked (treat as false)
 		else
 		{
 			//If the value wasn't set, but we are to ignore missing inputs

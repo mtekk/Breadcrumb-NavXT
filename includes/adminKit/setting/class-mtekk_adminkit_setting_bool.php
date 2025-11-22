@@ -73,15 +73,7 @@ class setting_bool extends setting_base
 		//If the setting was in the input array, check if it is true or false
 		if(isset($input[$this->get_opt_name()]))
 		{
-			if($input[$this->get_opt_name()] === true || $input[$this->get_opt_name()] === '1')
-			{
-				$newval = true;
-			}
-			//Treat anything that wasn't true as trying to set false
-			else
-			{
-				$newval = false;
-			}
+			$newval =  $input[$this->get_opt_name()] === true || $input[$this->get_opt_name()] === '1';
 		}
 		//Normally checkbox inputs will be missing the setting if uncecked (treat as false)
 		else

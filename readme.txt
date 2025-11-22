@@ -49,6 +49,18 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.5.0 =
+Release date: December 2025
+
+* Behavior change: Refactored `bcn_breadcrumb_trail::post_hierarchy` to use `WP_Post` instance instead of id/type/parent parameters.
+* Behavior change: Removed deprecated function `breadcrumb_trail::title_trim` per deprecation schedule.
+* Bug fix: Fixed issue where the uninstaller would result in PHP errors and fail.
+* Bug fix: Fixed issue where "Hide on Home" option in the block did not function as intended.
+* Bug fix: Fixed typo in the block that resulted in web browser console warning.
+* Bug fix: Fixed issue where the block selector in block.json did not match the selector the block generated with.
+* Bug fix: Fixed issue where settings exporter failed to export settings.
+* Bug fix: Fixed issue where boolean options with false values could not be imported.
+
 = 7.4.1 =
 Release date: January, 9th 2025
 

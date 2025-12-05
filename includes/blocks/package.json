@@ -1,7 +1,7 @@
 {
 	"name": "@mtekk/bcn-blocks",
 	"description": "Blocks for Breadcrumb NavXT",
-	"version": "7.3.0",
+	"version": "7.5.0",
 	"scripts": {
 		"build": "wp-scripts build",
 		"dev": "wp-scripts build",

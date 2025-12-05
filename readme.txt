@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, block
 Requires at least: 5.8
-Tested up to: 6.7
-Stable tag: 7.4.1
+Tested up to: 6.9
+Stable tag: 7.5
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -50,7 +50,7 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 
 == Changelog ==
 = 7.5.0 =
-Release date: December 2025
+Release date: December, 4th 2025
 
 * Behavior change: Refactored `bcn_breadcrumb_trail::post_hierarchy` to use `WP_Post` instance instead of id/type/parent parameters.
 * Behavior change: Removed deprecated function `breadcrumb_trail::title_trim` per deprecation schedule.

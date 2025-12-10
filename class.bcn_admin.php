@@ -105,8 +105,9 @@ class bcn_admin extends adminKit
 		//Add a message if we found some unknown settings while merging
 		if(count($unknown) > 0)
 		{
+			/* translators: %u: Number of unknown legacy settings found, %s: comma separated list of the setting names */
 			$this->messages[] = new message(
-					sprintf(__('Found %u unknown legacy settings: %s','breadcrumb-navxt'), count($unknown), implode(', ', $unknown)),
+					sprintf(__('Found %1$u unknown legacy settings: %2$s','breadcrumb-navxt'), count($unknown), implode(', ', $unknown)),
 					'warning',
 					true,
 					'bcn_unknown_legacy_settings');
@@ -277,10 +278,11 @@ class bcn_admin extends adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->get_value())
 		{
+			/* translators: %1$s: HTML opening tag for link to article, %2$s: HTML closing tag for link to article */
 			$this->messages[] = new message(
 					sprintf(
 							esc_html__('Error: The deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated) has no effect in this version Breadcrumb NavXT. Please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), 
-							'<a title="' . __('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
+							'<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
 					'error');
 		}
 		foreach($this->settings as $key => $setting)
@@ -304,6 +306,7 @@ class bcn_admin extends adminKit
 				if(count($deprecated_tags) > 0)
 				{
 					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->get_title());
+					/* translators: %1$s: Name of the deprecated template tag found, %2$s: Recommended replacement tag for the deprecated tag, %3$s: The setting name where the deprecated tag was found */
 					$this->messages[] = new message(
 							sprintf(
 									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please use %2$s instead.', 'breadcrumb-navxt'),
@@ -324,6 +327,7 @@ class bcn_admin extends adminKit
 		{
 			if(!($post_type instanceof WP_Post_Type))
 			{
+				/* translators: %1$s: Export of the post_type object of the unexpected CPT */
 				$this->messages[] = new message(
 						sprintf(
 							esc_html__('Error: WP_Post_Types global contains non WP_Post_Type object. Debug information: %1$s', 'breadcrumb-navxt'),
@@ -336,6 +340,7 @@ class bcn_admin extends adminKit
 			//If we haven't seen this post type before, warn the user
 			if(!isset($this->settings['Hpost_' . $post_type->name . '_template']))
 			{
+				/* translators: %1$s: Post type singular name, %2$s: Post type name */
 				$this->messages[] = new message(
 						sprintf(
 								esc_html__('Warning: The post type %1$s (%2$s) was registered after the Breadcrumb NavXT default settings. It will not show up in the settings.', 'breadcrumb-navxt'),
@@ -351,6 +356,7 @@ class bcn_admin extends adminKit
 			if(!($taxonomy instanceof WP_Taxonomy))
 			{
 				//If we haven't seen this taxonomy before, warn the user
+				/* translators: %1$s: Export of the taxonomy object of the unexpected custom taxonomy */
 				$this->messages[] = new message(
 						sprintf(
 								esc_html__('Error: WP_Taxonomies global contains non WP_Taxonomy object. Debug information: %1$s', 'breadcrumb-navxt'),
@@ -363,6 +369,7 @@ class bcn_admin extends adminKit
 			if(!isset($this->settings['Htax_' . $taxonomy->name . '_template']))
 			{
 				//If we haven't seen this taxonomy before, warn the user
+				/* translators: %1$s: Taxonomy label, %2$s: Taxonomy name */
 				$this->messages[] = new message(
 						sprintf(
 								esc_html__('Warning: The taxonomy %1$s (%2$s) was registered after the Breadcrumb NavXT default settings. It will not show up in the settings.', 'breadcrumb-navxt'),
@@ -432,7 +439,7 @@ class bcn_admin extends adminKit
 			}
 		}
 		?>
-		<div class="wrap"><h1><?php echo $this->full_name; ?></h1>
+		<div class="wrap"><h1><?php echo esc_html($this->full_name); ?></h1>
 		<?php
 		//We exit after the version check if there is an action the user needs to take before saving settings
 		if(!$this->version_check($this->get_option($this->unique_prefix . '_version')))
@@ -440,19 +447,19 @@ class bcn_admin extends adminKit
 			return;
 		}
 		?>
-		<form action="<?php echo $this->admin_url(); ?>" method="post" id="bcn_admin-options">
+		<form action="<?php echo esc_attr($this->admin_url()); ?>" method="post" id="bcn_admin-options">
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">
-				<legend class="screen-reader-text" data-title="<?php _e( 'A collection of settings most likely to be modified are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'General', 'breadcrumb-navxt' ); ?></legend>
-				<h2><?php _e('General', 'breadcrumb-navxt'); ?></h2>
+				<legend class="screen-reader-text" data-title="<?php esc_attr_e( 'A collection of settings most likely to be modified are located under this tab.', 'breadcrumb-navxt' );?>"><?php esc_html_e( 'General', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php esc_html_e('General', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->form->textbox($this->settings['hseparator'], '2', false, __('Placed in between each breadcrumb.', 'breadcrumb-navxt') . $overridden['hseparator'], $overridden_style['hseparator']);
 						do_action($this->unique_prefix . '_settings_general', $this->settings);
 					?>
 				</table>
-				<h2><?php _e('Current Item', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Current Item', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->form->input_check(
@@ -476,7 +483,7 @@ class bcn_admin extends adminKit
 						do_action($this->unique_prefix . '_settings_current_item', $this->settings);
 					?>
 				</table>
-				<h2><?php _e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Home Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->form->input_check(
@@ -500,7 +507,7 @@ class bcn_admin extends adminKit
 						do_action($this->unique_prefix . '_settings_home', $this->settings);
 					?>
 				</table>
-				<h2><?php _e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Blog Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->form->input_check(
@@ -512,7 +519,7 @@ class bcn_admin extends adminKit
 						do_action($this->unique_prefix . '_settings_blog', $this->settings);
 					?>
 				</table>
-				<h2><?php _e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Mainsite Breadcrumb', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
 						$this->form->input_check(
@@ -539,7 +546,7 @@ class bcn_admin extends adminKit
 				<?php do_action($this->unique_prefix . '_after_settings_tab_general', $this->settings); ?>
 			</fieldset>
 			<fieldset id="post" class="bcn_options">
-				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Post Types', 'breadcrumb-navxt' ); ?></legend>
+				<legend class="screen-reader-text" data-title="<?php esc_attr_e( 'The settings for all post types (Posts, Pages, and Custom Post Types) are located under this tab.', 'breadcrumb-navxt' );?>"><?php esc_html_e( 'Post Types', 'breadcrumb-navxt' ); ?></legend>
 			<?php
 			//Loop through all of the post types in the array
 			foreach($wp_post_types as $post_type)
@@ -551,15 +558,17 @@ class bcn_admin extends adminKit
 				}
 				$singular_name_lc = mb_strtolower($post_type->labels->singular_name, 'UTF-8');
 				?>
-				<h2><?php echo $post_type->labels->singular_name; ?></h2>
+				<h2><?php echo esc_html($post_type->labels->singular_name); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
+						/* translators: %s: Singular name for the CPT */
 						$this->form->textbox(
 								$this->settings['Hpost_' . $post_type->name . '_template'],
 								'6',
 								false,
 								sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc) . $overridden['Hpost_' . $post_type->name . '_template'],
 								$overridden_style['Hpost_' . $post_type->name . '_template']);
+						/* translators: %s: Singular name for the CPT */
 						$this->form->textbox(
 								$this->settings['Hpost_' . $post_type->name . '_template_no_anchor'],
 								'4',
@@ -572,7 +581,7 @@ class bcn_admin extends adminKit
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<label for="<?php echo $optid;?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name);?></label>
+							<label for="<?php echo esc_attr($optid);?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), esc_html($post_type->labels->singular_name));?></label>
 						</th>
 						<td>
 							<?php wp_dropdown_pages( apply_filters(
@@ -580,7 +589,7 @@ class bcn_admin extends adminKit
 										array('name' => $this->unique_prefix . '_options[apost_' . $post_type->name . '_root]',
 											'id' => $optid,
 											'echo' => 1,
-											'show_option_none' => __( '&mdash; Select &mdash;' ),
+											'show_option_none' => esc_attr__('&mdash; Select &mdash;', 'breadcrumb-navxt'),
 											'option_none_value' => '0',
 											'selected' => $this->settings['apost_' . $post_type->name . '_root']->get_value(),
 											'class' => $overridden_style['apost_' . $post_type->name . '_root']),
@@ -588,13 +597,14 @@ class bcn_admin extends adminKit
 									));
 							if(isset($overridden['apost_' . $post_type->name . '_root']) && $overridden['apost_' . $post_type->name . '_root'] !== '')
 							{
-								printf('<p class="description">%s</p>', $overridden['apost_' . $post_type->name . '_root']);
+								printf('<p class="description">%s</p>', esc_html($overridden['apost_' . $post_type->name . '_root']));
 							}
 							?>
 						</td>
 					</tr>
 					<?php
-							$this->form->input_check(
+						/* translators: %s: Post type singlar name */
+						$this->form->input_check(
 									$this->settings['bpost_' . $post_type->name . '_archive_display'],
 									sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc),
 									!$post_type->has_archive,
@@ -630,7 +640,7 @@ class bcn_admin extends adminKit
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<?php printf(__('%s Hierarchy', 'breadcrumb-navxt'), $post_type->labels->singular_name); ?>
+							<?php printf(esc_html__('%s Hierarchy', 'breadcrumb-navxt'), esc_html($post_type->labels->singular_name)); ?>
 						</th>
 						<td>
 							<?php
@@ -662,7 +672,7 @@ class bcn_admin extends adminKit
 							{
 								esc_html_e('The hierarchy which the breadcrumb trail will show. Note that the "Post Parent" option may require an additional plugin to behave as expected since this is a non-hierarchical post type.', 'breadcrumb-navxt');
 							}
-							echo $overridden['Epost_' . $post_type->name . '_hierarchy_type'];
+							echo esc_html($overridden['Epost_' . $post_type->name . '_hierarchy_type']);
 							?>
 							</p>
 						</td>
@@ -677,7 +687,7 @@ class bcn_admin extends adminKit
 			?>
 			</fieldset>
 			<fieldset id="tax" class="bcn_options alttab">
-				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Taxonomies', 'breadcrumb-navxt' ); ?></legend>
+				<legend class="screen-reader-text" data-title="<?php esc_attr_e( 'The settings for all taxonomies (including Categories, Tags, and custom taxonomies) are located under this tab.', 'breadcrumb-navxt' );?>"><?php esc_html_e( 'Taxonomies', 'breadcrumb-navxt' ); ?></legend>
 			<?php
 			//Loop through all of the taxonomies in the array
 			foreach($wp_taxonomies as $taxonomy)
@@ -689,15 +699,17 @@ class bcn_admin extends adminKit
 				}
 				$label_lc = mb_strtolower($taxonomy->label, 'UTF-8');
 				?>
-				<h2><?php echo mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8'); ?></h2>
+				<h2><?php echo esc_html(mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8')); ?></h2>
 				<table class="form-table">
 					<?php
+						/* translators: %s: Taxonomy name*/
 						$this->form->textbox(
 								$this->settings['Htax_' . $taxonomy->name . '_template'],
 								'6',
 								false,
 								sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt') . $overridden['Htax_' . $taxonomy->name . '_template'], $label_lc),
 								$overridden_style['Htax_' . $taxonomy->name . '_template']);
+						/* translators: %s: Taxonomy name */
 						$this->form->textbox(
 								$this->settings['Htax_' . $taxonomy->name . '_template_no_anchor'],
 								'4',
@@ -711,8 +723,8 @@ class bcn_admin extends adminKit
 			do_action($this->unique_prefix . '_after_settings_tab_taxonomy', $this->settings); ?>
 			</fieldset>
 			<fieldset id="miscellaneous" class="bcn_options">
-				<legend class="screen-reader-text" data-title="<?php _e( 'The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt' );?>"><?php _e( 'Miscellaneous', 'breadcrumb-navxt' ); ?></legend>
-				<h2><?php _e('Author Archives', 'breadcrumb-navxt'); ?></h2>
+				<legend class="screen-reader-text" data-title="<?php esc_attr_e( 'The settings for author and date archives, searches, and 404 pages are located under this tab.', 'breadcrumb-navxt' );?>"><?php esc_html_e( 'Miscellaneous', 'breadcrumb-navxt' ); ?></legend>
+				<h2><?php esc_html_e('Author Archives', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->form->textbox(
@@ -737,27 +749,27 @@ class bcn_admin extends adminKit
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<label for="<?php echo $optid;?>"><?php esc_html_e('Author Root Page', 'breadcrumb-navxt');?></label>
+							<label for="<?php echo esc_attr($optid);?>"><?php esc_html_e('Author Root Page', 'breadcrumb-navxt');?></label>
 						</th>
 						<td>
 							<?php wp_dropdown_pages(array(
 									'name' => $this->unique_prefix . '_options[aauthor_root]',
 									'id' => $optid,
 									'echo' => 1,
-									'show_option_none' => __( '&mdash; Select &mdash;' ),
+									'show_option_none' => esc_attr__('&mdash; Select &mdash;', 'breadcrumb-navxt'),
 									'option_none_value' => '0',
 									'selected' => $this->settings['aauthor_root']->get_value(),
 									'class' => $overridden_style['aauthor_root']
 							));
 							if(isset($overridden['aauthor_root']) && $overridden['aauthor_root'] !== '')
 							{
-								printf('<p class="description">%s</p>', $overridden['aauthor_root']);
+								printf('<p class="description">%s</p>', esc_html($overridden['aauthor_root']));
 							}
 							?>
 						</td>
 					</tr>
 				</table>
-				<h2><?php _e('Miscellaneous', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Miscellaneous', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<?php
 						$this->form->textbox(
@@ -797,7 +809,7 @@ class bcn_admin extends adminKit
 								$overridden_style['H404_template']);
 					?>
 				</table>
-				<h2><?php _e('Deprecated', 'breadcrumb-navxt'); ?></h2>
+				<h2><?php esc_html_e('Deprecated', 'breadcrumb-navxt'); ?></h2>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">
@@ -806,7 +818,10 @@ class bcn_admin extends adminKit
 						<td>
 							<label>
 								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" class="disabled" <?php checked(true, $this->settings['blimit_title']->get_value()); ?> />
-								<?php printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %suse CSS instead%s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');?>
+								<?php
+									/* translators: %1$s: HTML opening tag for link to article, %2$s: HTML closing tag for link to article */
+									printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %1$suse CSS instead%2$s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
+								?>
 							</label><br />
 							<ul>
 								<li>
@@ -823,7 +838,7 @@ class bcn_admin extends adminKit
 			</fieldset>
 			<?php do_action($this->unique_prefix . '_after_settings_tabs', $this->settings); ?>
 			</div>
-			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes') ?>" /></p>
+			<p class="submit"><input type="submit" class="button-primary" name="bcn_admin_options" value="<?php esc_attr_e('Save Changes', 'breadcrumb-navxt') ?>" /></p>
 		</form>
 		</div>
 		<?php

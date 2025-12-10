@@ -27,11 +27,6 @@ class bcn_widget extends WP_Widget
 	{
 		//Filter allowed_html array to allow others to add acceptable tags
 		$this->allowed_html = apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'));
-		//@see https://core.trac.wordpress.org/ticket/10527
-		if(!is_textdomain_loaded('breadcrumb-navxt'))
-		{
-			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
-		}
 		$ops = array('classname' => 'widget_breadcrumb_navxt', 'description' => __('Adds a breadcrumb trail to your sidebar', 'breadcrumb-navxt'));
 		parent::__construct('bcn_widget', 'Breadcrumb NavXT', $ops);
 	}

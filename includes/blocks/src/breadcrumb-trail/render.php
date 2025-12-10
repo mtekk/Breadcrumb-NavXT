@@ -14,9 +14,9 @@ if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLO
 	return;
 }
 //Handle previews
-if(isset($_REQUEST['post_id']))
+if(isset($_REQUEST['post_id']) && current_user_can('read_post', absint($_REQUEST['post_id'])))
 {
-	$post_id = $_REQUEST['post_id'];
+	$post_id = absint($_REQUEST['post_id']);
 	$preview_post = get_post($post_id);
 	if($attributes['format'] === 'list')
 	{

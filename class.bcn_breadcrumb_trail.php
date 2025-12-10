@@ -30,11 +30,6 @@ class bcn_breadcrumb_trail
 	//Default constructor
 	public function __construct()
 	{
-		//@see https://core.trac.wordpress.org/ticket/10527
-		if(!is_textdomain_loaded('breadcrumb-navxt'))
-		{
-			load_plugin_textdomain('breadcrumb-navxt', false, 'breadcrumb-navxt/languages');
-		}
 		$this->trail = &$this->breadcrumbs;
 		//Initialize with default option values
 		$this->opt = array(

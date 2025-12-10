@@ -222,11 +222,11 @@ class bcn_breadcrumb
 		}
 		//Build our replacements array
 		$replacements = array(
-			'%title%' => esc_attr(strip_tags($this->title)),
+			'%title%' => esc_attr(wp_strip_all_tags($this->title)),
 			'%link%' => esc_url($this->url),
 			'%htitle%' => $this->title,
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
-			'%ftitle%' => esc_attr(strip_tags($this->_title)),
+			'%ftitle%' => esc_attr(wp_strip_all_tags($this->_title)),
 			'%fhtitle%' => $this->_title,
 			'%position%' => $position,
 			'bcn-aria-current' => $aria_current_str
@@ -239,7 +239,7 @@ class bcn_breadcrumb
 		}
 		else
 		{
-			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('bcn_breadcrumb::type must be an array', 'breadcrumb-navxt'), '6.0.2');	
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('bcn_breadcrumb::type must be an array', 'breadcrumb-navxt'), '6.0.2');	
 		}
 		$replacements = apply_filters('bcn_template_tags', $replacements, $this->type, $this->id);
 		//If we are linked we'll need to use the normal template

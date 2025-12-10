@@ -484,7 +484,7 @@ class breadcrumb_navxt
 		{
 			$settings['Htax_' . $taxonomy->name. '_template'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template',
-					__(sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to the %%title%% %s archives." href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', $taxonomy->labels->singular_name), 'breadcrumb-navxt'),
+					sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', sprintf(esc_attr__('Go to the %%title%% %s archives.', 'breadcrumb-navxt'), $taxonomy->labels->singular_name)),
 					sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
 			$settings['Htax_' . $taxonomy->name. '_template_no_anchor'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template_no_anchor',

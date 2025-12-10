@@ -49,7 +49,7 @@ class bcn_widget extends WP_Widget
 		echo $args['before_widget'];
 		if(!empty($title))
 		{
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo esc_html($args['before_title'] . $title . $args['after_title']);
 		}
 		//We'll want to switch between the two breadcrumb output types
 		if($instance['type'] === 'list')
@@ -98,9 +98,9 @@ class bcn_widget extends WP_Widget
 	function update($new_instance, $old_instance)
 	{
 		//Filter out anything that could be invalid
-		$old_instance['title'] = strip_tags($new_instance['title']);
+		$old_instance['title'] = wp_strip_all_tags($new_instance['title']);
 		$old_instance['pretext'] = wp_kses($new_instance['pretext'], $this->allowed_html);
-		$old_instance['type'] = strip_tags($new_instance['type']);
+		$old_instance['type'] = wp_strip_all_tags($new_instance['type']);
 		//Have to check more than if it is set as it appears this must effectively run twice since WordPress 5.8
 		$old_instance['linked'] = isset($new_instance['linked']) && $new_instance['linked'] !== false;
 		$old_instance['reverse'] = isset($new_instance['reverse']) && $new_instance['reverse'] !== false;
@@ -113,33 +113,33 @@ class bcn_widget extends WP_Widget
 		$instance = wp_parse_args((array) $instance, $this->defaults);
 		?>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"> <?php _e('Title:', 'breadcrumb-navxt'); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>"> <?php esc_html_e('Title:', 'breadcrumb-navxt'); ?></label>
 			<input class="widefat" type="text" name="<?php echo esc_attr($this->get_field_name('title')); ?>" id="<?php echo esc_attr($this->get_field_id('title')); ?>" value="<?php echo esc_attr($instance['title']);?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('pretext')); ?>"> <?php _e('Text to show before the trail:', 'breadcrumb-navxt'); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id('pretext')); ?>"> <?php esc_html_e('Text to show before the trail:', 'breadcrumb-navxt'); ?></label>
 			<input class="widefat" type="text" name="<?php echo esc_attr($this->get_field_name('pretext')); ?>" id="<?php echo esc_attr($this->get_field_id('pretext')); ?>" value="<?php echo esc_attr($instance['pretext']);?>" />
 		</p>
 		<p>
-			<label for="<?php echo esc_attr($this->get_field_id('type')); ?>"> <?php _e('Output trail as:', 'breadcrumb-navxt'); ?></label>
+			<label for="<?php echo esc_attr($this->get_field_id('type')); ?>"> <?php esc_html_e('Output trail as:', 'breadcrumb-navxt'); ?></label>
 			<select name="<?php echo esc_attr($this->get_field_name('type')); ?>" id="<?php echo esc_attr($this->get_field_id('type')); ?>">
-				<option value="list" <?php selected('list', $instance['type']);?>><?php _e('List', 'breadcrumb-navxt'); ?></option>
-				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (RDFa)', 'breadcrumb-navxt'); ?></option>
-				<option value="microdata_wai_aria" <?php selected('microdata_wai_aria', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (RDFa) with WAI-ARIA', 'breadcrumb-navxt'); ?></option>
-				<option value="breadcrumblist_microdata" <?php selected('breadcrumblist_microdata', $instance['type']);?>><?php _e('Schema.org BreadcrumbList (microdata)', 'breadcrumb-navxt'); ?></option>
-				<option value="plain" <?php selected('plain', $instance['type']);?>><?php _e('Plain', 'breadcrumb-navxt'); ?></option>
+				<option value="list" <?php selected('list', $instance['type']);?>><?php esc_html_e('List', 'breadcrumb-navxt'); ?></option>
+				<option value="microdata" <?php selected('microdata', $instance['type']);?>><?php esc_html_e('Schema.org BreadcrumbList (RDFa)', 'breadcrumb-navxt'); ?></option>
+				<option value="microdata_wai_aria" <?php selected('microdata_wai_aria', $instance['type']);?>><?php esc_html_e('Schema.org BreadcrumbList (RDFa) with WAI-ARIA', 'breadcrumb-navxt'); ?></option>
+				<option value="breadcrumblist_microdata" <?php selected('breadcrumblist_microdata', $instance['type']);?>><?php esc_html_e('Schema.org BreadcrumbList (microdata)', 'breadcrumb-navxt'); ?></option>
+				<option value="plain" <?php selected('plain', $instance['type']);?>><?php esc_html_e('Plain', 'breadcrumb-navxt'); ?></option>
 				<?php do_action('bcn_widget_display_types', $instance);?>
 			</select>
 		</p>
 		<p>
 			<input class="checkbox" type="checkbox" name="<?php echo esc_attr($this->get_field_name('linked')); ?>" id="<?php echo esc_attr($this->get_field_id('linked')); ?>"<?php checked(true, $instance['linked']);?> />
-			<label for="<?php echo esc_attr($this->get_field_id('linked')); ?>"> <?php _e('Link the breadcrumbs', 'breadcrumb-navxt'); ?></label><br />
+			<label for="<?php echo esc_attr($this->get_field_id('linked')); ?>"> <?php esc_html_e('Link the breadcrumbs', 'breadcrumb-navxt'); ?></label><br />
 			<input class="checkbox" type="checkbox" name="<?php echo esc_attr($this->get_field_name('reverse')); ?>" id="<?php echo esc_attr($this->get_field_id('reverse')); ?>"<?php checked(true, $instance['reverse']);?> />
-			<label for="<?php echo esc_attr($this->get_field_id('reverse')); ?>"> <?php _e('Reverse the order of the trail', 'breadcrumb-navxt'); ?></label><br />
+			<label for="<?php echo esc_attr($this->get_field_id('reverse')); ?>"> <?php esc_html_e('Reverse the order of the trail', 'breadcrumb-navxt'); ?></label><br />
 			<input class="checkbox" type="checkbox" name="<?php echo esc_attr($this->get_field_name('front')); ?>" id="<?php echo esc_attr($this->get_field_id('front')); ?>"<?php checked(true, $instance['front']);?> />
-			<label for="<?php echo esc_attr($this->get_field_id('front')); ?>"> <?php _e('Hide the trail on the front page', 'breadcrumb-navxt'); ?></label><br />
+			<label for="<?php echo esc_attr($this->get_field_id('front')); ?>"> <?php esc_html_e('Hide the trail on the front page', 'breadcrumb-navxt'); ?></label><br />
 			<input class="checkbox" type="checkbox" name="<?php echo esc_attr($this->get_field_name('force')); ?>" id="<?php echo esc_attr($this->get_field_id('force')); ?>"<?php checked(true, $instance['force']);?> />
-			<label for="<?php echo esc_attr($this->get_field_id('force')); ?>"> <?php _e('Ignore breadcrumb cache', 'breadcrumb-navxt'); ?></label><br />
+			<label for="<?php echo esc_attr($this->get_field_id('force')); ?>"> <?php esc_html_e('Ignore breadcrumb cache', 'breadcrumb-navxt'); ?></label><br />
 		</p>
 		<?php
 	}

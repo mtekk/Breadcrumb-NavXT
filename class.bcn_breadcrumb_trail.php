@@ -513,7 +513,7 @@ class bcn_breadcrumb_trail
 		//If we did not get a WP_Post object, warn developer and return early
 		if(!($post instanceof WP_Post))
 		{
-			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$post global is not of type WP_Post', 'breadcrumb-navxt'), '5.1.1');
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('$post global is not of type WP_Post', 'breadcrumb-navxt'), '5.1.1');
 			return;
 		}
 		//If this is the current item or if we're allowing private posts in the trail add a breadcrumb
@@ -568,7 +568,7 @@ class bcn_breadcrumb_trail
 	{
 		if(!($term instanceof WP_Term))
 		{
-			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$term global is not of type WP_Term', 'breadcrumb-navxt'), '7.0.3');
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('$term global is not of type WP_Term', 'breadcrumb-navxt'), '7.0.3');
 			return;
 		}
 		//Place the breadcrumb in the trail, uses the constructor to set the title, template, and type, get a pointer to it in return

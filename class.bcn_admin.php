@@ -24,7 +24,7 @@ if(version_compare(phpversion(), '5.6.0', '<'))
 	function bcn_phpold()
 	{
 		/* translators: %1$s: User's version of PHP, %2$s: Breadcrmb NavXT minimuum PHP version */
-		printf('<div class="notice notice-error"><p>' . esc_html__('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', phpversion(), '7.0.0');
+		printf('<div class="notice notice-error"><p>' . esc_html__('Your PHP version is too old, please upgrade to a newer version. Your version is %1$s, Breadcrumb NavXT requires %2$s', 'breadcrumb-navxt') . '</p></div>', esc_html(phpversion()), '7.0.0');
 	}
 	//If we are in the admin, let's print a warning then return
 	if(is_admin())

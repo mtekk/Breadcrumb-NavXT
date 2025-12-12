@@ -74,7 +74,7 @@
     }
   },
   "usesContext": [
-    "groupId"
+    "postId"
   ],
   "selectors": {
     "root": ".wp-block-bcn-breadcrumb-trail"

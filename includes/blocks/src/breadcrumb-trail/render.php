@@ -13,11 +13,10 @@ if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLO
 {
 	return;
 }
-//Handle previews
-if(isset($_REQUEST['post_id']) && current_user_can('read_post', absint($_REQUEST['post_id'])))
+//Handle in-editor previews
+if(wp_is_serving_rest_request() && current_user_can('read_post', absint($block->context['postId'])))
 {
-	$post_id = absint($_REQUEST['post_id']);
-	$preview_post = get_post($post_id);
+	$preview_post = get_post(absint($block->context['postId']));
 	if($attributes['format'] === 'list')
 	{
 		$template = "<li%3\$s>%1\$s</li>\n";

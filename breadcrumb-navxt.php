@@ -3,7 +3,7 @@
 Plugin Name: Breadcrumb NavXT
 Plugin URI: http://mtekk.us/code/breadcrumb-navxt/
 Description: Adds a breadcrumb navigation showing the visitor&#39;s path to their current location. For details on how to use this plugin visit <a href="http://mtekk.us/code/breadcrumb-navxt/">Breadcrumb NavXT</a>. 
-Version: 7.5.0
+Version: 7.5.1
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -64,7 +64,7 @@ $breadcrumb_navxt = null;
 //TODO change to extends \mtekk\plugKit
 class breadcrumb_navxt
 {
-	const version = '7.5.0';
+	const version = '7.5.1';
 	protected $name = 'Breadcrumb NavXT';
 	protected $identifier = 'breadcrumb-navxt';
 	protected $unique_prefix = 'bcn';
@@ -355,6 +355,7 @@ class breadcrumb_navxt
 				__('Link Current Item', 'breadcrumb-navxt'));
 		$settings['Hpaged_template'] = new setting\setting_html(
 				'paged_template',
+				/* translators: %htitle%: The page title which may contain HTML */
 				sprintf('<span class="%%type%%">%1$s</span>', esc_attr__('Page %htitle%', 'breadcrumb-navxt')),
 				_x('Paged Template', 'Paged as in when on an archive or post that is split into multiple pages', 'breadcrumb-navxt'));
 		$settings['bpaged_display'] = new setting\setting_bool(
@@ -372,10 +373,12 @@ class breadcrumb_navxt
 			$settings['Hpost_' . $post_type->name . '_template'] = new setting\setting_html(
 					'post_' . $post_type->name . '_template',
 					bcn_breadcrumb::get_default_template(),
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Template', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			$settings['Hpost_' . $post_type->name . '_template_no_anchor'] = new setting\setting_html(
 					'post_' . $post_type->name . '_template_no_anchor',
 					bcn_breadcrumb::default_template_no_anchor,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			//Root default depends on post type
 			if($post_type->name === 'page')
@@ -393,6 +396,7 @@ class breadcrumb_navxt
 			$settings['apost_' . $post_type->name . '_root'] = new setting\setting_absint(
 					'post_' . $post_type->name . '_root',
 					$default_root,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Root Page', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			//Archive display default depends on post type
 			if($post_type->has_archive == true || is_string($post_type->has_archive))
@@ -406,10 +410,12 @@ class breadcrumb_navxt
 			$settings['bpost_' . $post_type->name . '_archive_display'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_archive_display',
 					$default_archive_display,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Archive Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			$settings['bpost_' . $post_type->name . '_taxonomy_referer'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_taxonomy_referer',
 					false,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			//Hierarchy use parent first depends on post type
 			if(in_array($post_type->name, array('page', 'post')))
@@ -427,6 +433,7 @@ class breadcrumb_navxt
 			$settings['bpost_' . $post_type->name . '_hierarchy_parent_first'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_hierarchy_parent_first',
 					$default_parent_first,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Hierarchy Use Parent First', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			//Hierarchy depends on post type
 			if($post_type->name === 'page')
@@ -470,10 +477,12 @@ class breadcrumb_navxt
 			$settings['bpost_' . $post_type->name . '_hierarchy_display'] = new setting\setting_bool(
 					'post_' . $post_type->name . '_hierarchy_display',
 					$default_hierarchy_display,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Hierarchy Display', 'breadcrumb-navxt'), $post_type->labels->singular_name));
 			$settings['Epost_' . $post_type->name . '_hierarchy_type'] = new setting\setting_enum(
 					'post_' . $post_type->name . '_hierarchy_type',
 					$hierarchy_type_default,
+					/* translators: %s: The singular name of the post type */
 					sprintf(__('%s Hierarchy Referer Influence', 'breadcrumb-navxt'), $post_type->labels->singular_name),
 					false,
 					false,
@@ -484,11 +493,14 @@ class breadcrumb_navxt
 		{
 			$settings['Htax_' . $taxonomy->name. '_template'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template',
+					/* translators: %s: The singular name of the taxonomy */
 					sprintf('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="%s" href="%%link%%" class="%%type%%" bcn-aria-current><span property="name">%%htitle%%</span></a><meta property="position" content="%%position%%"></span>', sprintf(esc_attr__('Go to the %%title%% %s archives.', 'breadcrumb-navxt'), $taxonomy->labels->singular_name)),
+					/* translators: %s: The singular name of the taxonomy */
 					sprintf(__('%s Template', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
 			$settings['Htax_' . $taxonomy->name. '_template_no_anchor'] = new setting\setting_html(
 					'tax_' . $taxonomy->name. '_template_no_anchor',
 					bcn_breadcrumb::default_template_no_anchor,
+					/* translators: %s: The singular name of the taxonomy */
 					sprintf(__('%s Template (Unlinked)', 'breadcrumb-navxt'), $taxonomy->labels->singular_name));
 		}
 		//Miscellaneous
@@ -503,12 +515,14 @@ class breadcrumb_navxt
 		$settings['Hsearch_template'] = new setting\setting_html(
 				'search_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+						/* translators: %s: The searched phrase */
 						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'),
 								sprintf('<a property="item" typeof="WebPage" title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of search results for %title%.', 'breadcrumb-navxt')))),
 				__('Search Template', 'breadcrumb-navxt'));
 		$settings['Hsearch_template_no_anchor'] = new setting\setting_html(
 				'search_template_no_anchor',
 				sprintf('<span class="%%type%%">%1$s</span>',
+						/* translators: %s: The searched phrase */
 						sprintf(esc_attr__('Search results for &#39;%1$s&#39;', 'breadcrumb-navxt'), '%htitle%')),
 				__('Search Template (Unlinked)', 'breadcrumb-navxt'));
 		$settings['Hdate_template'] = new setting\setting_html(
@@ -522,12 +536,14 @@ class breadcrumb_navxt
 		$settings['Hauthor_template'] = new setting\setting_html(
 				'author_template',
 				sprintf('<span property="itemListElement" typeof="ListItem"><span property="name">%1$s</span><meta property="position" content="%%position%%"></span>',
+						/* translators: %s: The post author name the current archive is for */
 						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'),
 								sprintf('<a title="%1$s" href="%%link%%" class="%%type%%" bcn-aria-current>%%htitle%%</a>', esc_attr__('Go to the first page of posts by %title%.', 'breadcrumb-navxt')))),
 				__('Author Template', 'breadcrumb-navxt'));
 		$settings['Hauthor_template_no_anchor'] = new setting\setting_html(
 				'author_template_no_anchor',
 				sprintf('<span class="%%type%%">%1$s</span>',
+						/* translators: %s: The post author name the current archive is for */
 						sprintf(esc_attr__('Articles by: %1$s', 'breadcrumb-navxt'), '%htitle%')),
 				__('Author Template (Unlinked)', 'breadcrumb-navxt'));
 		$settings['aauthor_root'] = new setting\setting_absint(
@@ -601,9 +617,7 @@ class breadcrumb_navxt
 			}
 			else
 			{
-				//Helps track issues, please don't remove it
-				$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
-				echo $credits . $trail_string;
+				echo $trail_string;
 			}
 		}
 	}
@@ -680,9 +694,7 @@ class breadcrumb_navxt
 		}
 		else
 		{
-			//Helps track issues, please don't remove it
-			$credits = "<!-- Breadcrumb NavXT " . $this::version . " -->\n";
-			echo $credits . $trail_string;
+			echo $trail_string;
 		}
 	}
 	/**

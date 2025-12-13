@@ -112,8 +112,6 @@ abstract class adminKit
 		add_action('admin_menu', array($this, 'add_page'));
 		//Installation Script hook
 		add_action('activate_' . $this->plugin_basename, array($this, 'install'));
-		//Initializes l10n domain
-		$this->local();
 		add_action('wp_loaded', array($this, 'wp_loaded'));
 		$this->form = new form($this->unique_prefix);
 		//Register Help Output
@@ -177,7 +175,7 @@ abstract class adminKit
 		//Assemble our url, nonce and all
 		$url = wp_nonce_url(add_query_arg($this->unique_prefix . '_' . $mode, $value, $uri), $this->unique_prefix . '_' . $mode);
 		//Return a valid anchor
-		return ' <a title="' . esc_attr($title) . '" href="' . $url . '" '. $anchor_extras . '>' . esc_html($text) . '</a>';
+		return ' <a title="' . esc_attr($title) . '" href="' . esc_url($url) . '" '. $anchor_extras . '>' . esc_html($text) . '</a>';
 	}
 	/**
 	 * Abstracts the check_admin_referer so that all the end user has to supply is the mode
@@ -196,7 +194,7 @@ abstract class adminKit
 		//If the user can not manage options we will die on them
 		if(!current_user_can($this->access_level))
 		{
-			wp_die(__('Insufficient privileges to proceed.', $this->identifier));
+			wp_die(esc_html__('Insufficient privileges to proceed.', $this->identifier));
 		}
 	}
 	function init()
@@ -261,7 +259,7 @@ abstract class adminKit
 		//Register JS for tabs
 		wp_register_script('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.js', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.js'), array('jquery-ui-tabs'), self::version, true);
 		//Register CSS for tabs
-		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.css'));
+		wp_register_style('mtekk_adminkit_tabs', plugins_url('/mtekk_adminkit_tabs' . $suffix . '.css', dirname(__FILE__) . '/assets/mtekk_adminkit_tabs' . $suffix . '.css'), array(), self::version);
 		//Register options
 		register_setting($this->unique_prefix . '_options', $this->unique_prefix . '_options', '');
 		//Synchronize up our settings with the database as we're done modifying them now
@@ -290,25 +288,6 @@ abstract class adminKit
 		}
 	}
 	/**
-	 * Initializes localization textdomain for translations (if applicable)
-	 * 
-	 * Will conditionally load the textdomain for translations. This is here for
-	 * plugins that span multiple files and have localization in more than one file
-	 * 
-	 * @return void
-	 */
-	function local()
-	{
-		global $l10n;
-		// the global and the check might become obsolete in
-		// further wordpress versions
-		// @see https://core.trac.wordpress.org/ticket/10527		
-		if(!isset($l10n[$this->identifier]))
-		{
-			load_plugin_textdomain($this->identifier, false, $this->identifier . '/languages');
-		}
-	}
-	/**
 	 * Places in a link to the settings page in the plugins listing entry
 	 * 
 	 * @param  array  $links An array of links that are output in the listing
@@ -321,7 +300,7 @@ abstract class adminKit
 		if($file == $this->plugin_basename)
 		{ 
 			//Add our link to the end of the array to better integrate into the WP 2.8 plugins page
-			$links[] = '<a href="' . $this->admin_url() . '">' . esc_html__('Settings') . '</a>';
+			$links[] = '<a href="' . esc_url($this->admin_url()) . '">' . esc_html__('Settings', $this->identifier) . '</a>';
 		}
 		return $links;
 	}
@@ -679,6 +658,11 @@ abstract class adminKit
 		//Update our backup options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->opt, false);
 		$opt_prev = $this->opt;
+		//While this should never happen, if the settings are missing, exit early
+		if(!isset($_POST[$this->unique_prefix . '_options']))
+		{
+			return;
+		}
 		//Grab our incoming array (the data is dirty)
 		$input = $_POST[$this->unique_prefix . '_options'];
 		//Run through the loop and get the diff from defaults
@@ -713,7 +697,8 @@ abstract class adminKit
 			{
 				$temp .= '<br />' . $setting;
 			}
-			$this->messages[] = new message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %sbug report%s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support forum.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . '">', '</a>'), 'info');
+			/* translators: %1$s: HTML opening tag for link to the support forums, %2$s: HTML closing tag for link to support forums */
+			$this->messages[] = new message($temp . '<br />' . sprintf(esc_html__('Please include this message in your %1$sbug report%2$s.', $this->identifier), '<a title="' . sprintf(esc_attr__('Go to the %s support forum.', $this->identifier), $this->short_name) . '" href="' . $this->support_url . '">', '</a>'), 'info');
 		}
 		add_action('admin_notices', array($this, 'messages'));
 	}
@@ -761,7 +746,7 @@ abstract class adminKit
 		//Set the backup options in the DB to the current options
 		$this->opts_backup();
 		//Load the user uploaded file, handle failure gracefully
-		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 		{
 			//Grab the json settings from the temp file, treat as associative array so we can just throw the settings subfield at the update loop
 			$settings_upload = json_decode(file_get_contents($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']), true);
@@ -877,7 +862,7 @@ abstract class adminKit
 		//We want to catch errors ourselves
 		set_error_handler($error_handler);
 		//Load the user uploaded file, handle failure gracefully
-		if(is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 		{
 			$opts_temp = array();
 			$version = '';
@@ -1021,6 +1006,7 @@ abstract class adminKit
 	{
 		
 	}
+	//FIXME: This looks like a hack to dismiss messages, there just has to be a better way...
 	function dismiss_message()
 	{
 		//Grab the submitted UID
@@ -1043,14 +1029,14 @@ abstract class adminKit
 		//Old deprecated messages
 		if(is_array($this->message) && count($this->message))
 		{
-			_deprecated_function( __FUNCTION__, '2.0.0', __('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
+			_deprecated_function( __FUNCTION__, '2.0.0', esc_html__('adminKit::message is deprecated, use new adminkit_messages instead.', $this->identifier) );
 			//Loop through our message classes
 			foreach($this->message as $key => $class)
 			{
 				//Loop through the messages in the current class
 				foreach($class as $message)
 				{
-					printf('<div class="%s"><p>%s</p></div>', esc_attr($key), $message);	
+					printf('<div class="%s"><p>%s</p></div>', esc_attr($key), wp_kses($message, wp_kses_allowed_html('post')));	
 				}
 			}
 			$this->message = array();
@@ -1126,9 +1112,9 @@ abstract class adminKit
 		$form .= sprintf('<input type="file" name="%1$s_admin_import_file" id="%1$s_admin_import_file" size="32" /><p class="description">', esc_attr($this->unique_prefix));
 		$form .= esc_html__('Select a JSON or XML settings file to upload and import settings from.', $this->identifier);
 		$form .= '</p></td></tr></table><p class="submit">';
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', $this->unique_prefix, esc_attr__('Import', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', $this->unique_prefix, esc_attr__('Export', $this->identifier));
-		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', $this->unique_prefix, esc_attr__('Reset', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_import" value="%2$s"/>', esc_attr($this->unique_prefix), esc_attr__('Import', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_settings_export" value="%2$s"/>', esc_attr($this->unique_prefix), esc_attr__('Export', $this->identifier));
+		$form .= sprintf('<input type="submit" class="button" name="%1$s_admin_reset" value="%2$s"/>', esc_attr($this->unique_prefix), esc_attr__('Reset', $this->identifier));
 		$form .= '</p></fieldset></form></div>';
 		return $form;
 	}
@@ -1157,7 +1143,7 @@ abstract class adminKit
 	function label($opt_id, $label)
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::label');
-		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), $label);
+		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), esc_html($label));
 	}
 	/**
 	 * This will output a well formed table row for a text input
@@ -1186,7 +1172,7 @@ abstract class adminKit
 			</th>
 			<td>
 				<?php printf('<input type="text" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -1234,7 +1220,7 @@ abstract class adminKit
 			</th>
 			<td>
 				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), $extras);?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -1267,7 +1253,7 @@ abstract class adminKit
 			</th>
 			<td>
 				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_attr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), disabled($disable, true, false), esc_attr($height));?>
-					<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+					<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 		<?php
@@ -1299,7 +1285,7 @@ abstract class adminKit
 			</th>
 			<td>
 				<?php printf('<textarea rows="%6$s" name="%1$s" id="%2$s" class="%4$s" %5$s/>%3$s</textarea><br />', esc_attr($opt_name), esc_attr($opt_id), esc_textarea($this->opt[$option]), esc_attr($class), disabled($disable, true, false), esc_attr($height));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -1333,9 +1319,9 @@ abstract class adminKit
 			<td>
 				<label for="<?php echo esc_attr( $opt_id ); ?>">
 					<?php printf('<input type="checkbox" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), checked($this->opt[$option], true, false));?>
-					<?php echo $instruction; ?>
+					<?php echo esc_html($instruction); ?>
 				</label><br />
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -1364,7 +1350,7 @@ abstract class adminKit
 		}?>
 		<label>
 			<?php printf('<input type="radio" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %5$s %6$s/>', esc_attr($opt_name), esc_attr($opt_id), esc_attr($value), esc_attr($class), disabled($disable, true, false), checked($value, $this->opt[$option], false));?>
-			<?php echo $instruction; ?>
+			<?php echo esc_html($instruction); ?>
 		</label><br/>
 	<?php
 	}
@@ -1402,7 +1388,7 @@ abstract class adminKit
 			</th>
 			<td>
 				<?php printf('<select name="%1$s" id="%2$s" class="%4$s" %5$s>%3$s</select><br />', esc_attr($opt_name), esc_attr($opt_id), $this->select_options($option, $titles, $values), esc_attr($class), disabled($disable, true, false));?>
-				<?php if($description !== ''){?><p class="description"><?php echo $description;?></p><?php }?>
+				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>
 	<?php
@@ -1429,7 +1415,7 @@ abstract class adminKit
 		{
 			if(!in_array($option, $exclude))
 			{
-				$options_html .= sprintf('<option value="%1$s" %2$s>%3$s</option>', esc_attr($values[$key]), selected($value, $values[$key], false), $option);
+				$options_html .= sprintf('<option value="%1$s" %2$s>%3$s</option>', esc_attr($values[$key]), selected($value, $values[$key], false), esc_html($option));
 			}
 		}
 		return $options_html;
@@ -1464,7 +1450,7 @@ abstract class adminKit
 	 */
 	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
 	{
-		return add_option($option, $value, null, $autoload);
+		return add_option($option, $value, '', $autoload);
 	}
 	/**
 	 * A local pass through for delete_option so that we can hook in and pick the correct method if needed
@@ -1474,5 +1460,19 @@ abstract class adminKit
 	function delete_option($option)
 	{
 		return delete_option($option);
+	}
+	/**
+	 * Initializes localization textdomain for translations (if applicable)
+	 *
+	 * Will conditionally load the textdomain for translations. This is here for
+	 * plugins that span multiple files and have localization in more than one file
+	 *
+	 * @return void
+	 *
+	 * @deprecated 7.5.1
+	 */
+	function local()
+	{
+		//Nothing to see here now that it's deprecated
 	}
 }

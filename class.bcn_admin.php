@@ -60,7 +60,7 @@ class bcn_admin extends adminKit
 	 * @param string $basename The basename of the plugin
 	 * @param array $settings The array of settings objects
 	 */
-	function __construct(array &$opts, $basename, array &$settings)
+	public function __construct(array &$opts, $basename, array &$settings)
 	{
 		$this->plugin_basename = $basename;
 		$this->full_name = esc_html__('Breadcrumb NavXT Settings', 'breadcrumb-navxt');
@@ -69,7 +69,7 @@ class bcn_admin extends adminKit
 		//We're going to make sure we load the parent's constructor
 		parent::__construct();
 	}
-	function is_network_admin()
+	public function is_network_admin()
 	{
 		return false;
 	}
@@ -78,7 +78,7 @@ class bcn_admin extends adminKit
 	 * 
 	 * @param array $opts The opts array
 	 */
-	function setting_merge($opts)
+	public function setting_merge($opts)
 	{
 		$unknown = array();
 		foreach($opts as $key => $value)
@@ -121,7 +121,7 @@ class bcn_admin extends adminKit
 	 * @since  3.2.0
 	 * @return void
 	 */
-	function init()
+	public function init()
 	{
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
@@ -133,7 +133,7 @@ class bcn_admin extends adminKit
 	 * @param array $opts
 	 * @param string $version the version of the passed in options
 	 */
-	function opts_upgrade($opts, $version)
+	public function opts_upgrade($opts, $version)
 	{
 		//If our version is not the same as in the db, time to update
 		if(version_compare($version, $this::version, '<'))
@@ -149,7 +149,7 @@ class bcn_admin extends adminKit
 	 * 
 	 * @param WP_Screen $screen The screen to add the help tab items to
 	 */
-	function help_contents(\WP_Screen &$screen)
+	public function help_contents(\WP_Screen &$screen)
 	{
 		$general_tab = '<p>' . esc_html__('Tips for the settings are located below select options.', 'breadcrumb-navxt') .
 				'</p><h5>' . esc_html__('Resources', 'breadcrumb-navxt') . '</h5><ul><li>' .
@@ -217,14 +217,14 @@ class bcn_admin extends adminKit
 	/**
 	 * enqueue's the tab style sheet on the settings page
 	 */
-	function admin_styles()
+	public function admin_styles()
 	{
 		wp_enqueue_style('mtekk_adminkit_tabs');
 	}
 	/**
 	 * enqueue's the tab js and translation js on the settings page
 	 */
-	function admin_scripts()
+	public function admin_scripts()
 	{
 		//Enqueue ui-tabs
 		wp_enqueue_script('jquery-ui-tabs');
@@ -243,7 +243,7 @@ class bcn_admin extends adminKit
 	/**
 	 * A message function that checks for the BCN_SETTINGS_* define statement
 	 */
-	function multisite_settings_warn()
+	public function multisite_settings_warn()
 	{
 		if(is_multisite())
 		{
@@ -273,7 +273,7 @@ class bcn_admin extends adminKit
 	/**
 	 * A message function that checks for deprecated settings that are set and warns the user
 	 */
-	function deprecated_settings_warn()
+	public function deprecated_settings_warn()
 	{
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->get_value())
@@ -321,7 +321,7 @@ class bcn_admin extends adminKit
 	/**
 	 * A message function that checks for post types added after the settings defaults were established
 	 */
-	function unknown_custom_types_warn()
+	public function unknown_custom_types_warn()
 	{
 		foreach($GLOBALS['wp_post_types'] as $post_type)
 		{
@@ -386,7 +386,7 @@ class bcn_admin extends adminKit
 	 * 
 	 * @return boool Whether or not the blog options should be disabled
 	 */
-	function maybe_disable_blog_options()
+	public function maybe_disable_blog_options()
 	{
 		return (get_option('show_on_front') !== 'page' || get_option('page_for_posts') < 1);
 	}
@@ -395,14 +395,14 @@ class bcn_admin extends adminKit
 	 * 
 	 * @return bool Whether or not the mainsite options should be disabled
 	 */
-	function maybe_disable_mainsite_options()
+	public function maybe_disable_mainsite_options()
 	{
 		return !is_multisite();
 	}
 	/**
 	 * The administrative page for Breadcrumb NavXT
 	 */
-	function admin_page()
+	public function admin_page()
 	{
 		global $wp_taxonomies, $wp_post_types;
 		$this->security();

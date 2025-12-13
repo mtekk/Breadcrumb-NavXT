@@ -37,7 +37,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param bcn_breadcrumb_trail $breadcrumb_trail a breadcrumb trail object
 	 * @param string $basename The basename of the plugin
 	 */
-	function __construct(array &$opts, $basename, array &$settings)
+	public function __construct(array &$opts, $basename, array &$settings)
 	{
 		//We're going to make sure we load the parent's constructor
 		parent::__construct($opts, $basename, $settings);
@@ -48,7 +48,7 @@ class bcn_network_admin extends bcn_admin
 		//Replace with the network_admin hook
 		add_action('network_admin_menu', array($this, 'add_page'));
 	}
-	function is_network_admin()
+	public function is_network_admin()
 	{
 		return true;
 	}
@@ -60,26 +60,26 @@ class bcn_network_admin extends bcn_admin
 	 * @since  3.2.0
 	 * @return void
 	 */
-	function init()
+	public function init()
 	{
 		//We're going to make sure we run the parent's version of this function as well
 		parent::init();
 	}
-	function wp_loaded()
+	public function wp_loaded()
 	{
 		parent::wp_loaded();
 	}
 	/**
 	 * Return the URL of the settings page for the plugin
 	 */
-	function admin_url()
+	public function admin_url()
 	{
 		return admin_url('network/settings.php?page=' . $this->identifier);
 	}
 	/**
 	 * Adds the adminpage the menu and the nice little settings link
 	 */
-	function add_page()
+	public function add_page()
 	{
 		//Add the submenu page to "settings" menu
 		$hookname = add_submenu_page('settings.php', $this->full_name, $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
@@ -102,7 +102,7 @@ class bcn_network_admin extends bcn_admin
 	 * @return string
 	 *
 	 */
-	function help()
+	public function help()
 	{
 		$screen = get_current_screen();
 		//Exit early if the add_help_tab function doesn't exist
@@ -122,7 +122,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param string $option The name of the option to retrieve
 	 * @return mixed The value of the option
 	 */
-	function get_option($option)
+	public function get_option($option)
 	{
 		return get_site_option($option);
 	}
@@ -133,7 +133,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param mixed $newvalue The new value to set the option to
 	 * 
 	 */
-	function update_option($option, $newvalue, $autoload = null)
+	public function update_option($option, $newvalue, $autoload = null)
 	{
 		return update_site_option($option, $newvalue);
 	}
@@ -146,7 +146,7 @@ class bcn_network_admin extends bcn_admin
 	 * @param string $autoload Whether or not to autoload the option, it's a string because WP is special
 	 * 
 	 */
-	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
+	public function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
 	{
 		return add_site_option($option, $value);
 	}
@@ -155,14 +155,14 @@ class bcn_network_admin extends bcn_admin
 	 * 
 	 * @param string $option The name of the option to delete
 	 */
-	function delete_option($option)
+	public function delete_option($option)
 	{
 		return delete_site_option($option);
 	}
 	/**
 	 * A message function that checks for the BCN_SETTINGS_* define statement
 	 */
-	function multisite_settings_warn()
+	public function multisite_settings_warn()
 	{
 		if(is_multisite())
 		{
@@ -193,7 +193,7 @@ class bcn_network_admin extends bcn_admin
 	/**
 	 * A message function that checks for deprecated settings that are set and warns the user
 	 */
-	function deprecated_settings_warn()
+	public function deprecated_settings_warn()
 	{
 		parent::deprecated_settings_warn();
 	}
@@ -202,7 +202,7 @@ class bcn_network_admin extends bcn_admin
 	 * 
 	 * @return boool Whether or not the blog options should be disabled
 	 */
-	function maybe_disable_blog_options()
+	public function maybe_disable_blog_options()
 	{
 		return false;
 	}
@@ -211,7 +211,7 @@ class bcn_network_admin extends bcn_admin
 	 * 
 	 * @return bool Whether or not the mainsite options should be disabled
 	 */
-	function maybe_disable_mainsite_options()
+	public function maybe_disable_mainsite_options()
 	{
 		return false;
 	}

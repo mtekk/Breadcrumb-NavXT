@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2025  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class message
 		if($dismissible === true && $uid === '')
 		{
 			//Let the user know they're doing it wrong
-			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, __('$uid must not be null if message is dismissible', 'mtekk_adminKit'), '1.0.0');
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('$uid must not be null if message is dismissible', 'mtekk_adminKit'), '1.0.0');
 			//Treat the message as non-dismissible
 			$dismissible = false;
 		}
@@ -69,9 +69,8 @@ class message
 	 */
 	public function dismiss()
 	{
-		if($this->dismissible && isset($_POST['uid']) && esc_attr($_POST['uid']) === $this->uid)
+		if($this->dismissible && isset($_POST['uid']) && esc_attr($_POST['uid']) === $this->uid && check_ajax_referer($this->uid . '_dismiss', 'nonce'))
 		{
-			check_ajax_referer($this->uid . '_dismiss', 'nonce');
 			$this->dismissed = true;
 			//If the message was dismissed, update the transient for 30 days
 			$result = set_transient($this->uid, $this->dismissed, 2592000);
@@ -90,7 +89,7 @@ class message
 				return;
 			}
 			wp_enqueue_script('mtekk_adminkit_messages');
-			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', esc_attr($this->type), $this->contents, esc_attr($this->uid), wp_create_nonce($this->uid . '_dismiss'));
+			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', esc_attr($this->type), $this->contents, esc_attr($this->uid), esc_attr(wp_create_nonce($this->uid . '_dismiss')));
 		}
 		else
 		{

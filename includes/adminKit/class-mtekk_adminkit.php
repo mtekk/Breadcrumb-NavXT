@@ -102,7 +102,7 @@ abstract class adminKit
 	protected $allowed_html;
 	protected $settings = array();
 	protected $form;
-	function __construct()
+	public function __construct()
 	{
 		$this->message = array();
 		$this->messages = array();
@@ -117,7 +117,7 @@ abstract class adminKit
 		//Register Help Output
 		//add_action('add_screen_help_and_options', array($this, 'help'));
 	}
-	function wp_loaded()
+	public function wp_loaded()
 	{
 		//Filter our allowed html tags
 		$this->allowed_html = apply_filters($this->unique_prefix . '_allowed_html', wp_kses_allowed_html('post'));
@@ -125,14 +125,14 @@ abstract class adminKit
 	/**
 	 * Returns the internal mtekk_admin_class version
 	 */
-	function get_admin_class_version()
+	public function get_admin_class_version()
 	{
 		return adminKit::version;
 	}
 	/**
 	 * Checks if the administrator has the access capability, and adds it if they don't
 	 */
-	function add_cap()
+	public function add_cap()
 	{
 		$role = get_role('administrator');
 		if($role instanceof \WP_Role && !$role->has_cap($this->access_level))
@@ -143,7 +143,7 @@ abstract class adminKit
 	/**
 	 * Return the URL of the settings page for the plugin
 	 */
-	function admin_url()
+	public function admin_url()
 	{
 		return admin_url('options-general.php?page=' . $this->identifier);
 	}
@@ -155,7 +155,7 @@ abstract class adminKit
 	 * @param string $text (optional) The text that will be surrounded by the anchor tags
 	 * @return string the assembled anchor
 	 */
-	function admin_anchor($mode, $title = '', $text = '')
+	public function admin_anchor($mode, $title = '', $text = '')
 	{
 		return $this->nonced_anchor($this->admin_url(), 'admin_' . $mode, 'true', $title, $text);
 	}
@@ -170,7 +170,7 @@ abstract class adminKit
 	 * @param string $anchor_extras (optional) This text is placed within the opening anchor tag, good for adding id, classes, rel field
 	 * @return string the assembled anchor
 	 */
-	function nonced_anchor($uri, $mode, $value = 'true', $title = '', $text = '', $anchor_extras = '')
+	public function nonced_anchor($uri, $mode, $value = 'true', $title = '', $text = '', $anchor_extras = '')
 	{
 		//Assemble our url, nonce and all
 		$url = wp_nonce_url(add_query_arg($this->unique_prefix . '_' . $mode, $value, $uri), $this->unique_prefix . '_' . $mode);
@@ -182,14 +182,14 @@ abstract class adminKit
 	 * 
 	 * @param string $mode The specific nonce "mode" (see nonced_anchor) that is being checked
 	 */
-	function check_nonce($mode)
+	public function check_nonce($mode)
 	{
 		check_admin_referer($this->unique_prefix . '_' . $mode);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
 	 */
-	function security()
+	protected function security()
 	{
 		//If the user can not manage options we will die on them
 		if(!current_user_can($this->access_level))
@@ -197,7 +197,7 @@ abstract class adminKit
 			wp_die(esc_html__('Insufficient privileges to proceed.', $this->identifier));
 		}
 	}
-	function init()
+	public function init()
 	{
 		$this->add_cap();
 		//Admin Options reset hook
@@ -270,7 +270,7 @@ abstract class adminKit
 	 * Adds the adminpage the menu and the nice little settings link
 	 * TODO: make this more generic for easier extension
 	 */
-	function add_page()
+	public function add_page()
 	{
 		//Add the submenu page to "settings" menu
 		$hookname = add_submenu_page('options-general.php', $this->full_name, $this->short_name, $this->access_level, $this->identifier, array($this, 'admin_page'));
@@ -294,7 +294,7 @@ abstract class adminKit
 	 * @param  string $file The file that is currently in processing
 	 * @return array  Array of links that are output in the listing.
 	 */
-	function filter_plugin_actions($links, $file)
+	public function filter_plugin_actions($links, $file)
 	{
 		//Make sure we are adding only for the current plugin
 		if($file == $this->plugin_basename)
@@ -309,7 +309,7 @@ abstract class adminKit
 	 *
 	 * @return bool whether or not the plugin has been installed
 	 */
-	function is_installed()
+	public function is_installed()
 	{
 		$opts = $this->get_option($this->unique_prefix . '_options');
 		return is_array($opts);
@@ -319,7 +319,7 @@ abstract class adminKit
 	 * 
 	 * FIXME: seems there is a lot of very similar code in opts_upgrade_wrapper
 	 */
-	function install()
+	public function install()
 	{
 		//Call our little security function
 		$this->security();
@@ -352,7 +352,7 @@ abstract class adminKit
 	/**
 	 * This removes database settings upon deletion of the plugin from WordPress
 	 */
-	function uninstall()
+	public function uninstall()
 	{
 		//Remove the option array setting
 		$this->delete_option($this->unique_prefix . '_options');
@@ -365,7 +365,7 @@ abstract class adminKit
 	 * Compares the supplied version with the internal version, places an upgrade warning if there is a mismatch
 	 * TODO: change this to being auto called in admin_init action
 	 */
-	function version_check($version)
+	public function version_check($version)
 	{
 		//If we didn't get a version, setup
 		if($version === false)
@@ -419,7 +419,7 @@ abstract class adminKit
 	 * @param array $settings The settings array
 	 * @return boolean
 	 */
-	function settings_validate(array &$settings)
+	public function settings_validate(array &$settings)
 	{
 		foreach($settings as $setting)
 		{
@@ -430,17 +430,17 @@ abstract class adminKit
 					return false;
 				}
 			}
-			else if($setting instanceof setting && $setting->get_value() !== $setting->validate($setting->get_value()))
+			else if($setting instanceof setting && $setting->get_value() !== $setting->validate($setting->get_value())) //FIXME: not sure I like this
 			{
 				return false;
 			}
 		}
-		return true;
+		return true; //FIXME: Shouldn't the default to be false?
 	}
 	/**
 	 * Synchronizes the backup options entry with the current options entry
 	 */
-	function opts_backup()
+	protected function opts_backup()
 	{
 		//Set the backup options in the DB to the current options
 		$this->update_option($this->unique_prefix . '_options_bk', $this->get_option($this->unique_prefix . '_options'), false);
@@ -577,7 +577,7 @@ abstract class adminKit
 	 * @param \mtekk\adminKit\setting\setting $b
 	 * @return number
 	 */
-	function setting_equal_check($a, $b)
+	public function setting_equal_check($a, $b)
 	{
 		if(is_array($a) || is_array($b))
 		{
@@ -646,7 +646,7 @@ abstract class adminKit
 	 * 3) Compute difference between defaults and results of #3
 	 * 4) Save to database the difference generated in #4
 	 */
-	function opts_update()
+	protected function opts_update()
 	{
 		//Do some security related things as we are not using the normal WP settings API
 		$this->security();
@@ -705,7 +705,7 @@ abstract class adminKit
 	/**
 	 * Retrieves the settings from database and exports as JSON
 	 */
-	function settings_export()
+	public function settings_export()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
@@ -739,7 +739,7 @@ abstract class adminKit
 	/**
 	 * Imports JSON settings into database
 	 */
-	function settings_import()
+	public function settings_import()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
@@ -793,7 +793,7 @@ abstract class adminKit
 	 * Exports a XML options document
 	 * @deprecated 7.5.0
 	 */
-	function opts_export()
+	public function opts_export()
 	{
 		_deprecated_function( __FUNCTION__, '7.5.0', '\mtekk\adminKit::settings_export');
 		//Do a nonce check, prevent malicious link/form problems 
@@ -846,7 +846,7 @@ abstract class adminKit
 	/**
 	 * Imports a XML options document
 	 */
-	function opts_import()
+	public function opts_import()
 	{
 		//Our quick and dirty error suppressor
 		$error_handler = function($errno, $errstr, $eerfile, $errline, $errcontext)
@@ -906,7 +906,7 @@ abstract class adminKit
 	/**
 	 * Resets the database settings array to the default set in opt
 	 */
-	function opts_reset()
+	public function opts_reset()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_import_export');
@@ -922,7 +922,7 @@ abstract class adminKit
 	/**
 	 * Undos the last settings save/reset/import
 	 */
-	function opts_undo()
+	public function opts_undo()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_undo');
@@ -943,7 +943,7 @@ abstract class adminKit
 	 * @param array $opts
 	 * @param string $version the version of the passed in options
 	 */
-	function opts_upgrade($opts, $version)
+	public function opts_upgrade($opts, $version)
 	{
 		//We don't support using newer versioned option files in older releases
 		if(version_compare($this::version, $version, '>='))
@@ -956,7 +956,7 @@ abstract class adminKit
 	 * 
 	 * FIXME: seems there is a lot of very similar code in install
 	 */
-	function opts_upgrade_wrapper()
+	public function opts_upgrade_wrapper()
 	{
 		//Do a nonce check, prevent malicious link/form problems
 		check_admin_referer($this->unique_prefix . '_admin_upgrade');
@@ -988,7 +988,7 @@ abstract class adminKit
 	 * @return string
 	 *
 	 */
-	function help()
+	public function help()
 	{
 		$screen = get_current_screen();
 		//Exit early if the add_help_tab function doesn't exist
@@ -1002,12 +1002,12 @@ abstract class adminKit
 			$this->help_contents($screen);
 		}
 	}
-	function help_contents(\WP_Screen &$screen)
+	public function help_contents(\WP_Screen &$screen)
 	{
 		
 	}
 	//FIXME: This looks like a hack to dismiss messages, there just has to be a better way...
-	function dismiss_message()
+	public function dismiss_message()
 	{
 		//Grab the submitted UID
 		$uid = esc_attr($_POST['uid']);
@@ -1020,7 +1020,7 @@ abstract class adminKit
 	/**
 	 * Prints to screen all of the messages stored in the message member variable
 	 */
-	function messages()
+	public function messages()
 	{
 		foreach($this->messages as $message)
 		{
@@ -1046,28 +1046,28 @@ abstract class adminKit
 	/**
 	 * Function prototype to prevent errors
 	 */
-	function admin_styles()
+	public function admin_styles()
 	{
 
 	}
 	/**
 	 * Function prototype to prevent errors
 	 */
-	function admin_scripts()
+	public function admin_scripts()
 	{
 
 	}
 	/**
 	 * Function prototype to prevent errors
 	 */
-	function admin_head()
+	public function admin_head()
 	{
 
 	}
 	/**
 	 * Function prototype to prevent errors
 	 */
-	function admin_page()
+	public function admin_page()
 	{
 
 	}
@@ -1097,7 +1097,7 @@ abstract class adminKit
 			return $option;
 		}
 	}
-	function import_form()
+	public function import_form()
 	{
 		$form = '<div id="mtekk_admin_import_export_relocate">';
 		$form .= sprintf('<form action="%s" method="post" enctype="multipart/form-data" id="%s_admin_upload">', esc_attr($this->admin_url()), esc_attr($this->unique_prefix));
@@ -1125,7 +1125,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_hidden($option)
+	public function input_hidden($option)
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_hidden');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1140,7 +1140,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function label($opt_id, $label)
+	public function label($opt_id, $label)
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::label');
 		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), esc_html($label));
@@ -1156,7 +1156,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
+	public function input_text($label, $option, $class = 'regular-text', $disable = false, $description = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_text');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1191,7 +1191,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
+	public function input_number($label, $option, $class = 'small-text', $disable = false, $description = '', $min = '', $max = '', $step = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_number');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1236,7 +1236,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
+	public function textbox($label, $option, $height = '3', $disable = false, $description = '', $class = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::textbox');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1269,7 +1269,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function tinymce($label, $option, $height = '3', $disable = false, $description = '')
+	public function tinymce($label, $option, $height = '3', $disable = false, $description = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::tinymce');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1302,7 +1302,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
+	public function input_check($label, $option, $instruction, $disable = false, $description = '', $class = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_check');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1337,7 +1337,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_radio($option, $value, $instruction, $disable = false, $class = '')
+	public function input_radio($option, $value, $instruction, $disable = false, $class = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_radio');
 		$opt_id = adminKit::get_valid_id($option);
@@ -1367,7 +1367,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function input_select($label, $option, $values, $disable = false, $description = '', $titles = false, $class = '')
+	public function input_select($label, $option, $values, $disable = false, $description = '', $titles = false, $class = '')
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_select');
 		//If we don't have titles passed in, we'll use option names as values
@@ -1405,7 +1405,7 @@ abstract class adminKit
 	 * 
 	 * @deprecated 7.0.0
 	 */
-	function select_options($optionname, $options, $values, $exclude = array())
+	public function select_options($optionname, $options, $values, $exclude = array())
 	{
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::select_options');
 		$options_html = '';
@@ -1426,7 +1426,7 @@ abstract class adminKit
 	 * @param string $option The name of the option to retrieve
 	 * @return mixed The value of the option
 	 */
-	function get_option($option)
+	public function get_option($option)
 	{
 		return get_option($option);
 	}
@@ -1436,7 +1436,7 @@ abstract class adminKit
 	 * @param string $option The name of the option to update
 	 * @param mixed $newvalue The new value to set the option to
 	 */
-	function update_option($option, $newvalue, $autoload = null)
+	public function update_option($option, $newvalue, $autoload = null)
 	{
 		return update_option($option, $newvalue, $autoload);
 	}
@@ -1448,7 +1448,7 @@ abstract class adminKit
 	 * @param null $deprecated Deprecated parameter
 	 * @param string $autoload Whether or not to autoload the option, it's a string because WP is special
 	 */
-	function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
+	public function add_option($option, $value = '', $deprecated = '', $autoload = 'yes')
 	{
 		return add_option($option, $value, '', $autoload);
 	}
@@ -1457,7 +1457,7 @@ abstract class adminKit
 	 *
 	 * @param string $option The name of the option to delete
 	 */
-	function delete_option($option)
+	public function delete_option($option)
 	{
 		return delete_option($option);
 	}
@@ -1471,7 +1471,7 @@ abstract class adminKit
 	 *
 	 * @deprecated 7.5.1
 	 */
-	function local()
+	public function local()
 	{
 		//Nothing to see here now that it's deprecated
 	}

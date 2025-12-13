@@ -1222,8 +1222,8 @@ class bcn_breadcrumb_trail
 		//Set trail order based on reverse flag
 		$this->order($reverse);
 		//The main compiling loop
-		$trail_str = $this->display_loop($this->breadcrumbs, $linked, $reverse, $template, $outer_template, $this->opt['hseparator']);
-		return $trail_str;
+		$trail_str_escaped = $this->display_loop($this->breadcrumbs, $linked, $reverse, $template, $outer_template, $this->opt['hseparator']);
+		return $trail_str_escaped;
 	}
 	/**
 	 * This function assembles the breadcrumbs in the breadcrumb trail in accordance with the passed in template
@@ -1248,7 +1248,7 @@ class bcn_breadcrumb_trail
 			$position = $last_position;
 		}
 		//Initialize the string which will hold the assembled trail
-		$trail_str = '';
+		$trail_str_escaped = '';
 		foreach($breadcrumbs as $key => $breadcrumb)
 		{
 			//Blank the separator if we are dealing with what is the last breadcrumb in the assembled trail
@@ -1258,7 +1258,7 @@ class bcn_breadcrumb_trail
 			}
 			if(is_array($breadcrumb))
 			{
-				$trail_str .= sprintf($outer_template, 
+				$trail_str_escaped .= sprintf($outer_template, 
 						$this->display_loop($breadcrumb, $linked, $reverse, $template, $outer_template, $this->opt['hseparator_higher_dim'], $depth + 1), $separator);
 			}
 			else if($breadcrumb instanceof bcn_breadcrumb)
@@ -1274,14 +1274,11 @@ class bcn_breadcrumb_trail
 				{
 					$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr(implode(' ', $value)));
 				}
-				//Filter li_attributes adding attributes to the li element
-				//TODO: Remove the bcn_li_attributes filter
-				$attribs = apply_filters_deprecated('bcn_li_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '6.0.0', 'bcn_display_attributes');
-				//TODO: Deprecate this filter in favor of just using bcn_display_attributes_array
-				$attribs = apply_filters('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id());
+				//TODO: Remove this filter in favor of just using bcn_display_attributes_array
+				$attribs = apply_filters_deprecated('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id(), '7.5.1', 'bcn_display_attribute_array');
 				$separator = apply_filters('bcn_display_separator', $separator, $position, $last_position, $depth);
 				//Assemble the breadcrumb
-				$trail_str .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
+				$trail_str_escaped .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
 			}
 			if($reverse)
 			{
@@ -1292,7 +1289,7 @@ class bcn_breadcrumb_trail
 				$position++;
 			}
 		}
-		return $trail_str;
+		return $trail_str_escaped;
 	}
 	/**
 	 * This functions outputs or returns the breadcrumb trail in Schema.org BreadcrumbList compliant JSON-LD
@@ -1306,11 +1303,11 @@ class bcn_breadcrumb_trail
 	{
 		//Set trail order based on reverse flag
 		$this->order($reverse);
-		$trail_str = (object)array(
+		$trail_str_escaped = (object)array(
 			'@context' => 'http://schema.org',
 			'@type' => 'BreadcrumbList',
 			'itemListElement' => $this->json_ld_loop($reverse));
-		return $trail_str;
+		return $trail_str_escaped;
 	}
 	/**
 	 * This function assembles all of the breadcrumbs into an object ready for json_encode
@@ -1325,11 +1322,11 @@ class bcn_breadcrumb_trail
 		{
 			$position = count($this->breadcrumbs);
 		}
-		$breadcrumbs = array();
+		$breadcrumbs_escaped= array();
 		//Loop around our breadcrumbs, call the JSON-LD assembler
 		foreach($this->breadcrumbs as $breadcrumb)
 		{
-			$breadcrumbs[] = $breadcrumb->assemble_json_ld($position);
+			$breadcrumbs_escaped[] = $breadcrumb->assemble_json_ld($position);
 			if($reverse)
 			{
 				$position--;
@@ -1339,7 +1336,7 @@ class bcn_breadcrumb_trail
 				$position++;
 			}
 		}
-		return $breadcrumbs;
+		return $breadcrumbs_escaped;
 	}
 	/**
 	 * Deprecated functions, don't use these

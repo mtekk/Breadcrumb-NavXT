@@ -1281,7 +1281,7 @@ class bcn_breadcrumb_trail
 					$attribs .= sprintf(' %1$s="%2$s"', esc_attr($attrib), esc_attr(implode(' ', $value)));
 				}
 				//TODO: Remove this filter in favor of just using bcn_display_attributes_array
-				$attribs = apply_filters_deprecated('bcn_display_attributes', $attribs, $breadcrumb->get_types(), $breadcrumb->get_id(), '7.5.1', 'bcn_display_attribute_array');
+				$attribs = apply_filters_deprecated('bcn_display_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '7.5.1', 'bcn_display_attribute_array');
 				$separator = apply_filters('bcn_display_separator', $separator, $position, $last_position, $depth);
 				//Assemble the breadcrumb
 				$trail_str_escaped .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);

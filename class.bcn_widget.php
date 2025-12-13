@@ -46,10 +46,10 @@ class bcn_widget extends WP_Widget
 			return;
 		}
 		//Mandatory before widget junk
-		echo $args['before_widget'];
+		echo wp_kses($args['before_widget'], wp_kses_allowed_html('post'));
 		if(!empty($title))
 		{
-			echo esc_html($args['before_title'] . $title . $args['after_title']);
+			echo wp_kses($args['before_title'], wp_kses_allowed_html('post')) . esc_html($title) . wp_kses($args['after_title'], wp_kses_allowed_html('post'));
 		}
 		//We'll want to switch between the two breadcrumb output types
 		if($instance['type'] === 'list')
@@ -93,7 +93,7 @@ class bcn_widget extends WP_Widget
 			do_action('bcn_widget_display_trail', $instance);
 		}
 		//Mandatory after widget junk
-		echo $args['after_widget'];
+		echo wp_kses($args['after_widget'], wp_kses_allowed_html('post'));;
 	}
 	function update($new_instance, $old_instance)
 	{

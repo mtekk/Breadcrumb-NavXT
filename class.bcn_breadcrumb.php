@@ -34,7 +34,6 @@ class bcn_breadcrumb
 	protected $url;
 	//The corresponding resource ID
 	protected $id = null;
-	private $_title = null;
 	//The type of this breadcrumb
 	protected $type;
 	const default_template_no_anchor = '<span property="itemListElement" typeof="ListItem"><span property="name" class="%type%">%htitle%</span><meta property="url" content="%link%"><meta property="position" content="%position%"></span>';
@@ -96,7 +95,6 @@ class bcn_breadcrumb
 	{
 		//Set the title
 		$this->title = apply_filters('bcn_breadcrumb_title', $title, $this->type, $this->id);
-		$this->_title = $this->title;
 	}
 	/**
 	 * Function to get the protected title member
@@ -226,8 +224,8 @@ class bcn_breadcrumb
 			'%link%' => esc_url($this->url),
 			'%htitle%' => $this->title,
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
-			'%ftitle%' => esc_attr(wp_strip_all_tags($this->_title)),
-			'%fhtitle%' => $this->_title,
+			'%ftitle%' => esc_attr(wp_strip_all_tags($this->title)),
+			'%fhtitle%' => $this->title,
 			'%position%' => $position,
 			'bcn-aria-current' => $aria_current_str
 			);

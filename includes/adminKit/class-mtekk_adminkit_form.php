@@ -1,6 +1,6 @@
 <?php
 /*
-	Copyright 2015-2023  John Havlik  (email : john.havlik@mtekk.us)
+	Copyright 2015-2025  John Havlik  (email : john.havlik@mtekk.us)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ class form
 	 */
 	public function label($opt_id, $label)
 	{
-		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), $label);
+		printf('<label for="%1$s">%2$s</label>', esc_attr($opt_id), esc_html($label));
 	}
 	/**
 	 * This will output a well formed table row for a text input
@@ -110,7 +110,7 @@ class form
 						disabled($disable, true, false));
 				if($description !== '')
 				{
-					printf('<p class="description">%s</p>', $description);
+					printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -166,7 +166,7 @@ class form
 						$extras);
 				if($description !== '')
 				{
-							printf('<p class="description">%s</p>', $description);
+							printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -205,7 +205,7 @@ class form
 						esc_attr($height));
 				if($description !== '')
 				{
-					printf('<p class="description">%s</p>', $description);
+					printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -244,7 +244,7 @@ class form
 						esc_attr($height));
 				if($description !== '')
 				{
-					printf('<p class="description">%s</p>', $description);
+					printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -282,12 +282,12 @@ class form
 							esc_attr($class),
 							disabled($disable, true, false),
 							checked($option->get_value(), true, false));
-					echo $instruction;?>
+					echo esc_html($instruction);?>
 				</label><br />
 				<?php
 				if($description !== '')
 				{
-					printf('<p class="description">%s</p>', $description);
+					printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -321,7 +321,7 @@ class form
 					esc_attr($class),
 					disabled($disable, true, false),
 					checked($value, $option->get_value(), false));
-			echo $instruction; ?>
+			echo esc_html($instruction); ?>
 		</label><br/>
 	<?php
 	}
@@ -363,7 +363,7 @@ class form
 						disabled($disable, true, false));
 				if($description !== '')
 				{
-					printf('<p class="description">%s</p>', $description);
+					printf('<p class="description">%s</p>', esc_html($description));
 				}?>
 			</td>
 		</tr>
@@ -390,7 +390,7 @@ class form
 				$options_html .= sprintf('<option value="%1$s" %2$s>%3$s</option>',
 						esc_attr($values[$key]),
 						selected($current_value, $values[$key], false),
-						$option);
+						esc_html($option));
 			}
 		}
 		return $options_html;

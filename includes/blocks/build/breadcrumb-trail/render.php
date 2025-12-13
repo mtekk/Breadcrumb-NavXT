@@ -13,8 +13,8 @@ if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLO
 {
 	return;
 }
-//Handle in-editor previews
-if(wp_is_serving_rest_request() && current_user_can('read_post', absint($block->context['postId'])))
+//Handle in-editor previews, function check to prevent requiring WP6.5
+if(function_exists('wp_is_serving_rest_request') && wp_is_serving_rest_request() && current_user_can('read_post', absint($block->context['postId'])))
 {
 	$preview_post = get_post(absint($block->context['postId']));
 	if($attributes['format'] === 'list')

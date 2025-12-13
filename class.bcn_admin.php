@@ -105,8 +105,8 @@ class bcn_admin extends adminKit
 		//Add a message if we found some unknown settings while merging
 		if(count($unknown) > 0)
 		{
-			/* translators: %u: Number of unknown legacy settings found, %s: comma separated list of the setting names */
 			$this->messages[] = new message(
+					/* translators: %u: Number of unknown legacy settings found, %s: comma separated list of the setting names */
 					sprintf(__('Found %1$u unknown legacy settings: %2$s','breadcrumb-navxt'), count($unknown), implode(', ', $unknown)),
 					'warning',
 					true,
@@ -278,9 +278,9 @@ class bcn_admin extends adminKit
 		//We're deprecating the limit title length setting, let the user know the new method of accomplishing this
 		if(isset($this->settings['blimit_title']) && $this->settings['blimit_title']->get_value())
 		{
-			/* translators: %1$s: HTML opening tag for link to article, %2$s: HTML closing tag for link to article */
 			$this->messages[] = new message(
 					sprintf(
+							/* translators: %1$s: HTML opening tag for link to article, %2$s: HTML closing tag for link to article */
 							esc_html__('Error: The deprecated setting "Title Length" (see Miscellaneous &gt; Deprecated) has no effect in this version Breadcrumb NavXT. Please %1$suse CSS instead%2$s.', 'breadcrumb-navxt'), 
 							'<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>'),
 					'error');
@@ -306,9 +306,9 @@ class bcn_admin extends adminKit
 				if(count($deprecated_tags) > 0)
 				{
 					$setting_link = sprintf('<a href="#%1$s">%2$s</a>', $key, $setting->get_title());
-					/* translators: %1$s: Name of the deprecated template tag found, %2$s: Recommended replacement tag for the deprecated tag, %3$s: The setting name where the deprecated tag was found */
 					$this->messages[] = new message(
 							sprintf(
+									/* translators: %1$s: Name of the deprecated template tag found, %2$s: Recommended replacement tag for the deprecated tag, %3$s: The setting name where the deprecated tag was found */
 									esc_html__('Error: The deprecated template tag %1$s found in setting %3$s. Please use %2$s instead.', 'breadcrumb-navxt'),
 									implode(' and ', $deprecated_tags),
 									implode(' and ', $replacement_tags),
@@ -327,9 +327,9 @@ class bcn_admin extends adminKit
 		{
 			if(!($post_type instanceof WP_Post_Type))
 			{
-				/* translators: %1$s: Export of the post_type object of the unexpected CPT */
 				$this->messages[] = new message(
 						sprintf(
+							/* translators: %1$s: Export of the post_type object of the unexpected CPT */
 							esc_html__('Error: WP_Post_Types global contains non WP_Post_Type object. Debug information: %1$s', 'breadcrumb-navxt'),
 							var_export($post_type, true)),
 						'error',
@@ -340,9 +340,9 @@ class bcn_admin extends adminKit
 			//If we haven't seen this post type before, warn the user
 			if(!isset($this->settings['Hpost_' . $post_type->name . '_template']))
 			{
-				/* translators: %1$s: Post type singular name, %2$s: Post type name */
 				$this->messages[] = new message(
 						sprintf(
+								/* translators: %1$s: Post type singular name, %2$s: Post type name */
 								esc_html__('Warning: The post type %1$s (%2$s) was registered after the Breadcrumb NavXT default settings. It will not show up in the settings.', 'breadcrumb-navxt'),
 								$post_type->labels->singular_name,
 								$post_type->name),
@@ -356,9 +356,9 @@ class bcn_admin extends adminKit
 			if(!($taxonomy instanceof WP_Taxonomy))
 			{
 				//If we haven't seen this taxonomy before, warn the user
-				/* translators: %1$s: Export of the taxonomy object of the unexpected custom taxonomy */
 				$this->messages[] = new message(
 						sprintf(
+								/* translators: %1$s: Export of the taxonomy object of the unexpected custom taxonomy */
 								esc_html__('Error: WP_Taxonomies global contains non WP_Taxonomy object. Debug information: %1$s', 'breadcrumb-navxt'),
 								var_export($taxonomy, true)),
 						'error',
@@ -369,9 +369,9 @@ class bcn_admin extends adminKit
 			if(!isset($this->settings['Htax_' . $taxonomy->name . '_template']))
 			{
 				//If we haven't seen this taxonomy before, warn the user
-				/* translators: %1$s: Taxonomy label, %2$s: Taxonomy name */
 				$this->messages[] = new message(
 						sprintf(
+								/* translators: %1$s: Taxonomy label, %2$s: Taxonomy name */
 								esc_html__('Warning: The taxonomy %1$s (%2$s) was registered after the Breadcrumb NavXT default settings. It will not show up in the settings.', 'breadcrumb-navxt'),
 								$taxonomy->label,
 								$taxonomy->name),
@@ -561,18 +561,18 @@ class bcn_admin extends adminKit
 				<h2><?php echo esc_html($post_type->labels->singular_name); ?></h2>
 				<table class="form-table adminkit-enset-top">
 					<?php
-						/* translators: %s: Singular name for the CPT */
 						$this->form->textbox(
 								$this->settings['Hpost_' . $post_type->name . '_template'],
 								'6',
 								false,
+								/* translators: %s: Singular name for the CPT */
 								sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt'), $singular_name_lc) . $overridden['Hpost_' . $post_type->name . '_template'],
 								$overridden_style['Hpost_' . $post_type->name . '_template']);
-						/* translators: %s: Singular name for the CPT */
 						$this->form->textbox(
 								$this->settings['Hpost_' . $post_type->name . '_template_no_anchor'],
 								'4',
 								false,
+								/* translators: %s: Singular name for the CPT */
 								sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt'), $singular_name_lc) . $overridden['Hpost_' . $post_type->name . '_template_no_anchor'],
 								$overridden_style['Hpost_' . $post_type->name . '_template_no_anchor']);
 						if(!in_array($post_type->name, array('page', 'post')))
@@ -580,7 +580,7 @@ class bcn_admin extends adminKit
 						$optid = form::get_valid_id('apost_' . $post_type->name . '_root');
 					?>
 					<tr valign="top">
-						<th scope="row">
+						<th scope="row"><?php /* translators: %s: Singular name for the CPT */ ?>
 							<label for="<?php echo esc_attr($optid);?>"><?php printf(esc_html__('%s Root Page', 'breadcrumb-navxt'), esc_html($post_type->labels->singular_name));?></label>
 						</th>
 						<td>
@@ -603,9 +603,9 @@ class bcn_admin extends adminKit
 						</td>
 					</tr>
 					<?php
-						/* translators: %s: Post type singlar name */
 						$this->form->input_check(
 									$this->settings['bpost_' . $post_type->name . '_archive_display'],
+									/* translators: %s: Post type singlar name */
 									sprintf(__('Show the breadcrumb for the %s post type archives in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc),
 									!$post_type->has_archive,
 									$overridden['bpost_' . $post_type->name . '_archive_display'],
@@ -621,12 +621,14 @@ class bcn_admin extends adminKit
 						{
 							$this->form->input_check(
 									$this->settings['bpost_' . $post_type->name . '_hierarchy_display'],
+									/* translators: %s: Singular name for the CPT */
 									sprintf(__('Show the hierarchy (specified below) leading to a %s in the breadcrumb trail.', 'breadcrumb-navxt'), $singular_name_lc),
 									false,
 									$overridden['bpost_' . $post_type->name . '_hierarchy_display'],
 									'adminkit-enset-ctrl adminkit-enset' . $overridden_style['bpost_' . $post_type->name . '_hierarchy_display']);
 							$this->form->input_check(
 									$this->settings['bpost_' . $post_type->name . '_hierarchy_parent_first'],
+									/* translators: %s: Singular name for the CPT */
 									sprintf(__('Use the parent of the %s as the primary hierarchy, falling back to the hierarchy selected below when the parent hierarchy is exhausted.', 'breadcrumb-navxt'), $singular_name_lc),
 									false,
 									$overridden['bpost_' . $post_type->name . '_hierarchy_parent_first'],
@@ -640,7 +642,8 @@ class bcn_admin extends adminKit
 					?>
 					<tr valign="top">
 						<th scope="row">
-							<?php printf(esc_html__('%s Hierarchy', 'breadcrumb-navxt'), esc_html($post_type->labels->singular_name)); ?>
+							<?php /* translators: %s: Singular name for the CPT */
+							printf(esc_html__('%s Hierarchy', 'breadcrumb-navxt'), esc_html($post_type->labels->singular_name)); ?>
 						</th>
 						<td>
 							<?php
@@ -702,18 +705,18 @@ class bcn_admin extends adminKit
 				<h2><?php echo esc_html(mb_convert_case($taxonomy->label, MB_CASE_TITLE, 'UTF-8')); ?></h2>
 				<table class="form-table">
 					<?php
-						/* translators: %s: Taxonomy name*/
 						$this->form->textbox(
 								$this->settings['Htax_' . $taxonomy->name . '_template'],
 								'6',
 								false,
+								/* translators: %s: Taxonomy name*/
 								sprintf(__('The template for %s breadcrumbs.', 'breadcrumb-navxt') . $overridden['Htax_' . $taxonomy->name . '_template'], $label_lc),
 								$overridden_style['Htax_' . $taxonomy->name . '_template']);
-						/* translators: %s: Taxonomy name */
 						$this->form->textbox(
 								$this->settings['Htax_' . $taxonomy->name . '_template_no_anchor'],
 								'4',
 								false,
+								/* translators: %s: Taxonomy name */
 								sprintf(__('The template for %s breadcrumbs, used only when the breadcrumb is not linked.', 'breadcrumb-navxt') . $overridden['Htax_' . $taxonomy->name . '_template_no_anchor'], $label_lc),
 								$overridden_style['Htax_' . $taxonomy->name . '_template_no_anchor']);
 					?>
@@ -754,7 +757,7 @@ class bcn_admin extends adminKit
 						<td>
 							<?php wp_dropdown_pages(array(
 									'name' => $this->unique_prefix . '_options[aauthor_root]',
-									'id' => $optid,
+									'id' => esc_attr($optid),
 									'echo' => 1,
 									'show_option_none' => esc_attr__('&mdash; Select &mdash;', 'breadcrumb-navxt'),
 									'option_none_value' => '0',

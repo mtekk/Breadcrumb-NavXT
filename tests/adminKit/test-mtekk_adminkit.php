@@ -161,7 +161,7 @@ class adminKitTest extends WP_UnitTestCase {
 		$old_val = array('Sopta' => 'AB Value', 'Soptb' => 'Hello', 'Soptc' => 'CD Value');
 		$this->admin->update_option('mak_options', $current_val);
 		$this->admin->update_option('mak_options_bk', $old_val);
-		$this->admin->opts_backup();
+		$this->admin->call('opts_backup');
 		$this->assertSame($current_val, $this->admin->get_option('mak_options_bk'));
 		$this->assertSame($current_val, $this->admin->get_option('mak_options'));
 	}
@@ -201,7 +201,7 @@ class adminKitTest extends WP_UnitTestCase {
 		//'Logon' for nonce check
 		wp_set_current_user( self::$superadmin_id);
 		$_REQUEST['_wpnonce'] = wp_create_nonce('mak_options-options');
-		$this->admin->opts_update();
+		$this->admin->call('opts_update');
 		//Retrieve the saved options
 		$saved_options = $this->admin->get_option('mak_options');
 		//We should only see the two non-default option values

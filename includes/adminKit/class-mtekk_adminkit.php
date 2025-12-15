@@ -726,7 +726,7 @@ abstract class adminKit
 			header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.json');
 			header('Content-Type: application/json');
 			//JSON encode our settings array
-			$output = json_encode(
+			$output = wp_json_encode(
 					(object)array(
 							'plugin' => $this->short_name,
 							'version' => $this::version,

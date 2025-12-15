@@ -734,7 +734,7 @@ class breadcrumb_navxt
 		}
 		//Generate the breadcrumb trail
 		$this->breadcrumb_trail->fill($force);
-		$trail_string_escaped= json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+		$trail_string_escaped = wp_json_encode($this->breadcrumb_trail->display_json_ld($reverse), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		if($return)
 		{
 			return $trail_string_escaped;

@@ -70,7 +70,7 @@ class bcn_breadcrumb
 			}
 			else
 			{
-				$this->template_no_anchor =  $this->run_template_kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id));
+				$this->template_no_anchor =  $this->kses(apply_filters('bcn_breadcrumb_template_no_anchor', $template, $this->type, $this->id));
 				$this->set_template(bcn_breadcrumb::get_default_template());
 			}
 		}
@@ -149,7 +149,7 @@ class bcn_breadcrumb
 	 * @param string $template_str The template string to run through kses
 	 * @return string The template string post cleaning
 	 */
-	protected function run_template_kses($template_str)
+	protected function kses($template_str)
 	{
 		return wp_kses($template_str, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post')));
 	}
@@ -161,7 +161,7 @@ class bcn_breadcrumb
 	public function set_template($template)
 	{
 		//Assign the breadcrumb template
-		$this->template = $this->run_template_kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id));
+		$this->template = $this->kses(apply_filters('bcn_breadcrumb_template', $template, $this->type, $this->id));
 	}
 	/**
 	 * Function to set the internal breadcrumb ID
@@ -222,11 +222,11 @@ class bcn_breadcrumb
 		$replacements = array(
 			'%title%' => esc_attr(wp_strip_all_tags($this->title)),
 			'%link%' => esc_url($this->url),
-			'%htitle%' => $this->title,
+			'%htitle%' => $this->kses($this->title), /*TODO: verify if we want to restrict this more*/
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(wp_strip_all_tags($this->title)),
-			'%fhtitle%' => $this->title,
-			'%position%' => $position,
+			'%fhtitle%' => $this->kses($this->title), /*TODO: verify if we want to restrict this more*/
+			'%position%' => esc_attr($position),
 			'bcn-aria-current' => $aria_current_str
 			);
 		//The type may be an array, implode it if that is the case
@@ -237,7 +237,9 @@ class bcn_breadcrumb
 		}
 		else
 		{
-			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('bcn_breadcrumb::type must be an array', 'breadcrumb-navxt'), '6.0.2');	
+			_doing_it_wrong(__CLASS__ . '::' . __FUNCTION__, esc_html__('bcn_breadcrumb::type must be an array', 'breadcrumb-navxt'), '6.0.2');
+			//Type wasn't an array, throw it through esc_attr
+			$replacements['%type%'] == esc_attr($replacements['%type%']);
 		}
 		$replacements = apply_filters('bcn_template_tags', $replacements, $this->type, $this->id);
 		//If we are linked we'll need to use the normal template

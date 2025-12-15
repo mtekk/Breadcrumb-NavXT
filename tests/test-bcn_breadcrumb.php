@@ -58,8 +58,9 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertSame('Hello', $this->breadcrumb->get_title());
 	}
 	function test_bad_title() {
-		$source = "'penn & teller' & at&t";
+		$source = "'penn & <del>teller</del>' & <h1>at&t</h1>";
 		$resa = "&#039;penn &amp; teller&#039; &amp; at&amp;t";
+		$resb = "'penn &amp; <del>teller</del>' &amp; <h1>at&amp;t</h1>";
 		//Set the title
 		$this->breadcrumb->set_title($source);
 		//Ensure the title hasn't changed yet (escape later)
@@ -69,7 +70,7 @@ class BreadcrumbTest extends WP_UnitTestCase {
 		$this->assertStringMatchesFormat('<span property="itemListElement" typeof="ListItem"><a property="item" typeof="WebPage" title="Go to %s." href="%s" class="%s" ><span property="name">%s</span></a><meta property="position" content="%d"></span>', $breadcrumb_string_linked1);
 		//Check that our titles are escaped as expected
 		$this->assertStringContainsString('title="Go to ' . $resa . '."', $breadcrumb_string_linked1);
-		$this->assertStringContainsString('<span property="name">' . $source . '</span>', $breadcrumb_string_linked1);
+		$this->assertStringContainsString('<span property="name">' . $resb . '</span>', $breadcrumb_string_linked1);
 	}
 	function test_set_url() {
 		//Start with an unlinked breadcrumb trail assembly

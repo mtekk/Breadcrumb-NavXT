@@ -1037,6 +1037,7 @@ abstract class adminKit
 	//FIXME: This looks like a hack to dismiss messages, there just has to be a better way...
 	public function dismiss_message()
 	{
+		$this->security();
 		//Grab the submitted UID
 		$uid = esc_attr($_POST['uid']);
 		//Create a dummy message, with the discovered UID

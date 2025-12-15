@@ -69,7 +69,7 @@ class message
 	 */
 	public function dismiss()
 	{
-		if($this->dismissible && isset($_POST['uid']) && esc_attr($_POST['uid']) === $this->uid && check_ajax_referer($this->uid . '_dismiss', 'nonce'))
+		if($this->dismissible && isset($_POST['uid']) && sanitize_html_class($_POST['uid']) === $this->uid && check_ajax_referer($this->uid . '_dismiss', 'nonce'))
 		{
 			$this->dismissed = true;
 			//If the message was dismissed, update the transient for 30 days

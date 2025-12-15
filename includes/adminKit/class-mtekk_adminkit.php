@@ -88,7 +88,7 @@ if(!class_exists('form'))
 }
 abstract class adminKit
 {
-	const version = '3.1.1';
+	const version = '3.1.2';
 	protected $full_name;
 	protected $short_name;
 	protected $plugin_basename;
@@ -184,7 +184,7 @@ abstract class adminKit
 	 */
 	public function check_nonce($mode)
 	{
-		check_admin_referer($this->unique_prefix . '_' . $mode);
+		return check_admin_referer($this->unique_prefix . '_' . $mode);
 	}
 	/**
 	 * Makes sure the current user can manage options to proceed
@@ -707,87 +707,95 @@ abstract class adminKit
 	 */
 	public function settings_export()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_import_export');
-		//Must clone the defaults since PHP normally shallow copies
-		$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
-		//Get the database options, and load
-		//FIXME: This changes once we save settings to the db instead of opts
-		adminKit::load_opts_into_settings($this->get_option($this->unique_prefix . '_options'), $this->settings);
-		//Get the unique settings
-		$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
-		//Change our header to application/json for direct save
-		header('Cache-Control: public');
-		//The next two will cause good browsers to download instead of displaying the file
-		header('Content-Description: File Transfer');
-		header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.json');
-		header('Content-Type: application/json');
-		//JSON encode our settings array
-		$output = json_encode(
-				(object)array(
-						'plugin' => $this->short_name,
-						'version' => $this::version,
-						'settings' => $export_settings)
-				, JSON_UNESCAPED_SLASHES, 32);
-		//Let the browser know how long the file is
-		header('Content-Length: ' . strlen($output)); // binary length
-		//Output the file
-		echo $output;
-		//Prevent WordPress from continuing on
-		die();
+		if(check_admin_referer($this->unique_prefix . '_admin_import_export'))
+		{
+			//Must clone the defaults since PHP normally shallow copies
+			$default_settings = array_map('mtekk\adminKit\adminKit::setting_cloner', $this->settings);
+			//Get the database options, and load
+			//FIXME: This changes once we save settings to the db instead of opts
+			adminKit::load_opts_into_settings($this->get_option($this->unique_prefix . '_options'), $this->settings);
+			//Get the unique settings
+			$export_settings = apply_filters($this->unique_prefix . '_settings_to_export', array_udiff_assoc($this->settings, $default_settings, array($this, 'setting_equal_check')));
+			//Change our header to application/json for direct save
+			header('Cache-Control: public');
+			//The next two will cause good browsers to download instead of displaying the file
+			header('Content-Description: File Transfer');
+			header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.json');
+			header('Content-Type: application/json');
+			//JSON encode our settings array
+			$output = json_encode(
+					(object)array(
+							'plugin' => $this->short_name,
+							'version' => $this::version,
+							'settings' => $export_settings)
+					, JSON_UNESCAPED_SLASHES, 32);
+			//Let the browser know how long the file is
+			header('Content-Length: ' . strlen($output)); // binary length
+			//Output the file
+			echo $output;
+			//Prevent WordPress from continuing on
+			die();
+		}
 	}
 	/**
 	 * Imports JSON settings into database
 	 */
 	public function settings_import()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_import_export');
-		//Set the backup options in the DB to the current options
-		$this->opts_backup();
-		//Load the user uploaded file, handle failure gracefully
-		if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		if(check_admin_referer($this->unique_prefix . '_admin_import_export'))
 		{
-			//Grab the json settings from the temp file, treat as associative array so we can just throw the settings subfield at the update loop
-			$settings_upload = json_decode(file_get_contents($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']), true);
-			//Only continue if we have a JSON object that is for this plugin (the the WP rest_is_object() function is handy here as the REST API passes JSON)
-			if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
+			//Set the backup options in the DB to the current options
+			$this->opts_backup();
+			//Load the user uploaded file, handle failure gracefully
+			if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 			{
-				//Act as if the JSON file was just a bunch of POST entries for a settings save
-				//Run through the loop and get the diff from defaults
-				$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
-				//FIXME: Eventually we'll save the object array, but not today
-				//Convert to opts array for saving
-				$this->opt = adminKit::settings_to_opts($new_settings);
-				//Run opts through update script
-				//Make sure we safely import and upgrade settings if needed
-				$this->opts_upgrade($this->opt, $settings_upload['version']);
-				//Commit the option changes
-				$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
-				//Check if known settings match attempted save
-				if($updated && count(array_diff_key($settings_upload['settings'], $this->settings)) == 0)
+				//Grab the json settings from the temp file, treat as associative array so we can just throw the settings subfield at the update loop
+				$settings_upload = json_decode(file_get_contents($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']), true);
+				//Only continue if we have a JSON object that is for this plugin (the the WP rest_is_object() function is handy here as the REST API passes JSON)
+				if(rest_is_object($settings_upload) && isset($settings_upload['plugin']) && $settings_upload['plugin'] === $this->short_name)
 				{
-					//Let the user know everything went ok
-					$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
-							. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
+					//Act as if the JSON file was just a bunch of POST entries for a settings save
+					//Run through the loop and get the diff from defaults
+					$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
+					//FIXME: Eventually we'll save the object array, but not today
+					//Convert to opts array for saving
+					$this->opt = adminKit::settings_to_opts($new_settings);
+					//Run opts through update script
+					//Make sure we safely import and upgrade settings if needed
+					$this->opts_upgrade($this->opt, $settings_upload['version']);
+					//Commit the option changes
+					$updated = $this->update_option($this->unique_prefix . '_options', $this->opt, true);
+					//Check if known settings match attempted save
+					if($updated && count(array_diff_key($settings_upload['settings'], $this->settings)) == 0)
+					{
+						//Let the user know everything went ok
+						$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
+								. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
+					}
+					else
+					{
+						$this->messages[] = new message(esc_html__('No settings were imported. Settings from uploaded file matched existing settings.', $this->identifier), 'info');
+					}
+					//Output any messages that there may be
+					add_action('admin_notices', array($this, 'messages'));
+					//And return as we're successful
+					return;
 				}
+				//If it wasn't JSON, try XML
 				else
 				{
-					$this->messages[] = new message(esc_html__('No settings were imported. Settings from uploaded file matched existing settings.', $this->identifier), 'info');
+					return $this->opts_import();
 				}
-				//Output any messages that there may be
-				add_action('admin_notices', array($this, 'messages'));
-				//And return as we're successful
-				return;
 			}
-			//If it wasn't JSON, try XML
-			else
-			{
-				return $this->opts_import();
-			}
+			//Throw an error since we could not load the file for various reasons
+			$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
 		}
-		//Throw an error since we could not load the file for various reasons
-		$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
 	}
 	/**
 	 * Exports a XML options document
@@ -796,146 +804,162 @@ abstract class adminKit
 	public function opts_export()
 	{
 		_deprecated_function( __FUNCTION__, '7.5.0', '\mtekk\adminKit::settings_export');
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems 
-		check_admin_referer($this->unique_prefix . '_admin_import_export');
-		//Update our internal settings
-		$this->opt = $this->get_option($this->unique_prefix . '_options');
-		//Create a DOM document
-		$dom = new \DOMDocument('1.0', 'UTF-8');
-		//Adds in newlines and tabs to the output
-		$dom->formatOutput = true;
-		//We're not using a DTD therefore we need to specify it as a standalone document
-		$dom->xmlStandalone = true;
-		//Add an element called options
-		$node = $dom->createElement('options');
-		$parnode = $dom->appendChild($node);
-		//Add a child element named plugin
-		$node = $dom->createElement('plugin');
-		$plugnode = $parnode->appendChild($node);
-		//Add some attributes that identify the plugin and version for the options export
-		$plugnode->setAttribute('name', $this->short_name);
-		$plugnode->setAttribute('version', $this::version);
-		//Change our header to text/xml for direct save
-		header('Cache-Control: public');
-		//The next two will cause good browsers to download instead of displaying the file
-		header('Content-Description: File Transfer');
-		header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.xml');
-		header('Content-Type: text/xml');
-		//Loop through the options array
-		foreach($this->opt as $key=>$option)
+		if(check_admin_referer($this->unique_prefix . '_admin_import_export'))
 		{
-			if(is_array($option))
+			//Update our internal settings
+			$this->opt = $this->get_option($this->unique_prefix . '_options');
+			//Create a DOM document
+			$dom = new \DOMDocument('1.0', 'UTF-8');
+			//Adds in newlines and tabs to the output
+			$dom->formatOutput = true;
+			//We're not using a DTD therefore we need to specify it as a standalone document
+			$dom->xmlStandalone = true;
+			//Add an element called options
+			$node = $dom->createElement('options');
+			$parnode = $dom->appendChild($node);
+			//Add a child element named plugin
+			$node = $dom->createElement('plugin');
+			$plugnode = $parnode->appendChild($node);
+			//Add some attributes that identify the plugin and version for the options export
+			$plugnode->setAttribute('name', $this->short_name);
+			$plugnode->setAttribute('version', $this::version);
+			//Change our header to text/xml for direct save
+			header('Cache-Control: public');
+			//The next two will cause good browsers to download instead of displaying the file
+			header('Content-Description: File Transfer');
+			header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.xml');
+			header('Content-Type: text/xml');
+			//Loop through the options array
+			foreach($this->opt as $key=>$option)
 			{
-				continue;
+				if(is_array($option))
+				{
+					continue;
+				}
+				//Add a option tag under the options tag, store the option value
+				$node = $dom->createElement('option', htmlentities($option, ENT_COMPAT | ENT_XML1, 'UTF-8'));
+				$newnode = $plugnode->appendChild($node);
+				//Change the tag's name to that of the stored option
+				$newnode->setAttribute('name', $key);
 			}
-			//Add a option tag under the options tag, store the option value
-			$node = $dom->createElement('option', htmlentities($option, ENT_COMPAT | ENT_XML1, 'UTF-8'));
-			$newnode = $plugnode->appendChild($node);
-			//Change the tag's name to that of the stored option
-			$newnode->setAttribute('name', $key);
+			//Prepare the XML for output
+			$output = $dom->saveXML();
+			//Let the browser know how long the file is
+			header('Content-Length: ' . strlen($output)); // binary length
+			//Output the file
+			echo $output;
+			//Prevent WordPress from continuing on
+			die();
 		}
-		//Prepare the XML for output
-		$output = $dom->saveXML();
-		//Let the browser know how long the file is
-		header('Content-Length: ' . strlen($output)); // binary length
-		//Output the file
-		echo $output;
-		//Prevent WordPress from continuing on
-		die();
 	}
 	/**
 	 * Imports a XML options document
 	 */
 	public function opts_import()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Our quick and dirty error suppressor
 		$error_handler = function($errno, $errstr, $eerfile, $errline, $errcontext)
 		{
 			return true;
 		};
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_import_export');
-		//Set the backup options in the DB to the current options
-		$this->opts_backup();
-		//Create a DOM document
-		$dom = new \DOMDocument('1.0', 'UTF-8');
-		//We want to catch errors ourselves
-		set_error_handler($error_handler);
-		//Load the user uploaded file, handle failure gracefully
-		if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
+		if(check_admin_referer($this->unique_prefix . '_admin_import_export'))
 		{
-			$opts_temp = array();
-			$version = '';
-			//Have to use an xpath query otherwise we run into problems
-			$xpath = new \DOMXPath($dom);  
-			$option_sets = $xpath->query('plugin');
-			//Loop through all of the xpath query results
-			foreach($option_sets as $options)
+			//Set the backup options in the DB to the current options
+			$this->opts_backup();
+			//Create a DOM document
+			$dom = new \DOMDocument('1.0', 'UTF-8');
+			//We want to catch errors ourselves
+			set_error_handler($error_handler);
+			//Load the user uploaded file, handle failure gracefully
+			if(isset($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && is_uploaded_file($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']) && $dom->load($_FILES[$this->unique_prefix . '_admin_import_file']['tmp_name']))
 			{
-				//We only want to import options for only this plugin
-				if($options->getAttribute('name') === $this->short_name)
+				$opts_temp = array();
+				$version = '';
+				//Have to use an xpath query otherwise we run into problems
+				$xpath = new \DOMXPath($dom);  
+				$option_sets = $xpath->query('plugin');
+				//Loop through all of the xpath query results
+				foreach($option_sets as $options)
 				{
-					//Grab the file version
-					$version = $options->getAttribute('version');
-					//Loop around all of the options
-					foreach($options->getelementsByTagName('option') as $child)
+					//We only want to import options for only this plugin
+					if($options->getAttribute('name') === $this->short_name)
 					{
-						//Place the option into the option array, DOMDocument decodes html entities for us
-						$opts_temp[$child->getAttribute('name')] = $child->nodeValue;
+						//Grab the file version
+						$version = $options->getAttribute('version');
+						//Loop around all of the options
+						foreach($options->getelementsByTagName('option') as $child)
+						{
+							//Place the option into the option array, DOMDocument decodes html entities for us
+							$opts_temp[$child->getAttribute('name')] = $child->nodeValue;
+						}
 					}
 				}
+				//Make sure we safely import and upgrade settings if needed
+				$this->opts_upgrade($opts_temp, $version);
+				//Commit the loaded options to the database
+				$this->update_option($this->unique_prefix . '_options', $this->opt, true);
+				//Everything was successful, let the user know
+				$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
+					. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
 			}
-			//Make sure we safely import and upgrade settings if needed
-			$this->opts_upgrade($opts_temp, $version);
-			//Commit the loaded options to the database
-			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
-			//Everything was successful, let the user know
-			$this->messages[] = new message(esc_html__('Settings successfully imported from the uploaded file.', $this->identifier)
-				. $this->admin_anchor('undo', __('Undo the options import.', $this->identifier), __('Undo', $this->identifier)), 'success');
+			else
+			{
+				//Throw an error since we could not load the file for various reasons
+				$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
+			}
+			//Reset to the default error handler after we're done
+			restore_error_handler();
+			//Output any messages that there may be
+			add_action('admin_notices', array($this, 'messages'));
 		}
-		else
-		{
-			//Throw an error since we could not load the file for various reasons
-			$this->messages[] = new message(esc_html__('Importing settings from file failed.', $this->identifier), 'error');
-		}
-		//Reset to the default error handler after we're done
-		restore_error_handler();
-		//Output any messages that there may be
-		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * Resets the database settings array to the default set in opt
 	 */
 	public function opts_reset()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_import_export');
-		//Set the backup options in the DB to the current options
-		$this->opts_backup();
-		//Load in the hard coded default option values
-		$this->update_option($this->unique_prefix . '_options', array(), true);
-		//Reset successful, let the user know
-		$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
-			. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
-		add_action('admin_notices', array($this, 'messages'));
+		if(check_admin_referer($this->unique_prefix . '_admin_import_export'))
+		{
+			//Set the backup options in the DB to the current options
+			$this->opts_backup();
+			//Load in the hard coded default option values
+			$this->update_option($this->unique_prefix . '_options', array(), true);
+			//Reset successful, let the user know
+			$this->messages[] = new message(esc_html__('Settings successfully reset to the default values.', $this->identifier)
+				. $this->admin_anchor('undo', __('Undo the options reset.', $this->identifier), __('Undo', $this->identifier)), 'success');
+			add_action('admin_notices', array($this, 'messages'));
+		}
 	}
 	/**
 	 * Undos the last settings save/reset/import
 	 */
 	public function opts_undo()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_undo');
-		//Set the options array to the current options
-		$opt = $this->get_option($this->unique_prefix . '_options');
-		//Set the options in the DB to the backup options
-		$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'), true);
-		//Set the backup options to the undone options
-		$this->update_option($this->unique_prefix . '_options_bk', $opt, false);
-		//Send the success/undo message
-		$this->messages[] = new message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
-			. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
-		add_action('admin_notices', array($this, 'messages'));
+		if(check_admin_referer($this->unique_prefix . '_admin_undo'))
+		{
+			//Set the options array to the current options
+			$opt = $this->get_option($this->unique_prefix . '_options');
+			//Set the options in the DB to the backup options
+			$this->update_option($this->unique_prefix . '_options', $this->get_option($this->unique_prefix . '_options_bk'), true);
+			//Set the backup options to the undone options
+			$this->update_option($this->unique_prefix . '_options_bk', $opt, false);
+			//Send the success/undo message
+			$this->messages[] = new message(esc_html__('Settings successfully undid the last operation.', $this->identifier)
+				. $this->admin_anchor('undo', __('Undo the last undo operation.', $this->identifier), __('Undo', $this->identifier)), 'success');
+			add_action('admin_notices', array($this, 'messages'));
+		}
 	}
 	/**
 	 * Upgrades input options array, sets to $this->opt, designed to be overwritten
@@ -958,29 +982,33 @@ abstract class adminKit
 	 */
 	public function opts_upgrade_wrapper()
 	{
+		//Check if the user has permissions to do this
+		$this->security();
 		//Do a nonce check, prevent malicious link/form problems
-		check_admin_referer($this->unique_prefix . '_admin_upgrade');
-		//Grab the database options
-		$opts = $this->get_option($this->unique_prefix . '_options');
-		if(is_array($opts))
+		if(check_admin_referer($this->unique_prefix . '_admin_upgrade'))
 		{
-			//Feed the just read options into the upgrade function
-			$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
-			//Always have to update the version
-			$this->update_option($this->unique_prefix . '_version', $this::version, false);
-			//Store the options
-			$this->update_option($this->unique_prefix . '_options', $this->opt, true);
-			//Send the success message
-			$this->messages[] = new message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
+			//Grab the database options
+			$opts = $this->get_option($this->unique_prefix . '_options');
+			if(is_array($opts))
+			{
+				//Feed the just read options into the upgrade function
+				$this->opts_upgrade($opts, $this->get_option($this->unique_prefix . '_version'));
+				//Always have to update the version
+				$this->update_option($this->unique_prefix . '_version', $this::version, false);
+				//Store the options
+				$this->update_option($this->unique_prefix . '_options', $this->opt, true);
+				//Send the success message
+				$this->messages[] = new message(esc_html__('Settings successfully migrated.', $this->identifier), 'success');
+			}
+			else
+			{
+				//Run the install script
+				$this->install();
+				//Send the success message
+				$this->messages[] = new message(esc_html__('Default settings successfully installed.', $this->identifier), 'success');
+			}
+			add_action('admin_notices', array($this, 'messages'));
 		}
-		else
-		{
-			//Run the install script
-			$this->install();
-			//Send the success message
-			$this->messages[] = new message(esc_html__('Default settings successfully installed.', $this->identifier), 'success');
-		}
-		add_action('admin_notices', array($this, 'messages'));
 	}
 	/**
 	 * help action hook function

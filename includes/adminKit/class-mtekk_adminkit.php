@@ -726,16 +726,16 @@ abstract class adminKit
 			header('Content-disposition: attachment; filename=' . $this->unique_prefix . '_settings.json');
 			header('Content-Type: application/json');
 			//JSON encode our settings array
-			$output = wp_json_encode(
+			$output_escaped= wp_json_encode(
 					(object)array(
 							'plugin' => $this->short_name,
 							'version' => $this::version,
 							'settings' => $export_settings)
 					, JSON_UNESCAPED_SLASHES, 32);
 			//Let the browser know how long the file is
-			header('Content-Length: ' . strlen($output)); // binary length
+			header('Content-Length: ' . strlen($output_escaped)); // binary length
 			//Output the file
-			echo $output;
+			echo $output_escaped;
 			//Prevent WordPress from continuing on
 			die();
 		}
@@ -1034,12 +1034,12 @@ abstract class adminKit
 	{
 		
 	}
-	//FIXME: This looks like a hack to dismiss messages, there just has to be a better way...
+	//FIXME: There just has to be a better way...
 	public function dismiss_message()
 	{
 		$this->security();
 		//Grab the submitted UID
-		$uid = esc_attr($_POST['uid']);
+		$uid = sanitize_html_class(wp_unslash($_POST['uid']));
 		//Create a dummy message, with the discovered UID
 		$message = new message('', '', true, $uid);
 		//Dismiss the message

@@ -121,6 +121,6 @@ class adminKitSettingStringTest extends WP_UnitTestCase {
 		$this->settings['normal_setting']->set_allow_empty(false);
 		$this->assertSame($this->settings['normal_setting']->validate(''), 'A Value');
 		//Test HTML
-		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), '&lt;span&gt;Hello World&lt;/span&gt;');
+		$this->assertSame($this->settings['normal_setting']->validate('<span>Hello World</span>'), 'Hello World');
 	}
 }

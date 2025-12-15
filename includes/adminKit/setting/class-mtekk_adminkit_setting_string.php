@@ -47,7 +47,7 @@ class setting_string extends setting_base
 		{
 			return $this->value;
 		}
-		return esc_html($new_value);
+		return sanitize_text_field($new_value);
 	}
 	/**
 	 * 

@@ -1284,7 +1284,7 @@ class bcn_breadcrumb_trail
 				$attribs = apply_filters_deprecated('bcn_display_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '7.5.1', 'bcn_display_attribute_array');
 				$separator = apply_filters('bcn_display_separator', $separator, $position, $last_position, $depth);
 				//Assemble the breadcrumb
-				$trail_str_escaped .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), $separator, $attribs);
+				$trail_str_escaped .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), wp_kses($separator, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'))), $attribs);
 			}
 			if($reverse)
 			{

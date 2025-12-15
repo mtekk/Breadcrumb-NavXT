@@ -146,12 +146,12 @@ class bcn_breadcrumb
 	/**
 	 * A wrapper for wp_kses which handles getting the allowed html
 	 * 
-	 * @param string $template_str The template string to run through kses
-	 * @return string The template string post cleaning
+	 * @param string $string The string to run through kses
+	 * @return string The string post cleaning
 	 */
-	protected function kses($template_str)
+	protected function kses($string)
 	{
-		return wp_kses($template_str, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post')));
+		return wp_kses($string, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post')));
 	}
 	/**
 	 * Function to set the internal breadcrumb template

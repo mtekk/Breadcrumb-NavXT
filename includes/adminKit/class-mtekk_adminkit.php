@@ -619,7 +619,7 @@ abstract class adminKit
 		}
 	}
 	/**
-	 * Generates array of the new non-default settings based off of form input
+	 * Generates array of the new non-default settings based off of form $input
 	 * 
 	 * @param array $input The form input array of setting values
 	 * @param bool $bool_ignore_missing Tell maybe_update_from_form_input to not treat missing bool setting entries as setting to false
@@ -742,6 +742,7 @@ abstract class adminKit
 	}
 	/**
 	 * Imports JSON settings into database
+	 * 
 	 */
 	public function settings_import()
 	{
@@ -762,6 +763,7 @@ abstract class adminKit
 				{
 					//Act as if the JSON file was just a bunch of POST entries for a settings save
 					//Run through the loop and get the diff from defaults
+					//this isn't obvious but calls adminkit::settings_update_loop() which calls setting::maybe_update_from_form_input which performs sanitization on a per setting basis
 					$new_settings = $this->get_settings_diff($settings_upload['settings'], true);
 					//FIXME: Eventually we'll save the object array, but not today
 					//Convert to opts array for saving
@@ -857,6 +859,8 @@ abstract class adminKit
 	}
 	/**
 	 * Imports a XML options document
+	 * 
+	 * FIXME: Where is the input sanitization/validation?
 	 */
 	public function opts_import()
 	{
@@ -900,8 +904,17 @@ abstract class adminKit
 						}
 					}
 				}
+				//Act as if the JSON file was just a bunch of POST entries for a settings save
+				//Run through the loop and get the diff from defaults
+				//this isn't obvious but calls adminkit::settings_update_loop() which calls setting::maybe_update_from_form_input which performs sanitization on a per setting basis
+				$new_settings = $this->get_settings_diff($opts_temp, true);
+				//FIXME: Eventually we'll save the object array, but not today
+				//Convert to opts array for saving
+				$this->opt = adminKit::settings_to_opts($new_settings);
+				//Run opts through update script
 				//Make sure we safely import and upgrade settings if needed
-				$this->opts_upgrade($opts_temp, $version);
+				$this->opts_upgrade($this->opt, $settings_upload['version']);
+				
 				//Commit the loaded options to the database
 				$this->update_option($this->unique_prefix . '_options', $this->opt, true);
 				//Everything was successful, let the user know

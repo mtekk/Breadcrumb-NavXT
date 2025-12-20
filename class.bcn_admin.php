@@ -812,31 +812,6 @@ class bcn_admin extends adminKit
 								$overridden_style['H404_template']);
 					?>
 				</table>
-				<h2><?php esc_html_e('Deprecated', 'breadcrumb-navxt'); ?></h2>
-				<table class="form-table">
-					<tr valign="top">
-						<th scope="row">
-							<?php esc_html_e('Title Length', 'breadcrumb-navxt'); ?>
-						</th>
-						<td>
-							<label>
-								<input name="bcn_options[blimit_title]" type="checkbox" id="blimit_title" value="true" class="disabled" <?php checked(true, $this->settings['blimit_title']->get_value()); ?> />
-								<?php
-									/* translators: %1$s: HTML opening tag for link to article, %2$s: HTML closing tag for link to article */
-									printf(esc_html__('Limit the length of the breadcrumb title. (Deprecated, %1$suse CSS instead%2$s)', 'breadcrumb-navxt'), '<a title="' . esc_attr__('Go to the guide on trimming breadcrumb title lengths with CSS', 'breadcrumb-navxt') . '" href="https://mtekk.us/archives/guides/trimming-breadcrumb-title-lengths-with-css/">', '</a>');
-								?>
-							</label><br />
-							<ul>
-								<li>
-									<label for="amax_title_length">
-										<?php esc_html_e('Max Title Length: ','breadcrumb-navxt');?>
-										<input type="number" name="bcn_options[amax_title_length]" id="amax_title_length" min="1" step="1" value="<?php echo esc_html($this->settings['amax_title_length']->get_value(), ENT_COMPAT, 'UTF-8'); ?>" class="small-text disabled" />
-									</label>
-								</li>
-							</ul>
-						</td>
-					</tr>
-				</table>
 				<?php do_action($this->unique_prefix . '_after_settings_tab_miscellaneous', $this->settings); ?>
 			</fieldset>
 			<?php do_action($this->unique_prefix . '_after_settings_tabs', $this->settings); ?>

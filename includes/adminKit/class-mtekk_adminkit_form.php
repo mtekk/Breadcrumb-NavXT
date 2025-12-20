@@ -133,18 +133,18 @@ class form
 	{
 		$opt_id = form::get_valid_id($option->get_name());
 		$opt_name = $this->unique_prefix . '_options[' . $option->get_opt_name(). ']';
-		$extras = '';
+		$extras_escaped = '';
 		if($min !== '')
 		{
-			$extras .= 'min="' . esc_attr($min) . '" ';
+			$extras_escaped.= 'min="' . esc_attr($min) . '" ';
 		}
 		if($max !== '')
 		{
-			$extras .= 'max="' . esc_attr($max) . '" ';
+			$extras_escaped.= 'max="' . esc_attr($max) . '" ';
 		}
 		if($step !== '')
 		{
-			$extras .= 'step="' . esc_attr($step) . '" ';
+			$extras_escaped.= 'step="' . esc_attr($step) . '" ';
 		}?>
 		<tr valign="top">
 			<th scope="row">
@@ -163,7 +163,7 @@ class form
 						esc_attr($option->get_value()),
 						esc_attr($class),
 						disabled($disable, true, false),
-						$extras);
+						$extras_escaped);
 				if($description !== '')
 				{
 							printf('<p class="description">%s</p>', esc_html($description));

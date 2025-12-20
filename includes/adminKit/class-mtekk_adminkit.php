@@ -848,11 +848,11 @@ abstract class adminKit
 				$newnode->setAttribute('name', $key);
 			}
 			//Prepare the XML for output
-			$output = $dom->saveXML();
+			$output_escaped = $dom->saveXML();
 			//Let the browser know how long the file is
-			header('Content-Length: ' . strlen($output)); // binary length
+			header('Content-Length: ' . strlen($output_escaped)); // binary length
 			//Output the file
-			echo $output;
+			echo $output_escaped;
 			//Prevent WordPress from continuing on
 			die();
 		}
@@ -1238,18 +1238,18 @@ abstract class adminKit
 		_deprecated_function( __FUNCTION__, '7.0', '\mtekk\adminKit\form::input_number');
 		$opt_id = adminKit::get_valid_id($option);
 		$opt_name = $this->unique_prefix . '_options[' . $option . ']';
-		$extras = '';
+		$extras_escaped = '';
 		if($min !== '')
 		{
-			$extras .= 'min="' . esc_attr($min) . '" ';
+			$extras_escaped .= 'min="' . esc_attr($min) . '" ';
 		}
 		if($max !== '')
 		{
-			$extras .= 'max="' . esc_attr($max) . '" ';
+			$extras_escaped .= 'max="' . esc_attr($max) . '" ';
 		}
 		if($step !== '')
 		{
-			$extras .= 'step="' . esc_attr($step) . '" ';
+			$extras_escaped .= 'step="' . esc_attr($step) . '" ';
 		}
 		if($disable)
 		{
@@ -1261,7 +1261,7 @@ abstract class adminKit
 				<?php $this->label($opt_id, $label);?>
 			</th>
 			<td>
-				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), $extras);?>
+				<?php printf('<input type="number" name="%1$s" id="%2$s" value="%3$s" class="%4$s" %6$s%5$s/><br />', esc_attr($opt_name), esc_attr($opt_id), esc_attr($this->opt[$option]), esc_attr($class), disabled($disable, true, false), $extras_escaped);?>
 				<?php if($description !== ''){?><p class="description"><?php echo esc_html($description);?></p><?php }?>
 			</td>
 		</tr>

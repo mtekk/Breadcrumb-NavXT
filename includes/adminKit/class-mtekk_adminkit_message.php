@@ -89,11 +89,11 @@ class message
 				return;
 			}
 			wp_enqueue_script('mtekk_adminkit_messages');
-			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', esc_attr($this->type), $this->contents, esc_attr($this->uid), esc_attr(wp_create_nonce($this->uid . '_dismiss')));
+			printf('<div class="notice notice-%1$s is-dismissible"><p>%2$s</p><meta property="uid" content="%3$s"><meta property="nonce" content="%4$s"></div>', esc_attr($this->type),  wp_kses_post($this->contents), esc_attr($this->uid), esc_attr(wp_create_nonce($this->uid . '_dismiss')));
 		}
 		else
 		{
-			printf('<div class="notice notice-%1$s"><p>%2$s</p></div>', esc_attr($this->type), $this->contents);
+			printf('<div class="notice notice-%1$s"><p>%2$s</p></div>', esc_attr($this->type), wp_kses_post($this->contents));
 		}
 	}
 }

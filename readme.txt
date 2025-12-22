@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, block
 Requires at least: 5.8
 Tested up to: 6.9
-Stable tag: 7.5
+Stable tag: 7.5.1
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,14 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.5.1 =
+Release date: December, 21st 2025
+
+* Behavior change: Removed deprecated `bcn_li_attributes` filter.
+* Bug fix: Fixed issue where the block could be used to generate breadcrumb trails that were not for the current resource.
+* Bug fix: Removed deprecated title length setting from settings page.
+* Bug fix: Fixed issue where XML settings import did not properly validate imported settings.
+
 = 7.5.0 =
 Release date: December, 4th 2025
 

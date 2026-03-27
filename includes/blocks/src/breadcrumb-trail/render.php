@@ -14,9 +14,10 @@ if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLO
 	return;
 }
 //Handle in-editor previews, function check to prevent requiring WP6.5
-if(function_exists('wp_is_serving_rest_request') && wp_is_serving_rest_request() && current_user_can('read_post', absint($block->context['postId'])))
+$post_id = isset($block->context['postId']) ? absint($block->context['postId']) : 0;
+if(function_exists('wp_is_serving_rest_request') && wp_is_serving_rest_request() && $post_id > 0 && current_user_can('read_post', $post_id))
 {
-	$preview_post = get_post(absint($block->context['postId']));
+	$preview_post = get_post($post_id);
 	if($attributes['format'] === 'list')
 	{
 		$template = "<li%3\$s>%1\$s</li>\n";

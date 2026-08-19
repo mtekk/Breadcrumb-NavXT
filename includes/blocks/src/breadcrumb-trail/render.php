@@ -9,6 +9,9 @@
  *
  * @package breadcrumb-navxt
  */
+
+require_once( __DIR__ . '/../../../block_direct_access.php');
+
 if($attributes['hideonHome'] === true && is_front_page() && !(is_paged() && $GLOBALS['breadcrumb_navxt']->show_paged()))
 {
 	return;

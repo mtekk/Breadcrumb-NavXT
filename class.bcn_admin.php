@@ -447,7 +447,7 @@ class bcn_admin extends adminKit
 			return;
 		}
 		?>
-		<form action="<?php echo esc_attr($this->admin_url()); ?>" method="post" id="bcn_admin-options">
+		<form action="<?php echo esc_url($this->admin_url()); ?>" method="post" id="bcn_admin-options">
 			<?php settings_fields('bcn_options');?>
 			<div id="hasadmintabs">
 			<fieldset id="general" class="bcn_options">

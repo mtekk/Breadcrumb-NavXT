@@ -254,8 +254,12 @@ class bcn_breadcrumb_trail
 	protected function determine_taxonomy()
 	{
 		global $wp;
+		$bk_req = '';
 		//Backup the server request variable
-		$bk_req = $_SERVER['REQUEST_URI'];
+		if(isset($_SERVER['REQUEST_URI']))
+		{
+			$bk_req = $_SERVER['REQUEST_URI'];
+		}
 		//Now set the request URL to the referrer URL
 		//Could just chain the [1] selection, but that's not PHP5.3 compatible
 		$url_split = explode(home_url(), esc_url(wp_get_referer()));

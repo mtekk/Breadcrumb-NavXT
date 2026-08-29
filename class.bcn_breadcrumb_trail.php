@@ -1269,6 +1269,12 @@ class bcn_breadcrumb_trail
 			}
 			else if($breadcrumb instanceof bcn_breadcrumb)
 			{
+				$assembled_breadcrumb = $breadcrumb->assemble($linked, $position, ($key === 0));
+				//If the assembled breadcrumb is empty, go to the next breadcrumb
+				if($assembled_breadcrumb == '')
+				{
+					continue;
+				}
 				$types = $breadcrumb->get_types();
 				array_walk($types, 'sanitize_html_class');
 				$attrib_array = array('class' => $types);
@@ -1284,7 +1290,7 @@ class bcn_breadcrumb_trail
 				$attribs = apply_filters_deprecated('bcn_display_attributes', array($attribs, $breadcrumb->get_types(), $breadcrumb->get_id()), '7.5.1', 'bcn_display_attribute_array');
 				$separator = apply_filters('bcn_display_separator', $separator, $position, $last_position, $depth);
 				//Assemble the breadcrumb
-				$trail_str_escaped .= sprintf($template, $breadcrumb->assemble($linked, $position, ($key === 0)), wp_kses($separator, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'))), $attribs);
+				$trail_str_escaped .= sprintf($template, $assembled_breadcrumb, wp_kses($separator, apply_filters('bcn_allowed_html', wp_kses_allowed_html('post'))), $attribs);
 			}
 			if($reverse)
 			{

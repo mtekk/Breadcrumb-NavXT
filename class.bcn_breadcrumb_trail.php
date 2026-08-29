@@ -1271,7 +1271,7 @@ class bcn_breadcrumb_trail
 			{
 				$assembled_breadcrumb = $breadcrumb->assemble($linked, $position, ($key === 0));
 				//If the assembled breadcrumb is empty, go to the next breadcrumb
-				if($assembled_breadcrumb == '')
+				if($assembled_breadcrumb === '')
 				{
 					continue;
 				}

@@ -220,14 +220,14 @@ class bcn_breadcrumb
 		}
 		//Build our replacements array
 		$replacements = array(
-			'%title%' => esc_attr(wp_strip_all_tags($this->title)),
+			'bcn-aria-current' => $aria_current_str,
 			'%link%' => esc_url($this->url),
 			'%htitle%' => $this->kses($this->title), /*TODO: verify if we want to restrict this more*/
 			'%type%' => apply_filters('bcn_breadcrumb_types', $this->type, $this->id),
 			'%ftitle%' => esc_attr(wp_strip_all_tags($this->title)),
 			'%fhtitle%' => $this->kses($this->title), /*TODO: verify if we want to restrict this more*/
 			'%position%' => esc_attr($position),
-			'bcn-aria-current' => $aria_current_str
+			'%title%' => esc_attr(wp_strip_all_tags($this->title)),
 			);
 		//The type may be an array, implode it if that is the case
 		if(is_array($replacements['%type%']))

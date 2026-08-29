@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, block
 Requires at least: 5.8
-Tested up to: 6.9
-Stable tag: 7.5.1
+Tested up to: 7.1
+Stable tag: 7.5.2
 Requires PHP: 7.0
 License: GPLv2 or later
 Adds breadcrumb navigation showing the visitor's path to their current location.
@@ -49,6 +49,14 @@ Please visit [Breadcrumb NavXT's Documentation](http://mtekk.us/code/breadcrumb-
 6. A screenshot of the Settings Import/Export/Reset form under the Help menu
 
 == Changelog ==
+= 7.5.2 =
+Release date: August, 29th 2026
+
+* Behavior change: Completely empty breadcrumbs no longer added to the trail at assembly time.
+* Bug fix: Fixed issue where the `bcn-aria-current` template tag could result in the browser executing scripts on search result pages.
+* Bug fix: Fixed issue with the block renderer using postId without checking it causing PHP warnings.
+* Bug fix: Fixed issue adminKit used esc_attr instead of esc_url in the settings import form.
+
 = 7.5.1 =
 Release date: December, 21st 2025
 
